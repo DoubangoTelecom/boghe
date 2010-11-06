@@ -1,0 +1,33 @@
+﻿<custom:BaseScreen x:Class="BogheApp.Screens.ScreenAbout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:custom="clr-namespace:BogheControls;assembly=BogheControls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="467" Width="232">
+    <Grid>
+        <RichTextBox Name="richTextBox" Height="467" Width="232">
+            <FlowDocument>
+                <Paragraph>
+                Boghe is free software: you can redistribute it and/or modify it under the terms of 
+	            the GNU General Public License as published by the Free Software Foundation, either version 3 
+	            of the License, or (at your option) any later version.
+	            </Paragraph>
+                <Paragraph>
+	            IMSDroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	            without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+	            See the GNU General Public License for more details.
+	            </Paragraph>
+                <Paragraph>
+	            You should have received a copy of the GNU General Public License along 
+	            with this program; if not, write to the Free Software Foundation, Inc., 
+	            59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+	            </Paragraph>
+                <Paragraph>
+	            For more information about the project: 
+                    <Hyperlink NavigateUri="http://code.google.com/p/boghe/">http://code.google.com/p/boghe/</Hyperlink>.
+	            Addition copyright information:
+                    <Hyperlink NavigateUri="http://code.google.com/p/boghe/wiki/Copyrigths">http://code.google.com/p/boghe/wiki/Copyrigths</Hyperlink>.
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+</custom:BaseScreen>
