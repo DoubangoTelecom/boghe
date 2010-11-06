@@ -1,9 +1,31 @@
-﻿using System;
+﻿/*
+* Copyright (C) 2010 Mamadou Diop.
+*
+* Contact: Mamadou Diop <diopmamadou(at)doubango.org>
+*	
+* This file is part of Boghe Project (http://code.google.com/p/boghe)
+*
+* imsdroid is free software: you can redistribute it and/or modify it under the terms of 
+* the GNU General Public License as published by the Free Software Foundation, either version 3 
+* of the License, or (at your option) any later version.
+*	
+* imsdroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+* See the GNU General Public License for more details.
+*	
+* You should have received a copy of the GNU General Public License along 
+* with this program; if not, write to the Free Software Foundation, Inc., 
+* 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Win32;
 using log4net;
+using BogheCore.Model;
+using BogheCore.Events;
 
 namespace BogheCore.Services.Impl
 {
@@ -46,15 +68,15 @@ namespace BogheCore.Services.Impl
 
         #region IConfigurationService
 
-        public String Get(String folder, String entry, String defaultValue)
+        public String Get(Configuration.ConfFolder folder, Configuration.ConfEntry entry, String defaultValue)
         {
             String result = defaultValue;
             try
             {
-                using (RegistryKey regkey = this.basekey.CreateSubKey(folder))
+                using (RegistryKey regkey = this.basekey.CreateSubKey(folder.ToString()))
                 {
                     object o;
-                    if ((o = regkey.GetValue(entry, defaultValue)) != null)
+                    if ((o = regkey.GetValue(entry.ToString(), defaultValue)) != null)
                     {
                         if (!String.IsNullOrEmpty(o.ToString()))
                         {
@@ -72,7 +94,7 @@ namespace BogheCore.Services.Impl
             return result;
         }
 
-        public bool Set(String folder, String entry, String value)
+        public bool Set(Configuration.ConfFolder folder, Configuration.ConfEntry entry, String value)
         {
             if (value == null)
             {
@@ -81,9 +103,9 @@ namespace BogheCore.Services.Impl
 
             try
             {
-                using (RegistryKey regkey = this.basekey.CreateSubKey(folder))
+                using (RegistryKey regkey = this.basekey.CreateSubKey(folder.ToString()))
                 {
-                    regkey.SetValue(entry, value);
+                    regkey.SetValue(entry.ToString(), value);
                     regkey.Close();
                 }
             }
@@ -93,18 +115,39 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
+            // Trigger
+            EventHandlerTrigger.TriggerEvent<ConfigurationEventArgs>(this.onConfigurationEvent, this, new ConfigurationEventArgs(folder, entry, value));
+
             return true;
         }
 
-        public bool Get(String folder, String entry, bool defaultValue)
+        public int Get(Configuration.ConfFolder folder, Configuration.ConfEntry entry, int defaultValue)
+        {
+            int result = defaultValue;
+            String value = this.Get(folder, entry, defaultValue.ToString());
+            if (Int32.TryParse(value, out result))
+            {
+                return result;
+            }
+            return defaultValue;
+        }
+
+        public bool Set(Configuration.ConfFolder folder, Configuration.ConfEntry entry, int value)
+        {
+            return this.Set(folder, entry, value.ToString());
+        }
+
+        public bool Get(Configuration.ConfFolder folder, Configuration.ConfEntry entry, bool defaultValue)
         {
             return Convert.ToBoolean(this.Get(folder, entry, defaultValue ? Boolean.TrueString : Boolean.FalseString)); 
         }
 
-        public bool Set(String folder, String entry, bool value)
+        public bool Set(Configuration.ConfFolder folder, Configuration.ConfEntry entry, bool value)
         {
             return this.Set(folder, entry, value ? Boolean.TrueString : Boolean.FalseString);
         }
+
+        public event EventHandler<ConfigurationEventArgs> onConfigurationEvent;
 
         #endregion
     }

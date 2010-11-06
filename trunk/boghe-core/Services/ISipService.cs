@@ -27,10 +27,11 @@ using BogheCore.Sip;
 
 namespace BogheCore.Services
 {
-    public interface ISipService
+    public interface ISipService : IService
     {
 
         MySipStack SipStack { get; }
+        bool IsRegistered { get; }
 
         bool StopStack();
         bool Register();

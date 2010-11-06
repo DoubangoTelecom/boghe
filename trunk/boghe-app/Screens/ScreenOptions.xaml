@@ -1,9 +1,9 @@
 ﻿<custom:BaseScreen x:Class="BogheApp.Screens.ScreenOptions"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:custom="clr-namespace:BogheControls;assembly=BogheControls"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="498" Width="371">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="540" Width="365">
     <Grid>
-        <TabControl Name="tabControl" Background="White" TabStripPlacement="Left">
+        <TabControl Name="tabControl" Background="White" TabStripPlacement="Left" Margin="0,0,0,41">
             
 
             <TabItem Header="General" Name="tabItemGeneral" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Height="45" Margin="1">
@@ -17,7 +17,7 @@
             <TabItem Header="Identity" Height="45" Margin="1" Name="tabItemIdentity">
                 <Grid Background="White">
                     <Label FontSize="16" Height="33" Margin="0,0,0,0" Name="labelIdentityTitle" VerticalAlignment="Top" Background="SkyBlue" FontWeight="Bold">Identity</Label>
-                    <GroupBox Header="Connection Settings" Margin="0,42,-3,0" Name="groupBoxIdentityConnection" Background="White" Height="200" VerticalAlignment="Top">
+                    <GroupBox Header="Connection Settings" Margin="0,42,-3,0" Name="groupBoxIdentityConnection" Background="White" Height="226" VerticalAlignment="Top">
                         <Grid>
                             <Label Height="28" HorizontalAlignment="Left" Margin="0,10,0,0" Name="labelDisplayName" VerticalAlignment="Top" Width="104">Display Name*:</Label>
                             <TextBox Height="23" Margin="108,13,1,0" Name="textBoxDisplayName" VerticalAlignment="Top" />
@@ -26,12 +26,13 @@
                             <Label HorizontalAlignment="Left" Margin="0,77,0,0" Name="labelPrivateIdentity" Width="104" Height="28" VerticalAlignment="Top">Private Identity*:</Label>
                             <TextBox Margin="108,78,1,0" Name="textBoxPrivateIdentity" Height="23" VerticalAlignment="Top" />
                             <Label Height="28" HorizontalAlignment="Left" Margin="0,108,0,0" Name="labelPassword" VerticalAlignment="Top" Width="104">Password:</Label>
-                            <TextBox Height="23" Margin="108,111,1,0" Name="textBoxPassword" VerticalAlignment="Top" />
                             <Label Height="28" HorizontalAlignment="Left" Margin="0,139,0,0" Name="labelRealm" VerticalAlignment="Top" Width="104">Realm*:</Label>
                             <TextBox Height="23" Margin="108,143,1,0" Name="textBoxRealm" VerticalAlignment="Top" />
+                            <CheckBox Height="16" Margin="5,0,6,8" Name="checkBoxEarlyIMS" VerticalAlignment="Bottom">Enable 3GG Early IMS Security</CheckBox>
+                            <PasswordBox Height="23" Margin="107,110.04,1,0" Name="passwordBoxSipPassword" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Security" Margin="1,256,3,12" Name="groupBoxIdentitySecurity">
+                    <GroupBox Header="Security" Margin="1,282,3,0" Name="groupBoxIdentitySecurity" Height="193" VerticalAlignment="Top">
                         <Grid>
                             <Label Height="28" HorizontalAlignment="Left" Margin="1,6,0,0" Name="labelOperatorId" VerticalAlignment="Top" Width="104">Operator ID*:</Label>
                             <TextBox Height="23" Margin="102,9,0,0" Name="textBoxOperatorId" VerticalAlignment="Top" />
@@ -50,9 +51,9 @@
                     <GroupBox Header="Settings" Margin="2,43,0,0" Name="groupBox1" Height="255" VerticalAlignment="Top">
                         <Grid>
                             <Label Height="28" Margin="0,34.04,0,0" Name="labelProxyHost" VerticalAlignment="Top" HorizontalAlignment="Left" Width="104">Proxy-CSCF Host*:</Label>
-                            <TextBox Height="23" Margin="111,37,3,0" Name="textBox1" VerticalAlignment="Top" />
-                            <RadioButton Height="16" Margin="0,9,7,0" Name="radioButtonIPv6" VerticalAlignment="Top" HorizontalAlignment="Right" Width="57">IPv6</RadioButton>
-                            <RadioButton Height="16" Margin="109,8,67,0" Name="radioButtonIPv4" VerticalAlignment="Top">IPv4</RadioButton>
+                            <TextBox Height="23" Margin="111,37,3,0" Name="textBoxProxyHost" VerticalAlignment="Top" />
+                            <RadioButton Height="16" Margin="0,9,7,0" Name="radioButtonIPv6" VerticalAlignment="Top" HorizontalAlignment="Right" Width="57" GroupName="IPVersion">IPv6</RadioButton>
+                            <RadioButton Height="16" Margin="109,8,67,0" Name="radioButtonIPv4" VerticalAlignment="Top" GroupName="IPVersion" IsChecked="True">IPv4</RadioButton>
                             <Label Height="28" HorizontalAlignment="Left" Margin="2,1,0,0" Name="labelIPVersion" VerticalAlignment="Top" Width="104">IP Version*:</Label>
                             <Label HorizontalAlignment="Left" Margin="1,65,0,0" Name="labelProxyPort" Width="104" Height="28.04" VerticalAlignment="Top">Proxy-CSCF Port*:</Label>
                             <TextBox Margin="112,68,2,0" Name="textBoxProxyPort" Height="23.04" VerticalAlignment="Top" />
@@ -67,7 +68,7 @@
                             <CheckBox Height="16" Margin="5,195,0,0" Name="checkBoxSigComp" VerticalAlignment="Top">Enable Signaling Compression (SigComp)</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Access Type" Height="106" Margin="2,0,0,49" Name="groupBoxNetworkAccess" VerticalAlignment="Bottom">
+                    <GroupBox Header="Access Type" Height="106" Margin="2,319,0,0" Name="groupBoxNetworkAccess" VerticalAlignment="Top">
                         <Grid>
                             <Label Height="28.04" HorizontalAlignment="Left" Margin="-1,3,0,0" Name="labelNetwork" VerticalAlignment="Top" Width="71">Network:</Label>
                             <ComboBox Height="23" Margin="76,6,9,0" Name="comboBoxNetworkType" SelectedIndex="10" VerticalAlignment="Top">
@@ -135,5 +136,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button HorizontalAlignment="Right" Margin="0,0,92,12" Name="buttonSave" Width="75" Height="23" VerticalAlignment="Bottom" Click="buttonSave_Click">Save</Button>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,11,12" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click">Cancel</Button>
     </Grid>
 </custom:BaseScreen>

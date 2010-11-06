@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheApp.Services.Impl;
 
-namespace BogheApp
+namespace BogheCore.Model
 {
-    class Configuration
+    public class Configuration
     {
         public enum ConfFolder
         {
@@ -32,12 +31,13 @@ namespace BogheApp
         public static String DEFAULT_IMPU = "sip:johndoe@open-ims.test";
 
         public static bool DEFAULT_EARLY_IMS = false;
-        public static String DEFAULT_PCSCF_DISCOVERY = "None";
+        public static bool DEFAULT_PCSCF_DISCOVERY_DNS = false;
+        public static bool DEFAULT_PCSCF_DISCOVERY_DHCP = false;
         public static String DEFAULT_PCSCF_HOST = "127.0.0.1";
         public static int DEFAULT_PCSCF_PORT = 5060;
         public static String DEFAULT_REALM = "sip:open-ims.test";
         public static bool DEFAULT_SIGCOMP = false;
-        public static String DEFAULT_TRANSPORT = "udp";
+        public static String DEFAULT_TRANSPORT = "UDP";
         public static String DEFAULT_IP_VERSION = "ipv4";
         public static bool DEFAULT_WIFI = true;
         public static bool DEFAULT_3G = false;
@@ -102,7 +102,7 @@ namespace BogheApp
             /* === VoLTE === */
 
             /* === NETWORK === */
-            EARLY_IMS, IP_VERSION, PCSCF_DISCOVERY, PCSCF_HOST, PCSCF_PORT, REALM, SIGCOMP, THREE_3G, TRANSPORT, WIFI,
+            EARLY_IMS, IP_VERSION, PCSCF_DISCOVERY_DNS, PCSCF_DISCOVERY_DHCP, PCSCF_HOST, PCSCF_PORT, REALM, SIGCOMP, THREE_3G, TRANSPORT, WIFI,
 
             /* === QOS/QOE === */
             PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, REFRESHER, SIP_CALLS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
@@ -124,26 +124,6 @@ namespace BogheApp
             /* === XCAP === */
             /* PASSWORD */
             ENABLED, XCAP_ROOT, USERNAME
-        }
-
-        public static String Get(ConfFolder folder, ConfEntry entry, String defaultValue)
-        {
-            return Win32ServiceManager.SharedManager.ConfigurationService.Get(folder.ToString(), entry.ToString(), defaultValue);
-        }
-
-        public static bool Set(ConfFolder folder, ConfEntry entry, String value)
-        {
-            return Win32ServiceManager.SharedManager.ConfigurationService.Set(folder.ToString(), entry.ToString(), value);
-        }
-
-        public static bool Get(ConfFolder folder, ConfEntry entry, bool defaultValue)
-        {
-            return Win32ServiceManager.SharedManager.ConfigurationService.Get(folder.ToString(), entry.ToString(), defaultValue);
-        }
-
-        public static bool Set(ConfFolder folder, ConfEntry entry, bool value)
-        {
-            return Win32ServiceManager.SharedManager.ConfigurationService.Set(folder.ToString(), entry.ToString(), value);
         }
     }
 }

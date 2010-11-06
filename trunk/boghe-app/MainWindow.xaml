@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BogheApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Boghe - IMS/RCS Client" Height="641" Width="389" Icon="/BogheApp;component/embedded/16/icon_16.png" Background="White">
+    Title="Boghe - IMS/RCS Client" Height="690" Width="400" Icon="/BogheApp;component/embedded/16/icon_16.png" Background="White" MinWidth="400" MinHeight="690">
     <Grid Background="White">
         <StatusBar Height="23" Margin="0,423,0,0" Name="statusBar" VerticalAlignment="Bottom" />
         <Menu Height="22" Name="menu" VerticalAlignment="Top">
@@ -21,6 +21,6 @@
         <TabControl Margin="0,68,0,21" Name="tabControl" FlowDirection="LeftToRight" Background="White">
             
         </TabControl>
-        
+        <Label Name="labelProgressInfo" Margin="0,629,40,0"></Label>
     </Grid>
 </Window>

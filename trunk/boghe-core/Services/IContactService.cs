@@ -25,7 +25,7 @@ using System.Text;
 
 namespace BogheCore.Services
 {
-    public interface IContactService
+    public interface IContactService : IService
     {
     }
 }

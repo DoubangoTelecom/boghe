@@ -25,7 +25,7 @@ using System.Text;
 
 namespace BogheCore.Services
 {
-    public interface IHistoryService
+    public interface IHistoryService : IService
     {
     }
 }
