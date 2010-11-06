@@ -31,9 +31,10 @@ namespace BogheApp.Services.Impl
     {
         private static Win32ServiceManager singleton = null;
 
-        private IScreenService screenService;
+        private IWin32ScreenService screenService;
         private ILogService logService;
         private IConfigurationService configurationService;
+        private ISipService sipService;
 
         /// <summary>
         /// Shared Service manager
@@ -88,7 +89,7 @@ namespace BogheApp.Services.Impl
         /// <summary>
         /// Screen Service
         /// </summary>
-        public IScreenService ScreenService
+        public IWin32ScreenService ScreenService
         {
             get
             {
@@ -123,9 +124,22 @@ namespace BogheApp.Services.Impl
             {
                 if (this.configurationService == null)
                 {
+                    // load XmlConfigurationService if "configuration.xml" exists
                     this.configurationService = new RegConfigurationService();
                 }
                 return this.configurationService;
+            }
+        }
+
+        public override ISipService SipService
+        {
+            get
+            {
+                if (this.sipService == null)
+                {
+                    this.sipService = new SipService(this);
+                }
+                return this.sipService;
             }
         }
 

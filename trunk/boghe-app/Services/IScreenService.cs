@@ -28,9 +28,12 @@ using BogheApp.Screens;
 
 namespace BogheApp.Services
 {
-    interface IScreenService : IService
+    interface IWin32ScreenService : IScreenService 
     {
-        void setTabControl(TabControl tabControl);
+        void SetTabControl(TabControl tabControl);
+        void SetProgressLabel(Label labelProgressInfo);
+
+        void SetProgressInfo(String text);
 
         ScreenAbout ScreenAbout { get; }
         ScreenAuthentication ScreenAuthentication { get; }

@@ -34,6 +34,7 @@ using BogheApp.Services.Impl;
 using BogheApp.Screens;
 using BogheControls;
 using BogheApp.Services;
+using BogheCore.Services;
 
 /*
  * XAML Namespaces and Namespace Mapping for WPF XAML: http://msdn.microsoft.com/en-us/library/ms747086.aspx
@@ -47,7 +48,8 @@ namespace BogheApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IScreenService screenService;
+        private readonly IWin32ScreenService screenService;
+        private readonly ISipService sipService;
 
         public MainWindow()
         {
@@ -61,7 +63,12 @@ namespace BogheApp
 
             // Initialize Screen Service
             this.screenService = Win32ServiceManager.SharedManager.ScreenService;
-            this.screenService.setTabControl(this.tabControl);
+            this.screenService.SetTabControl(this.tabControl);
+            this.screenService.SetProgressLabel(this.labelProgressInfo);
+            
+            // Initialize SIP Service
+            this.sipService = Win32ServiceManager.SharedManager.SipService;
+            this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));

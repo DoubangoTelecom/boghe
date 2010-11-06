@@ -49,13 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\ConfigurationEventArgs.cs" />
+    <Compile Include="Events\EventHandlerTrigger.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
+    <Compile Include="Model\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\IContactService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\Impl\RegConfigurationService.cs" />
     <Compile Include="Services\Impl\ServiceManager.cs" />
+    <Compile Include="Services\Impl\SipService.Callback.cs">
+      <DependentUpon>SipService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\SipService.cs" />
+    <Compile Include="Services\Impl\SipService.Preferences.cs">
+      <DependentUpon>SipService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\INetworkService.cs" />
     <Compile Include="Services\IScreenService.cs" />
     <Compile Include="Services\IService.cs" />
@@ -80,7 +90,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

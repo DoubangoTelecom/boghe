@@ -23,9 +23,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BogheApp.Screens
+namespace BogheCore.Services.Impl
 {
-    partial class ScreenOptions
+    partial class SipService
     {
+        internal class Preferences
+        {
+            public bool xcap_enabled;
+            //private boolean preslist;
+            //private boolean deferredMsg;
+            public bool presence_enabled;
+            public bool mwi;
+            public String impi;
+            public String impu;
+            public String realm;
+            public String pcscf_host;
+            public int pcscf_port;
+            public String transport;
+            public String ipversion;
+            //public String localIP;
+        }
     }
 }

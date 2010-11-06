@@ -25,12 +25,15 @@ using System.Text;
 using System.Windows.Controls;
 using BogheApp.Screens;
 using BogheControls;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace BogheApp.Services.Impl
 {
-    class ScreenService : IScreenService
+    class ScreenService : IWin32ScreenService
     {
         private TabControl tabControl;
+        private Label labelProgressInfo;
 
         private ScreenType loadedScreens = ScreenType.None;
 
@@ -62,9 +65,35 @@ namespace BogheApp.Services.Impl
 
         #region IScreenService
 
-        public void setTabControl(TabControl tabControl)
+        public void SetTabControl(TabControl tabControl)
         {
             this.tabControl = tabControl;
+        }
+
+        public void SetProgressLabel(Label labelProgressInfo)
+        {
+            this.labelProgressInfo = labelProgressInfo;
+        }
+
+        public void SetProgressInfo(String text)
+        {
+            if (this.labelProgressInfo == null)
+            {
+                return;
+            }
+
+            if (this.labelProgressInfo.Dispatcher.Thread == Thread.CurrentThread)
+            {
+                this.labelProgressInfo.Content = text;
+            }
+            else
+            {
+                this.labelProgressInfo.Dispatcher.BeginInvoke((ThreadStart)delegate ()
+                {
+                    this.labelProgressInfo.Content = text;
+                }, 
+                null);
+            }
         }
 
         public ScreenAbout ScreenAbout

@@ -53,7 +53,7 @@ namespace BogheCore.Sip
             get { return this.sipStack; }
         }
 
-        public bool Connected
+        public bool IsConnected
         {
             get { return this.connected; }
             set { this.connected = value; }

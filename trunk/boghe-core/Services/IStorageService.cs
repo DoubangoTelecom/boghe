@@ -25,7 +25,7 @@ using System.Text;
 
 namespace BogheCore.Services
 {
-    public interface IStorageService
+    public interface IStorageService : IService
     {
     }
 }

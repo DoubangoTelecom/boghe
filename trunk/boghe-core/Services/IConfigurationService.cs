@@ -22,15 +22,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheCore.Model;
+using BogheCore.Events;
 
 namespace BogheCore.Services
 {
     public interface IConfigurationService : IService
     {
-        String Get(String folder, String entry, String defaultValue);
-        bool Set(String folder, String entry, String value);
+        String Get(Configuration.ConfFolder folder, Configuration.ConfEntry entry, String defaultValue);
+        bool Set(Configuration.ConfFolder folder, Configuration.ConfEntry entry, String value);
 
-        bool Get(String folder, String entry, bool defaultValue);
-        bool Set(String folder, String entry, bool value);
+        int Get(Configuration.ConfFolder folder, Configuration.ConfEntry entry, int defaultValue);
+        bool Set(Configuration.ConfFolder folder, Configuration.ConfEntry entry, int value);
+
+        bool Get(Configuration.ConfFolder folder, Configuration.ConfEntry entry, bool defaultValue);
+        bool Set(Configuration.ConfFolder folder, Configuration.ConfEntry entry, bool value);
+
+        event EventHandler<ConfigurationEventArgs> onConfigurationEvent;
     }
 }

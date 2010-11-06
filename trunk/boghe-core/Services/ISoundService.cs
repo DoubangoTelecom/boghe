@@ -25,7 +25,7 @@ using System.Text;
 
 namespace BogheCore.Services
 {
-    public interface ISoundService
+    public interface ISoundService : IService
     {
     }
 }
