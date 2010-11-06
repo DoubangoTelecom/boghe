@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AA9DE4E7-5C53-4DDE-BD95-B478CE2E369E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BogheApp</RootNamespace>
+    <AssemblyName>BogheApp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c198e78e289aebd0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\boghe-thirdparties\win32\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="MainWindow.Menu.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Screens\ScreenAbout.Screen.cs">
+      <DependentUpon>ScreenAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenAbout.xaml.cs">
+      <DependentUpon>ScreenAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenAuthentication.Screen.cs">
+      <DependentUpon>ScreenAuthentication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenAuthentication.xaml.cs">
+      <DependentUpon>ScreenAuthentication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.xaml.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenType.cs" />
+    <Compile Include="Services\ILogService.cs" />
+    <Compile Include="Services\Impl\LogService.cs" />
+    <Compile Include="Services\Impl\ScreenService.cs" />
+    <Compile Include="Services\Impl\Win32ServiceManager.cs" />
+    <Compile Include="Services\IScreenService.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\boghe-controls\boghe-controls.csproj">
+      <Project>{598C350C-BBB4-41C4-84BC-725B17D6E294}</Project>
+      <Name>boghe-controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\boghe-core\boghe-core.csproj">
+      <Project>{B4E6B7AC-B18B-49CE-A79D-9B39E0A06499}</Project>
+      <Name>boghe-core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ScreenAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ScreenAuthentication.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Screens\ScreenOptions.Codecs.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.Contacts.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.General.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.Identity.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.Messaging.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.NATT.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.Network.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.QoSQoE.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.Screen.cs">
+      <SubType>
+      </SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenOptions.Security.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Screens\ScreenOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\icon_16.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
