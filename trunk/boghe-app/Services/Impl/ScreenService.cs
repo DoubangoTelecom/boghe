@@ -5,11 +5,11 @@
 *	
 * This file is part of Boghe Project (http://code.google.com/p/boghe)
 *
-* imsdroid is free software: you can redistribute it and/or modify it under the terms of 
+* Boghe is free software: you can redistribute it and/or modify it under the terms of 
 * the GNU General Public License as published by the Free Software Foundation, either version 3 
 * of the License, or (at your option) any later version.
 *	
-* imsdroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* Boghe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 * See the GNU General Public License for more details.
 *	
@@ -40,6 +40,8 @@ namespace BogheApp.Services.Impl
         private ScreenAbout screenAbout;
         private ScreenAuthentication screenAuthentication;
         private ScreenOptions screenOptions;
+        private ScreenContacts screenContacts;
+        private ScreenHistory screenHistory;
 
         #region IService
 
@@ -132,8 +134,31 @@ namespace BogheApp.Services.Impl
             }
         }
 
+        public ScreenContacts ScreenContacts
+        {
+            get
+            {
+                if (this.screenContacts == null)
+                {
+                    this.screenContacts = new ScreenContacts();
+                }
+                return this.screenContacts;
+            }
+        }
 
-        public void Show(ScreenType type)
+        public ScreenHistory ScreenHistory
+        {
+            get
+            {
+                if (this.screenHistory == null)
+                {
+                    this.screenHistory = new ScreenHistory();
+                }
+                return this.screenHistory;
+            }
+        }
+
+        public void Show(ScreenType type, int insertIndex)
         {
             TabItem tabItem = null;
             if ((this.loadedScreens & type) == type)
@@ -157,14 +182,32 @@ namespace BogheApp.Services.Impl
                 case ScreenType.Options:
                     tabItem = this.CreateTabItem(this.ScreenOptions, true);
                     break;
+                case ScreenType.History:
+                    tabItem = this.CreateTabItem(this.ScreenHistory, false);
+                    break;
+                case ScreenType.Contacts:
+                    tabItem = this.CreateTabItem(this.ScreenContacts, false);
+                    break;
             }
 
             if (tabItem != null)
             {
-                this.tabControl.Items.Add(tabItem);
+                if (insertIndex >= 0 && insertIndex < this.tabControl.Items.Count)
+                {
+                    this.tabControl.Items.Insert(insertIndex, tabItem);
+                }
+                else
+                {
+                    this.tabControl.Items.Add(tabItem);
+                }
                 this.tabControl.SelectedItem = tabItem;
                 this.loadedScreens |= type;
             }
+        }
+
+        public void Show(ScreenType type)
+        {
+            this.Show(type, -1);
         }
 
         public void Hide(ScreenType type)

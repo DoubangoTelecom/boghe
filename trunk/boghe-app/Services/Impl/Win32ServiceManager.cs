@@ -5,11 +5,11 @@
 *	
 * This file is part of Boghe Project (http://code.google.com/p/boghe)
 *
-* imsdroid is free software: you can redistribute it and/or modify it under the terms of 
+* Boghe is free software: you can redistribute it and/or modify it under the terms of 
 * the GNU General Public License as published by the Free Software Foundation, either version 3 
 * of the License, or (at your option) any later version.
 *	
-* imsdroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* Boghe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 * See the GNU General Public License for more details.
 *	
@@ -35,6 +35,8 @@ namespace BogheApp.Services.Impl
         private ILogService logService;
         private IConfigurationService configurationService;
         private ISipService sipService;
+        private IContactService contactService;
+        private IXcapService xcapService;
 
         /// <summary>
         /// Shared Service manager
@@ -63,8 +65,11 @@ namespace BogheApp.Services.Impl
 
             ret &= this.LogService.Start();
             ret &= this.ConfigurationService.Start();
+
             ret &= this.ScreenService.Start();
-            
+            ret &= this.SipService.Start();
+            ret &= this.XcapService.Start();
+            ret &= this.ContactService.Start();
 
             return ret;
         }
@@ -80,6 +85,10 @@ namespace BogheApp.Services.Impl
             // Log service should be last to stop
 
             ret &= this.ScreenService.Stop();
+            ret &= this.SipService.Stop();
+            ret &= this.XcapService.Stop();
+            ret &= this.ContactService.Stop();
+
             ret &= this.ConfigurationService.Stop();
             ret &= this.LogService.Stop();
 
@@ -140,6 +149,30 @@ namespace BogheApp.Services.Impl
                     this.sipService = new SipService(this);
                 }
                 return this.sipService;
+            }
+        }
+
+        public override IContactService ContactService
+        {
+            get
+            {
+                if (this.contactService == null)
+                {
+                    this.contactService = new ContactService(this);
+                }
+                return this.contactService;
+            }
+        }
+
+        public override IXcapService XcapService
+        {
+            get
+            {
+                if (this.xcapService == null)
+                {
+                    this.xcapService = new XcapService(this);
+                }
+                return this.xcapService;
             }
         }
 

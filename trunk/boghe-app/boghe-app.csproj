@@ -41,6 +41,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -134,6 +135,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Items\ItemContact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,8 +151,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Items\ItemContact.xaml.cs">
+      <DependentUpon>ItemContact.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenContacts.Screen.cs">
+      <DependentUpon>ScreenContacts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenContacts.xaml.cs">
+      <DependentUpon>ScreenContacts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenHistory.Screen.cs">
+      <DependentUpon>ScreenHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenHistory.xaml.cs">
+      <DependentUpon>ScreenHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\ScreenOptions.Codecs.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
@@ -182,6 +202,14 @@
     <Compile Include="Screens\ScreenOptions.Security.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
+    <Page Include="Screens\ScreenContacts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ScreenHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\ScreenOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,6 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\16\icon_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\signout_16.png" />
+    <Resource Include="embedded\16\signin_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

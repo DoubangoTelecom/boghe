@@ -5,11 +5,11 @@
 *	
 * This file is part of Boghe Project (http://code.google.com/p/boghe)
 *
-* imsdroid is free software: you can redistribute it and/or modify it under the terms of 
+* Boghe is free software: you can redistribute it and/or modify it under the terms of 
 * the GNU General Public License as published by the Free Software Foundation, either version 3 
 * of the License, or (at your option) any later version.
 *	
-* imsdroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* Boghe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 * See the GNU General Public License for more details.
 *	
@@ -62,6 +62,32 @@ namespace BogheApp
             if (menuItem == this.MenuItemTools_Options)
             {
                 Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.Options);
+            }
+        }
+
+        #endregion
+
+        #region MenuItemFile
+
+        private void MenuItemFile_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = e.OriginalSource as MenuItem;
+            if (menuItem == null)
+            {
+                return;
+            }
+
+            if (menuItem == this.MenuItemFile_SignIn)
+            {
+                this.sipService.Register();
+            }
+            else if (menuItem == this.MenuItemFile_SignOut)
+            {
+                this.sipService.UnRegister();
+            }
+            else if (menuItem == this.MenuItemFile_Exit)
+            {
+                App.Current.Shutdown();
             }
         }
 
