@@ -50,6 +50,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseItem.cs" />
     <Compile Include="BaseScreen.cs" />
     <Compile Include="CloseableTabItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

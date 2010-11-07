@@ -5,11 +5,11 @@
 *	
 * This file is part of Boghe Project (http://code.google.com/p/boghe)
 *
-* imsdroid is free software: you can redistribute it and/or modify it under the terms of 
+* Boghe is free software: you can redistribute it and/or modify it under the terms of 
 * the GNU General Public License as published by the Free Software Foundation, either version 3 
 * of the License, or (at your option) any later version.
 *	
-* imsdroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* Boghe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 * See the GNU General Public License for more details.
 *	
@@ -50,8 +50,11 @@ namespace BogheApp.Screens
 
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
 
+            this.radioButtonContactsRemote.Checked += delegate(object sender, RoutedEventArgs e) { this.groupBoxXCAP.IsEnabled = true; };
+            this.radioButtonContactsRemote.Unchecked += delegate(object sender, RoutedEventArgs e) { this.groupBoxXCAP.IsEnabled = false; };
+
             this.LoadConfiguration();
-        }
+        }        
 
         private void SaveConfiguration()
         {
@@ -60,12 +63,16 @@ namespace BogheApp.Screens
 
             if (!this.UpdateNetwork())
                 return;
+
+            if (!this.UpdateContacts())
+                return;
         }
 
         private void LoadConfiguration()
         {
             this.LoadIdentity();
             this.LoadNetwork();
+            this.LoadContacts();
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

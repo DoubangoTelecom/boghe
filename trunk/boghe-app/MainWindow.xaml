@@ -5,11 +5,15 @@
     <Grid Background="White">
         <StatusBar Height="23" Margin="0,423,0,0" Name="statusBar" VerticalAlignment="Bottom" />
         <Menu Height="22" Name="menu" VerticalAlignment="Top">
-            <MenuItem Header="File" Name="MenuItemFile">
-                <MenuItem Header="Sign In"></MenuItem>
-                <MenuItem Header="Sign Out" />
+            <MenuItem Header="File" Name="MenuItemFile" Click="MenuItemFile_Click">
+                <MenuItem Header="Sign In" Name="MenuItemFile_SignIn" >
+                    <MenuItem.Icon>
+                        <Image Source="embedded/16/signin_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Sign Out" Name="MenuItemFile_SignOut" IsEnabled="False" />
                 <Separator />
-                <MenuItem Header="Exit" />
+                <MenuItem Header="Exit" Name="MenuItemFile_Exit" />
             </MenuItem>
             <MenuItem Header="Tools" Name="MenuItemTools" Click="MenuItemTools_Click">
                 <MenuItem Header="Options" Name="MenuItemTools_Options" />
@@ -21,6 +25,6 @@
         <TabControl Margin="0,68,0,21" Name="tabControl" FlowDirection="LeftToRight" Background="White">
             
         </TabControl>
-        <Label Name="labelProgressInfo" Margin="0,629,40,0"></Label>
+        <Label Name="labelProgressInfo" Margin="0,0,40,0" Height="23" VerticalAlignment="Bottom"></Label>
     </Grid>
 </Window>

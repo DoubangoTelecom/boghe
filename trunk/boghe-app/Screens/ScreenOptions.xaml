@@ -108,6 +108,18 @@
             <TabItem Header="Contacts" Height="45" Margin="1" Name="tabItemContacts" Padding="6,1" >
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelContactsTitle" VerticalAlignment="Top" FontWeight="Bold">Contacts</Label>
+                    <RadioButton Height="16" Margin="7,43,0,0" Name="radioButtonContactsLocal" VerticalAlignment="Top" GroupName="Storage" IsChecked="True">Local Storage</RadioButton>
+                    <RadioButton Height="16" Margin="7,65,0,0" Name="radioButtonContactsRemote" VerticalAlignment="Top" GroupName="Storage">Remote Storage</RadioButton>
+                    <GroupBox Header="XCAP Preferences" Margin="20,89,6,0" Name="groupBoxXCAP" Height="138" VerticalAlignment="Top">
+                        <Grid>
+                            <Label Height="28" Margin="-3,6,0,0" Name="labelXcapRoot" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120.823">Base URI:</Label>
+                            <TextBox Height="23" Margin="68,9,6,0" Name="textBoxXcapRoot" VerticalAlignment="Top" />
+                            <Label Margin="-3,36,0,0" Name="labelUserName" HorizontalAlignment="Left" Width="119.823" Height="28" VerticalAlignment="Top">Username:</Label>
+                            <TextBox Margin="68,38,7,0" Name="textBoxXUI" Height="23" VerticalAlignment="Top" />
+                            <Label Height="28" Margin="-3,67,0,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="119.823">Password:</Label>
+                            <PasswordBox Height="23" Margin="68,70.04,7,0" Name="passwordBoxXUI" VerticalAlignment="Top" />
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Presence" Height="45" Name="tabItemPresence" Margin="1" >

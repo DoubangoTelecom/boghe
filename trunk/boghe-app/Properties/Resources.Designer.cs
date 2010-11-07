@@ -59,5 +59,12 @@ namespace BogheApp.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap signin_16 {
+            get {
+                object obj = ResourceManager.GetObject("signin_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

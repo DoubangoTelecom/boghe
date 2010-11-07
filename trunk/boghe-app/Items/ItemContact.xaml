@@ -1,0 +1,15 @@
+﻿<ctrl:BaseItem x:TypeArguments="corem:Contact" x:Class="BogheApp.Items.ItemContact"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
+    xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
+    
+    Height="38" Width="300">
+    
+    <Grid>
+        <Label Margin="0,-2,0,12" Name="label1" HorizontalAlignment="Left" Width="120">Label</Label>
+    </Grid>
+    
+    
+    
+</ctrl:BaseItem>

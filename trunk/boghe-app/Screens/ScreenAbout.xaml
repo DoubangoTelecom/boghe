@@ -2,9 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:custom="clr-namespace:BogheControls;assembly=BogheControls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="467" Width="232">
+    Height="467" Width="319">
     <Grid>
-        <RichTextBox Name="richTextBox" Height="467" Width="232">
+        <RichTextBox Name="richTextBox" Margin="0,0,-2.25,0">
             <FlowDocument>
                 <Paragraph>
                 Boghe is free software: you can redistribute it and/or modify it under the terms of 
@@ -12,7 +12,7 @@
 	            of the License, or (at your option) any later version.
 	            </Paragraph>
                 <Paragraph>
-	            IMSDroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	            Boghe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
 	            without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 	            See the GNU General Public License for more details.
 	            </Paragraph>

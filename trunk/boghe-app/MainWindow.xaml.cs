@@ -5,11 +5,11 @@
 *	
 * This file is part of Boghe Project (http://code.google.com/p/boghe)
 *
-* imsdroid is free software: you can redistribute it and/or modify it under the terms of 
+* Boghe is free software: you can redistribute it and/or modify it under the terms of 
 * the GNU General Public License as published by the Free Software Foundation, either version 3 
 * of the License, or (at your option) any later version.
 *	
-* imsdroid is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* Boghe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 * See the GNU General Public License for more details.
 *	
@@ -38,7 +38,7 @@ using BogheCore.Services;
 
 /*
  * XAML Namespaces and Namespace Mapping for WPF XAML: http://msdn.microsoft.com/en-us/library/ms747086.aspx
- * 
+ * Data Binding: http://msdn.microsoft.com/en-us/library/ms752347.aspx
  * */
 
 namespace BogheApp
@@ -74,8 +74,8 @@ namespace BogheApp
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
             
             // Show Authentication Screen
+            //this.screenService.Show(ScreenType.Contacts);
             this.screenService.Show(ScreenType.Authentication);
-            
         }
 
         private void CloseTab(object source, RoutedEventArgs args)
@@ -90,6 +90,5 @@ namespace BogheApp
                 }
             }
         }
-        
     }
 }
