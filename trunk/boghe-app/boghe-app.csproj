@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -133,9 +133,17 @@
       <Project>{B4E6B7AC-B18B-49CE-A79D-9B39E0A06499}</Project>
       <Name>boghe-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\boghe-xdm\boghe-xdm.csproj">
+      <Project>{C916D357-A1FF-46C8-B3BA-28173F5ACEE9}</Project>
+      <Name>boghe-xdm</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Items\ItemContact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Items\ItemGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,8 +159,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Items\DataTemplateSelectorContacts.cs" />
     <Compile Include="Items\ItemContact.xaml.cs">
       <DependentUpon>ItemContact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemGroup.xaml.cs">
+      <DependentUpon>ItemGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -186,6 +186,37 @@ namespace BogheCore.Services.Impl
             /// <returns></returns>
             public override int OnStackEvent(StackEvent e)
             {
+                short code = e.getCode();
+                String phrase = e.getPhrase();
+
+                if (code == tinyWRAP.tsip_event_code_stack_started)
+                {
+                    this.sipService.SipStack.State = MySipStack.STACK_STATE.STARTED;
+
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.START_OK, phrase));
+                }
+
+                else if (code == tinyWRAP.tsip_event_code_stack_failed_to_start)
+                {
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.START_NOK, phrase));
+                }
+
+                else if (code == tinyWRAP.tsip_event_code_stack_failed_to_stop)
+                {
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.STOP_NOK, phrase));
+                }
+
+                else if (code == tinyWRAP.tsip_event_code_stack_stopped)
+                {
+                    this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPED;
+
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.STOP_OK, phrase));
+                }
+
                 return 0;
             }
 

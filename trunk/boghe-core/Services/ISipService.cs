@@ -39,5 +39,6 @@ namespace BogheCore.Services
         bool UnRegister();
 
         event EventHandler<RegistrationEventArgs> onRegistrationEvent;
+        event EventHandler<StackEventArgs> onStackEvent;
     }
 }

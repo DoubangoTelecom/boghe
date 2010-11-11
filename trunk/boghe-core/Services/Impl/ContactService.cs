@@ -25,32 +25,36 @@ using System.Text;
 using System.Collections.ObjectModel;
 using BogheCore.Model;
 using BogheCore.Sip.Events;
+using BogheCore.Events;
 
 namespace BogheCore.Services.Impl
 {
     public class ContactService : IContactService
     {
-        private readonly ObservableCollection<Contact> contacts;
-        private readonly ObservableCollection<Group> groups;
+        private readonly MyObservableCollection<Contact> contacts;
+        private readonly MyObservableCollection<Group> groups;
 
-        private readonly IXcapService xcapService;
-        private readonly ISipService sipService;
-        private readonly IConfigurationService configurationService;
+        private IXcapService xcapService;
+        private ISipService sipService;
+        private IConfigurationService configurationService;
+        private readonly ServiceManager manager;
 
         public ContactService(ServiceManager manager)
         {
-            this.contacts = new ObservableCollection<Contact>();
-            this.groups = new ObservableCollection<Group>();
+            this.contacts = new MyObservableCollection<Contact>();
+            this.groups = new MyObservableCollection<Group>();
 
-            this.xcapService = manager.XcapService;
-            this.sipService = manager.SipService;
-            this.configurationService = manager.ConfigurationService;
+            this.manager = manager;
         }
 
         #region IService
 
         public bool Start()
         {
+            this.xcapService = this.manager.XcapService;
+            this.sipService = this.manager.SipService;
+            this.configurationService = this.manager.ConfigurationService;
+
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
 
             return true;
@@ -71,15 +75,27 @@ namespace BogheCore.Services.Impl
         {
         }
 
-        public ObservableCollection<Contact> Contacts 
+        public MyObservableCollection<Contact> Contacts 
         {
             get { return this.contacts; }
         }
 
-        public ObservableCollection<Group> Groups 
+        public MyObservableCollection<Group> Groups 
         {
             get { return this.groups; }
         }
+
+        public void UpdateGroupsAndContacts(List<Group> freshGroups, List<Contact> freshContacts)
+        {
+            this.groups.ReplaceRange(freshGroups);
+            this.contacts.ReplaceRange(freshContacts);
+
+
+            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, new ContactEventArgs(ContactEventTypes.CONTACTS_DOWNLOADED));
+            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, new ContactEventArgs(ContactEventTypes.GROUPS_DOWNLOADED));
+        }
+
+        public event EventHandler<ContactEventArgs> onContactEvent;
 
         #endregion
 

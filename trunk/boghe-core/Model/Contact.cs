@@ -24,14 +24,22 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using BogheXdm;
 
 namespace BogheCore.Model
 {
     [Serializable]
     [XmlRoot("Contact")]
-    public class Contact : IComparable<Contact>, INotifyPropertyChanged
+    public class Contact : BaseObject, IComparable<Contact>, INotifyPropertyChanged
     {
         private String displayName;
+        private String uriString;
+        private String groupName;
+
+        public Contact()
+        {
+            this.groupName = SpecialNames.SHARED_DOUBANGO;
+        }
 
         [XmlElement("display-name")]
         public string DisplayName
@@ -41,6 +49,28 @@ namespace BogheCore.Model
             {
                 this.displayName = value;
                 this.OnPropertyChanged("DisplayName");
+            }
+        }        
+
+        [XmlElement("uri")]
+        public string UriString
+        {
+            get { return this.uriString; }
+            set
+            {
+                this.uriString = value;
+                this.OnPropertyChanged("UriString");
+            }
+        }
+
+        [XmlElement("group-name")]
+        public string GroupName
+        {
+            get { return this.groupName; }
+            set
+            {
+                this.groupName = value;
+                this.OnPropertyChanged("GroupName");
             }
         }
 

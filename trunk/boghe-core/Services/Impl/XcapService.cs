@@ -37,17 +37,22 @@ namespace BogheCore.Services.Impl
         private readonly MyXcapCallback callback;
         private readonly IDictionary<String, String> documentsUris;
 
-        private readonly IConfigurationService configurationService;
-        private readonly ISipService sipService;
+        private IConfigurationService configurationService;
+        private ISipService sipService;
+        private IContactService contactService;
+        private readonly ServiceManager manager;
 
         private MyXcapStack xcapStack;
         private XcapSelector xcapSelector;
         private bool prepared;
         private State currentState;
 
-        private bool haveOMADirectory;
-        private bool haveResourceLists;
-        private bool haveRLS;
+        private bool hasOMADirectory;
+        private bool hasResourceLists;
+        private bool hasRLS;
+        private bool hasPresRules;
+        private bool hasOMAPresRules;
+        private bool hasOMAPresenceContent;
 
         public enum State
         {
@@ -55,6 +60,7 @@ namespace BogheCore.Services.Impl
             GET_XCAP_CAPS,
             GET_OMA_DIRECTORY,
             GET_RESOURCE_LISTS,
+            PUT_RESOURCE_LISTS,
             GET_RLS
         }
 
@@ -63,16 +69,28 @@ namespace BogheCore.Services.Impl
             this.callback = new MyXcapCallback(this);
             this.documentsUris = new Dictionary<String, String>();
 
-            this.currentState = State.NONE;
+            this.manager = manager;
+            this.CurrentState = State.NONE;        
+        }
 
-            this.configurationService = manager.ConfigurationService;
-            this.sipService = manager.SipService;
+        private State CurrentState
+        {
+            get { return this.currentState; }
+            set
+            {
+                LOG.Debug(String.Format("XCAP Current State={0}", value));
+                this.currentState = value;
+            }
         }
 
         #region IService
 
         public bool Start()
         {
+            this.configurationService = this.manager.ConfigurationService;
+            this.sipService = this.manager.SipService;
+            this.contactService = this.manager.ContactService;
+
             return true;
         }
 
@@ -93,7 +111,7 @@ namespace BogheCore.Services.Impl
                 return;
             }
 
-            this.currentState = State.GET_XCAP_CAPS;
+            this.CurrentState = State.GET_XCAP_CAPS;
 
             lock (this.xcapSelector)
             {

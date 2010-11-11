@@ -10,7 +10,27 @@ namespace BogheApp
 {
     partial class MainWindow
     {
-        public void sipService_onRegistrationEvent(object sender, RegistrationEventArgs e)
+        private void sipService_onStackEvent(object sender, StackEventArgs e)
+        {
+            if (this.Dispatcher.Thread != Thread.CurrentThread)
+            {
+                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                        new EventHandler<StackEventArgs>(this.sipService_onStackEvent), sender, new object[] { e });
+                return;
+            }
+
+            switch (e.Type)
+            {
+                case StackEventTypes.START_OK:
+                case StackEventTypes.START_NOK:
+                case StackEventTypes.STOP_NOK:
+                case StackEventTypes.STOP_OK:
+                    this.screenService.SetProgressInfo(e.Phrase);
+                    break;
+            }
+        }
+
+        private void sipService_onRegistrationEvent(object sender, RegistrationEventArgs e)
         {
             if (this.Dispatcher.Thread != Thread.CurrentThread)
             {

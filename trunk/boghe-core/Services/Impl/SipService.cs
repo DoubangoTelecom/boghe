@@ -34,7 +34,8 @@ namespace BogheCore.Services.Impl
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(SipService));
 
-        private readonly IConfigurationService configurationService;
+        private IConfigurationService configurationService;
+        private readonly ServiceManager manager;
 
         private readonly Preferences preferences;
         private MySipStack sipStack;
@@ -54,13 +55,15 @@ namespace BogheCore.Services.Impl
             this.sipCallback = new MySipCallback(this);
             this.debugCallback = new MySipDebugCallback();
 
-            this.configurationService = serviceManager.ConfigurationService;
+            this.manager = serviceManager;
         }
 
         #region IService
 
         public bool Start()
         {
+            this.configurationService = this.manager.ConfigurationService;
+
             return true;
         }
 
@@ -309,6 +312,7 @@ namespace BogheCore.Services.Impl
         }
 
         public event EventHandler<RegistrationEventArgs> onRegistrationEvent;
+        public event EventHandler<StackEventArgs> onStackEvent;
 
         #endregion
     }

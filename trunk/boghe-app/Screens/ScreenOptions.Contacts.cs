@@ -20,7 +20,7 @@ namespace BogheApp.Screens
 
         private bool UpdateContacts()
         {
-            this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.ENABLED, this.radioButtonContactsRemote.IsChecked.HasValue ? this.radioButtonContactsRemote.IsChecked.HasValue : Configuration.DEFAULT_XCAP_ENABLED);
+            this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.ENABLED, this.radioButtonContactsRemote.IsChecked.HasValue ? this.radioButtonContactsRemote.IsChecked.Value : Configuration.DEFAULT_XCAP_ENABLED);
             this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.XCAP_ROOT, this.textBoxXcapRoot.Text);
             this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.USERNAME, this.textBoxXUI.Text);
             this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.PASSWORD, this.passwordBoxXUI.Password);

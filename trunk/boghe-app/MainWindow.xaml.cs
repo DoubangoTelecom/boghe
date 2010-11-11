@@ -39,6 +39,7 @@ using BogheCore.Services;
 /*
  * XAML Namespaces and Namespace Mapping for WPF XAML: http://msdn.microsoft.com/en-us/library/ms747086.aspx
  * Data Binding: http://msdn.microsoft.com/en-us/library/ms752347.aspx
+ * Group Items: http://msdn.microsoft.com/en-us/library/ms754027.aspx
  * */
 
 namespace BogheApp
@@ -53,13 +54,7 @@ namespace BogheApp
 
         public MainWindow()
         {
-            InitializeComponent();
-
-            if (!Win32ServiceManager.SharedManager.Start())
-            {
-                MessageBox.Show("Failed to start service manager");
-                App.Current.Shutdown();
-            }
+            InitializeComponent();            
 
             // Initialize Screen Service
             this.screenService = Win32ServiceManager.SharedManager.ScreenService;
@@ -68,14 +63,16 @@ namespace BogheApp
             
             // Initialize SIP Service
             this.sipService = Win32ServiceManager.SharedManager.SipService;
+            this.sipService.onStackEvent += this.sipService_onStackEvent;
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
+            
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
             
             // Show Authentication Screen
-            //this.screenService.Show(ScreenType.Contacts);
-            this.screenService.Show(ScreenType.Authentication);
+            this.screenService.Show(ScreenType.Contacts);
+            //this.screenService.Show(ScreenType.Authentication);
         }
 
         private void CloseTab(object source, RoutedEventArgs args)

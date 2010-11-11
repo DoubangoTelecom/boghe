@@ -22,22 +22,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Model;
-using System.Collections.ObjectModel;
-using BogheCore.Events;
+using System.Xml.Serialization;
 
-
-namespace BogheCore.Services
+namespace BogheXdm
 {
-    public interface IContactService : IService
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlRoot(Namespace = "urn:doubango:params:xml:ns:properties")]
+    public partial class DoubangoProperty
     {
-        void Download();
+        private String nameField;
+        private String valueField;
 
-        MyObservableCollection<Contact> Contacts { get; }
-        MyObservableCollection<Group> Groups { get; }
+        public const String PROP_DISPLAY_NAME = "display-name";
+        public const String PROP_FIRST_NAME = "first-name";
 
-        void UpdateGroupsAndContacts(List<Group> freshGroups, List<Contact> freshContacts);
+        [XmlAttributeAttribute()]
+        public String name
+        {
+            get { return this.nameField; }
+            set { this.nameField = value; }
+        }
 
-        event EventHandler<ContactEventArgs> onContactEvent;
+        [XmlAttributeAttribute()]
+        public String value
+        {
+            get { return this.valueField; }
+            set { this.valueField = value; }
+        }
     }
 }
