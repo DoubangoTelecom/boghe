@@ -16,28 +16,35 @@
 * You should have received a copy of the GNU General Public License along 
 * with this program; if not, write to the Free Software Foundation, Inc., 
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*
 */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Model;
-using System.Collections.ObjectModel;
 using BogheCore.Events;
 
-
-namespace BogheCore.Services
+namespace BogheCore.Sip.Events
 {
-    public interface IContactService : IService
+    public class StackEventArgs : MyEventArgs
     {
-        void Download();
+        private readonly StackEventTypes type;
+        private readonly String phrase;
 
-        MyObservableCollection<Contact> Contacts { get; }
-        MyObservableCollection<Group> Groups { get; }
+        public StackEventArgs(StackEventTypes type, String phrase)
+            :base()
+        {
+            this.type = type;
+            this.phrase = phrase;
+        }
 
-        void UpdateGroupsAndContacts(List<Group> freshGroups, List<Contact> freshContacts);
+        public StackEventTypes Type
+        {
+            get { return this.type; }
+        }
 
-        event EventHandler<ContactEventArgs> onContactEvent;
+        public String Phrase
+        {
+            get { return this.phrase; }
+        }
     }
 }

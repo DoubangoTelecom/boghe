@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BogheCore.Model
 {
-    public class Configuration
+    public class Configuration : BaseObject
     {
         public enum ConfFolder
         {

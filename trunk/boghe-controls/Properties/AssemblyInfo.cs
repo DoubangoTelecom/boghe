@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("boghe-controls")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Boghe - Custom controls")]
+[assembly: AssemblyDescription("Boghe - Custom controls")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Doubango")]
 [assembly: AssemblyProduct("boghe-controls")]
-[assembly: AssemblyCopyright("Copyright ©  2010")]
+[assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

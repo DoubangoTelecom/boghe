@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,11 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\ConfigurationEventArgs.cs" />
+    <Compile Include="Events\ContactEventArgs.cs" />
+    <Compile Include="Events\ContactEventTypes.cs" />
     <Compile Include="Events\EventHandlerTrigger.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
+    <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\Group.cs" />
+    <Compile Include="MyObservableCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\IContactService.cs" />
@@ -79,7 +83,12 @@
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.cs" />
-    <Compile Include="Services\Impl\XcapService.Serializer.cs" />
+    <Compile Include="Services\Impl\XcapService.ResourceLists.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.Serializer.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\INetworkService.cs" />
     <Compile Include="Services\IScreenService.cs" />
     <Compile Include="Services\IService.cs" />
@@ -89,6 +98,8 @@
     <Compile Include="Services\IXcapService.cs" />
     <Compile Include="Sip\Events\RegistrationEventArgs.cs" />
     <Compile Include="Sip\Events\RegistrationEventTypes.cs" />
+    <Compile Include="Sip\Events\StackEventArgs.cs" />
+    <Compile Include="Sip\Events\StackEventTypes.cs" />
     <Compile Include="Sip\MyAVSession.cs" />
     <Compile Include="Sip\MyInviteSession.cs" />
     <Compile Include="Sip\MyPublicationSession.cs" />

@@ -18,26 +18,37 @@
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+using System.Windows;
 using BogheCore.Model;
-using System.Collections.ObjectModel;
-using BogheCore.Events;
 
-
-namespace BogheCore.Services
+namespace BogheApp.Items
 {
-    public interface IContactService : IService
+    internal class DataTemplateSelectorContacts : DataTemplateSelector
     {
-        void Download();
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+            DataTemplate template = null;
+            FrameworkElement element = container as FrameworkElement;
 
-        MyObservableCollection<Contact> Contacts { get; }
-        MyObservableCollection<Group> Groups { get; }
+            if (element != null && item != null)
+            {
+                if (item is Contact)
+                {
+                    template = element.FindResource("DataTemplateContact") as DataTemplate;
+                }
+                else if (item is Group)
+                {
+                    template = element.FindResource("DataTemplateGroup") as DataTemplate;
+                }
+            }
 
-        void UpdateGroupsAndContacts(List<Group> freshGroups, List<Contact> freshContacts);
-
-        event EventHandler<ContactEventArgs> onContactEvent;
+            return template;
+        }
     }
 }

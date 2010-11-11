@@ -33,42 +33,45 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BogheControls;
 using BogheCore.Model;
-using System.Collections.ObjectModel;
-using BogheApp.Items;
-using BogheCore.Services;
-using BogheApp.Services.Impl;
 
-namespace BogheApp.Screens
+namespace BogheApp.Items
 {
     /// <summary>
-    /// Interaction logic for ScreenContacts.xaml
+    /// Interaction logic for ItemGroup.xaml
     /// </summary>
-    public partial class ScreenContacts : BaseScreen
+    public partial class ItemGroup : BaseItem<Group>
     {
-        private readonly IContactService contactService;
-        
-
-        public ScreenContacts()
+        public ItemGroup()
         {
             InitializeComponent();
 
-            this.contactService = Win32ServiceManager.SharedManager.ContactService;
+            this.ValueLoaded += ItemGroup_ValueLoaded;
+        }
 
-            
-
-            this.listBox.ItemTemplateSelector = new DataTemplateSelectorContacts();
-
-            ObservableCollection<BaseObject> contacts = new ObservableCollection<BaseObject>();
-            for (int i = 0; i < 10; i++)
+        private void ItemGroup_ValueLoaded(object sender, EventArgs e)
+        {
+            Group group = this.Value;
+            if (group == null)
             {
-                Group g = new Group("g"+i.ToString(), "g"+i.ToString());
-                contacts.Add(g);
-
-                Contact c = new Contact();
-                c.DisplayName = "c" + i.ToString();
-                contacts.Add(c);
+                return;
             }
-            this.listBox.ItemsSource = contacts;
+
+            if (group.Name.Equals("g1"))
+            {
+                this.Height = 200;
+                for (int i = 0; i < 10; i++)
+                {
+                    this.listBox.Items.Add(i.ToString());
+                }
+            }
+
+            this.labelDisplayName.Content = group.DisplayName;
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            this.listBox.Visibility = Visibility.Collapsed;
+            this.Height = 30;
         }
     }
 }

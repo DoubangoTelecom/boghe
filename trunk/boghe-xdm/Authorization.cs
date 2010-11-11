@@ -22,22 +22,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Model;
-using System.Collections.ObjectModel;
-using BogheCore.Events;
 
-
-namespace BogheCore.Services
+namespace BogheXdm
 {
-    public interface IContactService : IService
+    [Flags]
+    public enum Authorization
     {
-        void Download();
+        None = 0x01<<0,
+        UnKnown = 0x01<<1,
+        Allowed = 0x01 << 2,
+        Pending = 0x001 << 3,
+        PoliteBlocked = 0x01 << 4,
+        Blocked = 0x01 << 5,
+        Revoked = 0x01 << 6,
 
-        MyObservableCollection<Contact> Contacts { get; }
-        MyObservableCollection<Group> Groups { get; }
-
-        void UpdateGroupsAndContacts(List<Group> freshGroups, List<Contact> freshContacts);
-
-        event EventHandler<ContactEventArgs> onContactEvent;
+        All = 0xFF
     }
 }

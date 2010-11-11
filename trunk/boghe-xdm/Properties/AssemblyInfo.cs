@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("boghe-xdm")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Boghe - XDM Functions")]
+[assembly: AssemblyDescription("Boghe - XDM Functions")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Doubango")]
 [assembly: AssemblyProduct("boghe-xdm")]
-[assembly: AssemblyCopyright("Copyright ©  2010")]
+[assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

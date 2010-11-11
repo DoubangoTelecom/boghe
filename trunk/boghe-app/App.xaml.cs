@@ -24,6 +24,8 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using BogheCore.Services.Impl;
+using BogheApp.Services.Impl;
 
 namespace BogheApp
 {
@@ -32,5 +34,19 @@ namespace BogheApp
     /// </summary>
     public partial class App : Application
     {
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            if (!Win32ServiceManager.SharedManager.Start())
+            {
+                MessageBox.Show("Failed to start service manager");
+                this.Shutdown();
+            }
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            Win32ServiceManager.SharedManager.Stop();
+        }
     }
 }

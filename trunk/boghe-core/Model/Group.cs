@@ -24,19 +24,28 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using BogheXdm;
 
 namespace BogheCore.Model
 {
     [Serializable]
     [XmlRoot("Group")]
-    public class Group : IComparable<Group>, INotifyPropertyChanged
+    public class Group : BaseObject, IComparable<Group>, INotifyPropertyChanged
     {
         private String name;
+        private String displayName;
+        private Authorization authorization;
 
         public Group()
+            :this(String.Format("Doubango_{0}", Guid.NewGuid()), "Unknown")
         {
-            // Default unique Group name
-            this.name = String.Format("Doubango_{0}", Guid.NewGuid());
+        }
+
+        public Group(String name, String displayName)
+        {
+            this.Name = name;
+            this.DisplayName = displayName;
+            this.Authorization = Authorization.Allowed;
         }
 
         [XmlAttribute("name")]
@@ -50,6 +59,31 @@ namespace BogheCore.Model
                     this.name = value;
                     this.OnPropertyChanged("Name");
                 }
+            }
+        }
+
+        [XmlAttribute("DisplayName")]
+        public String DisplayName
+        {
+            get { return this.displayName; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    this.displayName = value;
+                    this.OnPropertyChanged("DisplayName");
+                }
+            }
+        }
+
+        [XmlAttribute("Authorization")]
+        public Authorization Authorization
+        {
+            get { return this.authorization; }
+            set
+            {
+                this.authorization = value;
+                this.OnPropertyChanged("Authorization");
             }
         }
 

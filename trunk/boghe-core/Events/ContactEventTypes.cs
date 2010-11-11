@@ -22,22 +22,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Model;
-using System.Collections.ObjectModel;
-using BogheCore.Events;
 
-
-namespace BogheCore.Services
+namespace BogheCore.Events
 {
-    public interface IContactService : IService
+    public enum ContactEventTypes
     {
-        void Download();
-
-        MyObservableCollection<Contact> Contacts { get; }
-        MyObservableCollection<Group> Groups { get; }
-
-        void UpdateGroupsAndContacts(List<Group> freshGroups, List<Contact> freshContacts);
-
-        event EventHandler<ContactEventArgs> onContactEvent;
+        GROUPS_DOWNLOADED,
+        CONTACTS_DOWNLOADED
     }
 }
