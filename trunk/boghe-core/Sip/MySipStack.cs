@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -46,6 +46,13 @@ namespace BogheCore.Sip
 		    this.addHeader("User-Agent", String.Format("IM-client/OMA1.0 Boghe/v{0} (doubango r{1})", 
 				    "1.0.0", "500"));
 
+        }
+
+        public override void Dispose()
+        {
+            // To avoid usage from other external stacks (e.g. HTTP)
+            this.setDebugCallback(null);
+            //base.Dispose();
         }
 
         public STACK_STATE State

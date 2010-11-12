@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -25,11 +25,14 @@ using System.Text;
 using BogheXdm.Generated.resource_lists;
 using BogheCore.Model;
 using BogheXdm;
+using System.Threading;
 
 namespace BogheCore.Services.Impl
 {
     partial class XcapService
     {
+        private delegate void UpdateGroupsAndContactsDelegate(List<Group> freshGroups, List<Contact> freshContacts);
+
         private bool FromResouceListToContacts(resourcelists rlist)
         {
             List<Group> freshGroups = new List<Group>();
@@ -71,11 +74,15 @@ namespace BogheCore.Services.Impl
                     }
                 }
             }
-
-            this.contactService.UpdateGroupsAndContacts(freshGroups, freshContacts);
+            
+            // Update contacts/groups on the UI thread as CollectionView does not support changes from a thread different from the Dispatcher thread
+            new Thread(new ThreadStart(delegate(){
+                    this.manager.Dispatcher.Invoke(new UpdateGroupsAndContactsDelegate(this.contactService.UpdateGroupsAndContacts),
+                        new object[] { freshGroups, freshContacts });
+                })).Start();
             
             return true;
-        }
+        }        
 
         private bool handleResourceListsEvent(short code, byte[] content)
         {

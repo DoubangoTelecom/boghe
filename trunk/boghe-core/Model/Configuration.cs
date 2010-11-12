@@ -57,7 +57,8 @@ namespace BogheCore.Model
         public static bool DEFAULT_RCS_MWI = false;
         public static bool DEFAULT_RCS_OMAFDR = false;
         public static bool DEFAULT_RCS_PARTIAL_PUB = false;
-        public static bool DEFAULT_RCS_PRESENCE = false;
+        public static bool DEFAULT_RCS_PRESENCE_SUB = false;
+        public static bool DEFAULT_RCS_PRESENCE_PUB = false;
         public static bool DEFAULT_RCS_RLS = true;
         public static String DEFAULT_RCS_SMSC = "sip:+331000000000@open-ims.test";
         //public static PresenceStatus DEFAULT_RCS_STATUS = PresenceStatus.Online;
@@ -108,7 +109,7 @@ namespace BogheCore.Model
             PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, REFRESHER, SIP_CALLS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
 
             /* === RCS (GSMA Rich Communication Suite) === */
-            AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE, RLS, SMSC, STATUS,
+            AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
 
             /* === SECURITY === */
             TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, IMSAKA_AMF, IMSAKA_OPID,

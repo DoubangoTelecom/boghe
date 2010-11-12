@@ -60,9 +60,149 @@ namespace BogheApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap icon_16 {
+            get {
+                object obj = ResourceManager.GetObject("icon_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_error_16 {
+            get {
+                object obj = ResourceManager.GetObject("lock_error_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_error_24 {
+            get {
+                object obj = ResourceManager.GetObject("lock_error_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_error_32 {
+            get {
+                object obj = ResourceManager.GetObject("lock_error_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_ok_16 {
+            get {
+                object obj = ResourceManager.GetObject("lock_ok_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_ok_24 {
+            get {
+                object obj = ResourceManager.GetObject("lock_ok_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_ok_32 {
+            get {
+                object obj = ResourceManager.GetObject("lock_ok_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_warning_16 {
+            get {
+                object obj = ResourceManager.GetObject("lock_warning_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_warning_24 {
+            get {
+                object obj = ResourceManager.GetObject("lock_warning_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap lock_warning_32 {
+            get {
+                object obj = ResourceManager.GetObject("lock_warning_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static byte[] log4net_xml {
+            get {
+                object obj = ResourceManager.GetObject("log4net_xml", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap signin_16 {
             get {
                 object obj = ResourceManager.GetObject("signin_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap signin_161 {
+            get {
+                object obj = ResourceManager.GetObject("signin_161", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap signout_16 {
+            get {
+                object obj = ResourceManager.GetObject("signout_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_16 {
+            get {
+                object obj = ResourceManager.GetObject("user_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_back16 {
+            get {
+                object obj = ResourceManager.GetObject("user_back16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_busy_16 {
+            get {
+                object obj = ResourceManager.GetObject("user_busy_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_hyper_avail_16 {
+            get {
+                object obj = ResourceManager.GetObject("user_hyper_avail_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_offline_16 {
+            get {
+                object obj = ResourceManager.GetObject("user_offline_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_onthephone_16 {
+            get {
+                object obj = ResourceManager.GetObject("user_onthephone_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap user_time_16 {
+            get {
+                object obj = ResourceManager.GetObject("user_time_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

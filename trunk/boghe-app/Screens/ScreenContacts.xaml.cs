@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -37,6 +37,7 @@ using System.Collections.ObjectModel;
 using BogheApp.Items;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
+using BogheCore;
 
 namespace BogheApp.Screens
 {
@@ -46,29 +47,30 @@ namespace BogheApp.Screens
     public partial class ScreenContacts : BaseScreen
     {
         private readonly IContactService contactService;
-        
+        private readonly MyObservableCollection<BaseObject> contacts;
 
-        public ScreenContacts()
+        public ScreenContacts():base()
         {
             InitializeComponent();
 
+            this.contacts = new MyObservableCollection<BaseObject>();
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
 
-            
-
             this.listBox.ItemTemplateSelector = new DataTemplateSelectorContacts();
+            this.listBox.ItemsSource = this.contacts;
 
-            ObservableCollection<BaseObject> contacts = new ObservableCollection<BaseObject>();
-            for (int i = 0; i < 10; i++)
+            this.contactService.onContactEvent += this.contactService_onContactEvent;
+
+            /*for (int i = 0; i < 10; i++)
             {
-                Group g = new Group("g"+i.ToString(), "g"+i.ToString());
+                Group g = new Group("All Contacts" + i.ToString(), "All Contacts" + i.ToString());
                 contacts.Add(g);
 
                 Contact c = new Contact();
                 c.DisplayName = "c" + i.ToString();
                 contacts.Add(c);
-            }
-            this.listBox.ItemsSource = contacts;
-        }
+            }*/
+            
+        }        
     }
 }

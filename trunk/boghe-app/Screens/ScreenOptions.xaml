@@ -125,6 +125,16 @@
             <TabItem Header="Presence" Height="45" Name="tabItemPresence" Margin="1" >
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelPresenceTitle" VerticalAlignment="Top" FontWeight="Bold">Presence</Label>
+                    <GroupBox Header="Subscription" Height="100" Margin="7,48,6,0" Name="groupBoxPresenceSubscribtion" VerticalAlignment="Top">
+                        <Grid>
+                            <CheckBox Height="16" Margin="5,8,6,0" Name="checkBoxPresenceSubscribe" VerticalAlignment="Top">Enable Subscription</CheckBox>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Publication" Margin="7,167,6,0" Name="groupBoxPresencePublication" Height="145" VerticalAlignment="Top">
+                        <Grid>
+                            <CheckBox Height="16" Margin="5,8,6,0" Name="checkBoxPresencePublish" VerticalAlignment="Top">Enable Publication</CheckBox>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Codecs" Height="45" Name="tabItemCodecs" Margin="1" >

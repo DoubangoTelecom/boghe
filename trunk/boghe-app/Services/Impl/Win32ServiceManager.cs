@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -24,11 +24,14 @@ using System.Linq;
 using System.Text;
 using BogheCore.Services.Impl;
 using BogheCore.Services;
+using log4net;
 
 namespace BogheApp.Services.Impl
 {
     class Win32ServiceManager : ServiceManager
     {
+        private static ILog LOG = LogManager.GetLogger(typeof(Win32ServiceManager));
+
         private static Win32ServiceManager singleton = null;
 
         private IWin32ScreenService screenService;
@@ -61,6 +64,8 @@ namespace BogheApp.Services.Impl
         {
             bool ret = true;
 
+            LOG.Debug("Start Service Manager");
+
             // Log service should be the first to start
 
             ret &= this.LogService.Start();
@@ -81,6 +86,8 @@ namespace BogheApp.Services.Impl
         public bool Stop()
         {
             bool ret = true;
+
+            LOG.Debug("Stop Service Manager");
 
             // Log service should be last to stop
 
@@ -173,6 +180,15 @@ namespace BogheApp.Services.Impl
                     this.xcapService = new XcapService(this);
                 }
                 return this.xcapService;
+            }
+        }
+
+
+        public override System.Windows.Threading.Dispatcher Dispatcher
+        {
+            get
+            {
+                return App.Current.Dispatcher;
             }
         }
 

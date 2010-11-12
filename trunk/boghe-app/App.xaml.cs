@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -26,6 +26,9 @@ using System.Linq;
 using System.Windows;
 using BogheCore.Services.Impl;
 using BogheApp.Services.Impl;
+using System.IO;
+using log4net.Config;
+using log4net;
 
 namespace BogheApp
 {
@@ -34,9 +37,30 @@ namespace BogheApp
     /// </summary>
     public partial class App : Application
     {
+        private static ILog LOG;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            // Initialize log4net
+            try
+            {
+                using (Stream stream = new MemoryStream(BogheApp.Properties.Resources.log4net_xml))
+                {
+                    XmlConfigurator.Configure(stream);
+                    LOG = LogManager.GetLogger(typeof(App));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                this.Shutdown();
+            }
+
+            LOG.Debug("====================================================");
+            LOG.Debug("======Starting Boghe - IMS/RC Client v1.0.0 r501====");
+            LOG.Debug("====================================================");
+
+
             if (!Win32ServiceManager.SharedManager.Start())
             {
                 MessageBox.Show("Failed to start service manager");

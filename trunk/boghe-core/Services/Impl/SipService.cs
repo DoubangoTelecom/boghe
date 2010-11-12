@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -35,6 +35,7 @@ namespace BogheCore.Services.Impl
         private static readonly ILog LOG = LogManager.GetLogger(typeof(SipService));
 
         private IConfigurationService configurationService;
+        private IXcapService xcapService;
         private readonly ServiceManager manager;
 
         private readonly Preferences preferences;
@@ -43,11 +44,14 @@ namespace BogheCore.Services.Impl
         private readonly MySipDebugCallback debugCallback;
 
         private MyRegistrationSession regSession;
-        //private MySubscriptionSession subReg;
-        //private MySubscriptionSession subWinfo;
-        //private MySubscriptionSession subMwi;
+        private MySubscriptionSession subRLS;
+        private MySubscriptionSession subReg;
+        private MySubscriptionSession subWinfo;
+        private MySubscriptionSession subMwi;
         //private MySubscriptionSession subDebug;
         //private MyPublicationSession pubPres;
+
+        private String defaultIdentity;
 
         public SipService(ServiceManager serviceManager)
         {
@@ -63,22 +67,36 @@ namespace BogheCore.Services.Impl
         public bool Start()
         {
             this.configurationService = this.manager.ConfigurationService;
+            this.xcapService = this.manager.XcapService;
+
+            this.xcapService.onXcapEvent += this.xcapService_onXcapEvent;
 
             return true;
         }
 
         public bool Stop()
         {
+            bool ret = true;
+
             if (this.sipStack != null && this.sipStack.State == MySipStack.STACK_STATE.STARTED)
             {
-                this.sipStack.stop();
+                ret = this.sipStack.stop();
             }
-            return true;
+
+            this.xcapService.onXcapEvent -= this.xcapService_onXcapEvent;
+
+            return ret;
         }
 
         #endregion
 
         #region ISipService
+
+        public String DefaultIdentity 
+        {
+            get { return this.defaultIdentity; }
+            set { this.defaultIdentity = value; }
+        }
 
         public MySipStack SipStack
         {
@@ -264,9 +282,12 @@ namespace BogheCore.Services.Impl
             this.preferences.xcap_enabled = this.configurationService.Get(
                     Configuration.ConfFolder.XCAP, Configuration.ConfEntry.ENABLED,
                     Configuration.DEFAULT_XCAP_ENABLED);
-            this.preferences.presence_enabled = this.configurationService.Get(
-                    Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE,
-                    Configuration.DEFAULT_RCS_PRESENCE);
+            this.preferences.presence_sub = this.configurationService.Get(
+                    Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_SUB,
+                    Configuration.DEFAULT_RCS_PRESENCE_SUB);
+            this.preferences.presence_pub = this.configurationService.Get(
+                    Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_PUB,
+                    Configuration.DEFAULT_RCS_PRESENCE_PUB);
             this.preferences.mwi = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.MWI,
                     Configuration.DEFAULT_RCS_MWI);
@@ -292,6 +313,9 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
+            // Update default identity to the current IMPU
+            this.defaultIdentity = this.preferences.impu;
+
             return true;
         }
 
@@ -315,5 +339,35 @@ namespace BogheCore.Services.Impl
         public event EventHandler<StackEventArgs> onStackEvent;
 
         #endregion
+
+
+        private void DoPostRegistrationOp()
+        {
+            LOG.Debug("Post Registration Operations");
+
+            // Guard
+            if (!this.IsRegistered)
+            {
+                return;
+            }
+
+            // Subscribe to 'reg' event package
+            this.SubscribeToRegInfo();
+
+            // Subscription to RLS presence will be done when 'RLS_DONE' event is raised
+            // ...
+
+            // Subscribe to message waiting indication
+            if (this.preferences.mwi)
+            {
+                this.SubscribeToWinfo();
+            }
+
+            // Publish presence
+            if (this.preferences.presence_pub)
+            {
+                this.PublishPresence();
+            }
+        }
     }
 }

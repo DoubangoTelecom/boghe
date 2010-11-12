@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -85,6 +85,15 @@ namespace BogheCore.Model
                 this.authorization = value;
                 this.OnPropertyChanged("Authorization");
             }
+        }
+
+        public override string ToString()
+        {
+            if (!String.IsNullOrEmpty(this.DisplayName))
+            {
+                return this.DisplayName;
+            }
+            return this.Name;
         }
 
         #region IComparable

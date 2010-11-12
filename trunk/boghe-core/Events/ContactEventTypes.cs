@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -27,7 +27,6 @@ namespace BogheCore.Events
 {
     public enum ContactEventTypes
     {
-        GROUPS_DOWNLOADED,
-        CONTACTS_DOWNLOADED
+        RESET,
     }
 }

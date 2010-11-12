@@ -169,6 +169,15 @@
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\ScreenContactEdit.Screen.cs">
+      <DependentUpon>ScreenContactEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenContactEdit.xaml.cs">
+      <DependentUpon>ScreenContactEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenContacts.Contacts.cs">
+      <DependentUpon>ScreenContacts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\ScreenContacts.Screen.cs">
       <DependentUpon>ScreenContacts.xaml</DependentUpon>
     </Compile>
@@ -202,6 +211,9 @@
     <Compile Include="Screens\ScreenOptions.Network.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\ScreenOptions.Presence.cs">
+      <DependentUpon>ScreenOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\ScreenOptions.QoSQoE.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
@@ -214,6 +226,10 @@
     <Compile Include="Screens\ScreenOptions.Security.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
+    <Page Include="Screens\ScreenContactEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\ScreenContacts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,6 +249,36 @@
   <ItemGroup>
     <Resource Include="embedded\16\signout_16.png" />
     <Resource Include="embedded\16\signin_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\lock_error_32.png" />
+    <Resource Include="embedded\32\lock_ok_32.png" />
+    <Resource Include="embedded\32\lock_warning_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\lock_error_24.png" />
+    <Resource Include="embedded\24\lock_ok_24.png" />
+    <Resource Include="embedded\24\lock_warning_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\48\avatar_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\user_16.png" />
+    <Resource Include="embedded\16\user_back16.png" />
+    <Resource Include="embedded\16\user_busy_16.png" />
+    <Resource Include="embedded\16\user_hyper_avail_16.png" />
+    <Resource Include="embedded\16\user_offline_16.png" />
+    <Resource Include="embedded\16\user_onthephone_16.png" />
+    <Resource Include="embedded\16\user_time_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="embedded\log4net.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\lock_error_16.png" />
+    <Resource Include="embedded\16\lock_ok_16.png" />
+    <Resource Include="embedded\16\lock_warning_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

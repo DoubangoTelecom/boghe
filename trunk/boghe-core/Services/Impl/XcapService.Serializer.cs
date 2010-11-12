@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -32,7 +32,7 @@ namespace BogheCore.Services.Impl
     {
         private Object Deserialize(byte[] content, Type type)
         {
-            Object obj = null;
+            Object result = null;
 
             XmlReaderSettings settings = new XmlReaderSettings();
 
@@ -43,7 +43,7 @@ namespace BogheCore.Services.Impl
                     XmlSerializer xmlSerializer = new XmlSerializer(type);
                     try
                     {
-                        obj = xmlSerializer.Deserialize(reader);
+                        result = xmlSerializer.Deserialize(reader);
                     }
                     catch (Exception e)
                     {
@@ -52,7 +52,64 @@ namespace BogheCore.Services.Impl
                 }
             }
 
-            return obj;
+            return result;
+        }
+
+        private byte[] Serialize(Object content, bool withoutHeader, bool withoutXsn, XmlSerializerNamespaces namespaceSerializer)
+        {
+            byte[] xmlResult;
+
+            try
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    XmlWriterSettings xmlSettings = new XmlWriterSettings();
+                    xmlSettings.Encoding = new UTF8Encoding(false);
+                    xmlSettings.OmitXmlDeclaration = withoutHeader;
+                    xmlSettings.Indent = true;
+
+                    using (XmlWriter xmlWriter = XmlWriter.Create(stream, xmlSettings))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(content.GetType());
+                        if (namespaceSerializer != null)
+                        {
+                            serializer.Serialize(xmlWriter, content, namespaceSerializer);
+                        }
+                        else
+                        {
+                            serializer.Serialize(xmlWriter, content);
+                        }
+                    }
+
+                    xmlResult = stream.ToArray();
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.Error("Serialization failed", e);
+                xmlResult = new byte[0];
+            }
+            return xmlResult;
+        }
+
+        public byte[] Serialize(Object content)
+        {
+            return this.Serialize(content, false, false);
+        }
+
+        public byte[] Serialize(Object content, XmlSerializerNamespaces namespaceSerializer)
+        {
+            return this.Serialize(content, false, false, namespaceSerializer);
+        }
+
+        public byte[] Serialize(Object content, bool withoutHeader, XmlSerializerNamespaces namespaceSerializer)
+        {
+            return this.Serialize(content, withoutHeader, false, namespaceSerializer);
+        }
+
+        public byte[] Serialize(Object content, bool withoutHeader, bool withoutXsn)
+        {
+            return this.Serialize(content, withoutHeader, withoutXsn, null);
         }
     }
 }

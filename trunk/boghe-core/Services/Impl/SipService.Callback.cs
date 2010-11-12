@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -124,7 +124,17 @@ namespace BogheCore.Services.Impl
                     if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
                     {
                         this.sipService.regSession.IsConnected = true;
-                        // To PostRegistration() in new thread
+                        // Update default identity (vs barred)
+                        String _defaultIdentity = this.sipService.SipStack.getPreferredIdentity();
+                        if (!String.IsNullOrEmpty(_defaultIdentity))
+                        {
+                            this.sipService.defaultIdentity = _defaultIdentity;
+                        }
+                        // To PostRegistrationOp() in new thread to avoid blocking callbacks
+                        new Thread(new ThreadStart(delegate
+                        {
+                            this.sipService.DoPostRegistrationOp();
+                        })).Start();
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService, 
                             new RegistrationEventArgs(RegistrationEventTypes.REGISTRATION_OK, code, phrase));
                     }
@@ -140,8 +150,11 @@ namespace BogheCore.Services.Impl
                 else if (code == tinyWRAP.tsip_event_code_dialog_terminating)
                 {
                     // Registration
-                    EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService, 
-                        new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_INPROGRESS, code, phrase));
+                    if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
+                    {
+                        EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
+                            new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_INPROGRESS, code, phrase));
+                    }
 
 
                     // Audio/Video/MSRP
@@ -155,18 +168,21 @@ namespace BogheCore.Services.Impl
                 else if (code == tinyWRAP.tsip_event_code_dialog_terminated)
                 {
                     // Registration
-                    this.sipService.regSession.IsConnected = false;
-                    // To PostRegistration() in new thread
-                    EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
-                        new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_OK, code, phrase));
-                    /* Stop the stack (as we are already in the stack-thread, then do it in a new thread) */
-                    new Thread(new ThreadStart(delegate
+                    if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
                     {
-                        if (this.sipService.sipStack.State == MySipStack.STACK_STATE.STARTED)
+                        this.sipService.regSession.IsConnected = false;
+                        // To PostRegistration() in new thread
+                        EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
+                            new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_OK, code, phrase));
+                        /* Stop the stack (as we are already in the stack-thread, then do it in a new thread) */
+                        new Thread(new ThreadStart(delegate
                         {
-                            this.sipService.sipStack.stop();
-                        }
-                    })).Start();
+                            if (this.sipService.sipStack.State == MySipStack.STACK_STATE.STARTED)
+                            {
+                                this.sipService.sipStack.stop();
+                            }
+                        })).Start();
+                    }
 						
 
                     // Audio/Video/MSRP

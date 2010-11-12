@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -26,56 +26,19 @@ using System.Windows;
 using System.Windows.Controls;
 using BogheApp.Services.Impl;
 using BogheApp.Screens;
+using BogheCore.Model;
 
 namespace BogheApp
 {
     partial class MainWindow
     {
-        #region MenuItemHelp
-
-        private void MenuItemHelp_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = e.OriginalSource as MenuItem;
-            if (menuItem == null)
-            {
-                return;
-            }
-
-            if (menuItem == this.MenuItemHelp_About)
-            {
-                Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.About);
-            }
-        }
-
-        #endregion
-
-        #region MenuItemTools
-
-        private void MenuItemTools_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = e.OriginalSource as MenuItem;
-            if (menuItem == null)
-            {
-                return;
-            }
-
-            if (menuItem == this.MenuItemTools_Options)
-            {
-                Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.Options);
-            }
-        }
-
-        #endregion
-
         #region MenuItemFile
 
         private void MenuItemFile_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = e.OriginalSource as MenuItem;
-            if (menuItem == null)
-            {
-                return;
-            }
+            if (menuItem == null) return;
+
 
             if (menuItem == this.MenuItemFile_SignIn)
             {
@@ -88,6 +51,84 @@ namespace BogheApp
             else if (menuItem == this.MenuItemFile_Exit)
             {
                 App.Current.Shutdown();
+            }
+        }
+
+        #endregion
+
+        #region MenuItemAddressBook
+
+        private void MenuItemEAB_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = e.OriginalSource as MenuItem;
+            if (menuItem == null) return;
+
+            if (menuItem == this.MenuItemEAB_Refresh)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_Reset)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_AddContact)
+            {
+                Contact newContact = new Contact();
+                newContact.UriString = "sip:johndoe@open-ims.test";
+                newContact.DisplayName = "John Doe";
+
+                ScreenContactEdit screenEditContact = new ScreenContactEdit();
+                screenEditContact.EditMode = false;
+                screenEditContact.Contact = newContact;
+                this.screenService.Show(screenEditContact);
+            }
+            else if (menuItem == this.MenuItemEAB_EditContact)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_DeleteContact)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_AddGroup)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_EditGroup)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_DeleteGroup)
+            {
+            }
+            else if (menuItem == this.MenuItemEAB_Authorizations)
+            {
+            }
+        }
+
+        #endregion
+
+        #region MenuItemTools
+
+        private void MenuItemTools_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = e.OriginalSource as MenuItem;
+            if (menuItem == null) return;
+            
+
+            if (menuItem == this.MenuItemTools_Options)
+            {
+                Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.Options);
+            }
+        }
+
+        #endregion
+
+        #region MenuItemHelp
+
+        private void MenuItemHelp_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = e.OriginalSource as MenuItem;
+            if (menuItem == null) return;
+
+
+            if (menuItem == this.MenuItemHelp_About)
+            {
+                Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.About);
             }
         }
 
