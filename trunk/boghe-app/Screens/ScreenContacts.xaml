@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:BogheApp.Screens"
     xmlns:items="clr-namespace:BogheApp.Items"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="300" Width="300">
+     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="510" Width="367">
     
     <ctrl:BaseScreen.Resources>
         <DataTemplate x:Key="DataTemplateContact">
@@ -15,14 +15,21 @@
         </DataTemplate>
     </ctrl:BaseScreen.Resources>
     
-    <Grid>
-        
-        <ListBox Name="listBox" ItemsSource="{Binding}">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34*" />
+            <RowDefinition Height="383*" />
+            <RowDefinition Height="29*" />
+        </Grid.RowDefinitions>
+        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,3,0,5" Grid.Row="1">
             <!--ListBox.ItemTemplate>
                 <DataTemplate>
                     <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemContact>
                 </DataTemplate>
             </ListBox.ItemTemplate-->
         </ListBox>
+        <TextBox Margin="192,8,6,0" Name="textBoxFilterCriteria" Height="23" VerticalAlignment="Top" />
+        <ComboBox Margin="0,8,0,0" Name="comboBoxGroups" HorizontalAlignment="Left" Width="152" Height="23" VerticalAlignment="Top" />
+        <TextBox Margin="0,1.228,124,5.682" Name="textBoxFreeContact" Grid.Row="2" />
     </Grid>
 </ctrl:BaseScreen>

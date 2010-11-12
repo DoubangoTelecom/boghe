@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -32,7 +32,8 @@ namespace BogheCore.Services.Impl
             public bool xcap_enabled;
             //private boolean preslist;
             //private boolean deferredMsg;
-            public bool presence_enabled;
+            public bool presence_pub;
+            public bool presence_sub;
             public bool mwi;
             public String impi;
             public String impu;

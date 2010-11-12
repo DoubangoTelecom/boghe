@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -70,6 +70,12 @@ namespace BogheCore
             }
 
             this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        public List<T> FindAll(Predicate<T> matcher)
+        {
+            List<T> items = this.Items as List<T>;
+            return items.FindAll(matcher);
         }
     }
 }

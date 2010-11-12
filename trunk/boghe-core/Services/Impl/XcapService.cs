@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -27,6 +27,8 @@ using BogheCore.Sip.Events;
 using BogheCore.Model;
 using BogheCore.Xcap;
 using org.doubango.tinyWRAP;
+using BogheCore.Xcap.Events;
+using BogheXdm.Generated.resource_lists;
 
 namespace BogheCore.Services.Impl
 {
@@ -53,6 +55,9 @@ namespace BogheCore.Services.Impl
         private bool hasPresRules;
         private bool hasOMAPresRules;
         private bool hasOMAPresenceContent;
+
+        private String rlsPresUri;
+        private bool ready;
 
         public enum State
         {
@@ -103,6 +108,18 @@ namespace BogheCore.Services.Impl
 
         #region IXcapService
 
+        public event EventHandler<XcapEventArgs> onXcapEvent;
+
+        public bool IsReady
+        {
+            get { return this.ready; }
+        }
+
+        public String RLSPresUri 
+        {
+            get { return this.rlsPresUri; }
+        }
+
         public void DownloadDocuments()
         {
             if (!this.prepared)
@@ -119,6 +136,50 @@ namespace BogheCore.Services.Impl
                 this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_XCAP_CAPS_ID);
                 this.xcapStack.getDocument(this.xcapSelector.getString());
             }
+        }
+
+        public bool ContactAdd(Contact contact)
+        {
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Contact connot be added as XDMS doen't support 'resource-lists'");
+                return false;
+            }
+
+            bool ret;
+
+            entryType entry = this.ContactToEntry(contact);
+            byte[] payload = this.Serialize(entry, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID));
+            XcapSelector selector = new XcapSelector(this.xcapStack);
+            selector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                .setAttribute("list", "name", contact.GroupName)
+                .setAttribute("entry", "uri", contact.UriString);
+            ret = this.xcapStack.putElement(selector.getString(), payload, (uint)payload.Length);
+            selector.Dispose();
+
+            return ret;
+        }
+
+        public bool ContactUpdate(Contact contact, String prevGroupName)
+        {
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Contact connot be added as XDMS doen't support 'resource-lists'");
+                return false;
+            }
+
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Contact connot be added as XDMS doen't support 'resource-lists'");
+                return false;
+            }
+
+            return false;
+        }
+
+        public bool ContactDelete(Contact contact)
+        {
+            return false;
         }
 
         public bool Prepare()

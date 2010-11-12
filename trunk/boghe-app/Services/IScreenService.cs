@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -25,6 +25,7 @@ using System.Text;
 using BogheCore.Services;
 using System.Windows.Controls;
 using BogheApp.Screens;
+using BogheControls;
 
 namespace BogheApp.Services
 {
@@ -39,8 +40,11 @@ namespace BogheApp.Services
         ScreenAuthentication ScreenAuthentication { get; }
         ScreenOptions ScreenOptions { get; }
 
+        void Show(BaseScreen baseScreen, int insertIndex);
+        void Show(BaseScreen baseScreen);
         void Show(ScreenType type, int index);
         void Show(ScreenType type);
         void Hide(ScreenType type);
+        void Hide(BaseScreen baseScreen);
     }
 }

@@ -60,6 +60,7 @@ namespace BogheApp
                     // Menus
                     this.MenuItemFile_SignIn.IsEnabled = false;
                     this.MenuItemFile_SignOut.IsEnabled = true;
+                    this.MenuItemEAB.IsEnabled = true;
                     break;
 
                 case RegistrationEventTypes.UNREGISTRATION_INPROGRESS:
@@ -81,6 +82,7 @@ namespace BogheApp
                     // Menus
                     this.MenuItemFile_SignIn.IsEnabled = true;
                     this.MenuItemFile_SignOut.IsEnabled = false;
+                    this.MenuItemEAB.IsEnabled = false;
                     break;
             }
         }

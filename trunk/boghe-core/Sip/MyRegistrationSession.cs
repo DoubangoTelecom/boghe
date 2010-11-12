@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -39,7 +39,7 @@ namespace BogheCore.Sip
             base.init();
 
             // SigComp
-            this.SigCompId = sipStack.SigCompId;
+            base.SigCompId = sipStack.SigCompId;
 
             /* support for 3GPP SMS over IP */
             this.session.addCaps("+g.3gpp.smsip");

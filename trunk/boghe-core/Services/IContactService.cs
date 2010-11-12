@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -32,6 +32,10 @@ namespace BogheCore.Services
     public interface IContactService : IService
     {
         void Download();
+
+        bool ContactAdd(Contact contact);
+        bool ContactUpdate(Contact contact, String prevGroupName);
+        bool ContactDelete(Contact contact);
 
         MyObservableCollection<Contact> Contacts { get; }
         MyObservableCollection<Group> Groups { get; }

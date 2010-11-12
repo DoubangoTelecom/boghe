@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -33,6 +33,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BogheControls;
 using BogheCore.Model;
+using BogheControls.Utils;
 
 namespace BogheApp.Items
 {
@@ -56,22 +57,22 @@ namespace BogheApp.Items
                 return;
             }
 
-            if (group.Name.Equals("g1"))
-            {
-                this.Height = 200;
-                for (int i = 0; i < 10; i++)
-                {
-                    this.listBox.Items.Add(i.ToString());
-                }
-            }
-
             this.labelDisplayName.Content = group.DisplayName;
-        }
+            switch (group.Authorization)
+            {
+                case BogheXdm.Authorization.Allowed:
+                default:
+                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.lock_ok_16);
+                    break;
+                case BogheXdm.Authorization.Blocked:
+                case BogheXdm.Authorization.PoliteBlocked:
+                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.lock_warning_16);
+                    break;
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            this.listBox.Visibility = Visibility.Collapsed;
-            this.Height = 30;
+                case BogheXdm.Authorization.Revoked:
+                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.lock_error_16);
+                    break;
+            }
         }
     }
 }

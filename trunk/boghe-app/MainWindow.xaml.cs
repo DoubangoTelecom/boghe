@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -71,8 +71,8 @@ namespace BogheApp
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
             
             // Show Authentication Screen
-            this.screenService.Show(ScreenType.Contacts);
-            //this.screenService.Show(ScreenType.Authentication);
+            //this.screenService.Show(ScreenType.Contacts);
+            this.screenService.Show(ScreenType.Authentication);
         }
 
         private void CloseTab(object source, RoutedEventArgs args)
@@ -83,7 +83,7 @@ namespace BogheApp
                 BaseScreen screen = tabItem.Content as BaseScreen;
                 if (screen != null)
                 {
-                    this.screenService.Hide((ScreenType)screen.BaseScreenType);
+                    this.screenService.Hide(screen);
                 }
             }
         }

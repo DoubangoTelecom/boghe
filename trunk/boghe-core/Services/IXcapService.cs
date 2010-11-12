@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -22,14 +22,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheCore.Xcap.Events;
+using BogheCore.Model;
 
 namespace BogheCore.Services
 {
     public interface IXcapService : IService
     {
+        bool IsReady { get; }
+        String RLSPresUri { get; }
+
         void DownloadDocuments();
+
+        bool ContactAdd(Contact contact);
+        bool ContactUpdate(Contact contact, String prevGroupName);
+        bool ContactDelete(Contact contact);
 
         bool Prepare();
         bool UnPrepare();
+
+        event EventHandler<XcapEventArgs> onXcapEvent;
     }
 }

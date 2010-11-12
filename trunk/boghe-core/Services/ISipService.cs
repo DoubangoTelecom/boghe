@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -30,6 +30,7 @@ namespace BogheCore.Services
     public interface ISipService : IService
     {
 
+        String DefaultIdentity { get; set; }
         MySipStack SipStack { get; }
         bool IsRegistered { get; }
         bool IsXcapEnabled { get; }

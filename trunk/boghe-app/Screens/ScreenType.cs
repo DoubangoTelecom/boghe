@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -32,6 +32,7 @@ namespace BogheApp.Screens
         Authentication = 0x000001 << 1,
         History = 0x000001 << 2,
         Contacts = 0x000001 << 3,
-        Options = 0x000001 << 4
+        ContactEdit = 0x000001 << 4,
+        Options = 0x000001 << 5
     }
 }

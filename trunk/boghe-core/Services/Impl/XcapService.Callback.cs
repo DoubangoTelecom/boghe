@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -26,6 +26,8 @@ using org.doubango.tinyWRAP;
 using System.Threading;
 using BogheXdm.Generated.xcap_caps;
 using BogheXdm.Generated.oma.xcap_directory;
+using BogheCore.Events;
+using BogheCore.Xcap.Events;
 
 namespace BogheCore.Services.Impl
 {
@@ -173,6 +175,8 @@ namespace BogheCore.Services.Impl
                             {
                                 if (this.hasRLS)
                                 {
+                                    this.CurrentState = State.GET_RLS;
+                                    this.downloadDocument(XcapService.XCAP_AUID_IETF_RLS_SERVICES_ID);
                                 }
                                 else if (this.hasOMAPresRules)
                                 {
@@ -199,6 +203,26 @@ namespace BogheCore.Services.Impl
                     }
 
 
+                // ==============
+                case State.GET_RLS:
+                    {
+                        if (this.handleRLSEvent(code, content))
+                        {
+                            EventHandlerTrigger.TriggerEvent<XcapEventArgs>(this.onXcapEvent, this,
+                                new XcapEventArgs(XcapEventTypes.RLS_DONE, phrase));
+
+                            if (this.hasOMAPresRules)
+                            {
+                            }
+                            else if (this.hasPresRules)
+                            {
+                            }
+                            else if (this.hasOMAPresenceContent)
+                            {
+                            }
+                        }
+                        break;
+                    }
             }
         }
 

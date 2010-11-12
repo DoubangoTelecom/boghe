@@ -4,10 +4,13 @@
     xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
     
-    Height="38" Width="300">
+    Height="52" Width="359">
     
     <Grid>
-        <Label Margin="0,-2,0,12" Name="label1" HorizontalAlignment="Left" Width="120">Label</Label>
+        <Image Name="imageAvatar" Stretch="None" Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Center" Source="/BogheApp;component/embedded/48/avatar_48.png" />
+        <Image Margin="32,0,0,0" Name="imageStatus" Stretch="None" Height="16" VerticalAlignment="Top" Width="16" HorizontalAlignment="Left" Source="/BogheApp;component/embedded/16/user_offline_16.png" />
+        <Label Height="28" Margin="54,0,69,0" Name="labelDisplayName" VerticalAlignment="Top" FontWeight="Bold" FontSize="14">John Doe</Label>
+        <Label Margin="52,25,69,0" Name="labelUriString" Height="28" VerticalAlignment="Top">sip:johndoe@open-ims.test</Label>
     </Grid>
     
     

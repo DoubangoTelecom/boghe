@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -27,6 +27,7 @@ using BogheApp.Screens;
 using BogheControls;
 using System.Threading;
 using System.Windows.Threading;
+using System.Windows;
 
 namespace BogheApp.Services.Impl
 {
@@ -42,6 +43,8 @@ namespace BogheApp.Services.Impl
         private ScreenOptions screenOptions;
         private ScreenContacts screenContacts;
         private ScreenHistory screenHistory;
+
+        BaseScreen lastScreen = null;
 
         #region IService
 
@@ -158,6 +161,52 @@ namespace BogheApp.Services.Impl
             }
         }
 
+        public void Show(BaseScreen baseScreen, int insertIndex)
+        {
+            int index = -1;
+            foreach (TabItem item in this.tabControl.Items)
+            {
+                index ++;
+                if (item.Content == null)
+                {
+                    continue;
+                }
+                BaseScreen _baseScreen = item.Content as BaseScreen;
+
+                if (_baseScreen == baseScreen)
+                {
+                    this.tabControl.SelectedIndex = index;
+                    return;
+                }
+            }
+
+            TabItem tabItem = this.CreateTabItem(baseScreen, true);
+
+            // Events
+            baseScreen.BeforeLoading();
+            if (lastScreen != null) lastScreen.BeforeUnLoading();
+
+            if (insertIndex >= 0 && insertIndex < this.tabControl.Items.Count)
+            {
+                this.tabControl.Items.Insert(insertIndex, tabItem);
+            }
+            else
+            {
+                this.tabControl.Items.Add(tabItem);
+            }
+            this.tabControl.SelectedItem = tabItem;
+
+            // Events
+            if (lastScreen != null) lastScreen.AfterUnLoading();
+            baseScreen.AfterLoading();
+            lastScreen = baseScreen;
+        }
+
+        public void Show(BaseScreen baseScreen)
+        {
+            this.Show(baseScreen, -1);
+        }
+
         public void Show(ScreenType type, int insertIndex)
         {
             TabItem tabItem = null;
@@ -192,6 +241,10 @@ namespace BogheApp.Services.Impl
 
             if (tabItem != null)
             {
+                // Events
+                (tabItem.Content as BaseScreen).BeforeLoading();
+                if (lastScreen != null) lastScreen.BeforeUnLoading();
+
                 if (insertIndex >= 0 && insertIndex < this.tabControl.Items.Count)
                 {
                     this.tabControl.Items.Insert(insertIndex, tabItem);
@@ -202,6 +255,11 @@ namespace BogheApp.Services.Impl
                 }
                 this.tabControl.SelectedItem = tabItem;
                 this.loadedScreens |= type;
+
+                // Events
+                if (lastScreen != null) lastScreen.AfterUnLoading();
+                (tabItem.Content as BaseScreen).AfterLoading();
+                lastScreen = (tabItem.Content as BaseScreen);
             }
         }
 
@@ -220,9 +278,33 @@ namespace BogheApp.Services.Impl
             TabItem tabItem = this.GetItem(type);
             if (tabItem != null)
             {
+                BaseScreen screenToHide = tabItem.Content as BaseScreen;
+                // Events
+                screenToHide.BeforeUnLoading();
+
                 this.tabControl.Items.Remove(tabItem);
                 tabItem.Content = null;
                 this.loadedScreens &= ~type;
+
+                // Events
+                screenToHide.AfterUnLoading();
+            }
+        }
+
+        public void Hide(BaseScreen baseScreen)
+        {
+            TabItem tabItem = this.GetItem(baseScreen);
+            if (tabItem != null)
+            {
+                // Events
+                baseScreen.BeforeUnLoading();
+
+                this.tabControl.Items.Remove(tabItem);
+                tabItem.Content = null;
+                this.loadedScreens &= ~((ScreenType)baseScreen.BaseScreenType);
+
+                // Events
+                baseScreen.AfterUnLoading();
             }
         }
 
@@ -238,6 +320,23 @@ namespace BogheApp.Services.Impl
                 }
                 BaseScreen screen = tabItem.Content as BaseScreen;
                 if (screen != null && (ScreenType)screen.BaseScreenType == type)
+                {
+                    return tabItem;
+                }
+            }
+            return null;
+        }
+
+        private TabItem GetItem(BaseScreen baseScreen)
+        {
+            foreach (TabItem tabItem in this.tabControl.Items)
+            {
+                if (tabItem.Content == null)
+                {
+                    continue;
+                }
+                BaseScreen screen = tabItem.Content as BaseScreen;
+                if (screen != null && screen.BaseScreenId.Equals(baseScreen.BaseScreenId))
                 {
                     return tabItem;
                 }

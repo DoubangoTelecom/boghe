@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -26,11 +26,15 @@ using System.Collections.ObjectModel;
 using BogheCore.Model;
 using BogheCore.Sip.Events;
 using BogheCore.Events;
+using log4net;
+using System.Threading;
 
 namespace BogheCore.Services.Impl
 {
     public class ContactService : IContactService
     {
+        private static readonly ILog LOG = LogManager.GetLogger(typeof(ContactService));
+
         private readonly MyObservableCollection<Contact> contacts;
         private readonly MyObservableCollection<Group> groups;
 
@@ -73,6 +77,76 @@ namespace BogheCore.Services.Impl
 
         public void Download()
         {
+            // XcapService Will start download by itself when we get connected
+        }
+
+        public bool ContactAdd(Contact contact)
+        {
+            if (contact == null)
+            {
+                LOG.Error("Null Contact");
+                return false;
+            }
+
+            ThreadStart asynTask = new ThreadStart(delegate()
+                {
+                    if (this.sipService.IsXcapEnabled)
+                    {
+                        this.xcapService.ContactAdd(contact);
+                    }
+                    else
+                    {
+                    }
+                });
+            new Thread(asynTask).Start();
+
+            return true;
+        }
+
+        public bool ContactUpdate(Contact contact, String prevGroupName)
+        {
+            if (contact == null)
+            {
+                LOG.Error("Null Contact");
+                return false;
+            }
+
+            ThreadStart asynTask = new ThreadStart(delegate()
+            {
+                if (this.sipService.IsXcapEnabled)
+                {
+                    this.xcapService.ContactUpdate(contact, prevGroupName);
+                }
+                else
+                {
+                }
+            });
+            new Thread(asynTask).Start();
+
+            return true;
+        }
+
+        public bool ContactDelete(Contact contact)
+        {
+            if (contact == null)
+            {
+                LOG.Error("Null Contact");
+                return false;
+            }
+
+            ThreadStart asynTask = new ThreadStart(delegate()
+            {
+                if (this.sipService.IsXcapEnabled)
+                {
+                    this.xcapService.ContactDelete(contact);
+                }
+                else
+                {
+                }
+            });
+            new Thread(asynTask).Start();
+
+            return true;
         }
 
         public MyObservableCollection<Contact> Contacts 
@@ -91,8 +165,7 @@ namespace BogheCore.Services.Impl
             this.contacts.ReplaceRange(freshContacts);
 
 
-            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, new ContactEventArgs(ContactEventTypes.CONTACTS_DOWNLOADED));
-            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, new ContactEventArgs(ContactEventTypes.GROUPS_DOWNLOADED));
+            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, new ContactEventArgs(ContactEventTypes.RESET));
         }
 
         public event EventHandler<ContactEventArgs> onContactEvent;

@@ -3,10 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
-    Height="65" Width="300">
+    
+    Height="40" Width="300" BorderThickness="1" Background="Transparent">
     <Grid>
-        <Label Margin="0,3,0,2" Name="labelDisplayName">RCS Contacts</Label>
-        <ListBox Margin="0,28,0,2" Name="listBox" />
-        <Button Height="23" HorizontalAlignment="Right" Margin="0,4.48,12,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click">Button</Button>
+        <Label Margin="32,2,39,1" Name="labelDisplayName" FontSize="14" FontWeight="Bold">RCS Contacts</Label>
+        <Image Name="imageIcon" Stretch="None" HorizontalAlignment="Left" Width="16" Height="16" VerticalAlignment="Top" />
+        <Image HorizontalAlignment="Right" Name="imageExpand" Stretch="None" Width="32" Margin="0,-2,1,-2" Height="32" />
     </Grid>
 </ctrl:BaseItem>

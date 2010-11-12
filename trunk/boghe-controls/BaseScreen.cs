@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (C) 2010 Mamadou Diop.
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -28,10 +28,19 @@ namespace BogheControls
 {
     public class BaseScreen : UserControl
     {
+        protected String baseScreenId;
+
         public BaseScreen()
         {
             this.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             this.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            this.baseScreenId = Guid.NewGuid().ToString();
+        }
+
+        public virtual String BaseScreenId
+        {
+            get { return this.baseScreenId; }
+            set { this.baseScreenId = value; }
         }
 
         public virtual String BaseScreenTitle

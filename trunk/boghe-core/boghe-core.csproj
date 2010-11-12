@@ -52,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentType.cs" />
     <Compile Include="Events\ConfigurationEventArgs.cs" />
     <Compile Include="Events\ContactEventArgs.cs" />
     <Compile Include="Events\ContactEventTypes.cs" />
@@ -76,6 +77,9 @@
     <Compile Include="Services\Impl\SipService.Preferences.cs">
       <DependentUpon>SipService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\Impl\SipService.Presence.cs">
+      <DependentUpon>SipService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\Impl\XcapService.Auid.cs">
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
@@ -83,7 +87,11 @@
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.cs" />
+    <Compile Include="Services\Impl\XcapService.Misc.cs" />
     <Compile Include="Services\Impl\XcapService.ResourceLists.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.RLS.cs">
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.Serializer.cs">
@@ -107,6 +115,8 @@
     <Compile Include="Sip\MySipSession.cs" />
     <Compile Include="Sip\MySipStack.cs" />
     <Compile Include="Sip\MySubscriptionSession.cs" />
+    <Compile Include="Xcap\Events\XcapEventArgs.cs" />
+    <Compile Include="Xcap\Events\XcapEventTypes.cs" />
     <Compile Include="Xcap\MyXcapStack.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />
-    <Folder Include="Xcap\Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
