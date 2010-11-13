@@ -53,7 +53,9 @@
       <DependentUpon>resource-lists.cs</DependentUpon>
     </Compile>
     <Compile Include="Generated\rls-services.cs" />
-    <Compile Include="Generated\rls-services.Extra.cs" />
+    <Compile Include="Generated\rls-services.Extra.cs">
+      <DependentUpon>rls-services.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generated\xcap-caps.cs" />
     <Compile Include="Generated\xdm_xcapDirectory-v1_0.cs" />
     <Compile Include="Generated\xdm_xcapDirectory-v1_0.Extra.cs">

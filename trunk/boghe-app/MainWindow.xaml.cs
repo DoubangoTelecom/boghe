@@ -35,11 +35,14 @@ using BogheApp.Screens;
 using BogheControls;
 using BogheApp.Services;
 using BogheCore.Services;
+using BogheControls.Utils;
 
 /*
  * XAML Namespaces and Namespace Mapping for WPF XAML: http://msdn.microsoft.com/en-us/library/ms747086.aspx
  * Data Binding: http://msdn.microsoft.com/en-us/library/ms752347.aspx
  * Group Items: http://msdn.microsoft.com/en-us/library/ms754027.aspx
+ * 
+ * The 96 DPI Solution: http://www.charlespetzold.com/blog/2005/11/250723.html
  * */
 
 namespace BogheApp
@@ -51,6 +54,8 @@ namespace BogheApp
     {
         private readonly IWin32ScreenService screenService;
         private readonly ISipService sipService;
+        private readonly IConfigurationService configurationService;
+        private readonly IContactService contactService;
 
         public MainWindow()
         {
@@ -66,6 +71,11 @@ namespace BogheApp
             this.sipService.onStackEvent += this.sipService_onStackEvent;
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
             
+            // Configuration service
+            this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
+
+            // Contact Service
+            this.contactService = Win32ServiceManager.SharedManager.ContactService;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));

@@ -17,8 +17,8 @@
         <Label HorizontalAlignment="Left" Margin="1,153.96,0,0" Name="labelRealm" Width="104" Height="28" VerticalAlignment="Top">Realm*:</Label>
         <TextBox Margin="118,154.96,12,0" Name="textBoxRealm" Height="23" VerticalAlignment="Top" />
         <CheckBox Margin="12,225.92,12,0" Name="checkBoxEarlyIMS" Height="16" VerticalAlignment="Top">Enable 3GPP Early IMS Security</CheckBox>
-        <Button Margin="0,0,93,5" Name="buttonSignIn" Click="buttonSignIn_Click" Grid.Row="1" Height="21.96" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75">Sign In</Button>
-        <Button Margin="0,0,12,5" Name="buttonCancel" HorizontalAlignment="Right" Width="75" Grid.Row="1" Height="21.96" VerticalAlignment="Bottom" IsEnabled="False" Click="buttonCancel_Click">Cancel</Button>
+        <Button Margin="0,0,93,5" Name="buttonSignIn" Click="buttonSignIn_Click" Grid.Row="1" Height="21.96" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Background="White">Sign In</Button>
+        <Button Margin="0,0,12,5" Name="buttonCancel" HorizontalAlignment="Right" Width="75" Grid.Row="1" Height="21.96" VerticalAlignment="Bottom" IsEnabled="False" Click="buttonCancel_Click" Background="White">Cancel</Button>
         <PasswordBox Margin="118,123,12,0" Name="passwordBox" Height="22.96" VerticalAlignment="Top" />
     </Grid>
 </custom:BaseScreen>

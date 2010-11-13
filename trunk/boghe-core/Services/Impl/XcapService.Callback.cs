@@ -241,14 +241,21 @@ namespace BogheCore.Services.Impl
                 XcapMessage message = e.getXcapMessage();
                 String contentType;
 
-                if (message == null || (contentType = message.getXcapHeaderValue("Content-Type")) == null)
+                if (message == null)
                 {
-                    LOG.Error("Invalid XCAP message");
+                    LOG.Error("Invalid HTTP message");
                     return -1;
                 }
 
                 short code = message.getCode();
                 String phrase = message.getPhrase();
+                LOG.Debug(String.Format("code={0} and Phrase={1}", code, phrase));
+                if ((contentType = message.getXcapHeaderValue("Content-Type")) == null)
+                {
+                    return 0;
+                }
+
+                
                 uint clen = message.getXcapContentLength();
                 byte[] content = null;
                 if (clen > 0)

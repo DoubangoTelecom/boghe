@@ -6,11 +6,28 @@
     
     Height="52" Width="359">
     
-    <Grid>
+    <Grid>  
         <Image Name="imageAvatar" Stretch="None" Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Center" Source="/BogheApp;component/embedded/48/avatar_48.png" />
         <Image Margin="32,0,0,0" Name="imageStatus" Stretch="None" Height="16" VerticalAlignment="Top" Width="16" HorizontalAlignment="Left" Source="/BogheApp;component/embedded/16/user_offline_16.png" />
         <Label Height="28" Margin="54,0,69,0" Name="labelDisplayName" VerticalAlignment="Top" FontWeight="Bold" FontSize="14">John Doe</Label>
         <Label Margin="52,25,69,0" Name="labelUriString" Height="28" VerticalAlignment="Top">sip:johndoe@open-ims.test</Label>
+    
+    
+        <Grid.ContextMenu>
+            <ContextMenu Name="ctxMenu">
+                <MenuItem Header="Edit" Name="ctxMenu_Edit" Click="ctxMenu_Edit_Click" />
+                <MenuItem Header="Delete" Name="ctxMenu_Delete" Click="ctxMenu_Delete_Click" />
+                <Separator />
+                <MenuItem Header="Autorizations" Name="ctxMenu_Authorizations" Click="ctxMenu_Authorizations_Click" />
+                <Separator />
+                <MenuItem Header="Voice Call" Name="ctxMenu_Voice" Click="ctxMenu_Voice_Click" />
+                <MenuItem Header="Visio Call" Name="ctxMenu_Visio" Click="ctxMenu_Visio_Click" />
+                <MenuItem Header="Image Sharing" Name="ctxMenu_ImageShare" Click="ctxMenu_ImageShare_Click" />
+                <MenuItem Header="Chat" Name="ctxMenu_Chat" Click="ctxMenu_Chat_Click" />
+                <MenuItem Header="SMS" Name="ctxMenu_SMS" Click="ctxMenu_SMS_Click" />
+                <MenuItem Header="Conference" Name="ctxMenu_Conference" Click="ctxMenu_Conference_Click" />
+            </ContextMenu>
+        </Grid.ContextMenu>
     </Grid>
     
     
