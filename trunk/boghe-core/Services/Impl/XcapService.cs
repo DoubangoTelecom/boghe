@@ -75,7 +75,8 @@ namespace BogheCore.Services.Impl
             this.documentsUris = new Dictionary<String, String>();
 
             this.manager = manager;
-            this.CurrentState = State.NONE;        
+            this.CurrentState = State.NONE;
+            this.ready = false;
         }
 
         private State CurrentState
@@ -142,7 +143,7 @@ namespace BogheCore.Services.Impl
         {
             if (!this.hasResourceLists)
             {
-                LOG.Warn("Contact connot be added as XDMS doen't support 'resource-lists'");
+                LOG.Warn("Contact connot be added as XDMS doesn't support 'resource-lists'");
                 return false;
             }
 
@@ -164,29 +165,40 @@ namespace BogheCore.Services.Impl
         {
             if (!this.hasResourceLists)
             {
-                LOG.Warn("Contact connot be added as XDMS doen't support 'resource-lists'");
+                LOG.Warn("Contact connot be updated as XDMS doesn't support 'resource-lists'");
                 return false;
             }
 
-            if (!this.hasResourceLists)
-            {
-                LOG.Warn("Contact connot be added as XDMS doen't support 'resource-lists'");
-                return false;
-            }
+            
 
             return false;
         }
 
         public bool ContactDelete(Contact contact)
         {
-            return false;
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Contact connot be deleted as XDMS doesn't support 'resource-lists'");
+                return false;
+            }
+
+            bool ret;
+
+            XcapSelector selector = new XcapSelector(this.xcapStack);
+            selector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                .setAttribute("list", "name", contact.GroupName)
+                .setAttribute("entry", "uri", contact.UriString);
+            ret = this.xcapStack.deleteElement(selector.getString());
+            selector.Dispose();
+
+            return ret;
         }
 
         public bool Prepare()
         {
             if (this.prepared)
             {
-                LOG.Warn("XCAP service already prepared");
+                LOG.Debug("XCAP service already prepared");
                 return true;
             }
 

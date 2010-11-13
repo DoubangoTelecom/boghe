@@ -77,7 +77,16 @@ namespace BogheCore.Services.Impl
 
         public void Download()
         {
-            // XcapService Will start download by itself when we get connected
+            if (this.sipService.IsXcapEnabled)
+            {
+                if (this.xcapService.Prepare())
+                {
+                    this.xcapService.DownloadDocuments();
+                }
+            }
+            else
+            {
+            }
         }
 
         public bool ContactAdd(Contact contact)

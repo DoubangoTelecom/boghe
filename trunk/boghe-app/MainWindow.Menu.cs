@@ -65,14 +65,16 @@ namespace BogheApp
 
             if (menuItem == this.MenuItemEAB_Refresh)
             {
+                this.contactService.Download();
             }
             else if (menuItem == this.MenuItemEAB_Reset)
             {
             }
             else if (menuItem == this.MenuItemEAB_AddContact)
             {
+                String realm = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
                 Contact newContact = new Contact();
-                newContact.UriString = "sip:johndoe@open-ims.test";
+                newContact.UriString = String.Format("sip:johndoe@{0}", realm.Replace("sip:", String.Empty));
                 newContact.DisplayName = "John Doe";
 
                 ScreenContactEdit screenEditContact = new ScreenContactEdit();

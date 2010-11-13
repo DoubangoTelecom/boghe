@@ -4,10 +4,10 @@
     xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
     
-    Height="40" Width="300" BorderThickness="1" Background="Transparent">
+     BorderThickness="1" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="49">
     <Grid>
-        <Label Margin="32,2,39,1" Name="labelDisplayName" FontSize="14" FontWeight="Bold">RCS Contacts</Label>
+        <Label Margin="32,2,39,0" Name="labelDisplayName" FontSize="14" FontWeight="Bold" Height="33" VerticalAlignment="Center">RCS Contacts</Label>
         <Image Name="imageIcon" Stretch="None" HorizontalAlignment="Left" Width="16" Height="16" VerticalAlignment="Top" />
-        <Image HorizontalAlignment="Right" Name="imageExpand" Stretch="None" Width="32" Margin="0,-2,1,-2" Height="32" />
+        <Image HorizontalAlignment="Right" Name="imageExpand" Stretch="None" Width="32" Margin="0,-2,1,-2" Height="32" Opacity="0" />
     </Grid>
 </ctrl:BaseItem>

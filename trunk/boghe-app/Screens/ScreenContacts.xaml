@@ -8,10 +8,11 @@
     
     <ctrl:BaseScreen.Resources>
         <DataTemplate x:Key="DataTemplateContact">
-            <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemContact>
+            <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></items:ItemContact>
         </DataTemplate>
         <DataTemplate x:Key="DataTemplateGroup">
-            <items:ItemGroup Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemGroup>
+            <items:ItemGroup Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            </items:ItemGroup>
         </DataTemplate>
     </ctrl:BaseScreen.Resources>
     
@@ -21,7 +22,7 @@
             <RowDefinition Height="383*" />
             <RowDefinition Height="29*" />
         </Grid.RowDefinitions>
-        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,3,0,5" Grid.Row="1">
+        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,3,0,5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <!--ListBox.ItemTemplate>
                 <DataTemplate>
                     <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemContact>

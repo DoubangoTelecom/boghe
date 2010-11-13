@@ -11,7 +11,7 @@
         <TextBox Height="23" Margin="98,74,12,0" Name="textBoxDisplayName" VerticalAlignment="Top" />
         <Label Height="28" HorizontalAlignment="Left" Margin="2,102,0,0" Name="labelGroup" VerticalAlignment="Top" Width="91">Group*:</Label>
         <ComboBox Height="23" Margin="98,105,12,0" Name="comboBoxGroup" VerticalAlignment="Top" />
-        <Button Height="23" Margin="0,0,92,7" Name="buttonSave" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="buttonSave_Click">Save</Button>
-        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,7" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click">Cancel</Button>
+        <Button Height="23" Margin="0,0,92,7" Name="buttonSave" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="buttonSave_Click" Background="White">Save</Button>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,7" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click" Background="White">Cancel</Button>
     </Grid>
 </ctrl:BaseScreen>

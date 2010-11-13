@@ -77,6 +77,7 @@ namespace BogheApp.Screens
             set { 
                 this.editMode = value;
                 this.labelTitle.Content = value ? "Edit Contact" : "Add Contact";
+                this.textBoxSipUri.IsEnabled = !value;
             }
         }
 
@@ -88,7 +89,19 @@ namespace BogheApp.Screens
                 return;
             }
 
-            this.contactService.ContactAdd(this.Contact);
+            Group group = this.comboBoxGroup.SelectedItem as Group;
+            this.Contact.DisplayName = this.textBoxDisplayName.Text;
+
+            if (this.EditMode)
+            {
+            }
+            else
+            {
+                this.Contact.UriString = this.textBoxSipUri.Text;
+                this.Contact.GroupName = group.Name;
+                this.contactService.ContactAdd(this.Contact);
+                this.screenService.Hide(this);
+            }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)

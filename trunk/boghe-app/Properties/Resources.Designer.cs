@@ -60,6 +60,13 @@ namespace BogheApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap gsma_rcs {
+            get {
+                object obj = ResourceManager.GetObject("gsma_rcs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap icon_16 {
             get {
                 object obj = ResourceManager.GetObject("icon_16", resourceCulture);

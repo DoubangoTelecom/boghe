@@ -34,6 +34,8 @@ using System.Windows.Shapes;
 using BogheCore.Model;
 using BogheControls;
 using System.ComponentModel;
+using BogheCore.Services;
+using BogheApp.Services.Impl;
 
 namespace BogheApp.Items
 {
@@ -42,9 +44,13 @@ namespace BogheApp.Items
     /// </summary>
     public partial class ItemContact : BaseItem<Contact>
     {
+        private readonly IContactService contactService;
+
         public ItemContact()
         {
             InitializeComponent();
+
+            this.contactService = Win32ServiceManager.SharedManager.ContactService;
 
             this.ValueLoaded += this.ItemContact_ValueLoaded;
         }
@@ -57,7 +63,58 @@ namespace BogheApp.Items
                 return;
             }
 
-            this.labelDisplayName.Content = contact.DisplayName;
+            String uriString = String.IsNullOrEmpty(contact.UriString) ? "sip:(null)@(null)" : contact.UriString;
+
+            this.labelDisplayName.Content = String.IsNullOrEmpty(contact.DisplayName) ? uriString : contact.DisplayName;
+            this.labelUriString.Content = String.IsNullOrEmpty(contact.UriString) ? uriString : contact.UriString;
+        }
+
+        private void ctxMenu_Edit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Value != null)
+            {
+                this.contactService.ContactDelete(this.Value);
+            }
+        }
+
+        private void ctxMenu_Authorizations_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_Voice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_Visio_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_ImageShare_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_Chat_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_SMS_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_Conference_Click(object sender, RoutedEventArgs e)
+        {
+
         }             
     }
 }
