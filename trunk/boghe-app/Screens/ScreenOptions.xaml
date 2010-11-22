@@ -1,12 +1,12 @@
 ﻿<custom:BaseScreen x:Class="BogheApp.Screens.ScreenOptions"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:custom="clr-namespace:BogheControls;assembly=BogheControls"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="540" Width="365">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="516" Width="365">
     <Grid>
-        <TabControl Name="tabControl" Background="White" TabStripPlacement="Left" Margin="0,0,0,41">
+        <TabControl Name="tabControl" Background="White" TabStripPlacement="Left" Margin="0,0,0,41" BorderBrush="SkyBlue">
             
 
-            <TabItem Header="General" Name="tabItemGeneral" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Height="45" Margin="1">
+            <TabItem Header="General" Name="tabItemGeneral" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Height="45" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Height="33" Margin="0,0,0,0" Name="labelGeneralTitle" VerticalAlignment="Top" FontSize="16" Background="SkyBlue" FontWeight="Bold">General</Label>
                     <CheckBox Height="24" Margin="3,43,4,0" Name="checkBoxLaunchWhenStart" VerticalAlignment="Top">Launch when system starts</CheckBox>
@@ -14,7 +14,7 @@
                     <TextBox Height="23" Margin="136,76,6,0" Name="textBoxENUM" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Identity" Height="45" Margin="1" Name="tabItemIdentity">
+            <TabItem Header="Identity" Height="45" Margin="1" Name="tabItemIdentity" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label FontSize="16" Height="33" Margin="0,0,0,0" Name="labelIdentityTitle" VerticalAlignment="Top" Background="SkyBlue" FontWeight="Bold">Identity</Label>
                     <GroupBox Header="Connection Settings" Margin="0,42,-3,0" Name="groupBoxIdentityConnection" Background="White" Height="226" VerticalAlignment="Top">
@@ -45,7 +45,7 @@
                 </Grid>
                 
             </TabItem>
-            <TabItem Header="Network" Height="45" Margin="1" Name="tabItemNetwork" >
+            <TabItem Header="Network" Height="45" Margin="1" Name="tabItemNetwork" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNetworkTitle" VerticalAlignment="Top" FontWeight="Bold">Networking</Label>
                     <GroupBox Header="Settings" Margin="2,43,0,0" Name="groupBox1" Height="255" VerticalAlignment="Top">
@@ -100,29 +100,31 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Security" Height="45" Margin="1" Name="tabItemSecurity" >
+            <TabItem Header="Security" Height="45" Margin="1" Name="tabItemSecurity" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelSecurityTitle" VerticalAlignment="Top" FontWeight="Bold">Security</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="Contacts" Height="45" Margin="1" Name="tabItemContacts" Padding="6,1" >
+            <TabItem Header="Contacts" Height="45" Margin="1" Name="tabItemContacts" Padding="6,1" BorderBrush="SkyBlue" BorderThickness="1">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelContactsTitle" VerticalAlignment="Top" FontWeight="Bold">Contacts</Label>
                     <RadioButton Height="16" Margin="7,43,0,0" Name="radioButtonContactsLocal" VerticalAlignment="Top" GroupName="Storage" IsChecked="True">Local Storage</RadioButton>
                     <RadioButton Height="16" Margin="7,65,0,0" Name="radioButtonContactsRemote" VerticalAlignment="Top" GroupName="Storage">Remote Storage</RadioButton>
-                    <GroupBox Header="XCAP Preferences" Margin="20,89,6,0" Name="groupBoxXCAP" Height="138" VerticalAlignment="Top">
+                    <GroupBox Header="XCAP Preferences" Margin="20,89,6,207" Name="groupBoxXCAP">
                         <Grid>
-                            <Label Height="28" Margin="-3,6,0,0" Name="labelXcapRoot" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120.823">Base URI:</Label>
+                            <Label Height="28" Margin="-3,6,0,0" Name="labelXcapRoot" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65">Base URI:</Label>
                             <TextBox Height="23" Margin="68,9,6,0" Name="textBoxXcapRoot" VerticalAlignment="Top" />
-                            <Label Margin="-3,36,0,0" Name="labelUserName" HorizontalAlignment="Left" Width="119.823" Height="28" VerticalAlignment="Top">Username:</Label>
+                            <Label Margin="-3,36,0,0" Name="labelUserName" HorizontalAlignment="Left" Width="65" Height="28" VerticalAlignment="Top">Username:</Label>
                             <TextBox Margin="68,38,7,0" Name="textBoxXUI" Height="23" VerticalAlignment="Top" />
-                            <Label Height="28" Margin="-3,67,0,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="119.823">Password:</Label>
+                            <Label Margin="-3,67,0,0" Name="label1" HorizontalAlignment="Left" Width="65" Height="28" VerticalAlignment="Top">Password:</Label>
                             <PasswordBox Height="23" Margin="68,70.04,7,0" Name="passwordBoxXUI" VerticalAlignment="Top" />
+                            <Label Height="28" HorizontalAlignment="Left" Margin="-3,99,0,0" Name="labelContactsTimeOut" VerticalAlignment="Top" Width="65">Timeout:</Label>
+                            <TextBox Height="23" Margin="68,102.04,7,0" Name="textBoxXcapTimeout" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Presence" Height="45" Name="tabItemPresence" Margin="1" >
+            <TabItem Header="Presence" Height="45" Name="tabItemPresence" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelPresenceTitle" VerticalAlignment="Top" FontWeight="Bold">Presence</Label>
                     <GroupBox Header="Subscription" Height="100" Margin="7,48,6,0" Name="groupBoxPresenceSubscribtion" VerticalAlignment="Top">
@@ -130,29 +132,33 @@
                             <CheckBox Height="16" Margin="5,8,6,0" Name="checkBoxPresenceSubscribe" VerticalAlignment="Top">Enable Subscription</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Publication" Margin="7,167,6,0" Name="groupBoxPresencePublication" Height="145" VerticalAlignment="Top">
+                    <GroupBox Header="Publication" Margin="7,167,6,114" Name="groupBoxPresencePublication">
                         <Grid>
                             <CheckBox Height="16" Margin="5,8,6,0" Name="checkBoxPresencePublish" VerticalAlignment="Top">Enable Publication</CheckBox>
+                            <Label Height="28" HorizontalAlignment="Left" Margin="3,34,0,0" Name="labelPresenceFreeText" VerticalAlignment="Top" Width="86">Free Text:</Label>
+                            <Label Height="28" HorizontalAlignment="Left" Margin="3,61,0,0" Name="labelPresenceHomePage" VerticalAlignment="Top" Width="87">Home Page:</Label>
+                            <TextBox Height="23" Margin="85,37,6,0" Name="textBoxPresenceFreeText" VerticalAlignment="Top" />
+                            <TextBox Height="23" Margin="85,64,6,0" Name="textBoxPresenceHomePage" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Codecs" Height="45" Name="tabItemCodecs" Margin="1" >
+            <TabItem Header="Codecs" Height="45" Name="tabItemCodecs" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelCodecsTitle" VerticalAlignment="Top" FontWeight="Bold">Codecs</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="Messaging" Height="45" Name="tabItemMessaging" Margin="1" >
+            <TabItem Header="Messaging" Height="45" Name="tabItemMessaging" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontWeight="Bold" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelMessagingTitle" VerticalAlignment="Top">Messaging</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="QoS/QoE" Height="45" Name="tabItemQoSQoE" Margin="1" >
+            <TabItem Header="QoS/QoE" Height="45" Name="tabItemQoSQoE" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelQoSTitle" VerticalAlignment="Top" FontWeight="Bold">QoS/QoE</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="NATT" Height="45" Name="tabItemNATT" Margin="1" >
+            <TabItem Header="NATT" Height="45" Name="tabItemNATT" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNatTraversalTitle" VerticalAlignment="Top" FontWeight="Bold">NAT Traversal</Label>
                 </Grid>

@@ -22,10 +22,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheCore.Model;
+using BogheCore.Events;
 
 namespace BogheCore.Services
 {
     public interface IHistoryService : IService
     {
+        bool IsLoading { get; }
+        MyObservableCollection<HistoryEvent> Events { get; }
+
+        void AddEvent(HistoryEvent @event);
+        void UpdateEvent(HistoryEvent @event);
+        void DeleteEvent(HistoryEvent @event);
+        void DeleteEvent(int location);
+        void Clear();
+
+        event EventHandler<HistoryEventArgs> onHistoryEvent;
     }
 }

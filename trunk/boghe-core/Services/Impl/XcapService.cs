@@ -210,6 +210,8 @@ namespace BogheCore.Services.Impl
                     Configuration.ConfFolder.XCAP, Configuration.ConfEntry.XCAP_ROOT, Configuration.DEFAULT_XCAP_ROOT);
             String xcap_password = this.configurationService.Get(
                     Configuration.ConfFolder.XCAP, Configuration.ConfEntry.PASSWORD, Configuration.DEFAULT_XCAP_ROOT);
+            int xcap_timeout = this.configurationService.Get(
+                    Configuration.ConfFolder.XCAP, Configuration.ConfEntry.TIMEOUT, Configuration.DEFAULT_XCAP_TIMEOUT);
 
             if (this.xcapStack == null)
             {
@@ -221,6 +223,9 @@ namespace BogheCore.Services.Impl
                 this.xcapStack.setCredentials(xcap_ui, xcap_password);
                 this.xcapStack.setXcapRoot(xcap_root);
             }
+
+            // Set options
+            this.xcapStack.setTimeout((uint)xcap_timeout);
 
             if ((this.prepared = this.xcapStack.start()))
             {

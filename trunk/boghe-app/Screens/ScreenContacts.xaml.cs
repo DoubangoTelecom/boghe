@@ -38,6 +38,7 @@ using BogheApp.Items;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
 using BogheCore;
+using BogheCore.Sip;
 
 namespace BogheApp.Screens
 {
@@ -47,6 +48,7 @@ namespace BogheApp.Screens
     public partial class ScreenContacts : BaseScreen
     {
         private readonly IContactService contactService;
+        private readonly ISipService sipService;
         private readonly MyObservableCollection<BaseObject> contacts;
 
         public ScreenContacts():base()
@@ -55,6 +57,7 @@ namespace BogheApp.Screens
 
             this.contacts = new MyObservableCollection<BaseObject>();
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
+            this.sipService = Win32ServiceManager.SharedManager.SipService;
 
             this.listBox.ItemTemplateSelector = new DataTemplateSelectorContacts();
             this.listBox.ItemsSource = this.contacts;
@@ -71,6 +74,22 @@ namespace BogheApp.Screens
                 contacts.Add(c);
             }*/
             
+        }
+
+        private void buttonVoice_Click(object sender, RoutedEventArgs e)
+        {
+            SessionWindow.MakeAudioCall("sip:mercuro3@colibria.com");
+        }
+
+        private void buttonVisio_Click(object sender, RoutedEventArgs e)
+        {
+            //SessionWindow.MakeVideoCall("sip:2233392625@colibria.com");
+            SessionWindow.MakeVideoCall("sip:8583654806@colibria.com");
+        }
+
+        private void buttonFile_Click(object sender, RoutedEventArgs e)
+        {
+
         }        
     }
 }

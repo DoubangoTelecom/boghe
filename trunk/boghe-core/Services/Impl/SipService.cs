@@ -27,6 +27,7 @@ using BogheCore.Sip;
 using BogheCore.Sip.Events;
 using BogheCore.Model;
 using System.Threading;
+using BogheCore.Events;
 
 namespace BogheCore.Services.Impl
 {
@@ -91,6 +92,10 @@ namespace BogheCore.Services.Impl
         #endregion
 
         #region ISipService
+
+        public event EventHandler<RegistrationEventArgs> onRegistrationEvent;
+        public event EventHandler<StackEventArgs> onStackEvent;
+        public event EventHandler<InviteEventArgs> onInviteEvent;
 
         public String DefaultIdentity 
         {
@@ -334,9 +339,6 @@ namespace BogheCore.Services.Impl
             }
             return true;
         }
-
-        public event EventHandler<RegistrationEventArgs> onRegistrationEvent;
-        public event EventHandler<StackEventArgs> onStackEvent;
 
         #endregion
 

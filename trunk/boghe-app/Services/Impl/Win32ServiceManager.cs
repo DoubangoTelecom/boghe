@@ -40,6 +40,7 @@ namespace BogheApp.Services.Impl
         private ISipService sipService;
         private IContactService contactService;
         private IXcapService xcapService;
+        private IHistoryService historyService;
 
         /// <summary>
         /// Shared Service manager
@@ -75,6 +76,7 @@ namespace BogheApp.Services.Impl
             ret &= this.SipService.Start();
             ret &= this.XcapService.Start();
             ret &= this.ContactService.Start();
+            ret &= this.HistoryService.Start();
 
             return ret;
         }
@@ -95,6 +97,7 @@ namespace BogheApp.Services.Impl
             ret &= this.SipService.Stop();
             ret &= this.XcapService.Stop();
             ret &= this.ContactService.Stop();
+            ret &= this.HistoryService.Stop();
 
             ret &= this.ConfigurationService.Stop();
             ret &= this.LogService.Stop();
@@ -183,6 +186,17 @@ namespace BogheApp.Services.Impl
             }
         }
 
+        public override IHistoryService HistoryService
+        {
+            get
+            {
+                if (this.historyService == null)
+                {
+                    this.historyService = new HistoryService(this);
+                }
+                return this.historyService;
+            }
+        }
 
         public override System.Windows.Threading.Dispatcher Dispatcher
         {

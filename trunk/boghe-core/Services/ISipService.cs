@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using BogheCore.Sip.Events;
 using BogheCore.Sip;
+using BogheCore.Events;
 
 namespace BogheCore.Services
 {
@@ -41,5 +42,6 @@ namespace BogheCore.Services
 
         event EventHandler<RegistrationEventArgs> onRegistrationEvent;
         event EventHandler<StackEventArgs> onStackEvent;
+        event EventHandler<InviteEventArgs> onInviteEvent;
     }
 }

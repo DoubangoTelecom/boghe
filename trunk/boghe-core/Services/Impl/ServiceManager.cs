@@ -47,6 +47,11 @@ namespace BogheCore.Services.Impl
             get;
         }
 
+        public abstract IHistoryService HistoryService
+        {
+            get;
+        }
+
         public abstract System.Windows.Threading.Dispatcher Dispatcher
         {
             get;

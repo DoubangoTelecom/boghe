@@ -34,6 +34,7 @@ namespace BogheApp.Screens
             this.textBoxXcapRoot.Text = this.configurationService.Get(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.XCAP_ROOT, Configuration.DEFAULT_XCAP_ROOT);
             this.textBoxXUI.Text = this.configurationService.Get(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.USERNAME, Configuration.DEFAULT_XUI);
             this.passwordBoxXUI.Password = this.configurationService.Get(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.PASSWORD, String.Empty);
+            this.textBoxXcapTimeout.Text = this.configurationService.Get(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.TIMEOUT, Configuration.DEFAULT_XCAP_TIMEOUT).ToString();
 
             this.groupBoxXCAP.IsEnabled = this.radioButtonContactsRemote.IsChecked.HasValue ? this.radioButtonContactsRemote.IsChecked.Value : Configuration.DEFAULT_XCAP_ENABLED;
         }
@@ -44,6 +45,7 @@ namespace BogheApp.Screens
             this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.XCAP_ROOT, this.textBoxXcapRoot.Text);
             this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.USERNAME, this.textBoxXUI.Text);
             this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.PASSWORD, this.passwordBoxXUI.Password);
+            this.configurationService.Set(Configuration.ConfFolder.XCAP, Configuration.ConfEntry.TIMEOUT, this.textBoxXcapTimeout.Text);
 
             return true;
         }

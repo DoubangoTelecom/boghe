@@ -137,6 +137,10 @@
       <Project>{C916D357-A1FF-46C8-B3BA-28173F5ACEE9}</Project>
       <Name>boghe-xdm</Name>
     </ProjectReference>
+    <ProjectReference Include="..\doubango\doubango.csproj">
+      <Project>{93201A98-88E0-4430-BCEB-643E58C28C66}</Project>
+      <Name>doubango</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Items\ItemContact.xaml">
@@ -144,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Items\ItemGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Items\ItemHistoryAVCallEvent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -160,11 +168,15 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Items\DataTemplateSelectorContacts.cs" />
+    <Compile Include="Items\DataTemplateSelectorHistory.cs" />
     <Compile Include="Items\ItemContact.xaml.cs">
       <DependentUpon>ItemContact.xaml</DependentUpon>
     </Compile>
     <Compile Include="Items\ItemGroup.xaml.cs">
       <DependentUpon>ItemGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemHistoryAVCallEvent.xaml.cs">
+      <DependentUpon>ItemHistoryAVCallEvent.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -226,6 +238,12 @@
     <Compile Include="Screens\ScreenOptions.Security.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SessionWindow.SipEvent.cs">
+      <DependentUpon>SessionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SessionWindow.xaml.cs">
+      <DependentUpon>SessionWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Screens\ScreenContactEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -239,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Screens\ScreenOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SessionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +304,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\gsma_rcs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\45\call_incoming_45.png" />
+    <Resource Include="embedded\45\call_missed_45.png" />
+    <Resource Include="embedded\45\call_outgoing_45.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

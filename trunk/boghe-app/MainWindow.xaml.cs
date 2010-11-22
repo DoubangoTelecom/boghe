@@ -36,11 +36,15 @@ using BogheControls;
 using BogheApp.Services;
 using BogheCore.Services;
 using BogheControls.Utils;
+using BogheCore.Model;
 
 /*
  * XAML Namespaces and Namespace Mapping for WPF XAML: http://msdn.microsoft.com/en-us/library/ms747086.aspx
  * Data Binding: http://msdn.microsoft.com/en-us/library/ms752347.aspx
  * Group Items: http://msdn.microsoft.com/en-us/library/ms754027.aspx
+ * Validation: http://www.codeproject.com/KB/WPF/wpfvalidation.aspx
+ * 
+ * Serialization: http://msdn.microsoft.com/en-us/library/aa302290.aspx
  * 
  * The 96 DPI Solution: http://www.charlespetzold.com/blog/2005/11/250723.html
  * */
@@ -79,7 +83,7 @@ namespace BogheApp
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
-            
+
             // Show Authentication Screen
             //this.screenService.Show(ScreenType.Contacts);
             this.screenService.Show(ScreenType.Authentication);
@@ -96,6 +100,13 @@ namespace BogheApp
                     this.screenService.Hide(screen);
                 }
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.imageAvatar.Source = MyImageConverter.FromBitmap(Properties.Resources.avatar_48);
+            this.labelFreeText.Content = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, Configuration.DEFAULT_RCS_FREE_TEXT);
+            this.labelDisplayName.Content = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
         }
     }
 }

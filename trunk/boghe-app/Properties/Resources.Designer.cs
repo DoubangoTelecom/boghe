@@ -60,6 +60,34 @@ namespace BogheApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap avatar_48 {
+            get {
+                object obj = ResourceManager.GetObject("avatar_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap call_incoming_45 {
+            get {
+                object obj = ResourceManager.GetObject("call_incoming_45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap call_missed_45 {
+            get {
+                object obj = ResourceManager.GetObject("call_missed_45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap call_outgoing_45 {
+            get {
+                object obj = ResourceManager.GetObject("call_outgoing_45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap gsma_rcs {
             get {
                 object obj = ResourceManager.GetObject("gsma_rcs", resourceCulture);
