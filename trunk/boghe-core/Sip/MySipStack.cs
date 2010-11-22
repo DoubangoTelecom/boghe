@@ -50,7 +50,7 @@ namespace BogheCore.Sip
 
         public override void Dispose()
         {
-            // To avoid usage from other external stacks (e.g. HTTP)
+            // To avoid usage from other external stacks (e.g. HTTP, ...)
             this.setDebugCallback(null);
             //base.Dispose();
         }

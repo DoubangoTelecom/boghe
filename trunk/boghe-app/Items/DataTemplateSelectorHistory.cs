@@ -23,37 +23,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using BogheCore.Model;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BogheControls;
-using BogheCore.Services;
-using BogheApp.Services.Impl;
-using BogheApp.Items;
 
-namespace BogheApp.Screens
+namespace BogheApp.Items
 {
-    /// <summary>
-    /// Interaction logic for ScreenHistory.xaml
-    /// </summary>
-    public partial class ScreenHistory : BaseScreen
+    internal class DataTemplateSelectorHistory : DataTemplateSelector
     {
-        private readonly IHistoryService historyService;
-
-        public ScreenHistory()
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            InitializeComponent();
+            DataTemplate template = null;
+            FrameworkElement element = container as FrameworkElement;
 
-            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
+            if (element != null && item != null)
+            {
+                if (item is HistoryAVCallEvent)
+                {
+                    template = element.FindResource("DataTemplateHistoryAVCallEvent") as DataTemplate;
+                }
+                //else if (item is Group)
+                //{
+                //    template = element.FindResource("DataTemplateGroup") as DataTemplate;
+                //}
+            }
 
-            this.listBox.ItemTemplateSelector = new DataTemplateSelectorHistory();
-            this.listBox.ItemsSource = this.historyService.Events;
-
+            return template;
         }
     }
 }

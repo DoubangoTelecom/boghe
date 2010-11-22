@@ -61,6 +61,7 @@ namespace BogheCore.Model
         public static bool DEFAULT_RCS_PRESENCE_PUB = false;
         public static bool DEFAULT_RCS_RLS = true;
         public static String DEFAULT_RCS_SMSC = "sip:+331000000000@open-ims.test";
+        public static String DEFAULT_RCS_HOME_PAGE = "http://www.doubango.org";
         //public static PresenceStatus DEFAULT_RCS_STATUS = PresenceStatus.Online;
 
         public static String DEFAULT_QOS_PRECOND_BANDWIDTH = "Low";
@@ -89,13 +90,15 @@ namespace BogheCore.Model
         public static bool DEFAULT_XCAP_ENABLED = false;
         public static String DEFAULT_XCAP_ROOT = "http://doubango.org:8080/services";
         public static String DEFAULT_XUI = "sip:johndoe@open-ims.test";
-
+        public static int DEFAULT_XCAP_TIMEOUT = 6000; // milliseconds
 
 
         public enum ConfEntry
         {
+            TIMEOUT, PASSWORD,
+
             /* === IDENTITY === */
-            DISPLAY_NAME, IMPI, IMPU, PASSWORD,
+            DISPLAY_NAME, IMPI, IMPU, /*PASSWORD,*/
 
             /* === GENERAL === */
             FULL_SCREEN_VIDEO, FFC, AUDIO_PLAY_LEVEL, ENUM_DOMAIN,
@@ -109,7 +112,7 @@ namespace BogheCore.Model
             PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, REFRESHER, SIP_CALLS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
 
             /* === RCS (GSMA Rich Communication Suite) === */
-            AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
+            AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
 
             /* === SECURITY === */
             TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, IMSAKA_AMF, IMSAKA_OPID,
@@ -123,8 +126,7 @@ namespace BogheCore.Model
             HACK_AOR, HACK_AOR_TIMEOUT, USE_STUN, USE_ICE, STUN_DISCO, STUN_SERVER, STUN_PORT,
 
             /* === XCAP === */
-            /* PASSWORD */
-            ENABLED, XCAP_ROOT, USERNAME
+            /* PASSWORD, */ ENABLED, XCAP_ROOT, USERNAME/*, TIMEOUT*/
         }
     }
 }

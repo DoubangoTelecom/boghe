@@ -32,12 +32,16 @@ namespace BogheApp.Screens
         {
             this.checkBoxPresencePublish.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_PUB, Configuration.DEFAULT_RCS_PRESENCE_PUB);
             this.checkBoxPresenceSubscribe.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_SUB, Configuration.DEFAULT_RCS_PRESENCE_SUB);
+            this.textBoxPresenceFreeText.Text = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, Configuration.DEFAULT_RCS_FREE_TEXT);
+            this.textBoxPresenceHomePage.Text = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.HOME_PAGE, Configuration.DEFAULT_RCS_HOME_PAGE);
         }
 
         private bool UpdatePresence()
         {
             this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_PUB, this.checkBoxPresencePublish.IsChecked.HasValue ? this.checkBoxPresencePublish.IsChecked.Value : Configuration.DEFAULT_RCS_PRESENCE_PUB);
             this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_SUB, this.checkBoxPresenceSubscribe.IsChecked.HasValue ? this.checkBoxPresenceSubscribe.IsChecked.Value : Configuration.DEFAULT_RCS_PRESENCE_SUB);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, this.textBoxPresenceFreeText.Text);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.HOME_PAGE, this.textBoxPresenceHomePage.Text);
 
             return true;
         }

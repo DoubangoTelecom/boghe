@@ -98,6 +98,7 @@ namespace BogheCore.Services.Impl
                 }
 
                 uint sessionId = session.getId();
+                MyInviteSession invSession = null;
 
                 SipService.LOG.Info(String.Format("OnDialogEvent ({0})", phrase));
 
@@ -109,8 +110,13 @@ namespace BogheCore.Services.Impl
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService, 
                             new RegistrationEventArgs(RegistrationEventTypes.REGISTRATION_INPROGRESS, code, phrase));
                     }
-
                     // Audio/Video/MSRP
+                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    {
+                        InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.INPROGRESS, phrase);
+                        eargs.PutExtra("session", invSession);
+                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                    } 
 
                     // Subscription
 
@@ -140,6 +146,11 @@ namespace BogheCore.Services.Impl
                     }
 
                     // Audio/Video/MSRP
+                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    {
+                        invSession.IsConnected = true;
+                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.CONNECTED, phrase));
+                    }
 
                     // Subscription
 
@@ -156,8 +167,11 @@ namespace BogheCore.Services.Impl
                             new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_INPROGRESS, code, phrase));
                     }
 
-
                     // Audio/Video/MSRP
+                    else if (MyAVSession.HasSession(sessionId) || MyMsrpSession.HasSession(sessionId))
+                    {
+                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.TERMWAIT, phrase));
+                    }
 
                     // Subscription
 
@@ -183,9 +197,13 @@ namespace BogheCore.Services.Impl
                             }
                         })).Start();
                     }
-						
 
                     // Audio/Video/MSRP
+                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    {
+                        invSession.IsConnected = false;
+                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.DISCONNECTED, phrase));
+                    }
 
                     // Subscription
 

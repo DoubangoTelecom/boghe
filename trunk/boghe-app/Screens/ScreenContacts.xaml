@@ -18,11 +18,11 @@
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="34*" />
-            <RowDefinition Height="383*" />
-            <RowDefinition Height="29*" />
+            <RowDefinition Height="39*" />
+            <RowDefinition Height="435.5*" />
+            <RowDefinition Height="35.5*" />
         </Grid.RowDefinitions>
-        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,3,0,5" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,3,0,4" Grid.Row="1">
             <!--ListBox.ItemTemplate>
                 <DataTemplate>
                     <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemContact>
@@ -31,6 +31,10 @@
         </ListBox>
         <TextBox Margin="192,8,6,0" Name="textBoxFilterCriteria" Height="23" VerticalAlignment="Top" />
         <ComboBox Margin="0,8,0,0" Name="comboBoxGroups" HorizontalAlignment="Left" Width="152" Height="23" VerticalAlignment="Top" />
-        <TextBox Margin="0,1.228,124,5.682" Name="textBoxFreeContact" Grid.Row="2" />
+        <TextBox Margin="3,0,155,8" Name="textBoxFreeContact" Grid.Row="2" Height="21.318" VerticalAlignment="Bottom" />
+        <Button Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,116,2.5" Name="buttonVoice" Width="32" Height="32" VerticalAlignment="Bottom" Click="buttonVoice_Click"></Button>
+        <Button HorizontalAlignment="Right" Margin="0,0,78,2" Name="buttonVisio" Width="32" Grid.Row="2" Height="32" VerticalAlignment="Bottom" Click="buttonVisio_Click" />
+        <Button HorizontalAlignment="Right" Margin="0,0,41,2" Name="buttonFile" Width="32" Grid.Row="2" Height="32" VerticalAlignment="Bottom" Click="buttonFile_Click" />
+        <Button HorizontalAlignment="Right" Margin="0,0,3,3" Name="buttonMessaging" Width="32" Grid.Row="2" Height="31.5" VerticalAlignment="Bottom" />
     </Grid>
 </ctrl:BaseScreen>

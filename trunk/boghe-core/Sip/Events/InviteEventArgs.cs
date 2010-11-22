@@ -22,38 +22,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BogheControls;
-using BogheCore.Services;
-using BogheApp.Services.Impl;
-using BogheApp.Items;
+using BogheCore.Events;
 
-namespace BogheApp.Screens
+namespace BogheCore.Sip.Events
 {
-    /// <summary>
-    /// Interaction logic for ScreenHistory.xaml
-    /// </summary>
-    public partial class ScreenHistory : BaseScreen
+    public class InviteEventArgs : MyEventArgs
     {
-        private readonly IHistoryService historyService;
+        private readonly long sessionId;
+        private readonly InviteEventTypes type;
+        private readonly String phrase;
 
-        public ScreenHistory()
+        public InviteEventArgs(long sessionId, InviteEventTypes type, String phrase)
+            :base()
         {
-            InitializeComponent();
+            this.sessionId = sessionId;
+            this.type = type;
+            this.phrase = phrase;
+        }
 
-            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
+        public long SessionId
+        {
+            get { return this.sessionId; }
+        }
 
-            this.listBox.ItemTemplateSelector = new DataTemplateSelectorHistory();
-            this.listBox.ItemsSource = this.historyService.Events;
+        public InviteEventTypes Type
+        {
+            get { return this.type; }
+        }
 
+        public String Phrase
+        {
+            get { return this.phrase; }
         }
     }
 }

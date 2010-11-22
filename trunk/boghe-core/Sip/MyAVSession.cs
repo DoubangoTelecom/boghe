@@ -22,10 +22,182 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using org.doubango.tinyWRAP;
 
 namespace BogheCore.Sip
 {
-    public class MyAVSession
+    public class MyAVSession : MyInviteSession
     {
+        private readonly CallSession session;
+        private CallState callState;
+
+        private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
+
+        public enum CallState
+        {
+            NONE,
+            CALL_INCOMING,
+            CALL_INPROGRESS,
+            REMOTE_RINGING,
+            EARLY_MEDIA,
+            INCALL,
+            CALL_TERMINATED,
+        }
+
+        public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, MediaType mediaType)
+        {
+            lock (MyAVSession.sessions)
+            {
+                MyAVSession avSession = new MyAVSession(sipStack, session, mediaType, CallState.CALL_INCOMING);
+                MyAVSession.sessions.Add(avSession.Id, avSession);
+                return avSession;
+            }
+        }
+
+        public static MyAVSession CreateOutgoingSession(MySipStack sipStack, MediaType mediaType)
+        {
+            lock (MyAVSession.sessions)
+            {
+                MyAVSession avSession = new MyAVSession(sipStack, null, mediaType, CallState.CALL_INPROGRESS);
+                MyAVSession.sessions.Add(avSession.Id, avSession);
+
+                return avSession;
+            }
+        }
+
+        public static void ReleaseSession(MyAVSession session)
+        {
+            lock (MyAVSession.sessions)
+            {
+                if (session != null && MyAVSession.sessions.ContainsKey(session.Id))
+                {
+                    long id = session.Id;
+                    session.Dispose();
+                    MyAVSession.sessions.Remove(id);
+                }
+            }
+        }
+
+        public static MyAVSession GetSession(long id)
+        {
+		    lock(MyAVSession.sessions)
+            {
+                if (MyAVSession.sessions.ContainsKey(id))
+                    return MyAVSession.sessions[id];
+                else
+                    return null;
+		    }
+	    }
+
+        public static bool HasSession(long id)
+        {
+            lock (MyAVSession.sessions)
+            {
+                return MyAVSession.sessions.ContainsKey(id);
+            }
+        }
+
+        public MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, CallState callState)
+            : base(sipStack)
+        {
+            this.session = (session == null) ? new CallSession(sipStack) : session;
+            base.mediaType = mediaType;
+            this.callState = callState;
+
+            // commons
+            base.init();
+
+            // SigComp
+            base.SigCompId = sipStack.SigCompId;
+
+            // 100rel
+            this.session.set100rel(true); // will add "Supported: 100rel"
+
+            /* 3GPP TS 24.173
+		    *
+		    * 5.1 IMS communication service identifier
+		    * URN used to define the ICSI for the IMS Multimedia Telephony Communication Service: urn:urn-7:3gpp-service.ims.icsi.mmtel. 
+		    * The URN is registered at http://www.3gpp.com/Uniform-Resource-Name-URN-list.html.
+		    * Summary of the URN: This URN indicates that the device supports the IMS Multimedia Telephony Communication Service.
+		    *
+		    * Contact: <sip:impu@doubango.org;gr=urn:uuid:xxx;comp=sigcomp>;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"
+		    * Accept-Contact: *;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"
+		    * P-Preferred-Service: urn:urn-7:3gpp-service.ims.icsi.mmtel
+		    */
+            this.session.addCaps("+g.3gpp.icsi-ref", "\"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel\"");
+            this.session.addHeader("Accept-Contact", "*;+g.3gpp.icsi-ref=\"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel\"");
+            this.session.addHeader("P-Preferred-Service", "urn:urn-7:3gpp-service.ims.icsi.mmtel");
+        }
+
+        protected override SipSession Session
+        {
+            get { return this.session; }
+        }
+
+        public bool AcceptCall()
+        {
+            return this.session.accept();
+        }
+
+        public bool HangUpCall()
+        {
+            if (base.connected)
+            {
+                return this.session.hangup();
+            }
+            else
+            {
+                return this.session.reject();
+            }
+        }
+
+        public bool HoldCall()
+        {
+            return this.session.hold();
+        }
+
+        public bool MakeCall(String remoteUri)
+        {
+            bool ret;
+
+            base.outgoing = true;
+            base.ToUri = remoteUri;
+
+            ActionConfig config = new ActionConfig();
+            switch (this.mediaType)
+            {
+                case MediaType.AudioVideo:
+                case MediaType.Video:
+                    ret = this.session.callAudioVideo(remoteUri, config);
+                    break;
+                case MediaType.Audio:
+                    ret = this.session.callAudio(remoteUri, config);
+                    break;
+                default:
+                    throw new Exception("This session doesn't support this media type");
+            }
+            config.Dispose();
+
+            return ret;
+        }
+
+        public bool MakeVideoSharingCall(String remoteUri)
+        {
+            bool ret;
+
+            base.outgoing = true;
+
+            ActionConfig config = new ActionConfig();
+            ret = this.session.callVideo(remoteUri, config);
+            config.Dispose();
+
+            return ret;
+        }
+
+        public bool SendDTMF(int digit)
+        {
+            return this.session.sendDTMF(digit);
+        }
+
     }
 }

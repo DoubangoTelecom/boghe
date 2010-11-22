@@ -32,28 +32,41 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BogheControls;
-using BogheCore.Services;
-using BogheApp.Services.Impl;
-using BogheApp.Items;
+using BogheCore.Model;
+using BogheControls.Utils;
 
-namespace BogheApp.Screens
+namespace BogheApp.Items
 {
     /// <summary>
-    /// Interaction logic for ScreenHistory.xaml
+    /// Interaction logic for ItemHistoryAVCallEvent.xaml
     /// </summary>
-    public partial class ScreenHistory : BaseScreen
+    public partial class ItemHistoryAVCallEvent : BaseItem<HistoryAVCallEvent>
     {
-        private readonly IHistoryService historyService;
-
-        public ScreenHistory()
+        public ItemHistoryAVCallEvent()
         {
             InitializeComponent();
 
-            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
+            this.ValueLoaded += this.ItemHistoryAVCallEvent_ValueLoaded;
+        }
 
-            this.listBox.ItemTemplateSelector = new DataTemplateSelectorHistory();
-            this.listBox.ItemsSource = this.historyService.Events;
+        private void ItemHistoryAVCallEvent_ValueLoaded(object sender, EventArgs e)
+        {
+            HistoryAVCallEvent @event = this.Value;
 
+            this.labelDisplayName.Content = String.IsNullOrEmpty(@event.RemoteParty) ? "(null)" : @event.RemoteParty;
+            this.labelDescription.Content = String.Format("{0} {1} ({2})", @event.StartTime.ToLongDateString(), @event.StartTime.ToLongTimeString(), "00");
+            switch (@event.Status)
+            {
+                case HistoryEvent.StatusType.Incoming:
+                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.call_incoming_45);
+                    break;
+                case HistoryEvent.StatusType.Outgoing:
+                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.call_outgoing_45);
+                    break;
+                default:
+                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.call_missed_45);
+                    break;
+            }
         }
     }
 }

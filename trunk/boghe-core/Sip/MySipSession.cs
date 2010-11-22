@@ -32,6 +32,7 @@ namespace BogheCore.Sip
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MySipSession));
         protected MySipStack sipStack;
         protected bool connected;
+        protected bool outgoing;
         protected String fromUri;
         protected String toUri;
         protected String compId;
@@ -39,6 +40,7 @@ namespace BogheCore.Sip
         public MySipSession(MySipStack sipStack)
         {
             this.sipStack = sipStack;
+            this.outgoing = false;
             /* init must be called by the child class after session_create() */
             /* this.init(); */
         }
@@ -85,6 +87,11 @@ namespace BogheCore.Sip
                 }
                 this.toUri = value;
             }
+        }
+
+        public String RemotePartyUri
+        {
+            get { return this.outgoing ? this.toUri : this.fromUri; }
         }
 
         public String SigCompId

@@ -25,7 +25,18 @@ using System.Text;
 
 namespace BogheCore.Sip
 {
-    public class MyInviteSession
+    public abstract class MyInviteSession : MySipSession
     {
+        protected MediaType mediaType; 
+
+        protected MyInviteSession(MySipStack sipStack)
+            :base(sipStack)
+        {
+        }
+
+        public MediaType MediaType
+        {
+            get { return this.mediaType; }
+        }
     }
 }
