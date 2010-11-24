@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Boghe - XDM Functions")]
 [assembly: AssemblyDescription("Boghe - XDM Functions")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Doubango")]
+[assembly: AssemblyCompany("Doubango Telecom")]
 [assembly: AssemblyProduct("boghe-xdm")]
 [assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]

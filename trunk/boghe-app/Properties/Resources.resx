@@ -121,6 +121,21 @@
   <data name="avatar_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\48\avatar_48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bullet_ball_glass_blue_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\bullet_ball_glass_blue_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bullet_ball_glass_green_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\bullet_ball_glass_green_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bullet_ball_glass_grey_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\bullet_ball_glass_grey_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bullet_ball_glass_red_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\bullet_ball_glass_red_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bullet_ball_glass_yellow_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\bullet_ball_glass_yellow_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="call_incoming_45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\45\call_incoming_45.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,8 +145,47 @@
   <data name="call_outgoing_45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\45\call_outgoing_45.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dtmf_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_0.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_1.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_2.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_3.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_4.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_5.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_6.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_7.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_8.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_9.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_pound.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dtmf_star" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\dtmf_star.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gsma_rcs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\gsma_rcs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hourglass_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\hourglass_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\icon_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,6 +208,9 @@
   <data name="lock_ok_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\32\lock_ok_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="lock_open_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\lock_open_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="lock_warning_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\lock_warning_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -165,6 +222,15 @@
   </data>
   <data name="log4net_xml" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\log4net.xml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="newevent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\newevent.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ringbacktone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\ringbacktone.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ringtone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\sound\ringtone.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="signin_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\signin_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -25,6 +25,7 @@ using System.Text;
 using BogheCore.Services.Impl;
 using BogheCore.Services;
 using log4net;
+using BogheCore.Utils;
 
 namespace BogheApp.Services.Impl
 {
@@ -41,6 +42,7 @@ namespace BogheApp.Services.Impl
         private IContactService contactService;
         private IXcapService xcapService;
         private IHistoryService historyService;
+        private ISoundService soundService;
 
         /// <summary>
         /// Shared Service manager
@@ -52,6 +54,7 @@ namespace BogheApp.Services.Impl
                 if (Win32ServiceManager.singleton == null)
                 {
                     Win32ServiceManager.singleton = new Win32ServiceManager();
+                    UriUtils.ServiceManager = Win32ServiceManager.singleton;
                 }
                 return Win32ServiceManager.singleton;
             }
@@ -77,6 +80,7 @@ namespace BogheApp.Services.Impl
             ret &= this.XcapService.Start();
             ret &= this.ContactService.Start();
             ret &= this.HistoryService.Start();
+            ret &= this.SoundService.Start();
 
             return ret;
         }
@@ -98,6 +102,7 @@ namespace BogheApp.Services.Impl
             ret &= this.XcapService.Stop();
             ret &= this.ContactService.Stop();
             ret &= this.HistoryService.Stop();
+            ret &= this.SoundService.Stop();
 
             ret &= this.ConfigurationService.Stop();
             ret &= this.LogService.Stop();
@@ -195,6 +200,18 @@ namespace BogheApp.Services.Impl
                     this.historyService = new HistoryService(this);
                 }
                 return this.historyService;
+            }
+        }
+
+        public override ISoundService SoundService
+        {
+            get
+            {
+                if (this.soundService == null)
+                {
+                    this.soundService = new SoundService(this);
+                }
+                return this.soundService;
             }
         }
 

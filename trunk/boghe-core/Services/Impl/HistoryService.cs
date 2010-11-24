@@ -131,7 +131,7 @@ namespace BogheCore.Services.Impl
 
         public void AddEvent(HistoryEvent @event)
         {
-            this.events.Add(@event);
+            this.events.Insert(0, @event);
             EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, new HistoryEventArgs(HistoryEventTypes.ADDED));
 
             this.DeferredSave();

@@ -63,6 +63,9 @@
     <Compile Include="..\..\Doubango\bindings\csharp\InviteSession.cs">
       <Link>InviteSession.cs</Link>
     </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\MediaSessionMgr.cs">
+      <Link>MediaSessionMgr.cs</Link>
+    </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\MessagingEvent.cs">
       <Link>MessagingEvent.cs</Link>
     </Compile>

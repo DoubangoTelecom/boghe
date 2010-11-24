@@ -35,5 +35,5 @@ namespace BogheCore
         Chat = 0x01 << 3,
         Messaging = SMS | Chat,
         FileTransfer = 0x01 << 4
-    }
+    }    
 }

@@ -45,7 +45,7 @@ namespace BogheCore.Events
             return null;
         }
 
-        public MyEventArgs PutExtra(String key, Object value)
+        public MyEventArgs AddExtra(String key, Object value)
         {
             if (!this.extras.ContainsKey(key))
             {

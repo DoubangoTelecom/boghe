@@ -52,6 +52,11 @@ namespace BogheCore.Services.Impl
             get;
         }
 
+        public abstract ISoundService SoundService
+        {
+            get;
+        }
+
         public abstract System.Windows.Threading.Dispatcher Dispatcher
         {
             get;

@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>embedded\16\icon_16.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -115,7 +117,7 @@
     <Compile Include="Services\Impl\Win32ServiceManager.cs" />
     <Compile Include="Services\IScreenService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -238,6 +240,10 @@
     <Compile Include="Screens\ScreenOptions.Security.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\Impl\SoundService.cs" />
+    <Compile Include="SessionWindow.Internals.cs">
+      <DependentUpon>SessionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SessionWindow.SipEvent.cs">
       <DependentUpon>SessionWindow.xaml</DependentUpon>
     </Compile>
@@ -309,6 +315,39 @@
     <Resource Include="embedded\45\call_incoming_45.png" />
     <Resource Include="embedded\45\call_missed_45.png" />
     <Resource Include="embedded\45\call_outgoing_45.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\sound\dtmf_0.wav" />
+    <Resource Include="embedded\sound\dtmf_1.wav" />
+    <Resource Include="embedded\sound\dtmf_2.wav" />
+    <Resource Include="embedded\sound\dtmf_3.wav" />
+    <Resource Include="embedded\sound\dtmf_4.wav" />
+    <Resource Include="embedded\sound\dtmf_5.wav" />
+    <Resource Include="embedded\sound\dtmf_6.wav" />
+    <Resource Include="embedded\sound\dtmf_7.wav" />
+    <Resource Include="embedded\sound\dtmf_8.wav" />
+    <Resource Include="embedded\sound\dtmf_9.wav" />
+    <Resource Include="embedded\sound\dtmf_pound.wav" />
+    <Resource Include="embedded\sound\dtmf_star.wav" />
+    <Resource Include="embedded\sound\ringbacktone.wav" />
+    <Resource Include="embedded\sound\newevent.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\sound\ringtone.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\icon_16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\bullet_ball_glass_blue_24.png" />
+    <Resource Include="embedded\24\bullet_ball_glass_green_24.png" />
+    <Resource Include="embedded\24\bullet_ball_glass_grey_24.png" />
+    <Resource Include="embedded\24\bullet_ball_glass_red_24.png" />
+    <Resource Include="embedded\24\bullet_ball_glass_yellow_24.png" />
+    <Resource Include="embedded\24\hourglass_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\lock_open_24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

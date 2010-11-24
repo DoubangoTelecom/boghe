@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
 using log4net;
+using BogheCore.Utils;
 
 namespace BogheCore.Sip
 {
@@ -36,6 +37,8 @@ namespace BogheCore.Sip
         protected String fromUri;
         protected String toUri;
         protected String compId;
+        protected String remotePartyUri;
+        protected String remotePartyDisplayName = null;
 
         public MySipSession(MySipStack sipStack)
         {
@@ -89,9 +92,34 @@ namespace BogheCore.Sip
             }
         }
 
+        // Helper Property. Will not talk to the SIP Stack
         public String RemotePartyUri
         {
-            get { return this.outgoing ? this.toUri : this.fromUri; }
+            get 
+            {
+                if (String.IsNullOrEmpty(remotePartyUri))
+                {
+                    this.remotePartyUri =  this.outgoing ? this.toUri : this.fromUri;
+                }
+                return String.IsNullOrEmpty(this.remotePartyUri) ? "(null)" : this.remotePartyUri;
+            }
+            set
+            {
+                this.remotePartyUri = value;
+            }
+        }
+        
+        public String RemotePartyDisplayName
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(this.remotePartyDisplayName))
+                {
+                    this.remotePartyDisplayName = UriUtils.GetDisplayName(this.RemotePartyUri);
+                    this.remotePartyDisplayName = String.IsNullOrEmpty(this.remotePartyDisplayName) ? "(null)" : this.remotePartyDisplayName;
+                }
+                return this.remotePartyDisplayName;
+            }
         }
 
         public String SigCompId

@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Boghe - Custom controls")]
 [assembly: AssemblyDescription("Boghe - Custom controls")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Doubango")]
+[assembly: AssemblyCompany("Doubango Telecom")]
 [assembly: AssemblyProduct("boghe-controls")]
 [assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]

@@ -22,21 +22,55 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using org.doubango.tinyWRAP;
 
 namespace BogheCore.Sip
 {
     public abstract class MyInviteSession : MySipSession
     {
-        protected MediaType mediaType; 
+        protected MediaType mediaType;
+        protected MediaSessionMgr mediaSessionMgr = null;
+        protected InviteState state;
+
+        public enum InviteState
+        {
+            NONE,
+            INCOMING,
+            INPROGRESS,
+            REMOTE_RINGING,
+            EARLY_MEDIA,
+            INCALL,
+            TERMINATING,
+            TERMINATED,
+        }
 
         protected MyInviteSession(MySipStack sipStack)
             :base(sipStack)
         {
+            this.state = InviteState.NONE;
         }
 
         public MediaType MediaType
         {
             get { return this.mediaType; }
+        }
+
+        public InviteState State
+        {
+            get { return this.state; }
+            set { this.state = value; }
+        }
+
+        public MediaSessionMgr MediaSessionMgr
+        {
+            get
+            {
+                if (this.mediaSessionMgr == null)
+                {
+                    this.mediaSessionMgr = (this.Session as InviteSession).getMediaMgr();
+                }
+                return this.mediaSessionMgr;
+            }
         }
     }
 }

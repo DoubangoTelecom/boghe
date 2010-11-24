@@ -47,6 +47,7 @@ using BogheCore.Model;
  * Serialization: http://msdn.microsoft.com/en-us/library/aa302290.aspx
  * 
  * The 96 DPI Solution: http://www.charlespetzold.com/blog/2005/11/250723.html
+ * Play MFile: http://en.csharp-online.net/Graphics,_Multimedia,_and_Printing_Recipes%E2%80%94Recipe_8_12
  * */
 
 namespace BogheApp
@@ -60,6 +61,7 @@ namespace BogheApp
         private readonly ISipService sipService;
         private readonly IConfigurationService configurationService;
         private readonly IContactService contactService;
+        private readonly ISoundService soundService;
 
         public MainWindow()
         {
@@ -74,12 +76,12 @@ namespace BogheApp
             this.sipService = Win32ServiceManager.SharedManager.SipService;
             this.sipService.onStackEvent += this.sipService_onStackEvent;
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
+            this.sipService.onInviteEvent += this.sipService_onInviteEvent;
             
-            // Configuration service
+            // Services
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
-
-            // Contact Service
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
+            this.soundService = Win32ServiceManager.SharedManager.SoundService;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));

@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Boghe - IMS/RCS Client")]
 [assembly: AssemblyDescription("Boghe - IMS/RCS Client")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Doubango")]
+[assembly: AssemblyCompany("Doubango Telecom")]
 [assembly: AssemblyProduct("boghe-app")]
 [assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]

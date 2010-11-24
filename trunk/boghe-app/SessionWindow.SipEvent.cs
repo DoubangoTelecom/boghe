@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using BogheCore.Sip.Events;
 using BogheCore.Model;
+using BogheCore;
 
 namespace BogheApp
 {
@@ -24,30 +25,49 @@ namespace BogheApp
                 return;
             }
 
+            this.UpdateControls();
+
             switch (e.Type)
             {
                 case InviteEventTypes.INCOMING:
-                    this.labelInfo.Content = String.Format("Incoming call from {0}", "John Doe");
+                    this.labelInfo.Content = String.Format("Incoming call from {0}", this.AVSession.RemotePartyDisplayName);
                     this.avHistoryEvent = new HistoryAVCallEvent(this.AVSession.MediaType != BogheCore.MediaType.Audio, this.AVSession.RemotePartyUri);
                     this.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
                     break;
 
                 case InviteEventTypes.INPROGRESS:
+                    // History Event
                     this.labelInfo.Content = "Call In Progress...";
-                    this.avHistoryEvent = new HistoryAVCallEvent(this.AVSession.MediaType != BogheCore.MediaType.Audio, this.AVSession.RemotePartyUri);
+                    bool isVideo = (this.AVSession.MediaType == MediaType.AudioVideo || this.AVSession.MediaType == MediaType.Video);
+                    this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
                     this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
+                    // Video Displays
+                    if (isVideo)
+                    {
+                        this.AttachDisplays();
+                    }
+                    
                     break;
 
                 case InviteEventTypes.RINGING:
                     this.labelInfo.Content = "Ringing";
+                    this.soundService.PlayRingBackTone();
                     break;
 
                 case InviteEventTypes.EARLY_MEDIA:
                     this.labelInfo.Content = "Early Media Started";
+                    this.soundService.StopRingBackTone();
+                    this.soundService.StopRingTone();
                     break;
 
                 case InviteEventTypes.CONNECTED:
                     this.labelInfo.Content = "In Call";
+                    this.soundService.StopRingBackTone();
+                    this.soundService.StopRingTone();
+
+                    this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
+                    this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
+
                     //this.startTime = DateTime.Now;
                     //this.endTime = this.startTime;
                     //this.timerCall.Enabled = true;
@@ -60,15 +80,29 @@ namespace BogheApp
                         this.avHistoryEvent.StartTime = DateTime.Now;
                         this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
                     }
+                    
                     break;
 
                 case InviteEventTypes.DISCONNECTED:
                 case InviteEventTypes.TERMWAIT:
-                    this.labelInfo.Content = e.Phrase;
+                    this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? "Call Terminated" : e.Phrase;
                     this.timerCall.Enabled = false;
+                    this.soundService.StopRingBackTone();
+                    this.soundService.StopRingTone();
 
-                    this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
-                    this.historyService.AddEvent(this.avHistoryEvent);
+                    if (this.avHistoryEvent != null)
+                    {
+                        lock (this.avHistoryEvent)
+                        {
+                            this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
+                            this.historyService.AddEvent(this.avHistoryEvent);
+                            this.avHistoryEvent = null;
+                        }
+                    }
+
+                    this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
+                    this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
+                    this.AVSession = null;
                     break;
 
                 case InviteEventTypes.LOCAL_HOLD_OK:

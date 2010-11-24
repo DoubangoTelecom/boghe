@@ -29,26 +29,34 @@ namespace BogheCore.Sip
     public class MyAVSession : MyInviteSession
     {
         private readonly CallSession session;
-        private CallState callState;
 
         private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
-
-        public enum CallState
+        
+        public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
         {
-            NONE,
-            CALL_INCOMING,
-            CALL_INPROGRESS,
-            REMOTE_RINGING,
-            EARLY_MEDIA,
-            INCALL,
-            CALL_TERMINATED,
-        }
+            MediaType media;
 
-        public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, MediaType mediaType)
-        {
             lock (MyAVSession.sessions)
             {
-                MyAVSession avSession = new MyAVSession(sipStack, session, mediaType, CallState.CALL_INCOMING);
+                switch (mediaType)
+                {
+                    case twrap_media_type_t.twrap_media_audio:
+                        media = MediaType.Audio;
+                        break;
+                    case twrap_media_type_t.twrap_media_video:
+                        media = MediaType.Video;
+                        break;
+                    case twrap_media_type_t.twrap_media_audiovideo:
+                        media = MediaType.AudioVideo;
+                        break;
+                    default:
+                        return null;
+                }
+                MyAVSession avSession = new MyAVSession(sipStack, session, media, InviteState.INCOMING);
+                if (sipMessage != null)
+                {
+                    avSession.RemotePartyUri = sipMessage.getSipHeaderValue("f");
+                }
                 MyAVSession.sessions.Add(avSession.Id, avSession);
                 return avSession;
             }
@@ -58,7 +66,7 @@ namespace BogheCore.Sip
         {
             lock (MyAVSession.sessions)
             {
-                MyAVSession avSession = new MyAVSession(sipStack, null, mediaType, CallState.CALL_INPROGRESS);
+                MyAVSession avSession = new MyAVSession(sipStack, null, mediaType, InviteState.INPROGRESS);
                 MyAVSession.sessions.Add(avSession.Id, avSession);
 
                 return avSession;
@@ -97,12 +105,12 @@ namespace BogheCore.Sip
             }
         }
 
-        public MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, CallState callState)
+        public MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, InviteState callState)
             : base(sipStack)
         {
             this.session = (session == null) ? new CallSession(sipStack) : session;
             base.mediaType = mediaType;
-            this.callState = callState;
+            this.state = callState;
 
             // commons
             base.init();

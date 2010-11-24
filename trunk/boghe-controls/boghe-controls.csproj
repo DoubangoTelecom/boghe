@@ -54,6 +54,7 @@
     <Compile Include="BaseItem.cs" />
     <Compile Include="BaseScreen.cs" />
     <Compile Include="CloseableTabItem.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -68,6 +69,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Utils\MyImageConverter.cs" />
+    <Compile Include="VideoDisplay.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
