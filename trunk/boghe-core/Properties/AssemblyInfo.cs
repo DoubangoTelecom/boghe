@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Boghe - Core functions")]
 [assembly: AssemblyDescription("Boghe - Core functions")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Doubango")]
+[assembly: AssemblyCompany("Doubango Telecom")]
 [assembly: AssemblyProduct("boghe-core")]
 [assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]

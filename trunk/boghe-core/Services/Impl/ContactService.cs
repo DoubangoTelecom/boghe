@@ -158,6 +158,11 @@ namespace BogheCore.Services.Impl
             return true;
         }
 
+        public Contact ContactFind(String uri)
+        {
+            return null;
+        }
+
         public MyObservableCollection<Contact> Contacts 
         {
             get { return this.contacts; }

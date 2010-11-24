@@ -39,6 +39,7 @@ using BogheCore.Services;
 using BogheApp.Services.Impl;
 using BogheCore;
 using BogheCore.Sip;
+using BogheCore.Utils;
 
 namespace BogheApp.Screens
 {
@@ -62,29 +63,31 @@ namespace BogheApp.Screens
             this.listBox.ItemTemplateSelector = new DataTemplateSelectorContacts();
             this.listBox.ItemsSource = this.contacts;
 
-            this.contactService.onContactEvent += this.contactService_onContactEvent;
-
-            /*for (int i = 0; i < 10; i++)
-            {
-                Group g = new Group("All Contacts" + i.ToString(), "All Contacts" + i.ToString());
-                contacts.Add(g);
-
-                Contact c = new Contact();
-                c.DisplayName = "c" + i.ToString();
-                contacts.Add(c);
-            }*/
-            
+            this.contactService.onContactEvent += this.contactService_onContactEvent;            
         }
 
         private void buttonVoice_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeAudioCall("sip:mercuro3@colibria.com");
+            if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
+            {
+                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                if (!String.IsNullOrEmpty(remoteUri))
+                {
+                    SessionWindow.MakeAudioCall(remoteUri);
+                }
+            }
         }
 
         private void buttonVisio_Click(object sender, RoutedEventArgs e)
         {
-            //SessionWindow.MakeVideoCall("sip:2233392625@colibria.com");
-            SessionWindow.MakeVideoCall("sip:8583654806@colibria.com");
+            if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
+            {
+                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                if (!String.IsNullOrEmpty(remoteUri))
+                {
+                    SessionWindow.MakeVideoCall(remoteUri);
+                }
+            }
         }
 
         private void buttonFile_Click(object sender, RoutedEventArgs e)

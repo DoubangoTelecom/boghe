@@ -41,12 +41,21 @@
             </MenuItem>
         </Menu>
         <TabControl Margin="0,83,0,29" Name="tabControl" FlowDirection="LeftToRight" Background="White" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderBrush="SkyBlue">
-            
+
         </TabControl>
-        <Label Name="labelProgressInfo" Margin="0,0,40,-1" Height="32" VerticalAlignment="Bottom"></Label>
+        <Label Name="labelProgressInfo" Margin="0,0,97,-1" Height="32" VerticalAlignment="Bottom" FontSize="16" FontWeight="Normal"></Label>
         <Label Height="28" Margin="1,23,75,0" Name="labelDisplayName" VerticalAlignment="Top" FontSize="14" FontWeight="Bold">John Doe</Label>
         <Image Height="48" HorizontalAlignment="Right" Margin="0,25,5,0" Name="imageAvatar" Stretch="Fill" VerticalAlignment="Top" Width="48" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="4,56,0,0" Name="comboBoxStatus" VerticalAlignment="Top" Width="39" />
-        <Label Height="28" Margin="69,52,59,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0">Hello John Doe from Paris!</Label>
+        <Label Height="28" Margin="69,52,59,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0" FontSize="14">Hello John Doe from Paris!</Label>
+        <Border Height="27" HorizontalAlignment="Right" Margin="0,0,62,1" VerticalAlignment="Bottom" Width="27" MinWidth="27" MinHeight="27" MaxWidth="27" MaxHeight="27" BorderThickness="1" BorderBrush="SkyBlue" CornerRadius="2,2,2,2">
+            <Image MaxHeight="24" MaxWidth="24" MinHeight="24" MinWidth="24" Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Width="24" Height="24" Visibility="Hidden" />
+        </Border>
+        <Border Height="27" HorizontalAlignment="Right" Margin="0,0,31,1" VerticalAlignment="Bottom" Width="27" MinWidth="27" MinHeight="27" MaxWidth="27" MaxHeight="27" BorderThickness="1" BorderBrush="SkyBlue" CornerRadius="2,2,2,2">
+            <Image Height="24" MaxHeight="24" MaxWidth="24" MinHeight="24" MinWidth="24" Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Width="24" StretchDirection="Both" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <Border Height="27" HorizontalAlignment="Right" Margin="0,0,1,1" VerticalAlignment="Bottom" Width="27" MinWidth="27" MinHeight="27" MaxWidth="27" MaxHeight="27" BorderThickness="1" BorderBrush="SkyBlue" CornerRadius="2,2,2,2">
+            <Image Height="24" Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" Width="24" MinWidth="24" MinHeight="24" MaxWidth="24" MaxHeight="24" ClipToBounds="False" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Border>
     </Grid>
 </Window>

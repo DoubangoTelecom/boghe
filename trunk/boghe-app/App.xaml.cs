@@ -41,9 +41,9 @@ namespace BogheApp
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            // Initialize log4net
             try
             {
+                System.Threading.Thread.CurrentThread.Name = "Main Thread";
                 using (Stream stream = new MemoryStream(BogheApp.Properties.Resources.log4net_xml))
                 {
                     XmlConfigurator.Configure(stream);

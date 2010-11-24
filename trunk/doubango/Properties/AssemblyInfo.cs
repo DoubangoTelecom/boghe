@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("doubango - SWIG Wrappers")]
 [assembly: AssemblyDescription("doubango - SWIG Wrappers")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Doubango")]
+[assembly: AssemblyCompany("Doubango Telecom")]
 [assembly: AssemblyProduct("doubango")]
 [assembly: AssemblyCopyright("Copyright ©  2010 Doubango")]
 [assembly: AssemblyTrademark("")]

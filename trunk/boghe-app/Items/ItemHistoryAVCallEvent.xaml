@@ -6,7 +6,21 @@
     Height="57" Width="300">
     <Grid>
         <Image Margin="2,4,0,5" Name="imageIcon" Stretch="Fill" Width="45" HorizontalAlignment="Left" VerticalAlignment="Center" Height="45" />
-        <Label Margin="56,2,0,0" Name="labelDisplayName" FontSize="14" FontWeight="Bold" Height="29" VerticalAlignment="Top">John Doe</Label>
-        <Label Margin="56,0,0,1" Name="labelDescription" Height="28" VerticalAlignment="Bottom">2010 nov. 22 02:13 PM (00:30)</Label>
+        <Label Margin="56,0,0,0" Name="labelDisplayName" FontSize="14" FontWeight="Bold" Padding="0" Height="22" VerticalAlignment="Top">John Doe</Label>
+        <Label Margin="56,20,0,16" Name="labelDate" FontSize="12" Padding="0">2010 nov. 22 02:13 PM</Label>
+        <Label FontSize="12" Margin="53,0,3,0" Name="labelDuration" Padding="0" Height="21" VerticalAlignment="Bottom">Duration: 00:30</Label>
+        <Grid.ContextMenu>
+            <ContextMenu Name="ctxMenu">
+                <MenuItem Header="Make Voice Call" Name="ctxMenu_MakeVoiceCall" Click="ctxMenu_MakeVoiceCall_Click" />
+                <MenuItem Header="Make Video Call" Name="ctxMenu_MakeVideoCall" Click="ctxMenu_MakeVideoCall_Click" />
+                <MenuItem Header="Send File" Name="ctxMenu_SendFile" Click="ctxMenu_SendFile_Click" />
+                <MenuItem Header="Start Chat" Name="ctxMenu_StartChat" Click="ctxMenu_StartChat_Click" />
+                <MenuItem Header="Send SMS" Name="ctxMenu_SendSMS" Click="ctxMenu_SendSMS_Click" />
+                <Separator />
+                <MenuItem Header="Add To contacts" Name="ctxMenu_AddToContacts" Click="ctxMenu_AddToContacts_Click" />
+                <Separator />
+                <MenuItem Header="Delete History Event" Name="ctxMenu_DeleteHistoryEvent" Click="ctxMenu_DeleteHistoryEvent_Click" />
+            </ContextMenu>
+        </Grid.ContextMenu>
     </Grid>
 </ctrl:BaseItem>

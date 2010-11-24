@@ -5,6 +5,9 @@ using System.Text;
 using BogheCore.Sip.Events;
 using System.Threading;
 using BogheApp.Screens;
+using BogheCore.Sip;
+using BogheApp.Services.Impl;
+using BogheControls.Utils;
 
 namespace BogheApp
 {
@@ -43,6 +46,9 @@ namespace BogheApp
             {
                 case RegistrationEventTypes.REGISTRATION_INPROGRESS:
                     this.screenService.SetProgressInfo("Trying to Sign In...");
+
+                    // indicators
+                    this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_grey_24);
                     break;
 
                 case RegistrationEventTypes.REGISTRATION_NOK:
@@ -61,10 +67,20 @@ namespace BogheApp
                     this.MenuItemFile_SignIn.IsEnabled = false;
                     this.MenuItemFile_SignOut.IsEnabled = true;
                     this.MenuItemEAB.IsEnabled = true;
+
+                    // indicators
+                    this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_green_24);
+
+                    // Sound alert
+                    this.soundService.PlayConnectionChanged(true);
+
                     break;
 
                 case RegistrationEventTypes.UNREGISTRATION_INPROGRESS:
                     this.screenService.SetProgressInfo("Trying to Sign Out...");
+
+                    // indicators
+                    this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_grey_24);
                     break;
 
                 case RegistrationEventTypes.UNREGISTRATION_NOK:
@@ -83,6 +99,31 @@ namespace BogheApp
                     this.MenuItemFile_SignIn.IsEnabled = true;
                     this.MenuItemFile_SignOut.IsEnabled = false;
                     this.MenuItemEAB.IsEnabled = false;
+
+                    // indicators
+                    this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_red_24);
+
+                    // Sound alert
+                    this.soundService.PlayConnectionChanged(false);
+                    break;
+            }
+        }
+
+
+        private void sipService_onInviteEvent(object sender, InviteEventArgs e)
+        {
+            switch (e.Type)
+            {
+                case InviteEventTypes.INCOMING:
+                    Win32ServiceManager.SharedManager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                    {
+                        SessionWindow.ReceiveCall(e.GetExtra("Session") as MyInviteSession);
+                        this.soundService.PlayRingTone();
+                    }, null);
+                    
+                    break;
+
+                default:
                     break;
             }
         }

@@ -61,6 +61,7 @@
     <Compile Include="Events\HistoryEventTypes.cs" />
     <Compile Include="Model\HistoryAVCallEvent.cs" />
     <Compile Include="Model\HistoryEvent.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Services\Impl\HistoryService.cs" />
     <Compile Include="Sip\Events\InviteEventArgs.cs" />
     <Compile Include="Sip\Events\InviteEventTypes.cs" />
@@ -126,6 +127,8 @@
     <Compile Include="Sip\MySipSession.cs" />
     <Compile Include="Sip\MySipStack.cs" />
     <Compile Include="Sip\MySubscriptionSession.cs" />
+    <Compile Include="Utils\MySoundPlayer.cs" />
+    <Compile Include="Utils\UriUtils.cs" />
     <Compile Include="Xcap\Events\XcapEventArgs.cs" />
     <Compile Include="Xcap\Events\XcapEventTypes.cs" />
     <Compile Include="Xcap\MyXcapStack.cs" />
@@ -139,9 +142,6 @@
       <Project>{93201A98-88E0-4430-BCEB-643E58C28C66}</Project>
       <Name>doubango</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

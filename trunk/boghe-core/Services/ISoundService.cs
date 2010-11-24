@@ -27,5 +27,19 @@ namespace BogheCore.Services
 {
     public interface ISoundService : IService
     {
+        void PlayDTMF(int number);
+        void StopDTMF();
+
+        void PlayRingTone();
+        void StopRingTone();
+
+        void PlayRingBackTone();
+        void StopRingBackTone();
+
+        void PlayNewEvent();
+        void StopNewEvent();
+
+        void PlayConnectionChanged(bool connected);
+        void StopConnectionChanged(bool connected);
     }
 }

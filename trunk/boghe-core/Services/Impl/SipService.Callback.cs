@@ -113,8 +113,9 @@ namespace BogheCore.Services.Impl
                     // Audio/Video/MSRP
                     else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
+                        invSession.State = MyInviteSession.InviteState.INPROGRESS;
                         InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.INPROGRESS, phrase);
-                        eargs.PutExtra("session", invSession);
+                        eargs.AddExtra("session", invSession);
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
                     } 
 
@@ -148,6 +149,7 @@ namespace BogheCore.Services.Impl
                     // Audio/Video/MSRP
                     else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
+                        invSession.State = MyInviteSession.InviteState.INCALL;
                         invSession.IsConnected = true;
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.CONNECTED, phrase));
                     }
@@ -168,8 +170,9 @@ namespace BogheCore.Services.Impl
                     }
 
                     // Audio/Video/MSRP
-                    else if (MyAVSession.HasSession(sessionId) || MyMsrpSession.HasSession(sessionId))
+                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
+                        invSession.State = MyInviteSession.InviteState.TERMINATING;
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.TERMWAIT, phrase));
                     }
 
@@ -202,6 +205,7 @@ namespace BogheCore.Services.Impl
                     else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
                         invSession.IsConnected = false;
+                        invSession.State = MyInviteSession.InviteState.TERMINATED;
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.DISCONNECTED, phrase));
                     }
 
@@ -261,6 +265,65 @@ namespace BogheCore.Services.Impl
             /// <returns></returns>
             public override int OnInviteEvent(InviteEvent e)
             {
+                tsip_invite_event_type_t type = e.getType();
+                short code = e.getCode();
+                String phrase = e.getPhrase();
+                InviteSession session = e.getSession();
+
+                switch (type)
+                {
+                    case tsip_invite_event_type_t.tsip_i_newcall:
+                        if (session != null) /* As we are not the owner, then the session MUST be null */
+                        {
+                            LOG.Error("Invalid incoming session");
+                            session.hangup(); // To avoid another callback event
+                            return -1;
+                        }
+
+                        SipMessage message = e.getSipMessage();
+                        if (message == null)
+                        {
+                            LOG.Error("Invalid message");
+                            return -1;
+                        }
+                        twrap_media_type_t sessionType = e.getMediaType();
+
+                        switch (sessionType)
+                        {
+                            case twrap_media_type_t.twrap_media_msrp:
+                                break;
+
+                            case twrap_media_type_t.twrap_media_audio:
+                            case twrap_media_type_t.twrap_media_audiovideo:
+                            case twrap_media_type_t.twrap_media_video:
+                                if ((session = e.takeCallSessionOwnership()) == null)
+                                {
+                                    LOG.Error("Failed to take session ownership");
+                                    return -1;
+                                }
+                                MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
+                                InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
+                                eargs.AddExtra("Session", avSession);
+                                EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                break;
+
+                            default:
+                                LOG.Error("Invalid media type");
+                                return 0;
+                            
+                        }
+                        break;
+
+                    case tsip_invite_event_type_t.tsip_ao_request:
+                        if (code == 180 && session != null)
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                    new InviteEventArgs(session.getId(), InviteEventTypes.RINGING, phrase));
+                        }
+                        break;
+                }
+
+
                 return 0;
             }
 
@@ -271,6 +334,7 @@ namespace BogheCore.Services.Impl
             /// <returns></returns>
             public override int OnOptionsEvent(OptionsEvent e)
             {
+
                 return 0;
             }
         }

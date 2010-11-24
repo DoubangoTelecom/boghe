@@ -37,6 +37,8 @@ namespace BogheCore.Services
         bool ContactUpdate(Contact contact, String prevGroupName);
         bool ContactDelete(Contact contact);
 
+        Contact ContactFind(String uri);
+
         MyObservableCollection<Contact> Contacts { get; }
         MyObservableCollection<Group> Groups { get; }
 

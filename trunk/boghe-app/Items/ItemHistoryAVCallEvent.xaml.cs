@@ -34,6 +34,7 @@ using System.Windows.Shapes;
 using BogheControls;
 using BogheCore.Model;
 using BogheControls.Utils;
+using BogheCore.Utils;
 
 namespace BogheApp.Items
 {
@@ -53,8 +54,10 @@ namespace BogheApp.Items
         {
             HistoryAVCallEvent @event = this.Value;
 
-            this.labelDisplayName.Content = String.IsNullOrEmpty(@event.RemoteParty) ? "(null)" : @event.RemoteParty;
-            this.labelDescription.Content = String.Format("{0} {1} ({2})", @event.StartTime.ToLongDateString(), @event.StartTime.ToLongTimeString(), "00");
+            String displayName = UriUtils.GetDisplayName(@event.RemoteParty);
+            this.labelDisplayName.Content = String.IsNullOrEmpty(displayName) ? "(null)" : displayName;
+            this.labelDate.Content = String.Format("{0} {1}", @event.StartTime.ToLongDateString(), @event.StartTime.ToLongTimeString());
+            this.labelDuration.Content = String.Format("Duration: {0}", "00:00:00");
             switch (@event.Status)
             {
                 case HistoryEvent.StatusType.Incoming:
@@ -67,6 +70,41 @@ namespace BogheApp.Items
                     this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.call_missed_45);
                     break;
             }
+        }
+
+        private void ctxMenu_MakeVoiceCall_Click(object sender, RoutedEventArgs e)
+        {
+            SessionWindow.MakeAudioCall(this.Value.RemoteParty);
+        }
+
+        private void ctxMenu_MakeVideoCall_Click(object sender, RoutedEventArgs e)
+        {
+            SessionWindow.MakeVideoCall(this.Value.RemoteParty);
+        }
+
+        private void ctxMenu_SendFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_StartChat_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_SendSMS_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_AddToContacts_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ctxMenu_DeleteHistoryEvent_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
