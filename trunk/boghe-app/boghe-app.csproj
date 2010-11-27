@@ -183,6 +183,7 @@
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.Status.cs" />
     <Compile Include="Screens\ScreenContactEdit.Screen.cs">
       <DependentUpon>ScreenContactEdit.xaml</DependentUpon>
     </Compile>
@@ -348,6 +349,40 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\24\lock_open_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\phone_hang_up_32.png" />
+    <Resource Include="embedded\32\phone_hold_32.png" />
+    <Resource Include="embedded\32\phone_pick_up_32.png" />
+    <Resource Include="embedded\32\user_mobilephone_32.png" />
+    <Resource Include="embedded\32\user_monitor_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\document_down_32.png" />
+    <Resource Include="embedded\32\document_up_32.png" />
+    <Resource Include="embedded\32\messages_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\message_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\message_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\key_ok_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\key_warning_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\address_book_32.png" />
+    <Resource Include="embedded\32\application_edit_32.png" />
+    <Resource Include="embedded\32\coffee_beans_32.png" />
+    <Resource Include="embedded\32\firewall_information_32.png" />
+    <Resource Include="embedded\32\holmes_32.png" />
+    <Resource Include="embedded\32\lock_information_32.png" />
+    <Resource Include="embedded\32\message_information_32.png" />
+    <Resource Include="embedded\32\users4_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

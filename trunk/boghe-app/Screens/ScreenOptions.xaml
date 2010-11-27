@@ -4,9 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="516" Width="365">
     <Grid>
         <TabControl Name="tabControl" Background="White" TabStripPlacement="Left" Margin="0,0,0,41" BorderBrush="SkyBlue">
-            
-
-            <TabItem Header="General" Name="tabItemGeneral" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Height="45" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Name="tabItemGeneral" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Height="45" Margin="1" BorderThickness="1" BorderBrush="SkyBlue" Foreground="Black">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">General</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Height="33" Margin="0,0,0,0" Name="labelGeneralTitle" VerticalAlignment="Top" FontSize="16" Background="SkyBlue" FontWeight="Bold">General</Label>
                     <CheckBox Height="24" Margin="3,43,4,0" Name="checkBoxLaunchWhenStart" VerticalAlignment="Top">Launch when system starts</CheckBox>
@@ -14,9 +21,18 @@
                     <TextBox Height="23" Margin="136,76,6,0" Name="textBoxENUM" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Identity" Height="45" Margin="1" Name="tabItemIdentity" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Margin="1" Name="tabItemIdentity" BorderThickness="2" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Identity</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
-                    <Label FontSize="16" Height="33" Margin="0,0,0,0" Name="labelIdentityTitle" VerticalAlignment="Top" Background="SkyBlue" FontWeight="Bold">Identity</Label>
+                    <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelIdentityTitle" VerticalAlignment="Top" FontWeight="Bold">Identity</Label>
                     <GroupBox Header="Connection Settings" Margin="0,42,-3,0" Name="groupBoxIdentityConnection" Background="White" Height="226" VerticalAlignment="Top">
                         <Grid>
                             <Label Height="28" HorizontalAlignment="Left" Margin="0,10,0,0" Name="labelDisplayName" VerticalAlignment="Top" Width="104">Display Name*:</Label>
@@ -32,20 +48,28 @@
                             <PasswordBox Height="23" Margin="107,110.04,1,0" Name="passwordBoxSipPassword" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Security" Margin="1,282,3,0" Name="groupBoxIdentitySecurity" Height="193" VerticalAlignment="Top">
+                    <GroupBox Header="Security" Margin="1,277,3,6" Name="groupBoxIdentitySecurity">
                         <Grid>
                             <Label Height="28" HorizontalAlignment="Left" Margin="1,6,0,0" Name="labelOperatorId" VerticalAlignment="Top" Width="104">Operator ID*:</Label>
                             <TextBox Height="23" Margin="102,9,0,0" Name="textBoxOperatorId" VerticalAlignment="Top" />
                             <Label Height="28" HorizontalAlignment="Left" Margin="-1,35,0,0" Name="labelAMF" VerticalAlignment="Top" Width="104">AMF*:</Label>
                             <TextBox Height="23" Margin="102,38,0,0" Name="textBoxAMF" VerticalAlignment="Top" />
-                            <Label HorizontalAlignment="Left" Margin="0,64,0,76" Name="labelPrivacy" Width="104">Privacy:</Label>
-                            <ListView Margin="6,86.04,6,6" Name="listViewPrivacy" />
+                            <Label HorizontalAlignment="Left" Margin="0,64,0,0" Name="labelPrivacy" Width="104" Height="29" VerticalAlignment="Top">Privacy:</Label>
+                            <ListView Margin="6,0,6,7" Name="listViewPrivacy" Height="51" VerticalAlignment="Bottom" />
                         </Grid>
                     </GroupBox>
                 </Grid>
-                
             </TabItem>
-            <TabItem Header="Network" Height="45" Margin="1" Name="tabItemNetwork" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Margin="1" Name="tabItemNetwork" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Network</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNetworkTitle" VerticalAlignment="Top" FontWeight="Bold">Networking</Label>
                     <GroupBox Header="Settings" Margin="2,43,0,0" Name="groupBox1" Height="255" VerticalAlignment="Top">
@@ -59,6 +83,12 @@
                             <TextBox Margin="112,68,2,0" Name="textBoxProxyPort" Height="23.04" VerticalAlignment="Top" />
                             <Label Height="28.04" HorizontalAlignment="Left" Margin="-1,95,0,0" Name="labelTransport" VerticalAlignment="Top" Width="104">Transport*:</Label>
                             <ComboBox Height="23" Margin="112,97.04,4,0" Name="comboBoxTransport" VerticalAlignment="Top" SelectedIndex="0">
+                                <ComboBox.Background>
+                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                        <GradientStop Color="SkyBlue" Offset="0"/>
+                                        <GradientStop Color="White" Offset="0.567"/>
+                                    </LinearGradientBrush>
+                                </ComboBox.Background>
                                 <ComboBoxItem Name="ComboBoxItemUDP" Tag="UDP">UDP</ComboBoxItem>
                                 <ComboBoxItem Name="ComboBoxItemTCP" Tag="TCP">TCP</ComboBoxItem>
                                 <ComboBoxItem Name="ComboBoxItemTLS" Tag="TLS">TLS</ComboBoxItem>
@@ -68,10 +98,16 @@
                             <CheckBox Height="16" Margin="5,195,0,0" Name="checkBoxSigComp" VerticalAlignment="Top">Enable Signaling Compression (SigComp)</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Access Type" Height="106" Margin="2,319,0,0" Name="groupBoxNetworkAccess" VerticalAlignment="Top">
+                    <GroupBox Header="Access Type" Margin="2,314,0,45" Name="groupBoxNetworkAccess">
                         <Grid>
                             <Label Height="28.04" HorizontalAlignment="Left" Margin="-1,3,0,0" Name="labelNetwork" VerticalAlignment="Top" Width="71">Network:</Label>
                             <ComboBox Height="23" Margin="76,6,9,0" Name="comboBoxNetworkType" SelectedIndex="10" VerticalAlignment="Top">
+                                <ComboBox.Background>
+                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                        <GradientStop Color="SkyBlue" Offset="0"/>
+                                        <GradientStop Color="White" Offset="0.567"/>
+                                    </LinearGradientBrush>
+                                </ComboBox.Background>
                                 <ComboBoxItem>IEEE-802.11</ComboBoxItem>
                                 <ComboBoxItem>IEEE-802.11a</ComboBoxItem>
                                 <ComboBoxItem>IEEE-802.11b</ComboBoxItem>
@@ -100,12 +136,30 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Security" Height="45" Margin="1" Name="tabItemSecurity" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Margin="1" Name="tabItemSecurity" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Security</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelSecurityTitle" VerticalAlignment="Top" FontWeight="Bold">Security</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="Contacts" Height="45" Margin="1" Name="tabItemContacts" Padding="6,1" BorderBrush="SkyBlue" BorderThickness="1">
+            <TabItem Height="45" Margin="1" Name="tabItemContacts" Padding="6,1" BorderBrush="SkyBlue" BorderThickness="1">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Contacts</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelContactsTitle" VerticalAlignment="Top" FontWeight="Bold">Contacts</Label>
                     <RadioButton Height="16" Margin="7,43,0,0" Name="radioButtonContactsLocal" VerticalAlignment="Top" GroupName="Storage" IsChecked="True">Local Storage</RadioButton>
@@ -124,7 +178,16 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Presence" Height="45" Name="tabItemPresence" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Name="tabItemPresence" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Presence</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelPresenceTitle" VerticalAlignment="Top" FontWeight="Bold">Presence</Label>
                     <GroupBox Header="Subscription" Height="100" Margin="7,48,6,0" Name="groupBoxPresenceSubscribtion" VerticalAlignment="Top">
@@ -143,28 +206,64 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Codecs" Height="45" Name="tabItemCodecs" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Name="tabItemCodecs" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Codecs</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelCodecsTitle" VerticalAlignment="Top" FontWeight="Bold">Codecs</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="Messaging" Height="45" Name="tabItemMessaging" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Name="tabItemMessaging" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">Messaging</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontWeight="Bold" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelMessagingTitle" VerticalAlignment="Top">Messaging</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="QoS/QoE" Height="45" Name="tabItemQoSQoE" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Name="tabItemQoSQoE" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">QoS/QoE</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelQoSTitle" VerticalAlignment="Top" FontWeight="Bold">QoS/QoE</Label>
                 </Grid>
             </TabItem>
-            <TabItem Header="NATT" Height="45" Name="tabItemNATT" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+            <TabItem Height="45" Name="tabItemNATT" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
+                <TabItem.Header>
+                    <Label FontSize="12" FontWeight="Bold">NATT</Label>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="White" Offset="0.567"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNatTraversalTitle" VerticalAlignment="Top" FontWeight="Bold">NAT Traversal</Label>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button HorizontalAlignment="Right" Margin="0,0,92,12" Name="buttonSave" Width="75" Height="23" VerticalAlignment="Bottom" Click="buttonSave_Click">Save</Button>
-        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,11,12" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click">Cancel</Button>
+        <Button HorizontalAlignment="Right" Margin="0,0,92,4" Name="buttonSave" Width="75" Height="32" VerticalAlignment="Bottom" Click="buttonSave_Click" Background="Transparent" BorderBrush="SkyBlue">Save</Button>
+        <Button Height="32" HorizontalAlignment="Right" Margin="0,0,11,4" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Click="buttonCancel_Click" Background="Transparent" BorderBrush="SkyBlue">Cancel</Button>
     </Grid>
 </custom:BaseScreen>

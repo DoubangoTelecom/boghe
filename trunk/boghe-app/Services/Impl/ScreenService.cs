@@ -366,9 +366,14 @@ namespace BogheApp.Services.Impl
 
         private TabItem CreateTabItem(BaseScreen baseScreen, bool closeable)
         {
-            TabItem tabItem = closeable? new CloseableTabItem() : new TabItem();
+            TabItem tabItem = closeable ? new CloseableTabItem() : new TabItem();
             tabItem.Header = baseScreen.BaseScreenTitle;
             tabItem.Content = baseScreen;
+
+            baseScreen.Width = Double.NaN;
+            baseScreen.Height = Double.NaN;
+
+            
 
             return tabItem;
         }

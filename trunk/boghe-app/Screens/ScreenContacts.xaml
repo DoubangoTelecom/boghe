@@ -17,12 +17,7 @@
     </ctrl:BaseScreen.Resources>
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="39*" />
-            <RowDefinition Height="435.5*" />
-            <RowDefinition Height="35.5*" />
-        </Grid.RowDefinitions>
-        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,3,0,4" Grid.Row="1">
+        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,45,0,44" >
             <!--ListBox.ItemTemplate>
                 <DataTemplate>
                     <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemContact>
@@ -30,11 +25,26 @@
             </ListBox.ItemTemplate-->
         </ListBox>
         <TextBox Margin="192,8,6,0" Name="textBoxFilterCriteria" Height="23" VerticalAlignment="Top" />
-        <ComboBox Margin="0,8,0,0" Name="comboBoxGroups" HorizontalAlignment="Left" Width="152" Height="23" VerticalAlignment="Top" />
-        <TextBox Margin="3,0,155,8" Name="textBoxFreeContact" Grid.Row="2" Height="21.318" VerticalAlignment="Bottom" />
-        <Button Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,116,2.5" Name="buttonVoice" Width="32" Height="32" VerticalAlignment="Bottom" Click="buttonVoice_Click"></Button>
-        <Button HorizontalAlignment="Right" Margin="0,0,78,2" Name="buttonVisio" Width="32" Grid.Row="2" Height="32" VerticalAlignment="Bottom" Click="buttonVisio_Click" />
-        <Button HorizontalAlignment="Right" Margin="0,0,41,2" Name="buttonFile" Width="32" Grid.Row="2" Height="32" VerticalAlignment="Bottom" Click="buttonFile_Click" />
-        <Button HorizontalAlignment="Right" Margin="0,0,3,3" Name="buttonMessaging" Width="32" Grid.Row="2" Height="31.5" VerticalAlignment="Bottom" />
+        <ComboBox Margin="2,8,0,0" Name="comboBoxGroups" HorizontalAlignment="Left" Width="152" Height="23" VerticalAlignment="Top" >
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.567"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+        <TextBox Margin="3,0,155,4" Name="textBoxFreeContact" FontSize="14" Height="31" VerticalAlignment="Bottom" />
+        <Button HorizontalAlignment="Right" Margin="0,4,113,2" Name="buttonVoice" Click="buttonVoice_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Make Voice Call" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/user_mobilephone_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+        <Button HorizontalAlignment="Right" Margin="0,4,76,2" Name="buttonVisio"   Click="buttonVisio_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Make Video Call" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/user_monitor_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+        <Button HorizontalAlignment="Right" Margin="0,4,39,2" Name="buttonFile"    Click="buttonFile_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Send File" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/document_up_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+        <Button HorizontalAlignment="Right" Margin="0,4,1,2" Name="buttonMessaging"    Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Start Chat" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/messages_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
     </Grid>
 </ctrl:BaseScreen>
