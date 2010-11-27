@@ -123,6 +123,20 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap document_down_32 {
+            get {
+                object obj = ResourceManager.GetObject("document_down_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap document_up_32 {
+            get {
+                object obj = ResourceManager.GetObject("document_up_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.IO.UnmanagedMemoryStream dtmf_0 {
             get {
                 return ResourceManager.GetStream("dtmf_0", resourceCulture);
@@ -216,6 +230,13 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap key_ok_24 {
+            get {
+                object obj = ResourceManager.GetObject("key_ok_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap lock_error_16 {
             get {
                 object obj = ResourceManager.GetObject("lock_error_16", resourceCulture);
@@ -293,9 +314,37 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap messages_32 {
+            get {
+                object obj = ResourceManager.GetObject("messages_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.IO.UnmanagedMemoryStream newevent {
             get {
                 return ResourceManager.GetStream("newevent", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Bitmap phone_hang_up_32 {
+            get {
+                object obj = ResourceManager.GetObject("phone_hang_up_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap phone_hold_32 {
+            get {
+                object obj = ResourceManager.GetObject("phone_hold_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap phone_pick_up_32 {
+            get {
+                object obj = ResourceManager.GetObject("phone_pick_up_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -356,6 +405,20 @@ namespace BogheApp.Properties {
         public static System.Drawing.Bitmap user_hyper_avail_16 {
             get {
                 object obj = ResourceManager.GetObject("user_hyper_avail_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap user_mobilephone_32 {
+            get {
+                object obj = ResourceManager.GetObject("user_mobilephone_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap user_monitor_32 {
+            get {
+                object obj = ResourceManager.GetObject("user_monitor_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

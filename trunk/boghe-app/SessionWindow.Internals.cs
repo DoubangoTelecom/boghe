@@ -25,6 +25,8 @@ using System.Text;
 using org.doubango.tinyWRAP;
 using BogheCore.Utils;
 using BogheCore.Sip;
+using System.Drawing;
+using BogheControls.Utils;
 
 namespace BogheApp
 {
@@ -74,35 +76,35 @@ namespace BogheApp
                         case MyInviteSession.InviteState.INCOMING:
                             this.labelInfo.Content = String.Format("Incoming call from {0}", this.AVSession.RemotePartyDisplayName);
                             this.buttonHangUp.IsEnabled = true;
-                            this.buttonCallOrAnswer.IsEnabled = true;
-                            this.buttonCallOrAnswer.Tag = "Answer";
-                            this.buttonCallOrAnswer.Content = "Answer";
+                            this.UpdateButtonCallOrAnswer(true, "Answer", Properties.Resources.phone_pick_up_32);
                             break;
 
                         case MyInviteSession.InviteState.INPROGRESS:
                             this.buttonHangUp.IsEnabled = true;
-                            this.buttonCallOrAnswer.IsEnabled = false;
-                            this.buttonCallOrAnswer.Tag = "Call";
-                            this.buttonCallOrAnswer.Content = "Call";
+                            this.UpdateButtonCallOrAnswer(false, "Call", Properties.Resources.phone_pick_up_32);
                             break;
 
                         case MyInviteSession.InviteState.INCALL:
                             this.buttonHangUp.IsEnabled = true;
-                            this.buttonCallOrAnswer.IsEnabled = false;
-                            this.buttonCallOrAnswer.Tag = "Call";
-                            this.buttonCallOrAnswer.Content = "Call";
+                            this.UpdateButtonCallOrAnswer(false, "Call", Properties.Resources.phone_pick_up_32);
                             break;
 
                         case MyInviteSession.InviteState.TERMINATED:
                         case MyInviteSession.InviteState.TERMINATING:
                             this.buttonHangUp.IsEnabled = false;
-                            this.buttonCallOrAnswer.IsEnabled = true;
-                            this.buttonCallOrAnswer.Tag = "Call";
-                            this.buttonCallOrAnswer.Content = "Call";
+                            this.UpdateButtonCallOrAnswer(true, "Call", Properties.Resources.phone_pick_up_32);
                             break;
                     }
                 }
             }
+        }
+
+        private void UpdateButtonCallOrAnswer(bool enabled, String text, Bitmap image)
+        {
+            this.buttonCallOrAnswer.Tag = text;
+            this.buttonCallOrAnswer.IsEnabled = enabled;
+            this.buttonCallOrAnswerLabel.Content = text;
+            this.buttonCallOrAnswerImage.Source = MyImageConverter.FromBitmap(image);
         }
     }
 }

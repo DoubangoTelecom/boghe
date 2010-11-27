@@ -85,6 +85,7 @@ namespace BogheApp
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
+            
 
             // Show Authentication Screen
             //this.screenService.Show(ScreenType.Contacts);
@@ -106,9 +107,24 @@ namespace BogheApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Cursor = Cursors.Wait;
+
             this.imageAvatar.Source = MyImageConverter.FromBitmap(Properties.Resources.avatar_48);
             this.labelFreeText.Content = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, Configuration.DEFAULT_RCS_FREE_TEXT);
             this.labelDisplayName.Content = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
+
+            this.comboBoxStatus.ItemsSource = new Status[]
+            {
+                new Status("Busy", "/BogheApp;component/embedded/16/user_offline_16.png"),
+                new Status("Be Right Back", "/BogheApp;component/embedded/16/user_back16.png"),
+                new Status("Away", "/BogheApp;component/embedded/16/user_time_16.png"),
+                new Status("On The Phone", "/BogheApp;component/embedded/16/user_onthephone_16.png"),
+                new Status("HyperAvailable", "/BogheApp;component/embedded/16/user_hyper_avail_16.png"),
+                new Status("Offline", "/BogheApp;component/embedded/16/user_offline_16.png")
+            };
+            this.comboBoxStatus.SelectedIndex = 5;
+
+            this.Cursor = Cursors.Arrow;
         }
     }
 }

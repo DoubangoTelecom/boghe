@@ -11,7 +11,7 @@
         </DataTemplate>
     </ctrl:BaseScreen.Resources>
     
-    <Grid>
-        <ListBox Margin="0,34,0,0" Name="listBox" />
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListBox Margin="0,32,0,0" Name="listBox" VerticalContentAlignment="Top" />
     </Grid>
 </ctrl:BaseScreen>

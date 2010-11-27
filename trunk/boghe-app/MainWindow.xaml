@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BogheApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Boghe - IMS/RCS Client" Width="Auto" Height="Auto" SizeToContent="WidthAndHeight" Icon="/BogheApp;component/embedded/16/icon_16.png" Background="SkyBlue" MinWidth="400" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded">
+    Title="Boghe - IMS/RCS Client" Width="400" Height="690" SizeToContent="Manual"  Icon="/BogheApp;component/embedded/16/icon_16.png" Background="SkyBlue" MinWidth="400" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded">
     <Grid Background="White">
         <StatusBar Height="32" Name="statusBar" VerticalAlignment="Bottom" Background="White" />
         <Menu Height="22" Name="menu" VerticalAlignment="Top" Background="White" FontWeight="Normal" FontSize="14" BorderBrush="SkyBlue" BorderThickness="1">
@@ -40,22 +40,41 @@
                 <MenuItem Header="About" Name="MenuItemHelp_About" />
             </MenuItem>
         </Menu>
-        <TabControl Margin="0,83,0,29" Name="tabControl" FlowDirection="LeftToRight" Background="White" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderBrush="SkyBlue">
-
+        <TabControl Margin="0,86,0,29" Name="tabControl" FlowDirection="LeftToRight" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderBrush="SkyBlue">
         </TabControl>
-        <Label Name="labelProgressInfo" Margin="0,0,97,-1" Height="32" VerticalAlignment="Bottom" FontSize="16" FontWeight="Normal"></Label>
+        
         <Label Height="28" Margin="1,23,75,0" Name="labelDisplayName" VerticalAlignment="Top" FontSize="14" FontWeight="Bold">John Doe</Label>
         <Image Height="48" HorizontalAlignment="Right" Margin="0,25,5,0" Name="imageAvatar" Stretch="Fill" VerticalAlignment="Top" Width="48" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="4,56,0,0" Name="comboBoxStatus" VerticalAlignment="Top" Width="39" />
-        <Label Height="28" Margin="69,52,59,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0" FontSize="14">Hello John Doe from Paris!</Label>
-        <Border Height="27" HorizontalAlignment="Right" Margin="0,0,62,1" VerticalAlignment="Bottom" Width="27" MinWidth="27" MinHeight="27" MaxWidth="27" MaxHeight="27" BorderThickness="1" BorderBrush="SkyBlue" CornerRadius="2,2,2,2">
-            <Image MaxHeight="24" MaxWidth="24" MinHeight="24" MinWidth="24" Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Width="24" Height="24" Visibility="Hidden" />
-        </Border>
-        <Border Height="27" HorizontalAlignment="Right" Margin="0,0,31,1" VerticalAlignment="Bottom" Width="27" MinWidth="27" MinHeight="27" MaxWidth="27" MaxHeight="27" BorderThickness="1" BorderBrush="SkyBlue" CornerRadius="2,2,2,2">
-            <Image Height="24" MaxHeight="24" MaxWidth="24" MinHeight="24" MinWidth="24" Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Width="24" StretchDirection="Both" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </Border>
-        <Border Height="27" HorizontalAlignment="Right" Margin="0,0,1,1" VerticalAlignment="Bottom" Width="27" MinWidth="27" MinHeight="27" MaxWidth="27" MaxHeight="27" BorderThickness="1" BorderBrush="SkyBlue" CornerRadius="2,2,2,2">
-            <Image Height="24" Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" Width="24" MinWidth="24" MinHeight="24" MaxWidth="24" MaxHeight="24" ClipToBounds="False" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        </Border>
+        <ComboBox ItemsSource="{Binding}" Height="27" HorizontalAlignment="Left" Margin="4,52,0,0" Name="comboBoxStatus" VerticalAlignment="Top" Width="96" >
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.567"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Path=ImageSource}" Width="16" Height="16" />
+                        <TextBlock Text = "{Binding Path=Text}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Height="28" Margin="106,52,59,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0" FontSize="14">Hello John Doe from Paris!</Label>
+        
+        
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <DockPanel.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+            <Label Name="labelProgressInfo" Margin="0,0,0,1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="12" FontWeight="Normal" Height="26" Width="300" Background="Transparent"></Label>
+            <Image MinHeight="24" MinWidth="24" Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Right" />            
+            <Image Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Visibility="Hidden"   MinWidth="24" MinHeight="24" HorizontalAlignment="Right" />
+            <Image Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" MinWidth="24" MinHeight="24" ClipToBounds="False" HorizontalAlignment="Right" />
+        </DockPanel>
     </Grid>
 </Window>
