@@ -164,10 +164,12 @@ namespace BogheApp
                             new EventHandler<ElapsedEventArgs>(this.timerCall_Elapsed), sender, new object[] { e });
                     return;
                 }
-
-                //this.endTime = this.endTime.AddSeconds(1);
-                //DateTime duration = new DateTime().AddSeconds(this.endTime.Second - this.startTime.Second);
-                //this.labelDuration.Content = String.Format(CultureInfo.CurrentUICulture, "{0}", duration.ToString("HH:mm:ss"));
+                 
+                if (this.avHistoryEvent != null)
+                {
+                    TimeSpan duration = (DateTime.Now - this.avHistoryEvent.StartTime);
+                    this.labelDuration.Content = string.Format("{0:D2}:{1:D2}:{2:D2}", duration.Hours, duration.Minutes, duration.Seconds);
+                }
             }
             catch (TargetInvocationException ex)
             {

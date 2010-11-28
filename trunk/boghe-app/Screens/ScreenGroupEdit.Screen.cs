@@ -18,37 +18,46 @@
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 */
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls;
-using System.Windows;
-using BogheCore.Model;
 
-namespace BogheApp.Items
+namespace BogheApp.Screens
 {
-    internal class DataTemplateSelectorContacts : DataTemplateSelector
+    partial class ScreenGroupEdit
     {
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        public override String BaseScreenTitle
         {
-            DataTemplate template = null;
-            FrameworkElement element = container as FrameworkElement;
-
-            if (element != null && item != null)
+            get
             {
-                if (item is Contact)
-                {
-                    template = element.FindResource("DataTemplateContact") as DataTemplate;
-                }
-                else if (item is Group)
-                {
-                    //template = element.FindResource("DataTemplateGroup") as DataTemplate;
-                }
+                return this.editMode ? "Edit Contact" : "Add Contact";
             }
+        }
 
-            return template;
+        public override int BaseScreenType
+        {
+            get { return (int)BogheApp.Screens.ScreenType.GroupEdit; }
+        }
+
+        public override void BeforeLoading()
+        {
+
+        }
+
+        public override void AfterLoading()
+        {
+            
+        }
+
+        public override void BeforeUnLoading()
+        {
+
+        }
+
+        public override void AfterUnLoading()
+        {
+
         }
     }
 }

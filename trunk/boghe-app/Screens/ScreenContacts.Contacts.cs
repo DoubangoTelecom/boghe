@@ -27,6 +27,8 @@ using BogheCore.Model;
 using System.ComponentModel;
 using System.Threading;
 using BogheCore;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace BogheApp.Screens
 {
@@ -34,6 +36,11 @@ namespace BogheApp.Screens
     {
         private void contactService_onContactEvent(object sender, ContactEventArgs e)
         {
+            if (e.Type != ContactEventTypes.RESET)
+            {
+                return;
+            }
+
             if (this.Dispatcher.Thread != Thread.CurrentThread)
             {
                 this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
@@ -41,39 +48,41 @@ namespace BogheApp.Screens
                 return;
             }
 
-            switch (e.Type)
+            this.UpdateSource();
+        }
+
+        private void UpdateSource()
+        {
+            this.listBox.ItemsSource = this.contactService.Contacts;
+            this.contactsView = CollectionViewSource.GetDefaultView(this.listBox.ItemsSource);
+            (this.contactsView as ListCollectionView).CustomSort = new ContactsSorter();
+            this.contactsView.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+
+            IList<FilterItem> filterItems = new List<FilterItem>();
+            filterItems.Add(new FilterItem(null, "All Contacts", Colors.Green));
+            foreach(Group g in this.contactService.Groups)
             {
-                case ContactEventTypes.RESET:
-                    MyObservableCollection<Group> _groups = this.contactService.Groups;
-                    MyObservableCollection<Contact> _contacts = this.contactService.Contacts;
-                    MyObservableCollection<BaseObject> _mashup = new MyObservableCollection<BaseObject>();
-
-                    this.comboBoxGroups.ItemsSource = _groups;
-
-                    foreach (Group group in _groups)
-                    {
-                        _mashup.Add(group);
-                        List<Contact> groupContacts = _contacts.FindAll(delegate(Contact contact)
-                        {
-                            if (contact == null || String.IsNullOrEmpty(contact.GroupName))
-                            {
-                                return false;
-                            }
-                            return contact.GroupName.Equals(group.Name);
-                        });
-                        if (groupContacts != null)
-                        {
-                            foreach (Contact contact in groupContacts)
-                            {
-                                _mashup.Add(contact);
-                            }
-                        }
-                    }
-
-                    this.contacts.Clear();
-                    this.contacts.AddRange(_mashup);
-                    break;                
+                filterItems.Add(new FilterItem(g.Name, g.DisplayName, Colors.Green));
             }
+
+            this.comboBoxGroups.ItemsSource = filterItems;
+            this.comboBoxGroups.SelectedIndex = 0;
+
+            this.contactsView.Filter = delegate(object c)
+            {
+                if (this.comboBoxGroups.SelectedIndex < 0)
+                {
+                    return true;
+                }
+
+                Contact contact = c as Contact;
+                FilterItem fItem = this.comboBoxGroups.SelectedItem as FilterItem;
+                if (fItem == null || contact == null || String.IsNullOrEmpty(contact.GroupName))
+                {
+                    return false;
+                }
+                return (contact.DisplayName == null || contact.DisplayName.StartsWith(this.textBoxSearchCriteria.Text, StringComparison.InvariantCultureIgnoreCase)) && (fItem.Name == null || contact.GroupName.Equals(fItem.Name));
+            };
         }
     }
 }

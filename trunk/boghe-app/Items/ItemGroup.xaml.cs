@@ -34,13 +34,14 @@ using System.Windows.Shapes;
 using BogheControls;
 using BogheCore.Model;
 using BogheControls.Utils;
+using BogheApp.Services.Impl;
 
 namespace BogheApp.Items
 {
     /// <summary>
     /// Interaction logic for ItemGroup.xaml
     /// </summary>
-    public partial class ItemGroup : BaseItem<Group>
+    public partial class ItemGroup : BaseItem<String>
     {
         public ItemGroup()
         {
@@ -51,7 +52,7 @@ namespace BogheApp.Items
 
         private void ItemGroup_ValueLoaded(object sender, EventArgs e)
         {
-            Group group = this.Value;
+            Group group = Win32ServiceManager.SharedManager.ContactService.GroupFind(this.Value);
             if (group == null)
             {
                 return;
@@ -62,15 +63,15 @@ namespace BogheApp.Items
             {
                 case BogheXdm.Authorization.Allowed:
                 default:
-                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.lock_ok_16);
+                    this.GridGradienStop.Color = Colors.Green;
                     break;
                 case BogheXdm.Authorization.Blocked:
                 case BogheXdm.Authorization.PoliteBlocked:
-                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.lock_warning_16);
+                    this.GridGradienStop.Color = Colors.Red;
                     break;
 
                 case BogheXdm.Authorization.Revoked:
-                    this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.lock_error_16);
+                    this.GridGradienStop.Color = Colors.Salmon;
                     break;
             }
         }

@@ -36,6 +36,7 @@ using BogheControls;
 using System.ComponentModel;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
+using BogheApp.Screens;
 
 namespace BogheApp.Items
 {
@@ -45,6 +46,7 @@ namespace BogheApp.Items
     public partial class ItemContact : BaseItem<Contact>
     {
         private readonly IContactService contactService;
+        private Contact contactValue;
 
         public ItemContact()
         {
@@ -57,64 +59,96 @@ namespace BogheApp.Items
 
         public void ItemContact_ValueLoaded(object sender, EventArgs e)
         {
-            Contact contact = this.Value;
-            if (contact == null)
+            this.contactValue = this.Value;
+            if (this.contactValue == null)
             {
                 return;
             }
 
-            String uriString = String.IsNullOrEmpty(contact.UriString) ? "sip:(null)@(null)" : contact.UriString;
+            String uriString = String.IsNullOrEmpty(this.contactValue.UriString) ? "sip:(null)@(null)" : this.contactValue.UriString;
 
-            this.labelDisplayName.Content = String.IsNullOrEmpty(contact.DisplayName) ? uriString : contact.DisplayName;
-            this.labelUriString.Content = String.IsNullOrEmpty(contact.UriString) ? uriString : contact.UriString;
+            this.labelDisplayName.Content = String.IsNullOrEmpty(this.contactValue.DisplayName) ? uriString : this.contactValue.DisplayName;
+            this.labelUriString.Content = String.IsNullOrEmpty(this.contactValue.UriString) ? uriString : this.contactValue.UriString;
         }
 
         private void ctxMenu_Edit_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.contactValue == null)
+            {
+                return;
+            }
+            ScreenContactEdit screenContactEdit = new ScreenContactEdit(this.contactValue);
+            Win32ServiceManager.SharedManager.ScreenService.Show(screenContactEdit);
         }
 
         private void ctxMenu_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Value != null)
+            if (this.contactValue == null)
             {
-                this.contactService.ContactDelete(this.Value);
+                return;
             }
+
+            this.contactService.ContactDelete(this.contactValue);
         }
 
         private void ctxMenu_Authorizations_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.contactValue == null)
+            {
+                return;
+            }
         }
 
         private void ctxMenu_Voice_Click(object sender, RoutedEventArgs e)
         {
+            if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
+            {
+                return;
+            }
 
+            SessionWindow.MakeAudioCall(this.contactValue.UriString);
         }
 
         private void ctxMenu_Visio_Click(object sender, RoutedEventArgs e)
         {
+            if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
+            {
+                return;
+            }
 
+            SessionWindow.MakeVideoCall(this.contactValue.UriString);
         }
 
         private void ctxMenu_ImageShare_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
+            {
+                return;
+            }
         }
 
         private void ctxMenu_Chat_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
+            {
+                return;
+            }
         }
 
         private void ctxMenu_SMS_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
+            {
+                return;
+            }
         }
 
         private void ctxMenu_Conference_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
+            {
+                return;
+            }
         }             
     }
 }

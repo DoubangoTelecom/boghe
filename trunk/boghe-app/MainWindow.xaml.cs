@@ -62,6 +62,7 @@ namespace BogheApp
         private readonly IConfigurationService configurationService;
         private readonly IContactService contactService;
         private readonly ISoundService soundService;
+        private readonly IHistoryService historyService;
 
         public MainWindow()
         {
@@ -82,6 +83,7 @@ namespace BogheApp
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.soundService = Win32ServiceManager.SharedManager.SoundService;
+            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
@@ -126,5 +128,7 @@ namespace BogheApp
 
             this.Cursor = Cursors.Arrow;
         }
+
+        
     }
 }

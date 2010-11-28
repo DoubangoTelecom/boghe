@@ -70,7 +70,7 @@ namespace BogheApp
 
                     //this.startTime = DateTime.Now;
                     //this.endTime = this.startTime;
-                    //this.timerCall.Enabled = true;
+                    this.timerCall.Start();
                     if (this.avHistoryEvent != null)
                     {
                         if (this.avHistoryEvent.Status == HistoryEvent.StatusType.Missed)
@@ -86,7 +86,7 @@ namespace BogheApp
                 case InviteEventTypes.DISCONNECTED:
                 case InviteEventTypes.TERMWAIT:
                     this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? "Call Terminated" : e.Phrase;
-                    this.timerCall.Enabled = false;
+                    this.timerCall.Stop();
                     this.soundService.StopRingBackTone();
                     this.soundService.StopRingTone();
 
@@ -94,7 +94,7 @@ namespace BogheApp
                     {
                         lock (this.avHistoryEvent)
                         {
-                            this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
+                            this.avHistoryEvent.EndTime = DateTime.Now;
                             this.historyService.AddEvent(this.avHistoryEvent);
                             this.avHistoryEvent = null;
                         }

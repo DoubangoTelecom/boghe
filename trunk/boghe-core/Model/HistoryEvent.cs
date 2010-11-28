@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using BogheCore.Utils;
 
 namespace BogheCore.Model
 {
@@ -37,21 +38,30 @@ namespace BogheCore.Model
         protected bool seen;
         protected StatusType status;
         protected DateTime date;
+        protected String displayName;
 
+        [Flags]
         public enum StatusType
         {
-            Outgoing,
-            Incoming,
-            Missed,
-            Failed
+            Outgoing = 0x01<<0,
+            Incoming = 0x01 << 1,
+            Missed = 0x01 << 2,
+            Failed = 0x01 << 3,
+
+            All = Outgoing | Incoming | Missed | Failed
+        }
+
+        protected HistoryEvent()
+        {
+            this.status = StatusType.Missed;
+            this.date = DateTime.Now;
         }
 
         protected HistoryEvent(MediaType mediaType, String remoteParty)
+            :this()
         {
             this.mediaType = mediaType;
             this.remoteParty = remoteParty;
-            this.status = StatusType.Missed;
-            this.date = DateTime.Now;
         }
 
         [XmlElement("MediaType")]
@@ -105,6 +115,19 @@ namespace BogheCore.Model
             {
                 this.status = value;
                 this.OnPropertyChanged("Status");
+            }
+        }
+
+        [XmlIgnore]
+        public String DisplayName
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(this.displayName))
+                {
+                    this.displayName = UriUtils.GetDisplayName(this.RemoteParty);
+                }
+                return String.IsNullOrEmpty(this.displayName) ? "(null)" : this.displayName;
             }
         }
 

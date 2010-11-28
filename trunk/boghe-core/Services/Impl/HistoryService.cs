@@ -52,10 +52,10 @@ namespace BogheCore.Services.Impl
             this.deferredSaveTimer.AutoReset = false;
             this.deferredSaveTimer.Elapsed += delegate
             {
-                this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
-                {
+                //this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                //{
                     this.ImmediateSave();
-                }, null);
+                //}, null);
             };
             this.xmlSerializer = new XmlSerializer(typeof(MyObservableCollection<HistoryEvent>));
         }
@@ -64,44 +64,9 @@ namespace BogheCore.Services.Impl
 
         public bool Start()
         {
-            bool ret = false;
+            new System.Threading.Thread((System.Threading.ThreadStart)this.LoadHistory).Start();
 
-            LOG.Debug(String.Format("Loading history from {0}", HistoryService.FILE_NAME));
-
-            try
-            {
-                if (!File.Exists(HistoryService.FILE_NAME))
-                {
-                    LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", HistoryService.FILE_NAME));
-                    File.Create(HistoryService.FILE_NAME).Close();
-
-                    // create xml declaration
-                    this.events = new MyObservableCollection<HistoryEvent>();
-                    return this.ImmediateSave();
-                }
-
-                using (StreamReader reader = new StreamReader(HistoryService.FILE_NAME))
-                {
-                    try
-                    {
-                        this.events = this.xmlSerializer.Deserialize(reader) as MyObservableCollection<HistoryEvent>;
-                        ret = true;
-                    }
-                    catch (InvalidOperationException ie)
-                    {
-                        LOG.Error("Failed to load history", ie);
-
-                        reader.Close();
-                        File.Delete(HistoryService.FILE_NAME);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LOG.Error("Failed to load history", e);
-            }
-
-            return ret;
+            return true;
         }
 
         public bool Stop()
@@ -132,25 +97,47 @@ namespace BogheCore.Services.Impl
         public void AddEvent(HistoryEvent @event)
         {
             this.events.Insert(0, @event);
-            EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, new HistoryEventArgs(HistoryEventTypes.ADDED));
+
+            HistoryEventArgs eargs = new HistoryEventArgs(HistoryEventTypes.ADDED);
+            eargs.AddExtra("event", @event);
+            EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, eargs);
 
             this.DeferredSave();
         }
 
         public void UpdateEvent(HistoryEvent @event)
         {
+
         }
 
         public void DeleteEvent(HistoryEvent @event)
         {
+            this.events.Remove(@event);
+
+            HistoryEventArgs eargs = new HistoryEventArgs(HistoryEventTypes.REMOVED);
+            eargs.AddExtra("event", @event);
+            EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, eargs);
+
+            this.DeferredSave();
         }
 
         public void DeleteEvent(int location)
         {
+            if (location < 0 || location >= this.events.Count)
+            {
+                LOG.Error("Index OutOfRange");
+                return;
+            }
+
+            HistoryEvent @event = this.events[location];
+            this.DeleteEvent(@event);
         }
 
         public void Clear()
         {
+            this.events.Clear();
+            EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, new HistoryEventArgs(HistoryEventTypes.RESET));
+            this.DeferredSave();
         }
 
         public event EventHandler<HistoryEventArgs> onHistoryEvent;
@@ -184,6 +171,49 @@ namespace BogheCore.Services.Impl
                 }
             }
             return false;
+        }
+
+        private void LoadHistory()
+        {
+            this.loading = true;
+
+            LOG.Debug(String.Format("Loading history from {0}", HistoryService.FILE_NAME));
+
+            try
+            {
+                if (!File.Exists(HistoryService.FILE_NAME))
+                {
+                    LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", HistoryService.FILE_NAME));
+                    File.Create(HistoryService.FILE_NAME).Close();
+
+                    // create xml declaration
+                    this.events = new MyObservableCollection<HistoryEvent>();
+                    this.ImmediateSave();
+                }
+
+                using (StreamReader reader = new StreamReader(HistoryService.FILE_NAME))
+                {
+                    try
+                    {
+                        this.events = this.xmlSerializer.Deserialize(reader) as MyObservableCollection<HistoryEvent>;
+                    }
+                    catch (InvalidOperationException ie)
+                    {
+                        LOG.Error("Failed to load history", ie);
+
+                        reader.Close();
+                        File.Delete(HistoryService.FILE_NAME);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.Error("Failed to load history", e);
+            }
+
+            this.loading = false;
+
+            EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, new HistoryEventArgs(HistoryEventTypes.RESET));
         }
     }
 }
