@@ -67,6 +67,7 @@ namespace BogheApp
                     this.MenuItemFile_SignIn.IsEnabled = false;
                     this.MenuItemFile_SignOut.IsEnabled = true;
                     this.MenuItemEAB.IsEnabled = true;
+                    this.MenuItemHistory.IsEnabled = true;
 
                     // indicators
                     this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_green_24);
@@ -99,6 +100,7 @@ namespace BogheApp
                     this.MenuItemFile_SignIn.IsEnabled = true;
                     this.MenuItemFile_SignOut.IsEnabled = false;
                     this.MenuItemEAB.IsEnabled = false;
+                    this.MenuItemHistory.IsEnabled = false;
 
                     // indicators
                     this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_red_24);

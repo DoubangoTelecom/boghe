@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -183,7 +183,9 @@
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.Status.cs" />
+    <Compile Include="MainWindow.Status.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\ScreenContactEdit.Screen.cs">
       <DependentUpon>ScreenContactEdit.xaml</DependentUpon>
     </Compile>
@@ -198,6 +200,12 @@
     </Compile>
     <Compile Include="Screens\ScreenContacts.xaml.cs">
       <DependentUpon>ScreenContacts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenGroupEdit.Screen.cs">
+      <DependentUpon>ScreenGroupEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenGroupEdit.xaml.cs">
+      <DependentUpon>ScreenGroupEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\ScreenHistory.Screen.cs">
       <DependentUpon>ScreenHistory.xaml</DependentUpon>
@@ -256,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Screens\ScreenContacts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ScreenGroupEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -383,6 +395,21 @@
     <Resource Include="embedded\32\lock_information_32.png" />
     <Resource Include="embedded\32\message_information_32.png" />
     <Resource Include="embedded\32\users4_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\call_incoming_16.png" />
+    <Resource Include="embedded\16\call_missed_16.png" />
+    <Resource Include="embedded\16\call_outgoing_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\call_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\date_time_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\12\search_clear_12.png" />
+    <Resource Include="embedded\12\search_info_12.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

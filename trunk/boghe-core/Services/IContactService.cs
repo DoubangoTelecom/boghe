@@ -33,11 +33,17 @@ namespace BogheCore.Services
     {
         void Download();
 
+        bool IsLoading { get; }
+
         bool ContactAdd(Contact contact);
         bool ContactUpdate(Contact contact, String prevGroupName);
         bool ContactDelete(Contact contact);
-
         Contact ContactFind(String uri);
+
+        bool GroupAdd(Group group);
+        bool GroupUpdate(Group group);
+        bool GroupDelete(Group group);
+        Group GroupFind(String name);
 
         MyObservableCollection<Contact> Contacts { get; }
         MyObservableCollection<Group> Groups { get; }

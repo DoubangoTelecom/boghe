@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -62,6 +62,9 @@
     <Compile Include="Model\HistoryAVCallEvent.cs" />
     <Compile Include="Model\HistoryEvent.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="Services\Impl\ContactService.Local.cs">
+      <DependentUpon>ContactService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\Impl\HistoryService.cs" />
     <Compile Include="Sip\Events\InviteEventArgs.cs" />
     <Compile Include="Sip\Events\InviteEventTypes.cs" />

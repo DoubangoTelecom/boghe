@@ -40,6 +40,10 @@ using BogheApp.Services.Impl;
 using BogheCore;
 using BogheCore.Sip;
 using BogheCore.Utils;
+using System.ComponentModel;
+using System.Collections;
+using BogheXdm;
+using System.Globalization;
 
 namespace BogheApp.Screens
 {
@@ -48,22 +52,53 @@ namespace BogheApp.Screens
     /// </summary>
     public partial class ScreenContacts : BaseScreen
     {
+        private ICollectionView contactsView;
+
         private readonly IContactService contactService;
         private readonly ISipService sipService;
-        private readonly MyObservableCollection<BaseObject> contacts;
 
         public ScreenContacts():base()
         {
             InitializeComponent();
 
-            this.contacts = new MyObservableCollection<BaseObject>();
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.sipService = Win32ServiceManager.SharedManager.SipService;
 
-            this.listBox.ItemTemplateSelector = new DataTemplateSelectorContacts();
-            this.listBox.ItemsSource = this.contacts;
+            // important to do it here before setting ItemsSource
+            this.contactService.onContactEvent += this.contactService_onContactEvent;
 
-            this.contactService.onContactEvent += this.contactService_onContactEvent;            
+            this.UpdateSource();
+        }
+
+        private void BaseScreen_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void textBoxSearchCriteria_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (this.contactsView != null)
+            {
+                this.contactsView.Refresh();
+            }
+        }
+
+        private void imageSearchCriteriaClear_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.textBoxSearchCriteria.Text = String.Empty;
+        }
+
+        private void imageFreeTextClear_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.textBoxFreeContact.Text = String.Empty;
+        }
+
+        private void comboBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.contactsView != null)
+            {
+                this.contactsView.Refresh();
+            }
         }
 
         private void buttonVoice_Click(object sender, RoutedEventArgs e)
@@ -93,6 +128,59 @@ namespace BogheApp.Screens
         private void buttonFile_Click(object sender, RoutedEventArgs e)
         {
 
-        }        
+        }
+
+
+        #region ContactsSorter
+
+        class ContactsSorter : IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                Contact contact1 = x as Contact;
+                Contact contact2 = y as Contact;
+                if (contact1 != null && contact2 != null)
+                {
+                    return contact1.CompareTo(contact2);
+                }
+                return 0;
+            }
+        }
+
+        #endregion
+
+        #region FilterItem
+
+        class FilterItem
+        {
+            readonly String name;
+            readonly String displayName;
+            readonly Color color;
+
+            public FilterItem(String name, String displayName, Color color)
+            {
+                this.name = name;
+                this.displayName = displayName;
+                this.color = color;
+            }
+
+            public String Name
+            {
+                get { return this.name; }
+            }
+
+            public String DisplayName
+            {
+                get { return this.displayName; }
+            }
+
+            public Brush Color
+            {
+                get { return new SolidColorBrush(this.color); }
+            }
+        }
+
+        #endregion
+        
     }
 }

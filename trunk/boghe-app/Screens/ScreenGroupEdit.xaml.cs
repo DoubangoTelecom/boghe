@@ -34,76 +34,62 @@ using System.Windows.Shapes;
 using BogheControls;
 using BogheCore.Model;
 using BogheCore.Services;
-using BogheApp.Services.Impl;
 using BogheApp.Services;
+using BogheApp.Services.Impl;
 
 namespace BogheApp.Screens
 {
     /// <summary>
-    /// Interaction logic for ScreenContactEdit.xaml
+    /// Interaction logic for ScreenGroupEdit.xaml
     /// </summary>
-    public partial class ScreenContactEdit : BaseScreen
+    public partial class ScreenGroupEdit : BaseScreen
     {
-        private Contact contact;
+        private Group group;
         private bool editMode;
 
         private readonly IContactService contactService;
         private readonly IWin32ScreenService screenService;
 
-        public ScreenContactEdit(Contact contact) : base()
+        public ScreenGroupEdit(Group group)
         {
             InitializeComponent();
 
-            if ((this.contact = contact) != null)
+            if ((this.group = group) != null)
             {
-                this.textBoxSipUri.Text = this.contact.UriString ?? this.contact.UriString;
-                this.textBoxDisplayName.Text = this.contact.DisplayName ?? this.contact.DisplayName;
-                this.textBoxSipUri.IsEnabled = false;
+                this.textBoxDisplayName.Text = this.group.DisplayName ?? this.group.DisplayName;
+                this.labelTitle.Content = "Edit Group";
                 this.editMode = true;
-                this.labelTitle.Content = "Edit Contact";
             }
             else
             {
-                String realm = Win32ServiceManager.SharedManager.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, 
-                    Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
-                this.contact = new Contact();
-                this.textBoxSipUri.Text = this.contact.UriString = String.Format("sip:johndoe@{0}", realm.Replace("sip:", String.Empty));
-                this.textBoxDisplayName.Text = this.contact.DisplayName = "John Doe";
-                this.textBoxSipUri.IsEnabled = true;
+                this.labelTitle.Content = "Add Group";
                 this.editMode = false;
-                this.labelTitle.Content = "Add Contact";
             }
 
+            this.editMode = (group != null);
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.screenService = Win32ServiceManager.SharedManager.ScreenService;
         }
-
+        
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (this.comboBoxGroup.SelectedIndex == -1)
+            if (this.group == null)
             {
-                MessageBox.Show("You must select a group", "Invalid Group");
-                return;
+                this.group = new Group();
+                this.group.Authorization = BogheXdm.Authorization.Allowed;
             }
 
-            if (this.contact == null)
-            {
-                this.contact = new Contact();
-            }
-
-            Group group = this.comboBoxGroup.SelectedItem as Group;
-            this.contact.DisplayName = this.textBoxDisplayName.Text;
-            this.contact.UriString = this.textBoxSipUri.Text;
-            this.contact.GroupName = group.Name;
+            this.group.DisplayName = this.textBoxDisplayName.Text;
 
             if (this.editMode)
             {
-                this.contactService.ContactUpdate(this.contact, group.Name);
+                this.contactService.GroupUpdate(this.group);
             }
             else
             {
-                this.contactService.ContactAdd(this.contact);
+                this.contactService.GroupAdd(this.group);
             }
+
             this.screenService.Show(ScreenType.Contacts);
             this.screenService.Hide(this);
         }

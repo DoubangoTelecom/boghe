@@ -35,6 +35,9 @@ using BogheControls;
 using BogheCore.Model;
 using BogheControls.Utils;
 using BogheCore.Utils;
+using BogheCore.Services;
+using BogheApp.Services.Impl;
+using System.Globalization;
 
 namespace BogheApp.Items
 {
@@ -43,9 +46,13 @@ namespace BogheApp.Items
     /// </summary>
     public partial class ItemHistoryAVCallEvent : BaseItem<HistoryAVCallEvent>
     {
+        private readonly IHistoryService historyService;
+
         public ItemHistoryAVCallEvent()
         {
             InitializeComponent();
+
+            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
 
             this.ValueLoaded += this.ItemHistoryAVCallEvent_ValueLoaded;
         }
@@ -53,11 +60,25 @@ namespace BogheApp.Items
         private void ItemHistoryAVCallEvent_ValueLoaded(object sender, EventArgs e)
         {
             HistoryAVCallEvent @event = this.Value;
-
-            String displayName = UriUtils.GetDisplayName(@event.RemoteParty);
-            this.labelDisplayName.Content = String.IsNullOrEmpty(displayName) ? "(null)" : displayName;
-            this.labelDate.Content = String.Format("{0} {1}", @event.StartTime.ToLongDateString(), @event.StartTime.ToLongTimeString());
-            this.labelDuration.Content = String.Format("Duration: {0}", "00:00:00");
+            
+            this.labelDisplayName.Content = @event.DisplayName;
+            
+            DateTime eventDay = new DateTime(@event.StartTime.Year, @event.StartTime.Month, @event.StartTime.Day);
+            if (DateTime.Today.Equals(eventDay))
+            {
+                this.labelDate.Content = String.Format("Today {0}", @event.StartTime.ToLongTimeString());
+            }
+            else if ((DateTime.Today - eventDay).Days == 1)
+            {
+                this.labelDate.Content = String.Format("Yesterday {0}", @event.StartTime.ToLongTimeString());
+            }
+            else
+            {
+                this.labelDate.Content = @event.StartTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentUICulture);
+            }
+            
+            TimeSpan duration = @event.EndTime - @event.StartTime;
+            this.labelDuration.Content = string.Format("Duration: {0:D2}:{1:D2}:{2:D2}", duration.Hours, duration.Minutes, duration.Seconds);
             switch (@event.Status)
             {
                 case HistoryEvent.StatusType.Incoming:
@@ -104,7 +125,7 @@ namespace BogheApp.Items
 
         private void ctxMenu_DeleteHistoryEvent_Click(object sender, RoutedEventArgs e)
         {
-
+            this.historyService.DeleteEvent(this.Value);
         }
     }
 }

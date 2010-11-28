@@ -36,13 +36,14 @@ namespace BogheCore.Model
         public HistoryAVCallEvent() 
             : this(false, null)
         {
-            this.startTime = base.Date;
-            this.endTime = base.Date;
+            
         }
 
         public HistoryAVCallEvent(bool video, String remoteParty)
             : base (video ? MediaType.AudioVideo : MediaType.Audio, remoteParty)
         {
+            this.startTime = base.Date;
+            this.endTime = base.Date;
         }
 
         [XmlElement("StartTime")]

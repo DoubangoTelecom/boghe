@@ -48,6 +48,10 @@ namespace BogheApp.Screens
         public override void AfterLoading()
         {
             this.comboBoxGroup.ItemsSource = this.contactService.Groups;
+            if (this.contact != null)
+            {
+                this.comboBoxGroup.SelectedValue = this.contactService.GroupFind(this.contact.GroupName);
+            }
         }
 
         public override void BeforeUnLoading()

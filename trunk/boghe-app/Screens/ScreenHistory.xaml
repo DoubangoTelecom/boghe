@@ -3,7 +3,7 @@
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
     xmlns:items="clr-namespace:BogheApp.Items"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="522" Width="347">
+    Height="522" Width="347" Loaded="BaseScreen_Loaded">
     
     <ctrl:BaseScreen.Resources>
         <DataTemplate x:Key="DataTemplateHistoryAVCallEvent">
@@ -12,6 +12,29 @@
     </ctrl:BaseScreen.Resources>
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ListBox Margin="0,32,0,0" Name="listBox" VerticalContentAlignment="Top" />
+        <ListBox Margin="0,32,0,0" Name="listBox" VerticalContentAlignment="Top" IsSynchronizedWithCurrentItem="True" />
+        <ComboBox ItemsSource="{Binding}" Height="23" Margin="0,3,0,0" Name="comboBoxFilterCriteria" VerticalAlignment="Top" HorizontalAlignment="Left" Width="156" SelectedIndex="0" SelectionChanged="comboBoxFilterCriteria_SelectionChanged">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.567"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Path=ImageSource}" Width="16" Height="16" />
+                        <TextBlock Text = "{Binding Path=Text}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Border Height="23" VerticalAlignment="Top" Margin="179,3,2,0" BorderBrush="SkyBlue" BorderThickness="1">
+            <DockPanel>
+                <Image Source="/BogheApp;component/embedded/12/search_info_12.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2" />
+                <TextBox BorderThickness="0" Name="textBoxSearchCriteria" TextChanged="textBoxSearchCriteria_TextChanged" Width="131" />
+                <Image Name="imageSearchCriteriaClear" Source="/BogheApp;component/embedded/12/search_clear_12.png" Stretch="None"  VerticalAlignment="Center" MouseUp="imageSearchCriteriaClear_MouseUp" Focusable="True" HorizontalAlignment="Right" Margin="2" />
+            </DockPanel>
+        </Border>
     </Grid>
 </ctrl:BaseScreen>

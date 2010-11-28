@@ -2,14 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
-    xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
+    xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls" Padding="15,0,0,0">
     
-    Height="52" Width="359">
-    
-    <Grid>  
+    <Grid Background="Transparent">  
         <Image Name="imageAvatar" Stretch="None" Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Center" Source="/BogheApp;component/embedded/48/avatar_48.png" />
-        <Image Margin="32,0,0,0" Name="imageStatus" Stretch="None" Height="16" VerticalAlignment="Top" Width="16" HorizontalAlignment="Left" Source="/BogheApp;component/embedded/16/user_offline_16.png" />
-        <Label Height="28" Margin="54,0,69,0" Name="labelDisplayName" VerticalAlignment="Top" FontWeight="Bold" FontSize="14">John Doe</Label>
+        <Image Margin="50,3,0,0" Name="imageStatus" Stretch="None" Height="16" VerticalAlignment="Top" Width="16" HorizontalAlignment="Left" Source="/BogheApp;component/embedded/16/user_offline_16.png" />
+        <Label Margin="72,0,0,25" Name="labelDisplayName" FontWeight="Bold" FontSize="14">John Doe</Label>
         <Label Margin="52,25,69,0" Name="labelUriString" Height="28" VerticalAlignment="Top">sip:johndoe@open-ims.test</Label>
     
     

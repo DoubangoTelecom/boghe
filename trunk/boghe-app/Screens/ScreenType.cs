@@ -33,6 +33,7 @@ namespace BogheApp.Screens
         History = 0x000001 << 2,
         Contacts = 0x000001 << 3,
         ContactEdit = 0x000001 << 4,
-        Options = 0x000001 << 5
+        GroupEdit = 0x000001 << 5,
+        Options = 0x000001 << 6
     }
 }

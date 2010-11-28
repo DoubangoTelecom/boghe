@@ -194,6 +194,25 @@ namespace BogheCore.Services.Impl
             return ret;
         }
 
+        public bool GroupAdd(Group group)
+        {
+            LOG.Error("Not Implemented");
+            return false;
+        }
+
+        public bool GroupUpdate(Group group)
+        {
+            LOG.Error("Not Implemented");
+            return false;
+        }
+
+        public bool GroupDelete(Group group)
+        {
+            LOG.Error("Not Implemented");
+            return false;
+        }
+
+
         public bool Prepare()
         {
             if (this.prepared)

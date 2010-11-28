@@ -4,16 +4,16 @@
     Title="Boghe - IMS/RCS Client" Width="400" Height="690" SizeToContent="Manual"  Icon="/BogheApp;component/embedded/16/icon_16.png" Background="SkyBlue" MinWidth="400" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded">
     <Grid Background="White">
         <StatusBar Height="32" Name="statusBar" VerticalAlignment="Bottom" Background="White" />
-        <Menu Height="22" Name="menu" VerticalAlignment="Top" Background="White" FontWeight="Normal" FontSize="14" BorderBrush="SkyBlue" BorderThickness="1">
+        <Menu Height="22" Name="menu" VerticalAlignment="Top" Background="White" FontWeight="Normal" FontSize="12" BorderBrush="SkyBlue" BorderThickness="1">
             <MenuItem Header="File" Name="MenuItemFile" Click="MenuItemFile_Click" Background="White">
                 <MenuItem Header="Sign In" Name="MenuItemFile_SignIn" Background="Transparent">
                     <MenuItem.Icon>
-                        <Image Source="embedded/16/signin_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Image Source="/BogheApp;component/embedded/16/signin_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Sign Out" Name="MenuItemFile_SignOut" IsEnabled="False" >
                     <MenuItem.Icon>
-                        <Image Source="embedded/16/signout_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Image Source="/BogheApp;component/embedded/16/signout_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
@@ -32,6 +32,11 @@
                 <MenuItem Header="Delete Group" Name="MenuItemEAB_DeleteGroup" />
                 <Separator />
                 <MenuItem Header="Manage Autorizations" Name="MenuItemEAB_Authorizations" />
+            </MenuItem>
+            <MenuItem Header="History" Name="MenuItemHistory" IsEnabled="False" Click="MenuItemHistory_Click">
+                <MenuItem Header="Show History" Name="MenuItemHistory_ShowHistory" />
+                <Separator />
+                <MenuItem Header="Delete All Events" Name="MenuItemHistory_Clear" />
             </MenuItem>
             <MenuItem Header="Tools" Name="MenuItemTools" Click="MenuItemTools_Click">
                 <MenuItem Header="Options" Name="MenuItemTools_Options" />

@@ -34,6 +34,8 @@ namespace BogheCore
         SMS = 0x01 << 2,
         Chat = 0x01 << 3,
         Messaging = SMS | Chat,
-        FileTransfer = 0x01 << 4
+        FileTransfer = 0x01 << 4,
+
+        All = AudioVideo | Messaging | FileTransfer
     }    
 }

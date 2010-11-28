@@ -72,14 +72,7 @@ namespace BogheApp
             }
             else if (menuItem == this.MenuItemEAB_AddContact)
             {
-                String realm = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
-                Contact newContact = new Contact();
-                newContact.UriString = String.Format("sip:johndoe@{0}", realm.Replace("sip:", String.Empty));
-                newContact.DisplayName = "John Doe";
-
-                ScreenContactEdit screenEditContact = new ScreenContactEdit();
-                screenEditContact.EditMode = false;
-                screenEditContact.Contact = newContact;
+                ScreenContactEdit screenEditContact = new ScreenContactEdit(null);
                 this.screenService.Show(screenEditContact);
             }
             else if (menuItem == this.MenuItemEAB_EditContact)
@@ -90,6 +83,8 @@ namespace BogheApp
             }
             else if (menuItem == this.MenuItemEAB_AddGroup)
             {
+                ScreenGroupEdit screenGroupEdit = new ScreenGroupEdit(null);
+                this.screenService.Show(screenGroupEdit);
             }
             else if (menuItem == this.MenuItemEAB_EditGroup)
             {
@@ -99,6 +94,25 @@ namespace BogheApp
             }
             else if (menuItem == this.MenuItemEAB_Authorizations)
             {
+            }
+        }
+
+        #endregion
+
+        #region MenuItemHistory
+
+        private void MenuItemHistory_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = e.OriginalSource as MenuItem;
+            if (menuItem == null) return;
+
+            if (menuItem == this.MenuItemHistory_ShowHistory)
+            {
+                this.screenService.Show(ScreenType.History);
+            }
+            else if (menuItem == this.MenuItemHistory_Clear)
+            {
+                this.historyService.Clear();
             }
         }
 

@@ -38,6 +38,10 @@ namespace BogheCore.Services
         bool ContactUpdate(Contact contact, String prevGroupName);
         bool ContactDelete(Contact contact);
 
+        bool GroupAdd(Group group);
+        bool GroupUpdate(Group group);
+        bool GroupDelete(Group group);
+
         bool Prepare();
         bool UnPrepare();
 
