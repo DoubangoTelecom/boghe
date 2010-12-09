@@ -196,6 +196,12 @@
   <data name="icon_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\icon_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_messages_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\16\icon_messages_16.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_message_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\16\icon_message_16.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="key_ok_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\24\key_ok_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -232,8 +238,14 @@
   <data name="log4net_xml" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\log4net.xml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="messages_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\16\messages_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="messages_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\32\messages_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="message_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\16\message_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="newevent" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\sound\newevent.wav;System.IO.MemoryStream, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -288,5 +300,11 @@
   </data>
   <data name="user_time_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\user_time_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="messages_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\messages_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="message_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\embedded\24\message_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

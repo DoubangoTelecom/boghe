@@ -28,7 +28,7 @@ namespace BogheCore.Sip.Events
     public enum MsrpEventTypes
     {
         CONNECTED,
-        SUCCESS_200OK,
+        SUCCESS_2XX,
         SUCCESS_REPORT,
         DATA,
         ERROR,

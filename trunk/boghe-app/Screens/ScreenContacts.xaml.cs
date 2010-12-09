@@ -75,6 +75,30 @@ namespace BogheApp.Screens
             
         }
 
+        private void menuItemStartChat_Click(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
+            {
+                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                if (!String.IsNullOrEmpty(remoteUri))
+                {
+                    MessagingWindow.StartChat(remoteUri);
+                }
+            }
+        }
+
+        private void menuItemSendSMS_Click(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
+            {
+                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                if (!String.IsNullOrEmpty(remoteUri))
+                {
+                    MessagingWindow.SendSMS(remoteUri);
+                }
+            }
+        }
+
         private void textBoxSearchCriteria_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (this.contactsView != null)
@@ -127,9 +151,27 @@ namespace BogheApp.Screens
 
         private void buttonFile_Click(object sender, RoutedEventArgs e)
         {
-
+            if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
+            {
+                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                if (!String.IsNullOrEmpty(remoteUri))
+                {
+                    MessagingWindow.SendFile(remoteUri, null);
+                }
+            }
         }
 
+        private void buttonMessaging_Click(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
+            {
+                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                if (!String.IsNullOrEmpty(remoteUri))
+                {
+                    MessagingWindow.StartChat(remoteUri);
+                }
+            }
+        }
 
         #region ContactsSorter
 
@@ -157,7 +199,7 @@ namespace BogheApp.Screens
             readonly String displayName;
             readonly Color color;
 
-            public FilterItem(String name, String displayName, Color color)
+            internal FilterItem(String name, String displayName, Color color)
             {
                 this.name = name;
                 this.displayName = displayName;
@@ -181,6 +223,5 @@ namespace BogheApp.Screens
         }
 
         #endregion
-        
     }
 }

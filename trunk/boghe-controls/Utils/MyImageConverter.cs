@@ -36,5 +36,11 @@ namespace BogheControls.Utils
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero,
                         Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
+
+        public static ImageSource FromIcon(Icon icon)
+        {
+            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(icon.Handle,
+                        Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }    
     }
 }

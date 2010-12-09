@@ -230,6 +230,20 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Icon icon_message_16 {
+            get {
+                object obj = ResourceManager.GetObject("icon_message_16", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        public static System.Drawing.Icon icon_messages_16 {
+            get {
+                object obj = ResourceManager.GetObject("icon_messages_16", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap key_ok_24 {
             get {
                 object obj = ResourceManager.GetObject("key_ok_24", resourceCulture);
@@ -311,6 +325,34 @@ namespace BogheApp.Properties {
             get {
                 object obj = ResourceManager.GetObject("log4net_xml", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap message_16 {
+            get {
+                object obj = ResourceManager.GetObject("message_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap message_24 {
+            get {
+                object obj = ResourceManager.GetObject("message_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap messages_16 {
+            get {
+                object obj = ResourceManager.GetObject("messages_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap messages_24 {
+            get {
+                object obj = ResourceManager.GetObject("messages_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

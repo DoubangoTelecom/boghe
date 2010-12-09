@@ -12,18 +12,41 @@
     
     
         <Grid.ContextMenu>
-            <ContextMenu Name="ctxMenu">
-                <MenuItem Header="Edit" Name="ctxMenu_Edit" Click="ctxMenu_Edit_Click" />
-                <MenuItem Header="Delete" Name="ctxMenu_Delete" Click="ctxMenu_Delete_Click" />
+            <ContextMenu Name="ctxMenu" Background="White" BorderBrush="SkyBlue">                
+                <MenuItem Name="ctxMenu_Edit" Click="ctxMenu_Edit_Click" Header="Edit">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_edit_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Delete" Name="ctxMenu_Delete" Click="ctxMenu_Delete_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_delete_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="Autorizations" Name="ctxMenu_Authorizations" Click="ctxMenu_Authorizations_Click" />
                 <Separator />
                 <MenuItem Header="Voice Call" Name="ctxMenu_Voice" Click="ctxMenu_Voice_Click" />
                 <MenuItem Header="Visio Call" Name="ctxMenu_Visio" Click="ctxMenu_Visio_Click" />
-                <MenuItem Header="Image Sharing" Name="ctxMenu_ImageShare" Click="ctxMenu_ImageShare_Click" />
-                <MenuItem Header="Chat" Name="ctxMenu_Chat" Click="ctxMenu_Chat_Click" />
-                <MenuItem Header="SMS" Name="ctxMenu_SMS" Click="ctxMenu_SMS_Click" />
-                <MenuItem Header="Conference" Name="ctxMenu_Conference" Click="ctxMenu_Conference_Click" />
+                <Separator />
+                <MenuItem Header="Send File" Name="ctxMenu_SendFile" Click="ctxMenu_SendFile_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/document_up_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Chat" Name="ctxMenu_Chat" Click="ctxMenu_Chat_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/messages_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="SMS" Name="ctxMenu_SMS" Click="ctxMenu_SMS_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/message_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Conference" Name="ctxMenu_Conference" Click="ctxMenu_Conference_Click">
+                </MenuItem>
             </ContextMenu>
         </Grid.ContextMenu>
     </Grid>

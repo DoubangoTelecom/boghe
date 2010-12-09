@@ -119,7 +119,7 @@ namespace BogheApp
                 case InviteEventTypes.INCOMING:
                     Win32ServiceManager.SharedManager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
                     {
-                        SessionWindow.ReceiveCall(e.GetExtra("Session") as MyInviteSession);
+                        SessionWindow.ReceiveCall(e.GetExtra(InviteEventArgs.EXTRA_SESSION) as MyInviteSession);
                         this.soundService.PlayRingTone();
                     }, null);
                     

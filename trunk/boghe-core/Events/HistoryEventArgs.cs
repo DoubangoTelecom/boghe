@@ -29,6 +29,8 @@ namespace BogheCore.Events
     {
         public readonly HistoryEventTypes type;
 
+        public const String EXTRA_EVENT = "event";
+
         public HistoryEventArgs(HistoryEventTypes type) :base()
         {
             this.type = type;

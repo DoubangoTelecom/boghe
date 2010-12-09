@@ -57,7 +57,7 @@ namespace BogheApp
             }
 
             LOG.Debug("====================================================");
-            LOG.Debug("======Starting Boghe - IMS/RC Client v1.0.0 r501====");
+            LOG.Debug("======Starting Boghe - IMS/RCS Client v1.0.0 r501====");
             LOG.Debug("====================================================");
 
 

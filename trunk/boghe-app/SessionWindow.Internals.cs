@@ -27,6 +27,7 @@ using BogheCore.Utils;
 using BogheCore.Sip;
 using System.Drawing;
 using BogheControls.Utils;
+using BogheCore.Model;
 
 namespace BogheApp
 {
@@ -53,6 +54,26 @@ namespace BogheApp
             }
         }
 
+        private void AddMessagingEvent(HistoryEvent @event)
+        {
+            this.historyDataSource.Add(@event);
+
+            if (this.chatHistoryEvent != null)
+            {
+                this.chatHistoryEvent.Messages.Add(@event as HistoryShortMessageEvent);
+            }
+            else
+            {
+                switch (@event.MediaType)
+                {
+                    case BogheCore.MediaType.ShortMessage:
+                    case BogheCore.MediaType.SMS:
+                        this.historyService.AddEvent(@event);
+                        break;
+                }
+            }
+        }
+
         private void InitializeView()
         {
             if (this.AVSession != null)
@@ -62,6 +83,10 @@ namespace BogheApp
                     this.Title = String.Format("Talking with {0}", this.AVSession.RemotePartyDisplayName);
                     this.UpdateControls();
                 }
+            }
+            else
+            {
+                this.Title = String.Format("Talking with {0}", UriUtils.GetDisplayName(this.remotePartyUri));
             }
         }
 

@@ -31,6 +31,9 @@ namespace BogheCore.Model
     [Serializable]
     [XmlRoot("HistoryEvent")]
     [XmlInclude(typeof(HistoryAVCallEvent))]
+    [XmlInclude(typeof(HistoryShortMessageEvent))]
+    [XmlInclude(typeof(HistoryChatEvent))]
+    [XmlInclude(typeof(HistoryFileTransferEvent))]
     public abstract class HistoryEvent : IComparable<HistoryEvent>, INotifyPropertyChanged
     {
         protected MediaType mediaType;

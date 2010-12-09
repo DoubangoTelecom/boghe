@@ -59,8 +59,11 @@
     <Compile Include="Events\EventHandlerTrigger.cs" />
     <Compile Include="Events\HistoryEventArgs.cs" />
     <Compile Include="Events\HistoryEventTypes.cs" />
+    <Compile Include="Model\HistoryChatEvent.cs" />
     <Compile Include="Model\HistoryAVCallEvent.cs" />
     <Compile Include="Model\HistoryEvent.cs" />
+    <Compile Include="Model\HistoryFileTransferEvent.cs" />
+    <Compile Include="Model\HistoryShortMessageEvent.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Services\Impl\ContactService.Local.cs">
       <DependentUpon>ContactService.cs</DependentUpon>
@@ -124,6 +127,10 @@
     <Compile Include="Sip\Events\StackEventTypes.cs" />
     <Compile Include="Sip\MyAVSession.cs" />
     <Compile Include="Sip\MyInviteSession.cs" />
+    <Compile Include="Sip\MyMessagingSession.cs" />
+    <Compile Include="Sip\MyMsrpSession.Callback.cs">
+      <DependentUpon>MyMsrpSession.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sip\MyMsrpSession.cs" />
     <Compile Include="Sip\MyPublicationSession.cs" />
     <Compile Include="Sip\MyRegistrationSession.cs" />

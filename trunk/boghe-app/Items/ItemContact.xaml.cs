@@ -119,7 +119,7 @@ namespace BogheApp.Items
             SessionWindow.MakeVideoCall(this.contactValue.UriString);
         }
 
-        private void ctxMenu_ImageShare_Click(object sender, RoutedEventArgs e)
+        private void ctxMenu_SendFile_Click(object sender, RoutedEventArgs e)
         {
             if (this.contactValue == null || String.IsNullOrEmpty(this.contactValue.UriString))
             {
@@ -133,6 +133,8 @@ namespace BogheApp.Items
             {
                 return;
             }
+
+            MessagingWindow.StartChat(this.contactValue.UriString);
         }
 
         private void ctxMenu_SMS_Click(object sender, RoutedEventArgs e)
@@ -141,6 +143,8 @@ namespace BogheApp.Items
             {
                 return;
             }
+
+            MessagingWindow.SendSMS(this.contactValue.UriString);
         }
 
         private void ctxMenu_Conference_Click(object sender, RoutedEventArgs e)

@@ -107,6 +107,8 @@ namespace BogheApp.Screens
                 new FilterItem("Outgoing Calls", "/BogheApp;component/embedded/16/call_outgoing_16.png", HistoryEvent.StatusType.Outgoing, MediaType.AudioVideo),
                 new FilterItem("Incoming Calls", "/BogheApp;component/embedded/16/call_incoming_16.png", HistoryEvent.StatusType.Incoming, MediaType.AudioVideo),
                 new FilterItem("Missed Calls", "/BogheApp;component/embedded/16/call_missed_16.png", HistoryEvent.StatusType.Missed, MediaType.AudioVideo),
+                new FilterItem("Messaging", "/BogheApp;component/embedded/16/messages_16.png", HistoryEvent.StatusType.All, MediaType.Messaging),
+                new FilterItem("File Transfers", "/BogheApp;component/embedded/16/document_up_down_16.png", HistoryEvent.StatusType.All, MediaType.FileTransfer),
             };
             this.comboBoxFilterCriteria.SelectedIndex = 0;
 

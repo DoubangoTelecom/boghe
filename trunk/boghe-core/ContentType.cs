@@ -42,5 +42,7 @@ namespace BogheCore
         public const String XCAP_DIFF = "application/xcap-diff+xml";
 
         public const String SMS_3GPP = "application/vnd.3gpp.sms";
+
+        public const String TEXT_PLAIN = "text/plain";
     }
 }

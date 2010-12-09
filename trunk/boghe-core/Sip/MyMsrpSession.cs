@@ -23,13 +23,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+using log4net;
+using BogheCore.Sip.Events;
+using System.IO;
 
 namespace BogheCore.Sip
 {
-    public class MyMsrpSession : MyInviteSession
+    public partial class MyMsrpSession : MyInviteSession
     {
+        private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMsrpSession));
+
+        //private const String CHAT_ACCEPT_TYPES = "text/plain message/CPIM";
+        private const String CHAT_ACCEPT_TYPES = "text/plain";
+        private const String CHAT_ACCEPT_WRAPPED_TYPES = "text/plain image/jpeg image/gif image/bmp image/png";
+        private const String FILE_ACCEPT_TYPES = "*";
+        private const int CHUNK_DURATION = 25;
+
+        public event EventHandler<MsrpEventArgs> onMsrpEvent;
+
         private readonly MsrpSession session;
         private readonly MyMsrpCallback callback;
+        private List<PendingMessage> pendingMessages = null;
+        private String filePath;
 
         private static IDictionary<long, MyMsrpSession> sessions = new Dictionary<long, MyMsrpSession>();
 
@@ -38,11 +53,11 @@ namespace BogheCore.Sip
             return null;
         }
 
-        public static MyMsrpSession CreateOutgoingSession(MySipStack sipStack, MediaType mediaType)
+        public static MyMsrpSession CreateOutgoingSession(MySipStack sipStack, MediaType mediaType, String remoteUri)
         {
             if (mediaType == MediaType.FileTransfer || mediaType == MediaType.Chat)
             {
-                MyMsrpSession msrpSession = new MyMsrpSession(sipStack, null, mediaType);
+                MyMsrpSession msrpSession = new MyMsrpSession(sipStack, null, mediaType, remoteUri);
                 MyMsrpSession.sessions.Add(msrpSession.Id, msrpSession);
 
                 return msrpSession;
@@ -82,19 +97,20 @@ namespace BogheCore.Sip
             }
         }
 
-        public MyMsrpSession(MySipStack sipStack, MsrpSession session, MediaType mediaType) : base(sipStack)
+        public MyMsrpSession(MySipStack sipStack, MsrpSession session, MediaType mediaType, String remoteUri) : base(sipStack)
         {
             this.callback = new MyMsrpCallback(this);
             base.mediaType = mediaType;
+            base.remotePartyUri = remoteUri;
 
             if (session == null)
             {
-                this.outgoing = true;
+                base.outgoing = true;
                 this.session = new MsrpSession(sipStack, this.callback);
             }
             else 
             {
-                this.outgoing = false;
+                base.outgoing = false;
                 this.session = session;
                 this.session.setCallback(this.callback);
             }
@@ -111,16 +127,139 @@ namespace BogheCore.Sip
             get { return this.session; }
         }
 
-
-
-        class MyMsrpCallback : MsrpCallback
+        public String FilePath
         {
-            readonly MyMsrpSession session;
+            get { return this.filePath; }
+        }
 
-            internal MyMsrpCallback(MyMsrpSession session)
-                :base()
+        public bool Accept()
+        {
+            return this.session.accept();
+        }
+
+        public bool HangUp()
+        {
+            if (base.connected)
             {
-                this.session = session;
+                return this.session.hangup();
+            }
+            else
+            {
+                return this.session.reject();
+            }
+        }
+
+        public bool SendFile(String path)
+        {
+            if (String.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                LOG.Error(String.Format("File ({0}) doesn't exist", path));
+                return false;
+            }
+
+            if (this.mediaType != MediaType.FileTransfer)
+            {
+                LOG.Error("Invalid media type");
+                return false;
+            }
+
+            FileInfo finfo = new FileInfo(path);
+            this.filePath = filePath = finfo.FullName;
+            String fileSelector = String.Format("name:\"{0}\" type:{1} size:{2}",
+                finfo.Name, this.GetFileType(finfo.Extension), finfo.Length);
+
+            ActionConfig config = new ActionConfig();
+            config
+                .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-path", this.filePath)
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-selector", fileSelector)
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.FILE_ACCEPT_TYPES)
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-disposition", "attachment")
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-icon", "cid:test@doubango.org")
+                 .setMediaInt(twrap_media_type_t.twrap_media_msrp, "chunck-duration", MyMsrpSession.CHUNK_DURATION)
+                 ;
+
+            bool ret = this.session.callMsrp(this.RemotePartyUri, config);
+            config.Dispose();
+            return ret;
+        }
+
+        public bool SendMessage(String message, String contentType)
+        {
+            if(String.IsNullOrEmpty(message))
+            {
+                LOG.Error("Null or empty message");
+                return false;
+            }
+
+            if (this.mediaType != MediaType.Chat)
+            {
+                LOG.Error("Invalid media type");
+                return false;
+            }
+
+            if (base.IsConnected)
+            {
+                ActionConfig config = new ActionConfig();
+                config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", contentType);
+                byte[] payload = Encoding.UTF8.GetBytes(message);
+                bool ret = this.session.sendMessage(payload, (uint)payload.Length, config);
+                config.Dispose();
+
+                return ret;
+            }
+            else
+            {
+                if (this.pendingMessages == null)
+                {
+                    this.pendingMessages = new List<PendingMessage>();
+                }
+                this.pendingMessages.Add(new PendingMessage(message, contentType));
+
+                ActionConfig config = new ActionConfig();
+                config.setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.CHAT_ACCEPT_TYPES)
+                    .setMediaInt(twrap_media_type_t.twrap_media_msrp, "chunck-duration", 50);
+
+                bool ret = this.session.callMsrp(base.RemotePartyUri, config);
+                config.Dispose();
+
+                return ret;
+            }
+        }
+
+        private String GetFileType(String extension)
+        {
+            String type = "application/octet-stream";
+
+            if (extension.Equals("jpe") || extension.Equals("jpeg") || extension.Equals("jpg"))
+            {
+                type = "image/jpeg";
+            }
+            else if (extension.Equals("gif") || extension.Equals("png") || extension.Equals("bmp"))
+            {
+                type = String.Format("image/{0}", extension);
+            }
+            return type;
+        }
+
+        class PendingMessage
+        {
+            readonly String message;
+            readonly String contentType;
+
+            internal PendingMessage(String message, String contentType)
+            {
+                this.message = message;
+                this.contentType = contentType;
+            }
+
+            internal String Message
+            {
+                get { return this.message; }
+            }
+
+            internal String ContentType
+            {
+                get { return this.contentType; }
             }
         }
     }

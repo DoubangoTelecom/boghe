@@ -115,7 +115,7 @@ namespace BogheCore.Services.Impl
                     {
                         invSession.State = MyInviteSession.InviteState.INPROGRESS;
                         InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.INPROGRESS, phrase);
-                        eargs.AddExtra("session", invSession);
+                        eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, invSession);
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
                     } 
 
@@ -291,6 +291,12 @@ namespace BogheCore.Services.Impl
                         switch (sessionType)
                         {
                             case twrap_media_type_t.twrap_media_msrp:
+                                if ((session = e.takeMsrpSessionOwnership()) == null)
+                                {
+                                    LOG.Error("Failed to take MSRP session ownership");
+                                    return -1;
+                                }
+
                                 break;
 
                             case twrap_media_type_t.twrap_media_audio:
@@ -298,12 +304,12 @@ namespace BogheCore.Services.Impl
                             case twrap_media_type_t.twrap_media_video:
                                 if ((session = e.takeCallSessionOwnership()) == null)
                                 {
-                                    LOG.Error("Failed to take session ownership");
+                                    LOG.Error("Failed to take audio/video session ownership");
                                     return -1;
                                 }
                                 MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
                                 InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
-                                eargs.AddExtra("Session", avSession);
+                                eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
                                 EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
                                 break;
 

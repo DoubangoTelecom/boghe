@@ -31,7 +31,17 @@ namespace BogheCore.Sip.Events
         private readonly long sessionId;
         private readonly MsrpEventTypes type;
 
-        public MsrpEventArgs(long sessionId, MsrpEventTypes type) : base()
+        public const String EXTRA_SESSION= InviteEventArgs.EXTRA_SESSION;
+        public const String EXTRA_DATA = "data";
+        public const String EXTRA_CONTENT_TYPE = "content-type";
+        public const String EXTRA_BYTE_RANGE_START = "byte-start";
+        public const String EXTRA_BYTE_RANGE_END = "byte-end";
+        public const String EXTRA_BYTE_RANGE_TOTAL = "byte-total";
+        public const String EXTRA_RESPONSE_CODE = "response-code";
+        public const String EXTRA_REQUEST_TYPE = "request-type";
+
+        public MsrpEventArgs(long sessionId, MsrpEventTypes type)
+            : base()
         {
             this.sessionId = sessionId;
             this.type = type;
