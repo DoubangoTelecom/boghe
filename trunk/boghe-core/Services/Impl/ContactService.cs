@@ -152,7 +152,7 @@ namespace BogheCore.Services.Impl
                 }
 
                 ContactEventArgs eargs = new ContactEventArgs(ContactEventTypes.CONTACT_ADDED);
-                eargs.AddExtra("contact", contact);
+                eargs.AddExtra(ContactEventArgs.EXTRA_CONTACT, contact);
                 EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, eargs);
 
                 this.DeferredSave();
@@ -252,7 +252,7 @@ namespace BogheCore.Services.Impl
                 this.groups.Add(group);
 
                 ContactEventArgs eargs = new ContactEventArgs(ContactEventTypes.GROUP_ADDED);
-                eargs.AddExtra("group", group);
+                eargs.AddExtra(ContactEventArgs.EXTRA_GROUP, group);
                 EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, eargs);
 
                 this.DeferredSave();

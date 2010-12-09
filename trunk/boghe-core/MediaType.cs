@@ -32,9 +32,10 @@ namespace BogheCore
         Video = 0x01 << 1,
         AudioVideo = Audio | Video,
         SMS = 0x01 << 2,
-        Chat = 0x01 << 3,
-        Messaging = SMS | Chat,
-        FileTransfer = 0x01 << 4,
+        ShortMessage = 0x01 << 3,
+        Chat = 0x01 << 4,
+        Messaging = SMS | Chat | ShortMessage,
+        FileTransfer = 0x01 << 5,
 
         All = AudioVideo | Messaging | FileTransfer
     }    

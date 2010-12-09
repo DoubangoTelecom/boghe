@@ -31,6 +31,7 @@ namespace BogheCore.Sip
     public abstract class MySipSession : IComparable<MySipSession>, IDisposable
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MySipSession));
+
         protected MySipStack sipStack;
         protected bool connected;
         protected bool outgoing;

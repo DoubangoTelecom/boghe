@@ -29,6 +29,9 @@ namespace BogheCore.Events
     {
         private readonly ContactEventTypes type;
 
+        public const String EXTRA_CONTACT = "contact";
+        public const String EXTRA_GROUP = "group";
+
         public ContactEventArgs(ContactEventTypes type) : base()
         {
             this.type = type;

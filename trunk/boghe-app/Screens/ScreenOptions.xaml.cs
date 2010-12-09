@@ -53,6 +53,8 @@ namespace BogheApp.Screens
             this.radioButtonContactsRemote.Checked += delegate(object sender, RoutedEventArgs e) { this.groupBoxXCAP.IsEnabled = true; };
             this.radioButtonContactsRemote.Unchecked += delegate(object sender, RoutedEventArgs e) { this.groupBoxXCAP.IsEnabled = false; };
 
+            this.InitializeCodecs();
+
             this.LoadConfiguration();
         }        
 
@@ -69,6 +71,9 @@ namespace BogheApp.Screens
 
             if (!this.UpdatePresence())
                 return;
+
+            if (!this.UpdateCodecs())
+                return;
         }
 
         private void LoadConfiguration()
@@ -77,6 +82,7 @@ namespace BogheApp.Screens
             this.LoadNetwork();
             this.LoadContacts();
             this.LoadPresence();
+            this.LoadCodecs();
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

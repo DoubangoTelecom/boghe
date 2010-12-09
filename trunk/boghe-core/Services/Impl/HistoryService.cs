@@ -99,7 +99,7 @@ namespace BogheCore.Services.Impl
             this.events.Insert(0, @event);
 
             HistoryEventArgs eargs = new HistoryEventArgs(HistoryEventTypes.ADDED);
-            eargs.AddExtra("event", @event);
+            eargs.AddExtra(HistoryEventArgs.EXTRA_EVENT, @event);
             EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, eargs);
 
             this.DeferredSave();
@@ -115,7 +115,7 @@ namespace BogheCore.Services.Impl
             this.events.Remove(@event);
 
             HistoryEventArgs eargs = new HistoryEventArgs(HistoryEventTypes.REMOVED);
-            eargs.AddExtra("event", @event);
+            eargs.AddExtra(HistoryEventArgs.EXTRA_EVENT, @event);
             EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, eargs);
 
             this.DeferredSave();

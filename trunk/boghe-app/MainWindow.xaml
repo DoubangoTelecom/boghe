@@ -6,7 +6,7 @@
         <StatusBar Height="32" Name="statusBar" VerticalAlignment="Bottom" Background="White" />
         <Menu Height="22" Name="menu" VerticalAlignment="Top" Background="White" FontWeight="Normal" FontSize="12" BorderBrush="SkyBlue" BorderThickness="1">
             <MenuItem Header="File" Name="MenuItemFile" Click="MenuItemFile_Click" Background="White">
-                <MenuItem Header="Sign In" Name="MenuItemFile_SignIn" Background="Transparent">
+                <MenuItem Header="Sign In" Name="MenuItemFile_SignIn">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/signin_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </MenuItem.Icon>
@@ -48,7 +48,7 @@
         <TabControl Margin="0,86,0,29" Name="tabControl" FlowDirection="LeftToRight" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderBrush="SkyBlue">
         </TabControl>
         
-        <Label Height="28" Margin="1,23,75,0" Name="labelDisplayName" VerticalAlignment="Top" FontSize="14" FontWeight="Bold">John Doe</Label>
+        <Label Height="28" Margin="1,23,89,0" Name="labelDisplayName" VerticalAlignment="Top" FontSize="14" FontWeight="Bold">John Doe</Label>
         <Image Height="48" HorizontalAlignment="Right" Margin="0,25,5,0" Name="imageAvatar" Stretch="Fill" VerticalAlignment="Top" Width="48" />
         <ComboBox ItemsSource="{Binding}" Height="27" HorizontalAlignment="Left" Margin="4,52,0,0" Name="comboBoxStatus" VerticalAlignment="Top" Width="96" >
             <ComboBox.Background>
@@ -81,5 +81,6 @@
             <Image Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Visibility="Hidden"   MinWidth="24" MinHeight="24" HorizontalAlignment="Right" />
             <Image Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" MinWidth="24" MinHeight="24" ClipToBounds="False" HorizontalAlignment="Right" />
         </DockPanel>
+        <Image Height="24" HorizontalAlignment="Right" Margin="0,27,57,0" Name="imageMailbox" Stretch="None" VerticalAlignment="Top" Width="24" Source="/BogheApp;component/embedded/24/mailbox_empty_24.png" ToolTip="You don't have messages" />
     </Grid>
 </Window>

@@ -52,8 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseItem.cs" />
+    <Compile Include="BaseItem2.cs" />
     <Compile Include="BaseScreen.cs" />
     <Compile Include="CloseableTabItem.cs" />
+    <Compile Include="MyDockPanel.cs" />
+    <Compile Include="MyStackPanel.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

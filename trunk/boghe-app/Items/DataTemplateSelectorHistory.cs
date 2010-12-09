@@ -41,10 +41,14 @@ namespace BogheApp.Items
                 {
                     template = element.FindResource("DataTemplateHistoryAVCallEvent") as DataTemplate;
                 }
-                //else if (item is Group)
-                //{
-                //    template = element.FindResource("DataTemplateGroup") as DataTemplate;
-                //}
+                else if (item is HistoryChatEvent)
+                {
+                    template = element.FindResource("DataTemplateHistoryChatEvent") as DataTemplate;
+                }
+                else if (item is HistoryShortMessageEvent)
+                {
+                    template = element.FindResource("DataTemplateHistoryShortMessageEvent") as DataTemplate;
+                }
             }
 
             return template;

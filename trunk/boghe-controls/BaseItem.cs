@@ -32,7 +32,7 @@ namespace BogheControls
         private bool loaded;
         public event EventHandler ValueLoaded;
         
-        public static DependencyProperty ContactProperty = DependencyProperty.Register(
+        public static DependencyProperty ValueProperty = DependencyProperty.Register(
             "Value", typeof(T), typeof(BaseItem<T>));
 
         public BaseItem() : base()
@@ -42,8 +42,8 @@ namespace BogheControls
 
         public T Value
         {
-            get { return ((T)this.GetValue(ContactProperty)); }
-            set { this.SetValue(ContactProperty, value); }
+            get { return ((T)this.GetValue(ValueProperty)); }
+            set { this.SetValue(ValueProperty, value); }
         } 
 
         public void BaseItem_Loaded(object sender, System.Windows.RoutedEventArgs e)

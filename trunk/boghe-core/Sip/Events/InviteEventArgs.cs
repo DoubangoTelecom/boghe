@@ -32,6 +32,8 @@ namespace BogheCore.Sip.Events
         private readonly InviteEventTypes type;
         private readonly String phrase;
 
+        public const String EXTRA_SESSION = "session";
+
         public InviteEventArgs(long sessionId, InviteEventTypes type, String phrase)
             :base()
         {

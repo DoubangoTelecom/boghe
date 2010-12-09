@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
-    Height="57" Width="300">
+    Height="57" Width="300" Background="Transparent">
     <Grid>
         <Image Margin="2,4,0,5" Name="imageIcon" Stretch="Fill" Width="45" HorizontalAlignment="Left" VerticalAlignment="Center" Height="45" />
         <Label Margin="56,0,0,0" Name="labelDisplayName" FontSize="14" FontWeight="Bold" Padding="0" Height="22" VerticalAlignment="Top">John Doe</Label>
@@ -13,9 +13,21 @@
             <ContextMenu Name="ctxMenu">
                 <MenuItem Header="Make Voice Call" Name="ctxMenu_MakeVoiceCall" Click="ctxMenu_MakeVoiceCall_Click" />
                 <MenuItem Header="Make Video Call" Name="ctxMenu_MakeVideoCall" Click="ctxMenu_MakeVideoCall_Click" />
-                <MenuItem Header="Send File" Name="ctxMenu_SendFile" Click="ctxMenu_SendFile_Click" />
-                <MenuItem Header="Start Chat" Name="ctxMenu_StartChat" Click="ctxMenu_StartChat_Click" />
-                <MenuItem Header="Send SMS" Name="ctxMenu_SendSMS" Click="ctxMenu_SendSMS_Click" />
+                <MenuItem Header="Send File" Name="ctxMenu_SendFile" Click="ctxMenu_SendFile_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/document_up_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Start Chat" Name="ctxMenu_StartChat" Click="ctxMenu_StartChat_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/messages_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Send SMS" Name="ctxMenu_SendSMS" Click="ctxMenu_SendSMS_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/message_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="Add To contacts" Name="ctxMenu_AddToContacts" Click="ctxMenu_AddToContacts_Click" />
                 <Separator />

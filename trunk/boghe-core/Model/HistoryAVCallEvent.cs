@@ -33,7 +33,7 @@ namespace BogheCore.Model
         protected DateTime startTime;
         protected DateTime endTime;
 
-        public HistoryAVCallEvent() 
+        private HistoryAVCallEvent() 
             : this(false, null)
         {
             

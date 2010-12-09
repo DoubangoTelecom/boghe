@@ -44,6 +44,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -62,6 +63,9 @@
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
@@ -149,6 +153,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Items\ItemFileTransfer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Items\ItemGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,7 +165,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Items\ItemHistoryChatEvent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Items\ItemHistoryShortMessageEvent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Items\ItemShortMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessagingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,8 +195,12 @@
     </Page>
     <Compile Include="Items\DataTemplateSelectorContacts.cs" />
     <Compile Include="Items\DataTemplateSelectorHistory.cs" />
+    <Compile Include="Items\DataTemplateSelectorMessaging.cs" />
     <Compile Include="Items\ItemContact.xaml.cs">
       <DependentUpon>ItemContact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemFileTransfer.xaml.cs">
+      <DependentUpon>ItemFileTransfer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Items\ItemGroup.xaml.cs">
       <DependentUpon>ItemGroup.xaml</DependentUpon>
@@ -180,11 +208,32 @@
     <Compile Include="Items\ItemHistoryAVCallEvent.xaml.cs">
       <DependentUpon>ItemHistoryAVCallEvent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Items\ItemHistoryChatEvent.xaml.cs">
+      <DependentUpon>ItemHistoryChatEvent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemHistoryShortMessageEvent.xaml.cs">
+      <DependentUpon>ItemHistoryShortMessageEvent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemShortMessage.xaml.cs">
+      <DependentUpon>ItemShortMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.Status.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessagingWindow.Internals.cs">
+      <DependentUpon>MessagingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessagingWindow.MsrpEvent.cs">
+      <DependentUpon>MessagingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessagingWindow.Participants.cs">
+      <DependentUpon>MessagingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MessagingWindow.xaml.cs">
+      <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\ScreenContactEdit.Screen.cs">
       <DependentUpon>ScreenContactEdit.xaml</DependentUpon>
@@ -251,6 +300,9 @@
     </Compile>
     <Compile Include="Services\Impl\SoundService.cs" />
     <Compile Include="SessionWindow.Internals.cs">
+      <DependentUpon>SessionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SessionWindow.MsrpEvent.cs">
       <DependentUpon>SessionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SessionWindow.SipEvent.cs">
@@ -410,6 +462,49 @@
   <ItemGroup>
     <Resource Include="embedded\12\search_clear_12.png" />
     <Resource Include="embedded\12\search_info_12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\bullet_ball_glass_blue_16.png" />
+    <Resource Include="embedded\16\bullet_ball_glass_green_16.png" />
+    <Resource Include="embedded\16\bullet_ball_glass_grey_16.png" />
+    <Resource Include="embedded\16\bullet_ball_glass_red_16.png" />
+    <Resource Include="embedded\16\bullet_ball_glass_yellow_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\messages_16.png" />
+    <Resource Include="embedded\16\message_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\icon_messages_16.ico" />
+    <Resource Include="embedded\16\icon_message_16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\messages_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\avatar_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\mailbox_empty_24.png" />
+    <Resource Include="embedded\24\mailbox_full_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\magic_wand_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\magic_wand_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\user_delete_16.png" />
+    <Resource Include="embedded\16\user_edit_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\document_down_16.png" />
+    <Resource Include="embedded\16\document_up_16.png" />
+    <Resource Include="embedded\16\document_up_down_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\user_add_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

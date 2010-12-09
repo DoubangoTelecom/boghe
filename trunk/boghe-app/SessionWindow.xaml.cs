@@ -41,6 +41,7 @@ using System.Reflection;
 using BogheCore.Model;
 using org.doubango.tinyWRAP;
 using BogheControls;
+using BogheApp.Items;
 
 namespace BogheApp
 {
@@ -50,8 +51,11 @@ namespace BogheApp
     public partial class SessionWindow : Window
     {
         private static ILog LOG = LogManager.GetLogger(typeof(SessionWindow));
+        private static List<SessionWindow> windows = new List<SessionWindow>();
 
+        private MyMsrpSession chatSession = null;
         private MyAVSession avSession = null;
+        private readonly List<MyMsrpSession> fileTransferSessions;
         private readonly String remotePartyUri = null;
 
         private readonly IContactService contactService;
@@ -60,12 +64,14 @@ namespace BogheApp
         private readonly ISoundService soundService;
 
         private readonly Timer timerCall;
-        //private DateTime startTime;
-        //private DateTime endTime;
 
+        private HistoryChatEvent chatHistoryEvent;
         private HistoryAVCallEvent avHistoryEvent;
+
         private readonly VideoDisplay videoDisplayLocal;
         private readonly VideoDisplay videoDisplayRemote;
+
+        private readonly MyObservableCollection<HistoryEvent> historyDataSource;
 
         public SessionWindow(String remotePartyUri)
             : base()
@@ -74,7 +80,8 @@ namespace BogheApp
 
             this.remotePartyUri = remotePartyUri;
             this.Title = String.Empty;
-            
+
+            this.fileTransferSessions = new List<MyMsrpSession>();
 
             this.videoDisplayLocal = new VideoDisplay();
             this.videoDisplayLocal.Visibility = Visibility.Hidden;
@@ -95,21 +102,67 @@ namespace BogheApp
             this.historyService = Win32ServiceManager.SharedManager.HistoryService;
             this.soundService = Win32ServiceManager.SharedManager.SoundService;
 
+            // Messaging
+            this.historyDataSource = new MyObservableCollection<HistoryEvent>();
+            this.historyCtrl.ItemTemplateSelector = new DataTemplateSelectorMessaging();
+            this.historyCtrl.ItemsSource = this.historyDataSource;
+
             // Register to SIP events
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
+
+            lock (SessionWindow.windows)
+            {
+                SessionWindow.windows.Add(this);
+            }
+        }
+
+        public static List<SessionWindow> Windows
+        {
+            get { return SessionWindow.windows; }
         }
 
         private MyAVSession AVSession
         {
             get { return this.avSession; }
-            set {
-                this.avSession = value;
+            set { this.avSession = value; }
+        }
+
+        private MyMsrpSession ChatSession
+        {
+            get { return this.chatSession; }
+            set 
+            {
+                if (this.chatSession != null)
+                {
+                    this.chatSession.onMsrpEvent -= this.ChatSession_onMsrpEvent;
+                    if (this.chatHistoryEvent != null)
+                    {
+                        this.historyService.AddEvent(this.chatHistoryEvent);
+                    }
+                }
+                if ((this.chatSession = value) != null)
+                {
+                    this.chatSession.onMsrpEvent += this.ChatSession_onMsrpEvent;
+                    this.chatHistoryEvent = new HistoryChatEvent(this.remotePartyUri);
+                }
             }
         }
 
         public static void MakeAudioCall(String remoteUri)
         {
-            SessionWindow window = new SessionWindow(remoteUri);
+            SessionWindow window = null;
+
+            lock (SessionWindow.windows)
+            {
+                window = SessionWindow.windows.FirstOrDefault((x) =>
+                    x.AVSession == null && String.Equals(x.remotePartyUri, remoteUri)
+                    );
+            }
+
+            if (window == null)
+            {
+                window = new SessionWindow(remoteUri);
+            }
             window.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.Audio);
             window.Show();
             window.AVSession.MakeCall(remoteUri);
@@ -119,11 +172,31 @@ namespace BogheApp
 
         public static void MakeVideoCall(String remoteUri)
         {
-            SessionWindow window = new SessionWindow(remoteUri);
+            SessionWindow window = null;
+
+            lock (SessionWindow.windows)
+            {
+                window = SessionWindow.windows.FirstOrDefault((x) =>
+                    x.AVSession == null && String.Equals(x.remotePartyUri, remoteUri)
+                    );
+            }
+
+            if (window == null)
+            {
+                window = new SessionWindow(remoteUri);
+            }
+            
             window.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.AudioVideo);
             window.Show();
             window.AVSession.MakeCall(remoteUri);
 
+            window.InitializeView();
+        }
+
+        public static void StartChat(String remoteUri)
+        {
+            SessionWindow window = new SessionWindow(remoteUri);
+            window.Show();
             window.InitializeView();
         }
 
@@ -198,11 +271,41 @@ namespace BogheApp
             }
         }
 
+        private void buttonSendText_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ChatSession == null)
+            {
+                this.ChatSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.Chat, this.remotePartyUri);
+            }
+            HistoryShortMessageEvent @event = new HistoryShortMessageEvent(this.remotePartyUri);
+            @event.Status = HistoryEvent.StatusType.Outgoing;
+            @event.Content = this.textBoxInput.Text;
+            this.AddMessagingEvent(@event);
+
+            this.ChatSession.SendMessage(this.textBoxInput.Text, ContentType.TEXT_PLAIN);
+            this.textBoxInput.Text = String.Empty;
+        }
+
         private void SessionWindowName_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (this.AVSession != null && this.AVSession.State != MyInviteSession.InviteState.TERMINATING && this.AVSession.State != MyInviteSession.InviteState.TERMINATED)
             {
                 this.AVSession.HangUpCall();
+            }
+            if (this.ChatSession != null && this.ChatSession.State != MyInviteSession.InviteState.TERMINATING && this.ChatSession.State != MyInviteSession.InviteState.TERMINATED)
+            {
+                this.ChatSession.HangUp();
+            }
+        }
+
+        private void SessionWindowName_Closed(object sender, EventArgs e)
+        {
+            this.AVSession = null;
+            this.ChatSession = null;
+
+            lock (SessionWindow.windows)
+            {
+                SessionWindow.windows.Remove(this);
             }
         }
 
