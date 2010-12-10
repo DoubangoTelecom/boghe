@@ -146,6 +146,28 @@ namespace BogheApp
             {
                 Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.About);
             }
+            else if (menuItem == this.MenuItemHelp_BogheWebsite)
+            {
+                System.Diagnostics.Process.Start("http://code.google.com/p/boghe/");
+            }
+            else if (menuItem == this.MenuItemHelp_Check4Updates)
+            {
+            }
+            else if (menuItem == this.MenuItemHelp_GettingStarted)
+            {
+            }
+            else if (menuItem == this.MenuItemHelp_IssueTracker)
+            {
+                System.Diagnostics.Process.Start("http://code.google.com/p/boghe/issues/list");
+            }
+            else if (menuItem == this.MenuItemHelp_RequestInfo)
+            {
+                System.Diagnostics.Process.Start("mailto:diop m am ado u @ d ou b ang o . org".Replace(" ", String.Empty));
+            }
+            else if (menuItem == this.MenuItemHelpDoubangoWebsite)
+            {
+                System.Diagnostics.Process.Start("http://www.doubango.org");
+            }
         }
 
         #endregion

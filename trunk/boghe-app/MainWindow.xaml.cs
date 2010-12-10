@@ -38,6 +38,7 @@ using BogheCore.Services;
 using BogheControls.Utils;
 using BogheCore.Model;
 
+
 /*
  * XAML Namespaces and Namespace Mapping for WPF XAML: http://msdn.microsoft.com/en-us/library/ms747086.aspx
  * Data Binding: http://msdn.microsoft.com/en-us/library/ms752347.aspx
@@ -63,6 +64,8 @@ namespace BogheApp
         private readonly IContactService contactService;
         private readonly ISoundService soundService;
         private readonly IHistoryService historyService;
+
+        private const String AVATAR_PATH = "./avatar.png";
 
         public MainWindow()
         {
@@ -114,6 +117,11 @@ namespace BogheApp
             this.imageAvatar.Source = MyImageConverter.FromBitmap(Properties.Resources.avatar_48);
             this.labelFreeText.Content = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, Configuration.DEFAULT_RCS_FREE_TEXT);
             this.labelDisplayName.Content = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
+
+            if (System.IO.File.Exists(MainWindow.AVATAR_PATH))
+            {
+                this.imageAvatar.Source = new ImageSourceConverter().ConvertFromInvariantString(MainWindow.AVATAR_PATH) as ImageSource;
+            }
 
             this.comboBoxStatus.ItemsSource = new Status[]
             {

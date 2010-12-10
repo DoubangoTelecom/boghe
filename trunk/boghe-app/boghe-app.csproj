@@ -335,6 +335,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\generic.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\16\icon_16.png" />
@@ -505,6 +509,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\16\user_add_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\exit_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\about_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\user_refresh_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\users4_add_16.png" />
+    <Resource Include="embedded\16\users4_delete_16.png" />
+    <Resource Include="embedded\16\users4_edit_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
