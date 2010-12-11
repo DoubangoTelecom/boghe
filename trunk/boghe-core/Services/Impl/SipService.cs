@@ -96,6 +96,7 @@ namespace BogheCore.Services.Impl
         public event EventHandler<RegistrationEventArgs> onRegistrationEvent;
         public event EventHandler<StackEventArgs> onStackEvent;
         public event EventHandler<InviteEventArgs> onInviteEvent;
+        public event EventHandler<MessagingEventArgs> onMessagingEvent;
 
         public String DefaultIdentity 
         {

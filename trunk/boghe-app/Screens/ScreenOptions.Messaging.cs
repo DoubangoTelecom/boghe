@@ -22,10 +22,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheCore.Model;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        private void LoadMessaging()
+        {
+            this.radioButtonMessagingSMSBinary.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.BINARY_SMS, Configuration.DEFAULT_RCS_BINARY_SMS);
+            this.radioButtonMessagingSMSText.IsChecked = !this.radioButtonMessagingSMSBinary.IsChecked;
+            this.textBoxMessagingPSI.IsEnabled = this.radioButtonMessagingSMSBinary.IsChecked.Value;
+            this.textBoxMessagingPSI.Text = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.SMSC, Configuration.DEFAULT_RCS_SMSC);
+            this.checkBoxMsrpSuccessReport.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_SUCCESS, Configuration.DEFAULT_RCS_MSRP_SUCCESS);
+            this.checkBoxMsrpFailureReports.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_FAILURE, Configuration.DEFAULT_RCS_MSRP_FAILURE);
+            this.checkBoxOFDR.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.OMAFDR, Configuration.DEFAULT_RCS_OMAFDR);
+            this.checkBoxIMDN.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.IMDN, Configuration.DEFAULT_RCS_IMDN);
+            this.checkBoxIsComposing.IsChecked = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.ISCOMOPING, Configuration.DEFAULT_RCS_ISCOMOPING);
+        }
+
+        private bool UpdateMessaging()
+        {
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.BINARY_SMS, this.radioButtonMessagingSMSBinary.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.SMSC, this.textBoxMessagingPSI.Text);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_SUCCESS, this.checkBoxMsrpSuccessReport.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_FAILURE, this.checkBoxMsrpFailureReports.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.OMAFDR, this.checkBoxOFDR.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.IMDN, this.checkBoxIMDN.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.ISCOMOPING, this.checkBoxIsComposing.IsChecked.Value);
+
+            return true;
+        }
     }
 }

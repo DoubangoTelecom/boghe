@@ -30,7 +30,13 @@
             </ContextMenu>
         </Grid.ContextMenu>
         
-        <Border Margin="2,2,2,2" Name="borderHdr"  VerticalAlignment="Top" CornerRadius="3,3,3,3" Background="Beige" BorderBrush="SkyBlue" Padding="2" BorderThickness="1" Height="27">
+        <Border Margin="2,2,2,2" Name="borderHdr"  VerticalAlignment="Top" CornerRadius="3,3,3,3" BorderBrush="SkyBlue" Padding="2" BorderThickness="1" Height="27">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop x:Name="gradientStop" Color="Chocolate" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.567"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <DockPanel>
                 <Label DockPanel.Dock="Left" Height="22" Name="labelDescription" Width="183" FontSize="10" VerticalAlignment="Center">I say</Label>
                 <Image DockPanel.Dock="Right" HorizontalAlignment="Right" Name="imageStatus" Stretch="None" VerticalAlignment="Center" Source="/BogheApp;component/embedded/16/bullet_ball_glass_yellow_16.png" />

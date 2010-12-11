@@ -81,6 +81,7 @@ namespace BogheApp
             this.sipService.onStackEvent += this.sipService_onStackEvent;
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
+            this.sipService.onMessagingEvent += this.sipService_onMessagingEvent;
             
             // Services
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;

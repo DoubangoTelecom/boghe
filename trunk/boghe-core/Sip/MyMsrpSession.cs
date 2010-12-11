@@ -32,6 +32,7 @@ namespace BogheCore.Sip
     public partial class MyMsrpSession : MyInviteSession
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMsrpSession));
+        private const String DESTINATION_FOLDER = ".";
 
         //private const String CHAT_ACCEPT_TYPES = "text/plain message/CPIM";
         private const String CHAT_ACCEPT_TYPES = "text/plain";
@@ -45,11 +46,77 @@ namespace BogheCore.Sip
         private readonly MyMsrpCallback callback;
         private List<PendingMessage> pendingMessages = null;
         private String filePath;
+        private String fileType;
 
         private static IDictionary<long, MyMsrpSession> sessions = new Dictionary<long, MyMsrpSession>();
 
         public static MyMsrpSession TakeIncomingSession(MySipStack sipStack, MsrpSession session, SipMessage message)
         {
+            MyMsrpSession msrpSession = null;
+		    MediaType mediaType;
+		    SdpMessage sdp = message.getSdpMessage();
+		    String fromUri = message.getSipHeaderValue("f");
+    		
+            if(String.IsNullOrEmpty(fromUri)){
+			    LOG.Error("Invalid fromUri");
+			    return null;
+		    }
+
+		    if(sdp == null){
+			    LOG.Error("Invalid Sdp content");
+			    return null;
+		    }
+    		
+		    String fileSelector = sdp.getSdpHeaderAValue("message", "file-selector");
+            mediaType = String.IsNullOrEmpty(fileSelector) ? MediaType.Chat : MediaType.FileTransfer;
+
+            if (mediaType == MediaType.Chat)
+            {
+                
+            }
+            else
+            {
+                String name = null;
+                String type = null;
+                String[] attributes = fileSelector.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach (String attribute in attributes)
+                {
+                    String[] avp = attribute.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    if (avp.Length >= 2)
+                    {
+                        if (String.Equals(avp[0], "name", StringComparison.InvariantCultureIgnoreCase) && avp[1] != null)
+                        {
+                            name = avp[1].Replace("\"", String.Empty);
+                        }
+                        if (String.Equals(avp[0], "type", StringComparison.InvariantCultureIgnoreCase) && avp[1] != null)
+                        {
+                            type = avp[1];
+                        }
+                    }
+                }
+                if (name == null)
+                {
+                    LOG.Error("Invalid file name");
+                    return null;
+                }
+
+                msrpSession = MyMsrpSession.CreateIncomingSession(sipStack, session, mediaType, fromUri);
+                msrpSession.filePath = String.Format("{0}/{1}", MyMsrpSession.DESTINATION_FOLDER, name);
+                msrpSession.fileType = type;
+            }
+
+            return msrpSession;
+        }
+
+        public static MyMsrpSession CreateIncomingSession(MySipStack sipStack, MsrpSession session, MediaType mediaType, String remoteUri)
+        {
+            if (mediaType == MediaType.FileTransfer || mediaType == MediaType.Chat)
+            {
+                MyMsrpSession msrpSession = new MyMsrpSession(sipStack, session, mediaType, remoteUri);
+                MyMsrpSession.sessions.Add(msrpSession.Id, msrpSession);
+
+                return msrpSession;
+            }
             return null;
         }
 
@@ -165,8 +232,9 @@ namespace BogheCore.Sip
 
             FileInfo finfo = new FileInfo(path);
             this.filePath = filePath = finfo.FullName;
+            this.fileType = this.GetFileType(finfo.Extension);
             String fileSelector = String.Format("name:\"{0}\" type:{1} size:{2}",
-                finfo.Name, this.GetFileType(finfo.Extension), finfo.Length);
+                finfo.Name, this.fileType, finfo.Length);
 
             ActionConfig config = new ActionConfig();
             config

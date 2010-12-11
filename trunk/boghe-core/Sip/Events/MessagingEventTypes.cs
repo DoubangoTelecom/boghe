@@ -22,27 +22,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Sip.Events;
-using BogheCore.Sip;
-using BogheCore.Events;
 
-namespace BogheCore.Services
+namespace BogheCore.Sip.Events
 {
-    public interface ISipService : IService
+    public enum MessagingEventTypes
     {
-
-        String DefaultIdentity { get; set; }
-        MySipStack SipStack { get; }
-        bool IsRegistered { get; }
-        bool IsXcapEnabled { get; }
-
-        bool StopStack();
-        bool Register();
-        bool UnRegister();
-
-        event EventHandler<RegistrationEventArgs> onRegistrationEvent;
-        event EventHandler<StackEventArgs> onStackEvent;
-        event EventHandler<InviteEventArgs> onInviteEvent;
-        event EventHandler<MessagingEventArgs> onMessagingEvent;
+        INCOMING,
+        OUTGOING,
+        SUCCESS,
+        FAILURE
     }
 }

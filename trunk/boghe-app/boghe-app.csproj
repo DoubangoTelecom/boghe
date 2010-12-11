@@ -399,7 +399,6 @@
     <Resource Include="embedded\sound\dtmf_pound.wav" />
     <Resource Include="embedded\sound\dtmf_star.wav" />
     <Resource Include="embedded\sound\ringbacktone.wav" />
-    <Resource Include="embedded\sound\newevent.wav" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\sound\ringtone.wav" />
@@ -523,6 +522,12 @@
     <Resource Include="embedded\16\users4_add_16.png" />
     <Resource Include="embedded\16\users4_delete_16.png" />
     <Resource Include="embedded\16\users4_edit_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\sound\newsms.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\sound\connevent.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

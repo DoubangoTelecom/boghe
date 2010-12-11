@@ -98,8 +98,8 @@ namespace BogheApp.Items
                             this.buttonDecline.Visibility = Visibility.Collapsed;
                             this.progressBar.Visibility = Visibility.Collapsed;
 
-                            this.labelDescription.Content = "File transfer Failed";
-                            this.borderHdr.Background = Brushes.Red;
+                            this.labelDescription.Content = String.Format("File transfer Failed ({0})", e.Phrase);
+                            this.gradientStop.Color = Colors.Red;
                         }
                         break;
                     }
@@ -131,19 +131,19 @@ namespace BogheApp.Items
                     this.labelDescription.Content = String.Format("Receiving from {0}...", UriUtils.GetDisplayName(this.@event.RemoteParty));
                     this.buttonAccept.Content = "accept";
                     this.buttonDecline.Content = "decline";
-                    this.borderHdr.Background = Brushes.Beige;
+                    this.gradientStop.Color = Colors.Bisque;
                     break;
 
                 case HistoryEvent.StatusType.Outgoing:
                     this.labelDescription.Content = "Sending...";
                     this.buttonAccept.Visibility = Visibility.Collapsed;
                     this.buttonDecline.Content = "abort";
-                    this.borderHdr.Background = Brushes.AliceBlue;
+                    this.gradientStop.Color = Colors.SkyBlue;
                     break;
 
                 case HistoryEvent.StatusType.Failed:
                 default:
-                    this.borderHdr.Background = Brushes.Red;
+                    this.gradientStop.Color = Colors.Red;
                     break;
             }
 
@@ -254,7 +254,7 @@ namespace BogheApp.Items
                                     case HistoryEvent.StatusType.Failed:
                                     default:
                                         this.labelDescription.Content = "File transfer Failed";
-                                        this.borderHdr.Background = Brushes.Red;
+                                        this.gradientStop.Color = Colors.Red;
                                         break;
                                 }
                             }

@@ -69,17 +69,17 @@ namespace BogheApp.Items
             {
                 case HistoryEvent.StatusType.Incoming:
                     this.labelDescription.Content = String.Format("{0} says", UriUtils.GetDisplayName(messageEventValue.RemoteParty));
-                    this.borderHdr.Background = Brushes.Beige;
+                    this.gradientStop.Color = Colors.Bisque;
                     break;
 
                 case HistoryEvent.StatusType.Outgoing:
                     this.labelDescription.Content = "I say";
-                    this.borderHdr.Background = Brushes.AliceBlue;
+                    this.gradientStop.Color = Colors.SkyBlue;
                     break;
 
                 case HistoryEvent.StatusType.Failed:
                 default:
-                    this.borderHdr.Background = Brushes.Red;
+                    this.gradientStop.Color = Colors.Red;
                     break;
             }
 

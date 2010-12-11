@@ -11,7 +11,7 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
@@ -28,13 +28,16 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelIdentityTitle" VerticalAlignment="Top" FontWeight="Bold">Identity</Label>
-                    <GroupBox Header="Connection Settings" Margin="0,42,-3,0" Name="groupBoxIdentityConnection" Background="White" Height="226" VerticalAlignment="Top">
+                    <GroupBox Margin="0,42,-3,0" Name="groupBoxIdentityConnection" Background="White" Height="226" VerticalAlignment="Top">
+                        <GroupBox.Header>
+                            <TextBlock Text="Connection Settings" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <Label Height="28" HorizontalAlignment="Left" Margin="0,10,0,0" Name="labelDisplayName" VerticalAlignment="Top" Width="104">Display Name*:</Label>
                             <TextBox Height="23" Margin="108,13,1,0" Name="textBoxDisplayName" VerticalAlignment="Top" />
@@ -49,7 +52,10 @@
                             <PasswordBox Height="23" Margin="107,110.04,1,0" Name="passwordBoxSipPassword" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Security" Margin="1,277,3,6" Name="groupBoxIdentitySecurity">
+                    <GroupBox Margin="1,277,3,6" Name="groupBoxIdentitySecurity">
+                        <GroupBox.Header>
+                            <TextBlock Text="Security" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <Label Height="28" HorizontalAlignment="Left" Margin="1,6,0,0" Name="labelOperatorId" VerticalAlignment="Top" Width="104">Operator ID*:</Label>
                             <TextBox Height="23" Margin="102,9,0,0" Name="textBoxOperatorId" VerticalAlignment="Top" />
@@ -67,13 +73,16 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNetworkTitle" VerticalAlignment="Top" FontWeight="Bold">Networking</Label>
-                    <GroupBox Header="Settings" Margin="2,43,0,0" Name="groupBox1" Height="255" VerticalAlignment="Top">
+                    <GroupBox Margin="2,43,0,0" Name="groupBox1" Height="255" VerticalAlignment="Top">
+                        <GroupBox.Header>
+                            <TextBlock Text="Settings" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <Label Height="28" Margin="0,34.04,0,0" Name="labelProxyHost" VerticalAlignment="Top" HorizontalAlignment="Left" Width="104">Proxy-CSCF Host*:</Label>
                             <TextBox Height="23" Margin="111,37,3,0" Name="textBoxProxyHost" VerticalAlignment="Top" />
@@ -99,7 +108,10 @@
                             <CheckBox Height="16" Margin="5,195,0,0" Name="checkBoxSigComp" VerticalAlignment="Top">Enable Signaling Compression (SigComp)</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Access Type" Margin="2,314,0,45" Name="groupBoxNetworkAccess">
+                    <GroupBox Margin="2,314,0,45" Name="groupBoxNetworkAccess">
+                        <GroupBox.Header>
+                            <TextBlock Text="Access Type" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <Label Height="28.04" HorizontalAlignment="Left" Margin="-1,3,0,0" Name="labelNetwork" VerticalAlignment="Top" Width="71">Network:</Label>
                             <ComboBox Height="23" Margin="76,6,9,0" Name="comboBoxNetworkType" SelectedIndex="10" VerticalAlignment="Top">
@@ -143,7 +155,7 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
@@ -157,7 +169,7 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
@@ -165,7 +177,10 @@
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelContactsTitle" VerticalAlignment="Top" FontWeight="Bold">Contacts</Label>
                     <RadioButton Height="16" Margin="7,43,0,0" Name="radioButtonContactsLocal" VerticalAlignment="Top" GroupName="Storage" IsChecked="True">Local Storage</RadioButton>
                     <RadioButton Height="16" Margin="7,65,0,0" Name="radioButtonContactsRemote" VerticalAlignment="Top" GroupName="Storage">Remote Storage</RadioButton>
-                    <GroupBox Header="XCAP Preferences" Margin="20,89,6,207" Name="groupBoxXCAP">
+                    <GroupBox Margin="20,89,6,207" Name="groupBoxXCAP">
+                        <GroupBox.Header>
+                            <TextBlock Text="XCAP Preferences" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <Label Height="28" Margin="-3,6,0,0" Name="labelXcapRoot" VerticalAlignment="Top" HorizontalAlignment="Left" Width="65">Base URI:</Label>
                             <TextBox Height="23" Margin="68,9,6,0" Name="textBoxXcapRoot" VerticalAlignment="Top" />
@@ -185,18 +200,24 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelPresenceTitle" VerticalAlignment="Top" FontWeight="Bold">Presence</Label>
-                    <GroupBox Header="Subscription" Height="100" Margin="7,48,6,0" Name="groupBoxPresenceSubscribtion" VerticalAlignment="Top">
+                    <GroupBox Height="100" Margin="7,48,6,0" Name="groupBoxPresenceSubscribtion" VerticalAlignment="Top">
+                        <GroupBox.Header>
+                            <TextBlock Text="Subscription" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <CheckBox Height="16" Margin="5,8,6,0" Name="checkBoxPresenceSubscribe" VerticalAlignment="Top">Enable Subscription</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Publication" Margin="7,167,6,114" Name="groupBoxPresencePublication">
+                    <GroupBox Margin="7,167,6,114" Name="groupBoxPresencePublication">
+                        <GroupBox.Header>
+                            <TextBlock Text="Publication" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
                         <Grid>
                             <CheckBox Height="16" Margin="5,8,6,0" Name="checkBoxPresencePublish" VerticalAlignment="Top">Enable Publication</CheckBox>
                             <Label Height="28" HorizontalAlignment="Left" Margin="3,34,0,0" Name="labelPresenceFreeText" VerticalAlignment="Top" Width="86">Free Text:</Label>
@@ -213,7 +234,7 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
@@ -251,12 +272,35 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontWeight="Bold" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelMessagingTitle" VerticalAlignment="Top">Messaging</Label>
+                    <GroupBox Height="103" Margin="6,39,6,0" Name="groupBoxMessagingSMS" VerticalAlignment="Top">
+                        <GroupBox.Header>
+                            <TextBlock Text="SMS" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
+                        <Grid>
+                            <RadioButton Height="16" Margin="8,6,6,0" Name="radioButtonMessagingSMSText" VerticalAlignment="Top" GroupName="SMSEncoding">Plain Text Encoding</RadioButton>
+                            <RadioButton Height="16" Margin="8,26,6,0" Name="radioButtonMessagingSMSBinary" VerticalAlignment="Top" GroupName="SMSEncoding" IsChecked="False">Binary Encoding (3GPP SMSIP)</RadioButton>
+                            <TextBox Height="23" Margin="103,47,6,0" Name="textBoxMessagingPSI" VerticalAlignment="Top" />
+                            <Label Height="28" Margin="25,44,0,0" Name="labelMessagingPSI" VerticalAlignment="Top" HorizontalAlignment="Left" Width="77">SMS Center:</Label>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Margin="6,156,6,116.52" Name="groupBoxMessagingChat">
+                        <GroupBox.Header>
+                            <TextBlock Text="Chat" FontSize="14" FontWeight="Bold" Foreground="Black" />
+                        </GroupBox.Header>
+                        <Grid>
+                            <CheckBox Height="16" Margin="8,9,6,0" Name="checkBoxMsrpSuccessReport" VerticalAlignment="Top">Enable MSRP Success Reports</CheckBox>
+                            <CheckBox Height="16" Margin="8,31,6,0" Name="checkBoxMsrpFailureReports" VerticalAlignment="Top">Enable MSRP failure Reports</CheckBox>
+                            <CheckBox Height="16" Margin="8,53,6,0" Name="checkBoxOFDR" VerticalAlignment="Top">Enable OMA Final Delivery Reports</CheckBox>
+                            <CheckBox Margin="8,75,6,0" Name="checkBoxIMDN" Height="16.52" VerticalAlignment="Top">Enable Instant Message Disposition Notification (IMDN)</CheckBox>
+                            <CheckBox Height="16" Margin="8,97.52,6,0" Name="checkBoxIsComposing" VerticalAlignment="Top">Enable Indication of Message Composition for Instant Messaging</CheckBox>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Height="45" Name="tabItemQoSQoE" Margin="1" BorderThickness="1" BorderBrush="SkyBlue">
@@ -265,7 +309,7 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
@@ -279,7 +323,7 @@
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="Gray" Offset="0"/>
+                        <GradientStop Color="Bisque" Offset="0"/>
                         <GradientStop Color="White" Offset="0.567"/>
                     </LinearGradientBrush>
                 </TabItem.Background>

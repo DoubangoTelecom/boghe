@@ -119,6 +119,8 @@
     <Compile Include="Services\ISoundService.cs" />
     <Compile Include="Services\IStorageService.cs" />
     <Compile Include="Services\IXcapService.cs" />
+    <Compile Include="Sip\Events\MessagingEventArgs.cs" />
+    <Compile Include="Sip\Events\MessagingEventTypes.cs" />
     <Compile Include="Sip\Events\MsrpEventArgs.cs" />
     <Compile Include="Sip\Events\MsrpEventTypes.cs" />
     <Compile Include="Sip\Events\RegistrationEventArgs.cs" />

@@ -72,6 +72,11 @@ namespace BogheApp
                         break;
                 }
             }
+
+            if (@event.Status == HistoryEvent.StatusType.Incoming)
+            {
+                this.soundService.PlayNewEvent();
+            }
         }
 
         private void InitializeView()

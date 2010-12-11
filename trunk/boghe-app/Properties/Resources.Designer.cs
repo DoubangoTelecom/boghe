@@ -123,6 +123,12 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.IO.UnmanagedMemoryStream connevent {
+            get {
+                return ResourceManager.GetStream("connevent", resourceCulture);
+            }
+        }
+        
         public static System.Drawing.Bitmap document_down_32 {
             get {
                 object obj = ResourceManager.GetObject("document_down_32", resourceCulture);
@@ -363,9 +369,9 @@ namespace BogheApp.Properties {
             }
         }
         
-        public static System.IO.UnmanagedMemoryStream newevent {
+        public static System.IO.UnmanagedMemoryStream newsms {
             get {
-                return ResourceManager.GetStream("newevent", resourceCulture);
+                return ResourceManager.GetStream("newsms", resourceCulture);
             }
         }
         
