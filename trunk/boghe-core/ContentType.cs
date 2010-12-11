@@ -44,5 +44,7 @@ namespace BogheCore
         public const String SMS_3GPP = "application/vnd.3gpp.sms";
 
         public const String TEXT_PLAIN = "text/plain";
+
+        public const String UNKNOWN = "unknown/unknown";
     }
 }

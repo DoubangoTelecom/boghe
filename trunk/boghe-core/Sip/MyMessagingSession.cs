@@ -23,21 +23,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+using BogheCore.Utils;
+using log4net;
 
 namespace BogheCore.Sip
 {
     public class MyMessagingSession : MySipSession
     {
+        private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMessagingSession));
+
         private readonly MessagingSession session;
+        private static int SMS_MR = 0;
 
         public MyMessagingSession(MySipStack sipStack, String toUri)
         :base(sipStack)
         {
             this.session = new MessagingSession(sipStack);
-            this.session.setToUri(toUri);
-            
+
             // commons
             base.init();
+
+            base.ToUri = toUri;
 
             // SigComp
             base.SigCompId = sipStack.SigCompId;
@@ -48,16 +54,44 @@ namespace BogheCore.Sip
             get { return this.session; }
         }
 
-        public bool SendBinaryMessage(String text)
+        public bool SendBinaryMessage(String text, String SMSC)
         {
-            this.session.addHeader("Content-Type", ContentType.SMS_3GPP);
-            this.session.addHeader("Content-Transfer-Encoding", "binary");
-            this.session.addCaps("+g.3gpp.smsip");
+            String SMSCPhoneNumber;
+            String dstPhoneNumber;
+            String dstSipUri = base.ToUri;
 
-            return false;
-            //byte[] payload = Encoding.UTF8.GetBytes(text);
-            //bool ret = this.session.send(payload, (uint)payload.Length);
-            //return ret;
+            if ((SMSCPhoneNumber = UriUtils.GetValidPhoneNumber(SMSC)) != null && (dstPhoneNumber = UriUtils.GetValidPhoneNumber(dstSipUri)) != null)
+            {
+                base.ToUri = SMSC;
+                this.session.addHeader("Content-Type", ContentType.SMS_3GPP);
+                this.session.addHeader("Content-Transfer-Encoding", "binary");
+                this.session.addCaps("+g.3gpp.smsip");               
+    			
+			    RPMessage rpMessage;
+			    //if(ServiceManager.getConfigurationService().getBoolean(CONFIGURATION_SECTION.RCS, CONFIGURATION_ENTRY.HACK_SMS, false)){
+				//    rpMessage = SMSEncoder.encodeDeliver(++ScreenSMSCompose.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, new String(content));
+				//    session.addHeader("P-Asserted-Identity", SMSC);
+			    //}
+			    //else{
+				    rpMessage = SMSEncoder.encodeSubmit(++MyMessagingSession.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, text);
+			    //}
+    			
+			    long rpMessageLen = rpMessage.getPayloadLength();
+                byte[] payload = new byte[(int)rpMessageLen];
+                uint payloadLength = rpMessage.getPayload(payload, (uint)payload.Length);
+                bool ret = this.session.send(payload, payloadLength);
+                rpMessage.Dispose();
+                if(MyMessagingSession.SMS_MR >= 255){
+				    MyMessagingSession.SMS_MR = 0;
+			    }
+
+                return ret;
+            }
+            else
+            {
+                LOG.Error(String.Format("SMSC={0} or RemoteUri={1} is invalid", SMSC, dstSipUri));
+                return this.SendTextMessage(text);
+            }
         }
 
         public bool SendTextMessage(String text)

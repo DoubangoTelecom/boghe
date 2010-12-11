@@ -27,6 +27,8 @@ using BogheCore.Events;
 using BogheCore.Sip.Events;
 using System.Threading;
 using BogheCore.Sip;
+using BogheCore.Utils;
+using BogheCore.Model;
 
 namespace BogheCore.Services.Impl
 {
@@ -69,6 +71,172 @@ namespace BogheCore.Services.Impl
             /// <returns></returns>
             public override int OnMessagingEvent(MessagingEvent e)
             {
+                tsip_message_event_type_t type = e.getType();
+
+                switch (type)
+                {
+                    case tsip_message_event_type_t.tsip_ao_message:
+                        break;
+
+                    case tsip_message_event_type_t.tsip_i_message:
+                        {
+                            SipMessage message = e.getSipMessage();
+                            MessagingSession session = e.getSession();
+                            uint sessionId;
+
+                            if (session == null)
+                            {
+                                /* "Server-side-session" e.g. Initial MESSAGE sent by the remote party */
+                                session = e.takeSessionOwnership();
+                            }
+
+                            if (session == null)
+                            {
+                                LOG.Error("Failed to take session ownership");
+                            }
+
+                            if (message == null)
+                            {
+                                LOG.Error("Invalid message");
+
+                                session.reject();
+                                session.Dispose();
+                                return 0;
+                            }
+
+                            sessionId = session.getId();
+                            String from = message.getSipHeaderValue("f");
+					        String contentType = message.getSipHeaderValue("c");
+                            byte[] bytes = message.getSipContent();
+                            byte[] content = null;
+
+                            if (bytes == null || bytes.Length == 0)
+                            {
+                                LOG.Error("Invalid MESSAGE");
+                                session.reject();
+                                session.Dispose();
+                                return 0;
+                            }
+
+                            // Send 200 OK
+                            session.accept();
+                            session.Dispose();
+
+                            if (String.Equals(contentType, ContentType.SMS_3GPP, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                /* ==== 3GPP SMSIP  === */
+						        byte[] buffer = (bytes.Clone() as byte[]);
+						        SMSData smsData = SMSEncoder.decode(buffer, (uint)buffer.Length, false);
+                                if (smsData != null){
+                                    twrap_sms_type_t smsType = smsData.getType();
+                                    if (smsType == twrap_sms_type_t.twrap_sms_type_rpdata){
+                            	        /* === We have received a RP-DATA message === */
+                                        long payLength = smsData.getPayloadLength();
+                                        String SMSC = message.getSipHeaderValue("P-Asserted-Identity");
+                                        String SMSCPhoneNumber;
+                                        String origPhoneNumber = smsData.getOA();
+                                        
+                                        /* Destination address */
+                                        if(origPhoneNumber != null){
+                                	        from = UriUtils.MakeValidSipUri(origPhoneNumber);
+                                        }
+                                        else if((origPhoneNumber = UriUtils.GetValidPhoneNumber(from)) == null){
+                                	        LOG.Error("Invalid destination address");
+                                	        return 0;
+                                        }
+                                        
+                                        /* SMS Center 
+                                         * 3GPP TS 24.341 - 5.3.2.4	Sending a delivery report
+                                         * The address of the IP-SM-GW is received in the P-Asserted-Identity header in the SIP MESSAGE 
+                                         * request including the delivered short message.
+                                         * */
+                                        if((SMSCPhoneNumber = UriUtils.GetValidPhoneNumber(SMSC)) == null){
+                                            SMSC = this.sipService.manager.ConfigurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.SMSC, Configuration.DEFAULT_RCS_SMSC);
+                                	        if((SMSCPhoneNumber = UriUtils.GetValidPhoneNumber(SMSC)) == null){
+                                		        LOG.Error("Invalid IP-SM-GW address");
+                                		        return 0;
+                                	        }
+                                        }
+                                        
+                                        if (payLength > 0) {
+                                            /* Send RP-ACK */
+                                            RPMessage rpACK = SMSEncoder.encodeACK(smsData.getMR(), SMSCPhoneNumber, origPhoneNumber, false);
+                                            if (rpACK != null){
+                                                long ack_len = rpACK.getPayloadLength();
+                                                if (ack_len > 0){
+                                        	        buffer = new byte[(int)ack_len];
+                                                    long len = rpACK.getPayload(buffer, (uint)buffer.Length);
+
+                                                    MessagingSession m = new MessagingSession(this.sipService.SipStack);
+                                                    m.setToUri(SMSC);
+                                                    m.addHeader("Content-Type", ContentType.SMS_3GPP);
+                                                    m.addHeader("Content-Transfer-Encoding", "binary");
+                                                    m.addCaps("+g.3gpp.smsip");
+                                                    m.send(buffer, (uint)len);
+                                                    m.Dispose();
+                                                }
+                                                rpACK.Dispose();
+                                            }
+
+                                            /* Get ascii content */
+                                            content = new byte[(int)payLength];
+                                            smsData.getPayload(content, (uint)content.Length);
+                                        }
+                                        else{
+                                            /* Send RP-ERROR */
+                                            RPMessage rpError = SMSEncoder.encodeError(smsData.getMR(), SMSCPhoneNumber, origPhoneNumber, false);
+                                            if (rpError != null){
+                                                long err_len = rpError.getPayloadLength();
+                                                if (err_len > 0){
+                                        	        buffer = new byte[(int)err_len];
+                                                    long len = rpError.getPayload(buffer, (uint)buffer.Length);
+
+                                                    MessagingSession m = new MessagingSession(this.sipService.SipStack);
+                                                    m.setToUri(SMSC);
+                                                    m.addHeader("Content-Type", ContentType.SMS_3GPP);
+                                                    m.addHeader("Transfer-Encoding", "binary");
+                                                    m.addCaps("+g.3gpp.smsip");
+                                                    m.send(buffer, (uint)len);
+                                                    m.Dispose();
+                                                }
+                                                rpError.Dispose();
+                                            }
+                                        }
+                                    }
+                                    else{
+                            	        /* === We have received any non-RP-DATA message === */
+                            	        if(smsType == twrap_sms_type_t.twrap_sms_type_ack){
+                            		        /* Find message from the history (by MR) an update it's status */
+                            		        LOG.Debug("RP-ACK");
+                            	        }
+                            	        else if(smsType == twrap_sms_type_t.twrap_sms_type_error){
+                            		        /* Find message from the history (by MR) an update it's status */
+                                            LOG.Debug("RP-ERROR");
+                            	        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                /* ==== text/plain or any other  === */
+                                content = bytes;
+                            }
+
+
+                            /* Alert the user a,d add the message to the history */
+                            if (content != null)
+                            {
+                                MessagingEventArgs eargs = new MessagingEventArgs(sessionId, MessagingEventTypes.INCOMING, e.getPhrase(), content);
+                                eargs
+                                    .AddExtra(MessagingEventArgs.EXTRA_CODE, e.getCode())
+                                    .AddExtra(MessagingEventArgs.EXTRA_REMOTE_PARTY, from)
+                                    .AddExtra(MessagingEventArgs.EXTRA_CONTENT_TYPE, contentType == null ? ContentType.UNKNOWN : contentType);
+                                EventHandlerTrigger.TriggerEvent<MessagingEventArgs>(this.sipService.onMessagingEvent, this.sipService, eargs);
+                            }
+                            break;
+                        }
+                }
+
                 return 0;
             }
 
@@ -291,27 +459,43 @@ namespace BogheCore.Services.Impl
                         switch (sessionType)
                         {
                             case twrap_media_type_t.twrap_media_msrp:
-                                if ((session = e.takeMsrpSessionOwnership()) == null)
                                 {
-                                    LOG.Error("Failed to take MSRP session ownership");
-                                    return -1;
-                                }
+                                    if ((session = e.takeMsrpSessionOwnership()) == null)
+                                    {
+                                        LOG.Error("Failed to take MSRP session ownership");
+                                        return -1;
+                                    }
 
-                                break;
+                                    MyMsrpSession msrpSession = MyMsrpSession.TakeIncomingSession(this.sipService.SipStack, session as MsrpSession, message);
+                                    if (msrpSession == null)
+                                    {
+                                        LOG.Error("Failed to create new session");
+                                        session.hangup();
+                                        session.Dispose();
+                                        return 0;
+                                    }
+
+                                    InviteEventArgs eargs = new InviteEventArgs(msrpSession.Id, InviteEventTypes.INCOMING, phrase);
+                                    eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, msrpSession);
+                                    EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                    break;
+                                }
 
                             case twrap_media_type_t.twrap_media_audio:
                             case twrap_media_type_t.twrap_media_audiovideo:
                             case twrap_media_type_t.twrap_media_video:
-                                if ((session = e.takeCallSessionOwnership()) == null)
                                 {
-                                    LOG.Error("Failed to take audio/video session ownership");
-                                    return -1;
+                                    if ((session = e.takeCallSessionOwnership()) == null)
+                                    {
+                                        LOG.Error("Failed to take audio/video session ownership");
+                                        return -1;
+                                    }
+                                    MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
+                                    InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
+                                    eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
+                                    EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                    break;
                                 }
-                                MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
-                                InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
-                                eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
-                                EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
-                                break;
 
                             default:
                                 LOG.Error("Invalid media type");

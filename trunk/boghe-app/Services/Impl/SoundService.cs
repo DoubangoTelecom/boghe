@@ -57,8 +57,8 @@ namespace BogheApp.Services.Impl
                 this.dtmfPlayer = new SoundPlayer();
                 this.ringTonePlayer = new SoundPlayer(Properties.Resources.ringtone);
                 this.ringBackTonePlayer = new SoundPlayer(Properties.Resources.ringbacktone);
-                this.eventPlayer = new SoundPlayer(Properties.Resources.newevent);
-                this.connPlayer = new SoundPlayer(Properties.Resources.newevent);               
+                this.eventPlayer = new SoundPlayer(Properties.Resources.newsms);
+                this.connPlayer = new SoundPlayer(Properties.Resources.connevent);               
 
                 return true;
             }

@@ -62,6 +62,8 @@ namespace BogheCore.Model
         public static bool DEFAULT_RCS_RLS = true;
         public static String DEFAULT_RCS_SMSC = "sip:+331000000000@open-ims.test";
         public static String DEFAULT_RCS_HOME_PAGE = "http://www.doubango.org";
+        public static bool DEFAULT_RCS_IMDN = false;
+        public static bool DEFAULT_RCS_ISCOMOPING = true;
         //public static PresenceStatus DEFAULT_RCS_STATUS = PresenceStatus.Online;
 
         public static String DEFAULT_QOS_PRECOND_BANDWIDTH = "Low";
@@ -112,7 +114,7 @@ namespace BogheCore.Model
             PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, REFRESHER, SIP_CALLS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
 
             /* === RCS (GSMA Rich Communication Suite) === */
-            AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
+            AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, IMDN, ISCOMOPING, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
 
             /* === SECURITY === */
             TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, IMSAKA_AMF, IMSAKA_OPID,

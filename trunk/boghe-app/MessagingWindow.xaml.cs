@@ -47,16 +47,17 @@ namespace BogheApp
     public partial class MessagingWindow : Window
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MessagingWindow));
+        private static List<MessagingWindow> windows = new List<MessagingWindow>();
 
         private readonly String remotePartyUri = null;
 
+        private readonly IConfigurationService configurationService;
         private readonly IContactService contactService;
         private readonly ISipService sipService;
         private readonly IHistoryService historyService;
         private readonly ISoundService soundService;
 
         private MediaType messagingType;
-        private MyMessagingSession messagingSession;
         private MyMsrpSession chatSession = null;
         private HistoryChatEvent chatHistoryEvent;
         private readonly List<MyMsrpSession> fileTransferSessions;
@@ -73,6 +74,7 @@ namespace BogheApp
             this.fileTransferSessions = new List<MyMsrpSession>();
 
             // Services
+            this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.sipService = Win32ServiceManager.SharedManager.SipService;
             this.historyService = Win32ServiceManager.SharedManager.HistoryService;
@@ -87,6 +89,27 @@ namespace BogheApp
             this.participants = new MyObservableCollection<Participant>();
             this.participants.Add(new Participant(this.remotePartyUri));
             this.listBoxParticipants.ItemsSource = this.participants;
+
+            lock (MessagingWindow.windows)
+            {
+                MessagingWindow.windows.Add(this);
+            }
+        }
+
+        private bool UseBinarySMS
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.BINARY_SMS, Configuration.DEFAULT_RCS_BINARY_SMS);
+            }
+        }
+
+        private String SMSCAddress
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.SMSC, Configuration.DEFAULT_RCS_SMSC);
+            }
         }
 
         private MediaType MessagingType
@@ -121,6 +144,32 @@ namespace BogheApp
             window.Show();
 
             window.InitializeView();
+        }
+
+        public static void ReceiveShortMessage(String remoteUri, byte[] payload, String contentType)
+        {
+            MessagingWindow window = null;
+
+            lock (MessagingWindow.windows)
+            {
+                window = MessagingWindow.windows.FirstOrDefault((x) =>
+                    /*(x.MessagingType == MediaType.ShortMessage || x.MessagingType == MediaType.SMS) &&*/ String.Equals(x.remotePartyUri, remoteUri)
+                    );
+            }
+
+            if (window == null)
+            {
+                window = new MessagingWindow(remoteUri);
+                window.MessagingType = MediaType.SMS;
+                window.InitializeView();
+            }
+                        
+            window.Show();
+
+            HistoryShortMessageEvent @event = new HistoryShortMessageEvent(remoteUri);
+            @event.Status = HistoryEvent.StatusType.Incoming;
+            @event.Content = Encoding.UTF8.GetString(payload);
+            window.AddMessagingEvent(@event);
         }
 
         public static void StartChat(String remoteUri)
@@ -193,12 +242,17 @@ namespace BogheApp
                 case MediaType.SMS:
                 default:
                     {
-                        if (this.messagingSession == null)
+                        MyMessagingSession shortMessageSession = new MyMessagingSession(this.sipService.SipStack, this.remotePartyUri);
+                        if (this.UseBinarySMS)
                         {
-                            this.messagingSession = new MyMessagingSession(this.sipService.SipStack, this.remotePartyUri);
+                            shortMessageSession.SendBinaryMessage(this.textBoxInput.Text, this.SMSCAddress);
                         }
-                        this.messagingSession.SendTextMessage(this.textBoxInput.Text);
+                        else
+                        {
+                            shortMessageSession.SendTextMessage(this.textBoxInput.Text);
+                        }
                         this.textBoxInput.Text = String.Empty;
+                        shortMessageSession.Dispose();
                         break;
                     }
             }
@@ -266,10 +320,10 @@ namespace BogheApp
                     });
                 }
             }
-            if (this.messagingSession != null)
+
+            lock (MessagingWindow.windows)
             {
-                this.messagingSession.Dispose();
-                this.messagingSession = null;
+                MessagingWindow.windows.Remove(this);
             }
         }
     }

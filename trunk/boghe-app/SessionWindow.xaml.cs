@@ -203,15 +203,28 @@ namespace BogheApp
         public static void ReceiveCall(MyInviteSession session)
         {
             SessionWindow window = null;
-            bool isVideo = false;
+            bool isAV = false;
 
             if(session is MyAVSession)
             {
+                isAV = true;
                 window = new SessionWindow(session.RemotePartyUri);
                 window.AVSession = session as MyAVSession;
-                isVideo = window.avSession.MediaType == MediaType.AudioVideo || window.avSession.MediaType == MediaType.Video;
-                window.avHistoryEvent = new HistoryAVCallEvent(isVideo, window.avSession.RemotePartyUri);
+                window.avHistoryEvent = new HistoryAVCallEvent(((window.avSession.MediaType & MediaType.Video) == MediaType.Video), window.avSession.RemotePartyUri);
                 window.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
+            }
+            else if (session is MyMsrpSession)
+            {
+                /*window = new SessionWindow(session.RemotePartyUri);
+                if (session.MediaType == MediaType.Chat)
+                {
+                    window.ChatSession = session as MyMsrpSession;
+                }
+                else
+                {
+                }
+                */
+                (session as MyMsrpSession).HangUp();
             }
 
             if (window != null)
@@ -220,9 +233,14 @@ namespace BogheApp
 
                 window.Show();
 
-                if (isVideo)
+                if (((window.avSession.MediaType & MediaType.Video) == MediaType.Video))
                 {
                     window.AttachDisplays();
+                }
+
+                if (isAV)
+                {
+                    window.soundService.PlayRingTone();
                 }
             }
         }

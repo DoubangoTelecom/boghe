@@ -120,9 +120,26 @@ namespace BogheApp
                     Win32ServiceManager.SharedManager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
                     {
                         SessionWindow.ReceiveCall(e.GetExtra(InviteEventArgs.EXTRA_SESSION) as MyInviteSession);
-                        this.soundService.PlayRingTone();
                     }, null);
                     
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void sipService_onMessagingEvent(object sender, MessagingEventArgs e)
+        {
+            switch (e.Type)
+            {
+                case MessagingEventTypes.INCOMING:
+                    Win32ServiceManager.SharedManager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                    {
+                        MessagingWindow.ReceiveShortMessage(e.GetExtra(MessagingEventArgs.EXTRA_REMOTE_PARTY) as String,
+                            e.Payload, e.GetExtra(MessagingEventArgs.EXTRA_CONTENT_TYPE) as String);
+                    }, null);
+
                     break;
 
                 default:
