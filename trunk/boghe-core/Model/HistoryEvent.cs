@@ -42,6 +42,7 @@ namespace BogheCore.Model
         protected StatusType status;
         protected DateTime date;
         protected String displayName;
+        protected long sipSessionId;
 
         [Flags]
         public enum StatusType
@@ -132,6 +133,13 @@ namespace BogheCore.Model
                 }
                 return String.IsNullOrEmpty(this.displayName) ? "(null)" : this.displayName;
             }
+        }
+
+        [XmlIgnore]
+        public long SipSessionId
+        {
+            get { return this.sipSessionId; }
+            set { this.sipSessionId = value; }
         }
 
         public int CompareTo(HistoryEvent other)

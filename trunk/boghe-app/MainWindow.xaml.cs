@@ -83,11 +83,12 @@ namespace BogheApp
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
             this.sipService.onMessagingEvent += this.sipService_onMessagingEvent;
             
-            // Services
+            // Initialize other Services
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.soundService = Win32ServiceManager.SharedManager.SoundService;
             this.historyService = Win32ServiceManager.SharedManager.HistoryService;
+            this.configurationService.onConfigurationEvent += this.configurationService_onConfigurationEvent;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
@@ -138,6 +139,41 @@ namespace BogheApp
             this.Cursor = Cursors.Arrow;
         }
 
-        
+        private void configurationService_onConfigurationEvent(object sender, BogheCore.Events.ConfigurationEventArgs e)
+        {
+            if (e.Value == null)
+            {
+                return;
+            }
+
+            switch (e.Folder)
+            {
+                case Configuration.ConfFolder.IDENTITY:
+                    {
+                        switch (e.Entry)
+                        {
+                            case Configuration.ConfEntry.DISPLAY_NAME:
+                                {
+                                    this.labelDisplayName.Content = e.Value;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+
+                case Configuration.ConfFolder.RCS:
+                    {
+                        switch (e.Entry)
+                        {
+                            case Configuration.ConfEntry.FREE_TEXT:
+                                {
+                                    this.labelFreeText.Content = e.Value;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+        }
     }
 }

@@ -31,6 +31,24 @@ namespace BogheApp
 {
     partial class MessagingWindow
     {
+        private void SendFile(String filePath)
+        {
+            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.FileTransfer, this.remotePartyUri);
+            lock (this.fileTransferSessions)
+            {
+                this.fileTransferSessions.Add(msrpSession);
+            }
+            msrpSession.onMsrpEvent += this.FileTransfer_onMsrpEvent;
+
+            HistoryFileTransferEvent @event = new HistoryFileTransferEvent(this.remotePartyUri, filePath);
+            @event.Status = HistoryEvent.StatusType.Outgoing;
+            @event.SipSessionId = msrpSession.Id;
+            @event.MsrpSession = msrpSession;
+            this.AddMessagingEvent(@event);
+
+            msrpSession.SendFile(filePath);
+        }
+
         private void InitializeView()
         {
             this.Title = String.Format("Talking with {0}", UriUtils.GetDisplayName(this.remotePartyUri));

@@ -28,11 +28,30 @@ using BogheCore.Sip;
 using System.Drawing;
 using BogheControls.Utils;
 using BogheCore.Model;
+using BogheCore;
 
 namespace BogheApp
 {
     partial class SessionWindow
     {
+        private void SendFile(String filePath)
+        {
+            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.FileTransfer, this.remotePartyUri);
+            lock (this.fileTransferSessions)
+            {
+                this.fileTransferSessions.Add(msrpSession);
+            }
+            msrpSession.onMsrpEvent += this.FileTransfer_onMsrpEvent;
+
+            HistoryFileTransferEvent @event = new HistoryFileTransferEvent(this.remotePartyUri, filePath);
+            @event.Status = HistoryEvent.StatusType.Outgoing;
+            @event.MsrpSession = msrpSession;
+            @event.SipSessionId = msrpSession.Id;
+            this.AddMessagingEvent(@event);
+
+            msrpSession.SendFile(filePath);
+        }        
+
         private void AttachDisplays()
         {
             if (this.AVSession == null || this.AVSession.MediaSessionMgr == null)

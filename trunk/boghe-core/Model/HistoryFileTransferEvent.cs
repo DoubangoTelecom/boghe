@@ -43,7 +43,7 @@ namespace BogheCore.Model
         public HistoryFileTransferEvent(String remoteParty, String filePath)
             : base(MediaType.FileTransfer, remoteParty)
         {
-            
+            this.filePath = filePath;
         }
 
         [XmlElement("FilePath")]

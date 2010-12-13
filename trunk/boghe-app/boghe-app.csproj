@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -169,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Items\ItemHistoryFileTransferEvent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Items\ItemHistoryShortMessageEvent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,6 +214,9 @@
     </Compile>
     <Compile Include="Items\ItemHistoryChatEvent.xaml.cs">
       <DependentUpon>ItemHistoryChatEvent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemHistoryFileTransferEvent.xaml.cs">
+      <DependentUpon>ItemHistoryFileTransferEvent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Items\ItemHistoryShortMessageEvent.xaml.cs">
       <DependentUpon>ItemHistoryShortMessageEvent.xaml</DependentUpon>
@@ -300,6 +307,9 @@
     </Compile>
     <Compile Include="Services\Impl\SoundService.cs" />
     <Compile Include="SessionWindow.Internals.cs">
+      <DependentUpon>SessionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SessionWindow.Menu.cs">
       <DependentUpon>SessionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SessionWindow.MsrpEvent.cs">
@@ -528,6 +538,60 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\sound\connevent.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\document_forbidden_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\document_forbidden_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\visio_call_32.png" />
+    <Resource Include="embedded\32\voice_call_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\visio_call_24.png" />
+    <Resource Include="embedded\24\voice_call_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\visio_call_16.png" />
+    <Resource Include="embedded\16\voice_call_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\call_hold_16.png" />
+    <Resource Include="embedded\16\call_resume_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\call_hold_32.png" />
+    <Resource Include="embedded\32\call_resume_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\visio_call.png" />
+    <Resource Include="embedded\voice_call.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\phone_hang_up_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\call_transfer_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\call_transfer_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\32\calendar_delete_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\calendar_delete_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\folder_up_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\24\image_gallery_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\image_gallery_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,6 +15,20 @@ namespace BogheApp
         {
             if (this.AVSession == null || this.AVSession.Id != e.SessionId)
             {
+                if (e.Type == InviteEventTypes.DISCONNECTED)
+                {
+                    if (this.historyDataSource.Any(x => x.SipSessionId == e.SessionId))
+                    {
+                        this.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            HistoryEvent @event = this.historyDataSource.FirstOrDefault(x => x.SipSessionId == e.SessionId);
+                            if (@event != null)
+                            {
+                                this.historyService.AddEvent(@event);
+                            }
+                        }, null);
+                    }
+                }
                 return;
             }
 
@@ -107,6 +121,7 @@ namespace BogheApp
 
                 case InviteEventTypes.LOCAL_HOLD_OK:
                     this.labelInfo.Content = "Call placed on hold";
+                    this.IsHeld = true;
                     break;
 
                 case InviteEventTypes.LOCAL_HOLD_NOK:
@@ -115,6 +130,7 @@ namespace BogheApp
 
                 case InviteEventTypes.LOCAL_RESUME_OK:
                     this.labelInfo.Content = "Call taken off hold";
+                    this.IsHeld = false;
                     break;
 
                 case InviteEventTypes.LOCAL_RESUME_NOK:

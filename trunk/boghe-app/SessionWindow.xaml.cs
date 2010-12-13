@@ -42,6 +42,8 @@ using BogheCore.Model;
 using org.doubango.tinyWRAP;
 using BogheControls;
 using BogheApp.Items;
+using System.Collections.Specialized;
+using BogheControls.Utils;
 
 namespace BogheApp
 {
@@ -53,6 +55,7 @@ namespace BogheApp
         private static ILog LOG = LogManager.GetLogger(typeof(SessionWindow));
         private static List<SessionWindow> windows = new List<SessionWindow>();
 
+        private bool isHeld = false;
         private MyMsrpSession chatSession = null;
         private MyAVSession avSession = null;
         private readonly List<MyMsrpSession> fileTransferSessions;
@@ -80,6 +83,7 @@ namespace BogheApp
 
             this.remotePartyUri = remotePartyUri;
             this.Title = String.Empty;
+            this.buttonCallOrAnswer.Tag = "Call";
 
             this.fileTransferSessions = new List<MyMsrpSession>();
 
@@ -121,10 +125,35 @@ namespace BogheApp
             get { return SessionWindow.windows; }
         }
 
+        private bool IsHeld
+        {
+            get { return this.isHeld; }
+            set
+            {
+                if (this.isHeld != value)
+                {
+                    this.isHeld = value;
+                    if (this.isHeld)
+                    {
+                        this.MenuItemCall_HoldResume.Header = "Resume Call";
+                        this.MenuItemCall_HoldResumeImage.Source = MyImageConverter.FromBitmap(Properties.Resources.call_resume_16);
+                    }
+                    else
+                    {
+                        this.MenuItemCall_HoldResume.Header = "Hold Call";
+                        this.MenuItemCall_HoldResumeImage.Source = MyImageConverter.FromBitmap(Properties.Resources.call_hold_16);
+                    }
+                }
+            }
+        }
+
         private MyAVSession AVSession
         {
             get { return this.avSession; }
-            set { this.avSession = value; }
+            set { 
+                this.avSession = value;
+                this.IsHeld = false;
+            }
         }
 
         private MyMsrpSession ChatSession
@@ -144,6 +173,7 @@ namespace BogheApp
                 {
                     this.chatSession.onMsrpEvent += this.ChatSession_onMsrpEvent;
                     this.chatHistoryEvent = new HistoryChatEvent(this.remotePartyUri);
+                    this.chatHistoryEvent.SipSessionId = value.Id;
                 }
             }
         }
@@ -203,45 +233,64 @@ namespace BogheApp
         public static void ReceiveCall(MyInviteSession session)
         {
             SessionWindow window = null;
-            bool isAV = false;
+            bool isAV = (session is MyAVSession);
 
-            if(session is MyAVSession)
+            lock (SessionWindow.windows)
             {
-                isAV = true;
+                window = SessionWindow.windows.FirstOrDefault((x) =>
+                    ((isAV && x.AVSession == null) || (x.ChatSession == null)) && String.Equals(x.remotePartyUri, session.RemotePartyUri)
+                    );
+            }
+
+            if (window == null)
+            {
                 window = new SessionWindow(session.RemotePartyUri);
+            }
+
+            if(isAV)
+            {
                 window.AVSession = session as MyAVSession;
                 window.avHistoryEvent = new HistoryAVCallEvent(((window.avSession.MediaType & MediaType.Video) == MediaType.Video), window.avSession.RemotePartyUri);
+                window.avHistoryEvent.SipSessionId = session.Id;
                 window.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
             }
             else if (session is MyMsrpSession)
             {
-                /*window = new SessionWindow(session.RemotePartyUri);
+                MyMsrpSession msrpSession = session as MyMsrpSession;
+
                 if (session.MediaType == MediaType.Chat)
                 {
-                    window.ChatSession = session as MyMsrpSession;
+                    window.ChatSession = msrpSession;
+                }
+                else if (session.MediaType == MediaType.FileTransfer)
+                {
+                    HistoryFileTransferEvent @event = new HistoryFileTransferEvent(window.remotePartyUri, msrpSession.FilePath);
+                    @event.Status = HistoryEvent.StatusType.Incoming;
+                    @event.SipSessionId = session.Id;
+                    @event.MsrpSession = msrpSession;
+                    window.AddMessagingEvent(@event);
                 }
                 else
                 {
+                    throw new Exception("Unsupported session Type");
                 }
-                */
-                (session as MyMsrpSession).HangUp();
             }
-
-            if (window != null)
+            else
             {
-                window.InitializeView();
+                throw new Exception("Unsupported session Type");
+            }
+            
+            window.InitializeView();
+            window.Show();
 
-                window.Show();
 
-                if (((window.avSession.MediaType & MediaType.Video) == MediaType.Video))
+            if (isAV)
+            {
+                if (((window.AVSession.MediaType & MediaType.Video) == MediaType.Video))
                 {
                     window.AttachDisplays();
                 }
-
-                if (isAV)
-                {
-                    window.soundService.PlayRingTone();
-                }
+                window.soundService.PlayRingTone();
             }
         }
 
@@ -297,6 +346,7 @@ namespace BogheApp
             }
             HistoryShortMessageEvent @event = new HistoryShortMessageEvent(this.remotePartyUri);
             @event.Status = HistoryEvent.StatusType.Outgoing;
+            @event.SipSessionId = this.ChatSession.Id;
             @event.Content = this.textBoxInput.Text;
             this.AddMessagingEvent(@event);
 
@@ -341,6 +391,19 @@ namespace BogheApp
             {
                 
             }
+
+            this.historyDataSource.CollectionChanged += (_sender, _e) =>
+            {
+                switch (_e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                    case NotifyCollectionChangedAction.Remove:
+                    case NotifyCollectionChangedAction.Replace:
+                    case NotifyCollectionChangedAction.Reset:
+                        this.historyCtrlScrollViewer.ScrollToEnd();
+                        break;
+                }
+            };
         }
     }
 }

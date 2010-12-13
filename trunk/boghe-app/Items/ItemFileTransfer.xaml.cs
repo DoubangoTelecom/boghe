@@ -42,6 +42,7 @@ using System.IO;
 using BogheControls.Utils;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
+using System.Diagnostics;
 
 namespace BogheApp.Items
 {
@@ -51,6 +52,7 @@ namespace BogheApp.Items
     public partial class ItemFileTransfer : BaseItem<HistoryFileTransferEvent>
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(ItemFileTransfer));
+
         private HistoryFileTransferEvent @event;
         private String fileName;
         private bool done;
@@ -68,6 +70,7 @@ namespace BogheApp.Items
             this.progressBar.Value = 0;
             this.textBlockName.Text = String.Empty;
             this.textBlockTransfered.Text = String.Empty;
+            this.imageIcon.Cursor = Cursors.Wait;
         }
 
         private void sipService_onInviteEvent(object sender, InviteEventArgs e)
@@ -82,16 +85,32 @@ namespace BogheApp.Items
                 return;
             }
 
+            if (this.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            {
+                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                        new EventHandler<InviteEventArgs>(this.sipService_onInviteEvent), sender, new object[] { e });
+                return;
+            }
+
             switch(e.Type)
             {
+                case InviteEventTypes.CONNECTED:
+                    {
+                        if (this.imageIcon.Source == null && File.Exists(this.@event.MsrpSession.FilePath))
+                        {
+                            using (System.Drawing.Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(this.@event.MsrpSession.FilePath))
+                            {
+                                this.imageIcon.Source = MyImageConverter.FromIcon(icon);
+                            }
+                        }
+                        this.buttonAccept.Visibility = Visibility.Collapsed;
+                        this.buttonDecline.Visibility = Visibility.Visible;
+                        this.buttonDecline.Content = "abort";
+                        break;
+                    }
+
                 case InviteEventTypes.DISCONNECTED:
                     {
-                        if (this.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
-                        {
-                            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                                    new EventHandler<InviteEventArgs>(this.sipService_onInviteEvent), sender, new object[] { e });
-                            return;
-                        }
                         if (!this.done)
                         {
                             this.buttonAccept.Visibility = Visibility.Collapsed;
@@ -100,7 +119,16 @@ namespace BogheApp.Items
 
                             this.labelDescription.Content = String.Format("File transfer Failed ({0})", e.Phrase);
                             this.gradientStop.Color = Colors.Red;
+
+                            this.imageIcon.Cursor = Cursors.No;
                         }
+                        else
+                        {
+                            this.imageIcon.Cursor = Cursors.Hand;
+                            this.imageIcon.Tag = this.@event.MsrpSession.FilePath;
+                        }
+
+                        this.sipService.onInviteEvent -= this.sipService_onInviteEvent;
                         break;
                     }
                 default:
@@ -147,19 +175,7 @@ namespace BogheApp.Items
                     break;
             }
 
-            DateTime eventDay = new DateTime(this.@event.Date.Year, this.@event.Date.Month, @event.Date.Day);
-            if (DateTime.Today.Equals(eventDay))
-            {
-                this.labelDate.Content = String.Format("Today {0}", this.@event.Date.ToLongTimeString());
-            }
-            else if ((DateTime.Today - eventDay).Days == 1)
-            {
-                this.labelDate.Content = String.Format("Yesterday {0}", this.@event.Date.ToLongTimeString());
-            }
-            else
-            {
-                this.labelDate.Content = this.@event.Date.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentUICulture);
-            }
+            this.labelDate.Content = BaseItem<HistoryFileTransferEvent>.GetFriendlyDateString(this.@event.Date);
             this.fileName = new FileInfo(this.@event.MsrpSession.FilePath).Name;
             this.textBlockName.Text = this.fileName;
             if (File.Exists(this.@event.MsrpSession.FilePath))
@@ -173,7 +189,7 @@ namespace BogheApp.Items
 
         private void buttonDecline_Click(object sender, RoutedEventArgs e)
         {
-            if (this.@event.MsrpSession != null)
+            if (this.@event != null && this.@event.MsrpSession != null)
             {
                 this.@event.MsrpSession.HangUp();
             }
@@ -181,7 +197,7 @@ namespace BogheApp.Items
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)
         {
-            if (this.@event.MsrpSession != null)
+            if (this.@event != null && this.@event.MsrpSession != null)
             {
                 this.@event.MsrpSession.Accept();
             }
@@ -218,12 +234,18 @@ namespace BogheApp.Items
                         this.labelDescription.Content = "File transfer Failed";
                         this.borderHdr.Background = Brushes.Red;
                     }
+
+                    if (this.@event != null && this.@event.MsrpSession != null)
+                    {
+                        this.@event.MsrpSession.onMsrpEvent -= this.MsrpSession_onMsrpEvent;
+                    }
                     break;
 
                 case MsrpEventTypes.ERROR:
                     break;
 
                 case MsrpEventTypes.SUCCESS_2XX:
+                case MsrpEventTypes.DATA:
                     {
                         long? end = e.GetExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_END) as long?;
                         long? total = e.GetExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_TOTAL) as long?;
@@ -259,6 +281,10 @@ namespace BogheApp.Items
                                 }
                             }
                         }
+                        else
+                        {
+                            this.progressBar.IsIndeterminate = true;
+                        }
                         
                         break;
                     }
@@ -267,6 +293,41 @@ namespace BogheApp.Items
                     {
                         break;
                     }
+            }
+        }
+
+        private void imageIcon_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.imageIcon.Tag == null)
+            {
+                return;
+            }
+
+            String fullPath = new FileInfo(this.imageIcon.Tag as String).FullName;
+
+            try
+            {
+                Process.Start(fullPath);
+            }
+            catch (System.ComponentModel.Win32Exception w32ex)
+            {
+                if (w32ex.ErrorCode == -2147467259)
+                {
+                    try
+                    {
+                        ProcessStartInfo pInfo = new ProcessStartInfo("rundll32.exe");
+                        pInfo.Arguments = String.Format("shell32.dll, OpenAs_RunDLL {0}", fullPath);
+                        Process.Start(pInfo);
+                    }
+                    catch(Exception ex)
+                    {
+                        LOG.Error(ex);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                LOG.Error(ex);
             }
         }
 

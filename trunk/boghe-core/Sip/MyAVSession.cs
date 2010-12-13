@@ -29,7 +29,6 @@ namespace BogheCore.Sip
     public class MyAVSession : MyInviteSession
     {
         private readonly CallSession session;
-
         private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
         
         public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
@@ -162,6 +161,11 @@ namespace BogheCore.Sip
         public bool HoldCall()
         {
             return this.session.hold();
+        }
+
+        public bool ResumeCall()
+        {
+            return this.session.resume();
         }
 
         public bool MakeCall(String remoteUri)

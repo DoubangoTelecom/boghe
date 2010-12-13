@@ -26,7 +26,7 @@ namespace BogheCore.Model
         public static String PCSCF_DISCOVERY_DNS = "DNS NAPTR+SRV";
 
         // Default values
-        public static String DEFAULT_DISPLAY_NAME = "johndoe";
+        public static String DEFAULT_DISPLAY_NAME = "John Doe";
         public static String DEFAULT_IMPI = "johndoe@open-ims.test";
         public static String DEFAULT_IMPU = "sip:johndoe@open-ims.test";
 

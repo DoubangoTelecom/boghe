@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows;
+using System.Globalization;
 
 namespace BogheControls
 {
@@ -55,6 +56,23 @@ namespace BogheControls
                 {
                     this.ValueLoaded(sender, EventArgs.Empty);
                 }
+            }
+        }
+
+        protected static String GetFriendlyDateString(DateTime date)
+        {
+            DateTime _date = new DateTime(date.Year, date.Month, date.Day);
+            if (DateTime.Today.Equals(_date))
+            {
+                return String.Format("Today {0}", date.ToLongTimeString());
+            }
+            else if ((DateTime.Today - _date).Days == 1)
+            {
+                return String.Format("Yesterday {0}", date.ToLongTimeString());
+            }
+            else
+            {
+                return date.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentUICulture);
             }
         }
     }

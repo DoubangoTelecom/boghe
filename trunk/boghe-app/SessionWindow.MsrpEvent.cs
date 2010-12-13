@@ -6,11 +6,79 @@ using BogheCore.Sip.Events;
 using System.Threading;
 using BogheCore;
 using BogheCore.Model;
+using BogheCore.Sip;
 
 namespace BogheApp
 {
     partial class SessionWindow
     {
+        private void FileTransfer_onMsrpEvent(object sender, MsrpEventArgs e)
+        {
+            if (!this.historyDataSource.Any((x) => x.SipSessionId == e.SessionId))
+            {
+                return;
+            }
+
+            if (this.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            {
+                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                        new EventHandler<MsrpEventArgs>(this.FileTransfer_onMsrpEvent), sender, new object[] { e });
+                return;
+            }
+
+            MyMsrpSession session = (e.GetExtra(MsrpEventArgs.EXTRA_SESSION) as MyMsrpSession);
+            if (session == null)
+            {
+                LOG.Error("No matching MSRP session could be found");
+                return;
+            }
+
+            switch (e.Type)
+            {
+                case MsrpEventTypes.CONNECTED:
+                    break;
+
+                case MsrpEventTypes.DISCONNECTED:
+                    {
+                        lock (this.fileTransferSessions)
+                        {
+                            this.fileTransferSessions.RemoveAll((x) => x.Id == session.Id);
+                        }
+                        break;
+                    }
+
+                case MsrpEventTypes.ERROR:
+                    LOG.Error(String.Format("MSRP session error code={0}", e.GetExtra(MsrpEventArgs.EXTRA_RESPONSE_CODE)));
+                    session.HangUp();
+                    break;
+
+                case MsrpEventTypes.SUCCESS_2XX:
+                    {
+                        long? end = e.GetExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_END) as long?;
+                        long? total = e.GetExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_TOTAL) as long?;
+
+                        if (end.HasValue && total.HasValue && end.Value >= 0 && total.Value >= 0)
+                        {
+                            if (end.Value >= total.Value)
+                            {
+                                session.HangUp();
+                            }
+                        }
+                        else
+                        {
+                            LOG.Error(String.Format("Invalid MSRP byte-range: {0}-{1}", end, total));
+                        }
+
+                        break;
+                    }
+
+                case MsrpEventTypes.SUCCESS_REPORT:
+                    {
+                        break;
+                    }
+            }
+        }
+
         private void ChatSession_onMsrpEvent(object sender, MsrpEventArgs e)
         {
             if (this.ChatSession == null || this.ChatSession.Id != e.SessionId)

@@ -69,6 +69,7 @@
       <DependentUpon>ContactService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\HistoryService.cs" />
+    <Compile Include="Services\Impl\XmlConfigurationService.cs" />
     <Compile Include="Sip\Events\InviteEventArgs.cs" />
     <Compile Include="Sip\Events\InviteEventTypes.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
@@ -102,7 +103,9 @@
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.cs" />
-    <Compile Include="Services\Impl\XcapService.Misc.cs" />
+    <Compile Include="Services\Impl\XcapService.Misc.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\Impl\XcapService.ResourceLists.cs">
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>

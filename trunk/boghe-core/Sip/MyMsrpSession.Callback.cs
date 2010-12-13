@@ -51,20 +51,42 @@ namespace BogheCore.Sip
                 }
             }
 
-            private void AppenData(byte[] data, uint len)
+            private bool AppenData(byte[] data, uint len)
             {
-                if (this.session.MediaType == MediaType.Chat)
+                try
                 {
-                    if (this.chatStream == null)
+                    if (this.session.MediaType == MediaType.Chat)
                     {
-                        this.chatStream = new MemoryStream(); // Expandable memory stream
-                    }
+                        if (this.chatStream == null)
+                        {
+                            this.chatStream = new MemoryStream(); // Expandable memory stream
+                        }
 
-                    this.chatStream.Write(data, 0, (int)len);
+                        this.chatStream.Write(data, 0, (int)len);
+                    }
+                    else if (this.session.MediaType == MediaType.FileTransfer)
+                    {
+                        if (this.session.outFileStream == null)
+                        {
+                            LOG.Error("Null FileStream");
+                            return false;
+                        }
+                        else
+                        {
+                            lock (this.session.outFileStream)
+                            {
+                                this.session.outFileStream.Write(data, 0, (int)len);
+                            }
+                        }
+                    }
                 }
-                else if (this.session.MediaType == MediaType.FileTransfer)
+                catch (Exception e)
                 {
+                    LOG.Error(e);
+                    return false;
                 }
+
+                return true;
             }
 
             private void ProcessResponse(MsrpMessage message)
@@ -143,6 +165,17 @@ namespace BogheCore.Sip
                                     EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
                                     this.chatStream.SetLength(0);
                                 }
+                                else if (this.session.MediaType == MediaType.FileTransfer)
+                                {
+                                    if (this.session.outFileStream != null)
+                                    {
+                                        lock (this.session.outFileStream)
+                                        {
+                                            this.session.outFileStream.Close();
+                                            this.session.outFileStream = null;
+                                        }
+                                    }
+                                }
                             }
 
                             break;
@@ -199,6 +232,15 @@ namespace BogheCore.Sip
 
                     case tmsrp_event_type_t.tmsrp_event_type_disconnected:
                         {
+                            lock (this.session.outFileStream)
+                            {
+                                if (this.session.outFileStream != null)
+                                {
+                                    this.session.outFileStream.Close();
+                                    this.session.outFileStream = null;
+                                }
+                            }
+
                             MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.DISCONNECTED);
                             eargs.AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
                             EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
