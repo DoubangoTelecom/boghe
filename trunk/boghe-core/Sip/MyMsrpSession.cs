@@ -32,7 +32,7 @@ namespace BogheCore.Sip
     public partial class MyMsrpSession : MyInviteSession
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMsrpSession));
-        private const String DESTINATION_FOLDER = ".";
+        private const String DESTINATION_FOLDER = "./SharedContent";
 
         //private const String CHAT_ACCEPT_TYPES = "text/plain message/CPIM";
         private const String CHAT_ACCEPT_TYPES = "text/plain";
@@ -47,6 +47,7 @@ namespace BogheCore.Sip
         private List<PendingMessage> pendingMessages = null;
         private String filePath;
         private String fileType;
+        private FileStream outFileStream;
 
         private static IDictionary<long, MyMsrpSession> sessions = new Dictionary<long, MyMsrpSession>();
 
@@ -194,6 +195,15 @@ namespace BogheCore.Sip
             get { return this.session; }
         }
 
+        public new void Dispose()
+        {
+            if (this.outFileStream != null)
+            {
+                this.outFileStream.Close();
+            }
+            base.Dispose();
+        }
+
         public String FilePath
         {
             get { return this.filePath; }
@@ -201,6 +211,31 @@ namespace BogheCore.Sip
 
         public bool Accept()
         {
+            if (base.State == InviteState.INCOMING && base.MediaType == MediaType.FileTransfer)
+            {
+                try
+                {
+                    FileInfo fInfo = new FileInfo(this.FilePath);
+                    if (!Directory.Exists(fInfo.DirectoryName))
+                    {
+                        Directory.CreateDirectory(fInfo.DirectoryName);
+                    }
+                    if (this.outFileStream != null)
+                    {
+                        lock (this.outFileStream)
+                        {
+                            this.outFileStream.Close();
+                            this.outFileStream = null;
+                        }
+                    }
+                    this.outFileStream = File.Create(this.FilePath);
+                }
+                catch (IOException ioE)
+                {
+                    LOG.Error(ioE);
+                    return this.HangUp();
+                }
+            }
             return this.session.accept();
         }
 
@@ -208,6 +243,14 @@ namespace BogheCore.Sip
         {
             if (base.connected)
             {
+                if (this.outFileStream != null)
+                {
+                    lock (this.outFileStream)
+                    {
+                        this.outFileStream.Close();
+                        this.outFileStream = null;
+                    }
+                }
                 return this.session.hangup();
             }
             else

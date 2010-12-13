@@ -26,8 +26,16 @@
                 <Separator />
                 <MenuItem Header="Autorizations" Name="ctxMenu_Authorizations" Click="ctxMenu_Authorizations_Click" />
                 <Separator />
-                <MenuItem Header="Voice Call" Name="ctxMenu_Voice" Click="ctxMenu_Voice_Click" />
-                <MenuItem Header="Visio Call" Name="ctxMenu_Visio" Click="ctxMenu_Visio_Click" />
+                <MenuItem Header="Voice Call" Name="ctxMenu_Voice" Click="ctxMenu_Voice_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/voice_call_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Visio Call" Name="ctxMenu_Visio" Click="ctxMenu_Visio_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/visio_call_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="Send File" Name="ctxMenu_SendFile" Click="ctxMenu_SendFile_Click">
                     <MenuItem.Icon>

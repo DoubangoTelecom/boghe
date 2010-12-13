@@ -7,18 +7,21 @@
     
     <ctrl:BaseScreen.Resources>
         <DataTemplate x:Key="DataTemplateHistoryAVCallEvent">
-            <items:ItemHistoryAVCallEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></items:ItemHistoryAVCallEvent>
+            <items:ItemHistoryAVCallEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </DataTemplate>
         <DataTemplate x:Key="DataTemplateHistoryChatEvent">
-            <items:ItemHistoryChatEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></items:ItemHistoryChatEvent>
+            <items:ItemHistoryChatEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </DataTemplate>
         <DataTemplate x:Key="DataTemplateHistoryShortMessageEvent">
-            <items:ItemHistoryShortMessageEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></items:ItemHistoryShortMessageEvent>
+            <items:ItemHistoryShortMessageEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplateHistoryFileTransferEvent">
+            <items:ItemHistoryFileTransferEvent Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </DataTemplate>
     </ctrl:BaseScreen.Resources>
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ListBox Margin="0,32,0,0" Name="listBox" HorizontalAlignment="Stretch" VerticalContentAlignment="Top" IsSynchronizedWithCurrentItem="True" />
+        <ListBox Margin="0,32,0,0" Name="listBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" IsSynchronizedWithCurrentItem="True" />
         <ComboBox ItemsSource="{Binding}" Height="23" Margin="0,3,0,0" Name="comboBoxFilterCriteria" VerticalAlignment="Top" HorizontalAlignment="Left" Width="156" SelectedIndex="0" SelectionChanged="comboBoxFilterCriteria_SelectionChanged">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">

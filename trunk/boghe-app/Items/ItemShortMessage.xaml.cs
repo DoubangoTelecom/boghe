@@ -83,20 +83,7 @@ namespace BogheApp.Items
                     break;
             }
 
-            DateTime eventDay = new DateTime(messageEventValue.Date.Year, messageEventValue.Date.Month, messageEventValue.Date.Day);
-            if (DateTime.Today.Equals(eventDay))
-            {
-                this.labelDate.Content = String.Format("Today {0}", messageEventValue.Date.ToLongTimeString());
-            }
-            else if ((DateTime.Today - eventDay).Days == 1)
-            {
-                this.labelDate.Content = String.Format("Yesterday {0}", messageEventValue.Date.ToLongTimeString());
-            }
-            else
-            {
-                this.labelDate.Content = messageEventValue.Date.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentUICulture);
-            }
-
+            this.labelDate.Content = BaseItem<HistoryShortMessageEvent>.GetFriendlyDateString(messageEventValue.Date);
             this.labelContent.Content = messageEventValue.Content;
         }
 

@@ -60,26 +60,15 @@ namespace BogheApp.Items
             HistoryShortMessageEvent @event = this.Value;
 
             this.labelDisplayName.Content = @event.DisplayName;
-
-            DateTime eventDay = new DateTime(@event.Date.Year, @event.Date.Month, @event.Date.Day);
-            if (DateTime.Today.Equals(eventDay))
-            {
-                this.labelDate.Content = String.Format("Today {0}", @event.Date.ToLongTimeString());
-            }
-            else if ((DateTime.Today - eventDay).Days == 1)
-            {
-                this.labelDate.Content = String.Format("Yesterday {0}", @event.Date.ToLongTimeString());
-            }
-            else
-            {
-                this.labelDate.Content = @event.Date.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentUICulture);
-            }
+            this.labelDate.Content = BaseItem<HistoryShortMessageEvent>.GetFriendlyDateString(@event.Date);            
 
             this.textBockMessage.Text = String.Empty;
             if (!String.IsNullOrEmpty(@event.Content))
             {
                 this.textBockMessage.Text = @event.Content;
             }
+
+            this.Width = Double.NaN;
         }
 
         private void ctxMenu_MakeVoiceCall_Click(object sender, RoutedEventArgs e)

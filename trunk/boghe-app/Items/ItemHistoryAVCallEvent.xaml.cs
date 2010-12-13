@@ -47,6 +47,7 @@ namespace BogheApp.Items
     public partial class ItemHistoryAVCallEvent : BaseItem<HistoryAVCallEvent>
     {
         private readonly IHistoryService historyService;
+        private HistoryAVCallEvent @event;
 
         public ItemHistoryAVCallEvent()
         {
@@ -59,25 +60,12 @@ namespace BogheApp.Items
 
         private void ItemHistoryAVCallEvent_ValueLoaded(object sender, EventArgs e)
         {
-            HistoryAVCallEvent @event = this.Value;
-            
-            this.labelDisplayName.Content = @event.DisplayName;
-            
-            DateTime eventDay = new DateTime(@event.StartTime.Year, @event.StartTime.Month, @event.StartTime.Day);
-            if (DateTime.Today.Equals(eventDay))
-            {
-                this.labelDate.Content = String.Format("Today {0}", @event.StartTime.ToLongTimeString());
-            }
-            else if ((DateTime.Today - eventDay).Days == 1)
-            {
-                this.labelDate.Content = String.Format("Yesterday {0}", @event.StartTime.ToLongTimeString());
-            }
-            else
-            {
-                this.labelDate.Content = @event.StartTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CurrentUICulture);
-            }
-            
-            TimeSpan duration = @event.EndTime - @event.StartTime;
+            this.@event = this.Value;
+
+            this.labelDisplayName.Content = this.@event.DisplayName;
+            this.labelDate.Content = BaseItem<HistoryAVCallEvent>.GetFriendlyDateString(this.@event.Date);
+
+            TimeSpan duration = this.@event.EndTime - this.@event.StartTime;
             this.labelDuration.Content = string.Format("Duration: {0:D2}:{1:D2}:{2:D2}", duration.Hours, duration.Minutes, duration.Seconds);
             switch (@event.Status)
             {
@@ -91,31 +79,33 @@ namespace BogheApp.Items
                     this.imageIcon.Source = MyImageConverter.FromBitmap(Properties.Resources.call_missed_45);
                     break;
             }
+
+            this.Width = Double.NaN;
         }
 
         private void ctxMenu_MakeVoiceCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeAudioCall(this.Value.RemoteParty);
+            SessionWindow.MakeAudioCall(this.@event.RemoteParty);
         }
 
         private void ctxMenu_MakeVideoCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeVideoCall(this.Value.RemoteParty);
+            SessionWindow.MakeVideoCall(this.@event.RemoteParty);
         }
 
         private void ctxMenu_SendFile_Click(object sender, RoutedEventArgs e)
         {
-            MessagingWindow.SendFile(this.Value.RemoteParty, null);
+            MessagingWindow.SendFile(this.@event.RemoteParty, null);
         }
 
         private void ctxMenu_StartChat_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.StartChat(this.Value.RemoteParty);
+            SessionWindow.StartChat(this.@event.RemoteParty);
         }
 
         private void ctxMenu_SendSMS_Click(object sender, RoutedEventArgs e)
         {
-            MessagingWindow.SendSMS(this.Value.RemoteParty);
+            MessagingWindow.SendSMS(this.@event.RemoteParty);
         }
 
         private void ctxMenu_AddToContacts_Click(object sender, RoutedEventArgs e)
@@ -125,7 +115,7 @@ namespace BogheApp.Items
 
         private void ctxMenu_DeleteHistoryEvent_Click(object sender, RoutedEventArgs e)
         {
-            this.historyService.DeleteEvent(this.Value);
+            this.historyService.DeleteEvent(this.@event);
         }
     }
 }

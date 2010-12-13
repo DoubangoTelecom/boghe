@@ -73,7 +73,11 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Delete All Events" Name="MenuItemHistory_Clear" />
+                <MenuItem Header="Delete All Events" Name="MenuItemHistory_Clear">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/calendar_delete_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Tools" Name="MenuItemTools" Click="MenuItemTools_Click">
                 <MenuItem Header="Options" Name="MenuItemTools_Options">
@@ -127,7 +131,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Label Height="28" Margin="106,52,91,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0" FontSize="14">Hello John Doe from Paris!</Label>
+        <Label Height="28" Margin="106,52,91,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0" FontSize="14" FontStyle="Italic" Foreground="Black">Hello John Doe from Paris!</Label>
         
         
         <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">

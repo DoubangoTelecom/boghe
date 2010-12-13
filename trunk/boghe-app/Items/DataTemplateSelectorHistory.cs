@@ -49,6 +49,10 @@ namespace BogheApp.Items
                 {
                     template = element.FindResource("DataTemplateHistoryShortMessageEvent") as DataTemplate;
                 }
+                else if (item is HistoryFileTransferEvent)
+                {
+                    template = element.FindResource("DataTemplateHistoryFileTransferEvent") as DataTemplate;
+                }
             }
 
             return template;

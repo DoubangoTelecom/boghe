@@ -40,6 +40,7 @@ namespace BogheCore.Sip
         protected String compId;
         protected String remotePartyUri;
         protected String remotePartyDisplayName = null;
+        protected long id = -1;
 
         public MySipSession(MySipStack sipStack)
         {
@@ -51,7 +52,14 @@ namespace BogheCore.Sip
 
         public long Id
         {
-            get { return this.Session.getId(); }
+            get 
+            { 
+                if(this.id == -1)
+                {
+                    this.id = this.Session.getId(); 
+                }
+                return this.id; 
+            }
         }
 
         public MySipStack Stack

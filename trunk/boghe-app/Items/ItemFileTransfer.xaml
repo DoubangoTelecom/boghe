@@ -20,7 +20,7 @@
             </DockPanel>
         </Border>
         <DockPanel Margin="5,32,2,0" Height="70" VerticalAlignment="Top">
-            <Image DockPanel.Dock="Left" Height="32" Name="imageIcon" Stretch="Fill" Width="32" VerticalAlignment="Top" />
+            <Image DockPanel.Dock="Left" Height="32" Name="imageIcon" Stretch="Fill" Width="32" VerticalAlignment="Top" ToolTip="Open File" MouseUp="imageIcon_MouseUp" />
             <DockPanel Margin="3,0,0,0">
                 <TextBlock DockPanel.Dock="Top" Name="textBlockName" Text="My Best Picture.PNG (6,78 Ko)" FontWeight="Bold" HorizontalAlignment="Stretch"></TextBlock>
                 <ProgressBar DockPanel.Dock="Top" Height="16" Background="Transparent" Name="progressBar" BorderBrush="SkyBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></ProgressBar>

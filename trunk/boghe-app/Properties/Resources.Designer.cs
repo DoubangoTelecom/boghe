@@ -102,6 +102,13 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap call_hold_16 {
+            get {
+                object obj = ResourceManager.GetObject("call_hold_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap call_incoming_45 {
             get {
                 object obj = ResourceManager.GetObject("call_incoming_45", resourceCulture);
@@ -123,15 +130,50 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap call_resume_16 {
+            get {
+                object obj = ResourceManager.GetObject("call_resume_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.IO.UnmanagedMemoryStream connevent {
             get {
                 return ResourceManager.GetStream("connevent", resourceCulture);
             }
         }
         
+        public static System.Drawing.Bitmap document_down_16 {
+            get {
+                object obj = ResourceManager.GetObject("document_down_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap document_down_32 {
             get {
                 object obj = ResourceManager.GetObject("document_down_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap document_forbidden_16 {
+            get {
+                object obj = ResourceManager.GetObject("document_forbidden_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap document_forbidden_32 {
+            get {
+                object obj = ResourceManager.GetObject("document_forbidden_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap document_up_16 {
+            get {
+                object obj = ResourceManager.GetObject("document_up_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

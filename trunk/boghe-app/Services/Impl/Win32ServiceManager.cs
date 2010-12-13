@@ -148,8 +148,11 @@ namespace BogheApp.Services.Impl
             {
                 if (this.configurationService == null)
                 {
-                    // load XmlConfigurationService if "configuration.xml" exists
+#if REG_CONF
                     this.configurationService = new RegConfigurationService();
+#else
+                    this.configurationService = new XmlConfigurationService(this);
+#endif
                 }
                 return this.configurationService;
             }

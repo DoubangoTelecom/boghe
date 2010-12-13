@@ -38,6 +38,7 @@ using BogheControls.Utils;
 using BogheCore.Model;
 using BogheApp.Items;
 using log4net;
+using System.Collections.Specialized;
 
 namespace BogheApp
 {
@@ -205,23 +206,6 @@ namespace BogheApp
             }
         }
 
-        public void SendFile(String filePath)
-        {
-            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.FileTransfer, this.remotePartyUri);
-            lock (this.fileTransferSessions)
-            {
-                this.fileTransferSessions.Add(msrpSession);
-            }
-            msrpSession.onMsrpEvent += this.FileTransfer_onMsrpEvent;
-
-            HistoryFileTransferEvent @event = new HistoryFileTransferEvent(this.remotePartyUri, filePath);
-            @event.Status = HistoryEvent.StatusType.Outgoing;
-            @event.MsrpSession = msrpSession;
-            this.AddMessagingEvent(@event);
-
-            msrpSession.SendFile(filePath);
-        }
-
         private void buttonSendText_Click(object sender, RoutedEventArgs e)
         {
             if (this.textBoxInput.Text == String.Empty)
@@ -262,12 +246,12 @@ namespace BogheApp
 
         private void MenuItemCall_MakeAudioCall_Click(object sender, RoutedEventArgs e)
         {
-
+            SessionWindow.MakeAudioCall(this.remotePartyUri);
         }
 
         private void MenuItemCall_MakeVideoCall_Click(object sender, RoutedEventArgs e)
         {
-
+            SessionWindow.MakeVideoCall(this.remotePartyUri);
         }
 
         private void MenuItemCall_ShareImage_Click(object sender, RoutedEventArgs e)
@@ -325,6 +309,22 @@ namespace BogheApp
             {
                 MessagingWindow.windows.Remove(this);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.historyDataSource.CollectionChanged += (_sender, _e) =>
+            {
+                switch (_e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                    case NotifyCollectionChangedAction.Remove:
+                    case NotifyCollectionChangedAction.Replace:
+                    case NotifyCollectionChangedAction.Reset:
+                        this.historyCtrlScrollViewer.ScrollToEnd();
+                        break;
+                }
+            };
         }
     }
 }
