@@ -56,13 +56,30 @@ namespace BogheApp.Screens
             this.listBox.ItemsSource = this.contactService.Contacts;
             this.contactsView = CollectionViewSource.GetDefaultView(this.listBox.ItemsSource);
             (this.contactsView as ListCollectionView).CustomSort = new ContactsSorter();
-            this.contactsView.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+            if (this.contactsView.GroupDescriptions.Count == 0)
+            {
+                this.contactsView.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+            }
 
             IList<FilterItem> filterItems = new List<FilterItem>();
             filterItems.Add(new FilterItem(null, "All Contacts", Colors.Green));
             foreach(Group g in this.contactService.Groups)
             {
-                filterItems.Add(new FilterItem(g.Name, g.DisplayName, Colors.Green));
+                Color color = Colors.Green;
+                switch (g.Authorization)
+                {
+                    case BogheXdm.Authorization.PoliteBlocked:
+                    case BogheXdm.Authorization.Revoked:
+                    case BogheXdm.Authorization.Blocked:
+                        color = Colors.Red;
+                        break;
+                    case BogheXdm.Authorization.Pending:
+                        color = Colors.Gainsboro;
+                        break;
+                    default:
+                        break;
+                }
+                filterItems.Add(new FilterItem(g.Name, g.DisplayName, color));
             }
 
             this.comboBoxGroups.ItemsSource = filterItems;

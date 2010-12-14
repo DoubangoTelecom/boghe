@@ -24,7 +24,11 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Autorizations" Name="ctxMenu_Authorizations" Click="ctxMenu_Authorizations_Click" />
+                <MenuItem Header="Autorizations" Name="ctxMenu_Authorizations" Click="ctxMenu_Authorizations_Click">
+                    <MenuItem Header="Allow" Name="ctxMenu_Authorizations_Allow" />
+                    <MenuItem Header="Block" Name="ctxMenu_Authorizations_Block" />
+                    <MenuItem Header="Revoke" Name="ctxMenu_Authorizations_Revoke" />
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="Voice Call" Name="ctxMenu_Voice" Click="ctxMenu_Voice_Click">
                     <MenuItem.Icon>

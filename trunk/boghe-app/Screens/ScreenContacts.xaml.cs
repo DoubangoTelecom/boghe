@@ -183,7 +183,14 @@ namespace BogheApp.Screens
                 Contact contact2 = y as Contact;
                 if (contact1 != null && contact2 != null)
                 {
-                    return contact1.CompareTo(contact2);
+                    if (contact2.Authorization == contact1.Authorization)
+                    {
+                        return contact1.CompareTo(contact2);
+                    }
+                    else
+                    {
+                        return (contact1.Authorization - contact2.Authorization);
+                    }
                 }
                 return 0;
             }

@@ -39,7 +39,7 @@ namespace BogheCore.Services.Impl
             }
 
             String resourceList; // e.g.:http://doubango.org:8080/services/resource-lists/users/sip:boghe@doubango.org/index/~~/resource-lists/list%5B@name=%22rcs%22%5D
-            XcapSelector selector = new XcapSelector(this.xcapStack);
+            XcapSelector selector = new XcapSelector(this.xcapStack.Stack);
             selector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
                 .setAttribute("list", "name", presList);
             resourceList = selector.getString();

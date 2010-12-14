@@ -22,37 +22,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Events;
+using BogheCore.Services.Impl;
+using org.doubango.tinyWRAP;
 
-namespace BogheCore.Xcap.Events
+namespace BogheCore.Xcap
 {
-    public class XcapEventArgs : MyEventArgs
+    internal class MyAsyncXcapCallback : XcapCallback
     {
-        private readonly XcapEventTypes type;
-        private readonly String phrase;
-        private readonly short code;
+        private readonly XcapService xcapService;
 
-        public XcapEventArgs(XcapEventTypes type, short code, String phrase)
-            :base()
+        internal MyAsyncXcapCallback(XcapService xcapService)
+            : base()
         {
-            this.type = type;
-            this.code = code;
-            this.phrase = phrase;
+            this.xcapService = xcapService;
         }
 
-        public XcapEventTypes Type
+        public override int onEvent(XcapEvent e)
         {
-            get { return this.type; }
-        }
-
-        public short Code
-        {
-            get { return this.code; }
-        }
-
-        public String Phrase
-        {
-            get { return this.phrase; }
+            throw new Exception("Not implemented");
         }
     }
 }

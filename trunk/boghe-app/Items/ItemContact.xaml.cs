@@ -78,7 +78,7 @@ namespace BogheApp.Items
                 return;
             }
             ScreenContactEdit screenContactEdit = new ScreenContactEdit(this.contactValue);
-            Win32ServiceManager.SharedManager.ScreenService.Show(screenContactEdit);
+            Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenContactEdit);
         }
 
         private void ctxMenu_Delete_Click(object sender, RoutedEventArgs e)
@@ -96,6 +96,21 @@ namespace BogheApp.Items
             if (this.contactValue == null)
             {
                 return;
+            }
+            MenuItem menuItem = e.OriginalSource as MenuItem;
+            if (menuItem == null) return;
+
+            if (menuItem == this.ctxMenu_Authorizations_Allow)
+            {
+                this.contactService.ContactAuthorize(this.contactValue, BogheXdm.Authorization.Allowed);
+            }
+            else if (menuItem == this.ctxMenu_Authorizations_Block)
+            {
+                this.contactService.ContactAuthorize(this.contactValue, BogheXdm.Authorization.Blocked);
+            }
+            else if (menuItem == this.ctxMenu_Authorizations_Revoke)
+            {
+                this.contactService.ContactAuthorize(this.contactValue, BogheXdm.Authorization.Revoked);
             }
         }
 
@@ -125,6 +140,8 @@ namespace BogheApp.Items
             {
                 return;
             }
+
+            MessagingWindow.SendFile(this.contactValue.UriString, null);
         }
 
         private void ctxMenu_Chat_Click(object sender, RoutedEventArgs e)

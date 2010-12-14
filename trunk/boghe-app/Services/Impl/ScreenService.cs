@@ -70,14 +70,18 @@ namespace BogheApp.Services.Impl
 
         #region IScreenService
 
-        public void SetTabControl(TabControl tabControl)
-        {
-            this.tabControl = tabControl;
-        }
-
         public void SetProgressLabel(Label labelProgressInfo)
         {
             this.labelProgressInfo = labelProgressInfo;
+        }
+
+        #endregion
+
+        #region IWin32ScreenService
+
+        public void SetTabControl(TabControl tabControl)
+        {
+            this.tabControl = tabControl;
         }
 
         public void SetProgressInfo(String text)

@@ -24,35 +24,16 @@ using System.Linq;
 using System.Text;
 using BogheCore.Events;
 
-namespace BogheCore.Xcap.Events
+namespace BogheCore.Services
 {
-    public class XcapEventArgs : MyEventArgs
+    public interface IStateMonitorService : IService
     {
-        private readonly XcapEventTypes type;
-        private readonly String phrase;
-        private readonly short code;
+        String[] TopState { get; }
 
-        public XcapEventArgs(XcapEventTypes type, short code, String phrase)
-            :base()
-        {
-            this.type = type;
-            this.code = code;
-            this.phrase = phrase;
-        }
+        void AddState(String stateKey, String stateDescription);
+        void RemoveState(String stateKey);
+        void ClearStates();
 
-        public XcapEventTypes Type
-        {
-            get { return this.type; }
-        }
-
-        public short Code
-        {
-            get { return this.code; }
-        }
-
-        public String Phrase
-        {
-            get { return this.phrase; }
-        }
+        event EventHandler<StateMonitorEventArgs> onStateChangedEvent;
     }
 }

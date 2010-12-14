@@ -52,6 +52,18 @@ namespace BogheCore.Utils
             }
         }
 
+        public static Uri GetHttpUri(String UriString)
+        {
+            try
+            {
+                return new Uri(UriString);
+            }
+            catch
+            {
+                return new Uri("http://doubango.org");
+            }
+        }
+
         public static String GetDisplayName(String uri)
         {
             String displayname = null;

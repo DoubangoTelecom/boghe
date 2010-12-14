@@ -38,11 +38,14 @@ namespace BogheCore.Services
         bool ContactAdd(Contact contact);
         bool ContactUpdate(Contact contact, String prevGroupName);
         bool ContactDelete(Contact contact);
+        bool ContactAuthorize(Contact contact, BogheXdm.Authorization authorization);
         Contact ContactFind(String uri);
+        
 
         bool GroupAdd(Group group);
         bool GroupUpdate(Group group);
         bool GroupDelete(Group group);
+        bool GroupAuthorize(Group group, BogheXdm.Authorization authorization);
         Group GroupFind(String name);
 
         MyObservableCollection<Contact> Contacts { get; }

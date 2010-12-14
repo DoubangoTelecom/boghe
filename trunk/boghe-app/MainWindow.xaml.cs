@@ -37,6 +37,7 @@ using BogheApp.Services;
 using BogheCore.Services;
 using BogheControls.Utils;
 using BogheCore.Model;
+using BogheCore.Events;
 
 
 /*
@@ -64,6 +65,7 @@ namespace BogheApp
         private readonly IContactService contactService;
         private readonly ISoundService soundService;
         private readonly IHistoryService historyService;
+        private readonly IStateMonitorService stateMonitorService;
 
         private const String AVATAR_PATH = "./avatar.png";
 
@@ -72,7 +74,7 @@ namespace BogheApp
             InitializeComponent();            
 
             // Initialize Screen Service
-            this.screenService = Win32ServiceManager.SharedManager.ScreenService;
+            this.screenService = Win32ServiceManager.SharedManager.Win32ScreenService;
             this.screenService.SetTabControl(this.tabControl);
             this.screenService.SetProgressLabel(this.labelProgressInfo);
             
@@ -88,7 +90,9 @@ namespace BogheApp
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.soundService = Win32ServiceManager.SharedManager.SoundService;
             this.historyService = Win32ServiceManager.SharedManager.HistoryService;
+            this.stateMonitorService = Win32ServiceManager.SharedManager.StateMonitorService;
             this.configurationService.onConfigurationEvent += this.configurationService_onConfigurationEvent;
+            this.stateMonitorService.onStateChangedEvent += this.stateMonitorService_onStateChangedEvent;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
@@ -139,7 +143,7 @@ namespace BogheApp
             this.Cursor = Cursors.Arrow;
         }
 
-        private void configurationService_onConfigurationEvent(object sender, BogheCore.Events.ConfigurationEventArgs e)
+        private void configurationService_onConfigurationEvent(object sender, ConfigurationEventArgs e)
         {
             if (e.Value == null)
             {
@@ -173,6 +177,28 @@ namespace BogheApp
                         }
                         break;
                     }
+            }
+        }
+
+        private void stateMonitorService_onStateChangedEvent(object sender, StateMonitorEventArgs e)
+        {
+            if (this.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            {
+                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                        new EventHandler<StateMonitorEventArgs>(this.stateMonitorService_onStateChangedEvent), sender, new object[] { e });
+                return;
+            }
+
+            String[] topState = this.stateMonitorService.TopState;
+            if (topState == null)
+            {
+                this.imageIndicatorHourGlass.Visibility = Visibility.Hidden;
+                this.labelProgressInfo.Content = String.Empty;
+            }
+            else
+            {
+                this.imageIndicatorHourGlass.Visibility = Visibility.Visible;
+                this.labelProgressInfo.Content = topState[1];
             }
         }
     }

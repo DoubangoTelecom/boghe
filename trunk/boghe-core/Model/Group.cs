@@ -30,11 +30,12 @@ namespace BogheCore.Model
 {
     [Serializable]
     [XmlRoot("Group")]
-    public class Group : BaseObject, IComparable<Group>, INotifyPropertyChanged
+    public class Group : BaseObject, IComparable<Group>, INotifyPropertyChanged, ICloneable
     {
         private String name;
         private String displayName;
         private Authorization authorization;
+        // Think about Clone() when you add new fields
 
         public Group()
             :this(String.Format("Doubango_{0}", Guid.NewGuid()), "Unknown")
@@ -95,6 +96,19 @@ namespace BogheCore.Model
             }
             return this.Name;
         }
+
+        #region ICloneable
+
+        public object Clone()
+        {
+            Group clone = new Group();
+            clone.name = this.name;
+            clone.displayName = this.displayName;
+            clone.authorization = this.authorization;
+            return clone;
+        }
+
+        #endregion
 
         #region IComparable
 
