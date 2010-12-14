@@ -34,8 +34,6 @@ namespace BogheApp.Services
         void SetTabControl(TabControl tabControl);
         void SetProgressLabel(Label labelProgressInfo);
 
-        void SetProgressInfo(String text);
-
         ScreenAbout ScreenAbout { get; }
         ScreenAuthentication ScreenAuthentication { get; }
         ScreenOptions ScreenOptions { get; }

@@ -128,7 +128,7 @@ namespace BogheApp
 
             if (menuItem == this.MenuItemTools_Options)
             {
-                Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.Options);
+                Win32ServiceManager.SharedManager.Win32ScreenService.Show(ScreenType.Options);
             }
         }
 
@@ -144,7 +144,7 @@ namespace BogheApp
 
             if (menuItem == this.MenuItemHelp_About)
             {
-                Win32ServiceManager.SharedManager.ScreenService.Show(ScreenType.About);
+                Win32ServiceManager.SharedManager.Win32ScreenService.Show(ScreenType.About);
             }
             else if (menuItem == this.MenuItemHelp_BogheWebsite)
             {

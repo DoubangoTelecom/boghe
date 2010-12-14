@@ -21,7 +21,7 @@
     </ctrl:BaseScreen.Resources>
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ListBox Margin="0,32,0,0" Name="listBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" IsSynchronizedWithCurrentItem="True" />
+        <ListBox Margin="0,32,0,0" Name="listBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" IsSynchronizedWithCurrentItem="True" SelectionMode="Single" />
         <ComboBox ItemsSource="{Binding}" Height="23" Margin="0,3,0,0" Name="comboBoxFilterCriteria" VerticalAlignment="Top" HorizontalAlignment="Left" Width="156" SelectedIndex="0" SelectionChanged="comboBoxFilterCriteria_SelectionChanged">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">

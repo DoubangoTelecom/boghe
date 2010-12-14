@@ -239,6 +239,9 @@
     <Compile Include="MessagingWindow.Participants.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MessagingWindow.SipEvent.cs">
+      <DependentUpon>MessagingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessagingWindow.xaml.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>

@@ -43,6 +43,7 @@ namespace BogheApp.Services.Impl
         private IXcapService xcapService;
         private IHistoryService historyService;
         private ISoundService soundService;
+        private IStateMonitorService stateMonitorService;
 
         /// <summary>
         /// Shared Service manager
@@ -75,12 +76,13 @@ namespace BogheApp.Services.Impl
             ret &= this.LogService.Start();
             ret &= this.ConfigurationService.Start();
 
-            ret &= this.ScreenService.Start();
+            ret &= this.Win32ScreenService.Start();
             ret &= this.SipService.Start();
             ret &= this.XcapService.Start();
             ret &= this.ContactService.Start();
             ret &= this.HistoryService.Start();
             ret &= this.SoundService.Start();
+            ret &= this.StateMonitorService.Start();
 
             return ret;
         }
@@ -97,12 +99,13 @@ namespace BogheApp.Services.Impl
 
             // Log service should be last to stop
 
-            ret &= this.ScreenService.Stop();
+            ret &= this.Win32ScreenService.Stop();
             ret &= this.SipService.Stop();
             ret &= this.XcapService.Stop();
             ret &= this.ContactService.Stop();
             ret &= this.HistoryService.Stop();
             ret &= this.SoundService.Stop();
+            ret &= this.StateMonitorService.Stop();
 
             ret &= this.ConfigurationService.Stop();
             ret &= this.LogService.Stop();
@@ -113,7 +116,7 @@ namespace BogheApp.Services.Impl
         /// <summary>
         /// Screen Service
         /// </summary>
-        public IWin32ScreenService ScreenService
+        public IWin32ScreenService Win32ScreenService
         {
             get
             {
@@ -155,6 +158,14 @@ namespace BogheApp.Services.Impl
 #endif
                 }
                 return this.configurationService;
+            }
+        }
+
+        public override IScreenService ScreenService
+        {
+            get
+            {
+                return this.Win32ScreenService;
             }
         }
 
@@ -215,6 +226,18 @@ namespace BogheApp.Services.Impl
                     this.soundService = new SoundService(this);
                 }
                 return this.soundService;
+            }
+        }
+
+        public override IStateMonitorService StateMonitorService
+        {
+            get
+            {
+                if (this.stateMonitorService == null)
+                {
+                    this.stateMonitorService = new StateMonitorService();
+                }
+                return this.stateMonitorService;
             }
         }
 

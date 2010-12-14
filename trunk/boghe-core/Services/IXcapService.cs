@@ -32,15 +32,17 @@ namespace BogheCore.Services
         bool IsReady { get; }
         String RLSPresUri { get; }
 
-        void DownloadDocuments();
+        bool DownloadDocuments();
 
         bool ContactAdd(Contact contact);
         bool ContactUpdate(Contact contact, String prevGroupName);
         bool ContactDelete(Contact contact);
+        bool ContactAuthorize(Contact contact, BogheXdm.Authorization authorization);
 
         bool GroupAdd(Group group);
         bool GroupUpdate(Group group);
         bool GroupDelete(Group group);
+        bool GroupAuthorize(Group group, BogheXdm.Authorization authorization);
 
         bool Prepare();
         bool UnPrepare();

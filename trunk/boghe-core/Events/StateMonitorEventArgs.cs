@@ -22,37 +22,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Events;
 
-namespace BogheCore.Xcap.Events
+namespace BogheCore.Events
 {
-    public class XcapEventArgs : MyEventArgs
+    public class StateMonitorEventArgs : MyEventArgs
     {
-        private readonly XcapEventTypes type;
-        private readonly String phrase;
-        private readonly short code;
+        private readonly StateMonitorEventTypes type;
+        private readonly String key;
+        private readonly String description;
 
-        public XcapEventArgs(XcapEventTypes type, short code, String phrase)
+        public StateMonitorEventArgs(StateMonitorEventTypes type, String key, String description)
             :base()
         {
             this.type = type;
-            this.code = code;
-            this.phrase = phrase;
+            this.key = key;
+            this.description = description;
         }
 
-        public XcapEventTypes Type
+        public StateMonitorEventTypes Type
         {
             get { return this.type; }
         }
 
-        public short Code
+        public String Key
         {
-            get { return this.code; }
+            get { return this.key; }
         }
 
-        public String Phrase
+        public String Description
         {
-            get { return this.phrase; }
+            get { return this.description; }
         }
     }
 }

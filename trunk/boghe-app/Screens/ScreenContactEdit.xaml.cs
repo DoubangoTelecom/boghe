@@ -75,7 +75,7 @@ namespace BogheApp.Screens
             }
 
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
-            this.screenService = Win32ServiceManager.SharedManager.ScreenService;
+            this.screenService = Win32ServiceManager.SharedManager.Win32ScreenService;
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BogheApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Boghe - IMS/RCS Client" Width="400" Height="690" SizeToContent="Manual"  Icon="/BogheApp;component/embedded/16/icon_16.png" Background="SkyBlue" MinWidth="400" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded">
+    Title="Boghe - IMS/RCS Client" Width="450" Height="690" SizeToContent="Manual"  Icon="/BogheApp;component/embedded/16/icon_16.png" Background="SkyBlue" MinWidth="450" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded">
 
     <Grid Background="White">
         <StatusBar Height="32" Name="statusBar" VerticalAlignment="Bottom" Background="White" />
@@ -141,9 +141,9 @@
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </DockPanel.Background>
-            <Label Name="labelProgressInfo" Margin="0,0,0,1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="12" FontWeight="Normal" Height="26" Width="300" Background="Transparent"></Label>
-            <Image MinHeight="24" MinWidth="24" Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Right" />            
-            <Image Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Visibility="Hidden"   MinWidth="24" MinHeight="24" HorizontalAlignment="Right" />
+            <Label Name="labelProgressInfo" Margin="0,0,0,1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="12" FontWeight="Normal" Height="26" Width="352" Background="Transparent"></Label>
+            <Image MinHeight="24" MinWidth="24" Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />            
+            <Image Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Visibility="Hidden"   MinWidth="24" MinHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <Image Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" MinWidth="24" MinHeight="24" ClipToBounds="False" HorizontalAlignment="Right" />
         </DockPanel>
         <Image Height="24" HorizontalAlignment="Right" Margin="0,25,89,0" Name="imageMailbox" Stretch="None" VerticalAlignment="Top" Width="24" Source="/BogheApp;component/embedded/24/mailbox_empty_24.png" ToolTip="You don't have messages" />

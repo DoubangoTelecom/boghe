@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using BogheXdm.Generated.resource_lists;
 using BogheCore.Model;
+using BogheXdm;
 
 namespace BogheCore.Services.Impl
 {
@@ -37,6 +38,31 @@ namespace BogheCore.Services.Impl
             entry.displayname.Value = contact.DisplayName;
 
             return entry;
+        }
+
+        private Contact EntryToContact(entryType entry, String groupName)
+        {
+            Contact contact = new Contact();
+            contact.DisplayName = entry.displayname == null ? null : entry.displayname.Value;
+            contact.UriString = entry.uri;
+            contact.GroupName = groupName;
+            return contact;
+        }
+
+        private listType GroupToList(Group group)
+        {
+            listType list = new listType();
+            list.name = group.Name;
+            list.displayname = new displaynameType();
+            list.displayname.Value = group.DisplayName;
+            return list;
+        }
+
+        private Group ListToGroup(listType list)
+        {
+            Group group = new Group(list.name, list.displayname.Value);
+            group.Authorization = SpecialNames.GetAutorization(group.Name);
+            return group;
         }
     }
 }

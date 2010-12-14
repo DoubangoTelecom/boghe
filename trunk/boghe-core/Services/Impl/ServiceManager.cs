@@ -32,6 +32,11 @@ namespace BogheCore.Services.Impl
             get;
         }
 
+        public abstract IScreenService ScreenService
+        {
+            get;
+        }
+        
         public abstract ISipService SipService
         {
             get;
@@ -53,6 +58,11 @@ namespace BogheCore.Services.Impl
         }
 
         public abstract ISoundService SoundService
+        {
+            get;
+        }
+
+        public abstract IStateMonitorService StateMonitorService
         {
             get;
         }

@@ -29,14 +29,16 @@ using BogheCore.Xcap;
 using org.doubango.tinyWRAP;
 using BogheCore.Xcap.Events;
 using BogheXdm.Generated.resource_lists;
+using BogheCore.Events;
 
 namespace BogheCore.Services.Impl
 {
     public partial class XcapService : IXcapService
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(XcapService));
+        private const bool SYNCHRONOUSLY = true; 
 
-        private readonly MyXcapCallback callback;
+        private readonly XcapCallback callback;
         private readonly IDictionary<String, String> documentsUris;
 
         private IConfigurationService configurationService;
@@ -44,6 +46,7 @@ namespace BogheCore.Services.Impl
         private IContactService contactService;
         private readonly ServiceManager manager;
 
+        private System.Threading.Semaphore synchronizer;
         private MyXcapStack xcapStack;
         private XcapSelector xcapSelector;
         private bool prepared;
@@ -71,7 +74,11 @@ namespace BogheCore.Services.Impl
 
         public XcapService(ServiceManager manager)
         {
-            this.callback = new MyXcapCallback(this);
+#if ASYNCHRONOUSLY
+            this.callback = new MyAsyncXcapCallback(this);
+#else
+            this.callback = new MySyncXcapCallback(this);
+#endif
             this.documentsUris = new Dictionary<String, String>();
 
             this.manager = manager;
@@ -89,6 +96,27 @@ namespace BogheCore.Services.Impl
             }
         }
 
+        internal int Timeout
+        {
+            get 
+            {
+                if (this.xcapStack == null)
+                {
+                    return this.configurationService.Get(
+                    Configuration.ConfFolder.XCAP, Configuration.ConfEntry.TIMEOUT, Configuration.DEFAULT_XCAP_TIMEOUT);
+                }
+                else
+                {
+                    return this.xcapStack.Timeout;
+                }
+            }
+        }
+
+        internal System.Threading.Semaphore Synchronizer
+        {
+            get { return this.synchronizer; }
+        }
+
         #region IService
 
         public bool Start()
@@ -97,11 +125,20 @@ namespace BogheCore.Services.Impl
             this.sipService = this.manager.SipService;
             this.contactService = this.manager.ContactService;
 
+#if !ASYNCHRONOUSLY
+            this.synchronizer = new System.Threading.Semaphore(0, 1);
+#endif
+
             return true;
         }
 
         public bool Stop()
         {
+            if (this.synchronizer != null)
+            {
+                this.synchronizer.Close();
+                this.synchronizer = null;
+            }
             return true;
         }
 
@@ -121,22 +158,131 @@ namespace BogheCore.Services.Impl
             get { return this.rlsPresUri; }
         }
 
-        public void DownloadDocuments()
+        public bool DownloadDocuments()
         {
             if (!this.prepared)
             {
                 LOG.Error("XCAP sevice not prepared");
-                return;
+                return false;
             }
 
+            this.ready = false;
             this.CurrentState = State.GET_XCAP_CAPS;
 
             lock (this.xcapSelector)
             {
+                MyXcapMessage xcapMessage;
+
+                // ============== xcap-caps ============== //
                 this.xcapSelector.reset();
                 this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_XCAP_CAPS_ID);
-                this.xcapStack.getDocument(this.xcapSelector.getString());
+                xcapMessage = this.xcapStack.GetDocument(this.xcapSelector.getString());
+                // xcap-caps is mandatory ==> continue the process only if all is ok
+                if (xcapMessage == null)
+                {
+                    LOG.Error("Failed to get 'xcap-caps' document");
+                    return false;
+                }
+                if (!this.handleXcapCapsEvent(xcapMessage.Code, xcapMessage.Content))
+                {
+                    LOG.Error("Failed to handle 'xcap-caps' document");
+                    return false;
+                }
+
+
+                // ============== org.openmobilealliance.xcap-directory ============== //
+                if (this.hasOMADirectory)
+                {
+                    if (this.xcapStack.IsRunning)
+                    {
+                        xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_OMA_DIRECTORY_ID);
+                        if (xcapMessage != null)
+                        {
+                            if (!this.handleOMADirectoryEvent(xcapMessage.Code, xcapMessage.Content))
+                            {
+                                LOG.Error("Failed to handle 'org.openmobilealliance.xcap-directory' document");
+                            }
+                        }
+                        else
+                        {
+                            LOG.Error("Failed to get 'org.openmobilealliance.xcap-directory' document");
+                        }
+                    }
+                    else
+                    {
+                        LOG.Warn("XCAP Stack not running");
+                    }
+                }
+                else
+                {
+                    LOG.Warn("'org.openmobilealliance.xcap-directory' not supported");
+                }
+
+                // ============== resource-lists ============== //
+                if (hasResourceLists)
+                {
+                    if (this.xcapStack.IsRunning)
+                    {
+                        xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID);
+                        if (xcapMessage != null)
+                        {
+                            if (!this.handleResourceListsEvent(xcapMessage.Code, xcapMessage.Content))
+                            {
+                                LOG.Error("Failed to handle 'resource-lists' document");
+                            }
+                            else
+                            {
+                                EventHandlerTrigger.TriggerEvent<XcapEventArgs>(this.onXcapEvent, this, 
+                                    new XcapEventArgs(XcapEventTypes.RESOURCE_LISTS_DONE, xcapMessage.Code, xcapMessage.Phrase));
+                            }
+                        }
+                        else
+                        {
+                            LOG.Error("Failed to get 'resource-lists' document");
+                        }
+                    }
+                    else
+                    {
+                        LOG.Warn("XCAP Stack not running");
+                    }
+                }
+                else
+                {
+                    LOG.Error("'resource-lists' not supported");
+                }
+
+                // ============== rls-services ============== //
+                if (this.hasRLS)
+                {
+                    if (this.xcapStack.IsRunning)
+                    {
+                        xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_IETF_RLS_SERVICES_ID);
+                        if (xcapMessage != null)
+                        {
+                            if (!this.handleRLSEvent(xcapMessage.Code, xcapMessage.Content))
+                            {
+                                LOG.Error("Failed to handle 'resource-lists' document");
+                            }
+                        }
+                        else
+                        {
+                            LOG.Error("Failed to get 'resource-lists' document");
+                        }
+                    }
+                    else
+                    {
+                        LOG.Warn("XCAP Stack not running");
+                    }
+                }
+                else
+                {
+                    LOG.Error("'rls-services' not supported");
+                }
             }
+
+            this.ready = true;
+
+            return true;
         }
 
         public bool ContactAdd(Contact contact)
@@ -145,20 +291,23 @@ namespace BogheCore.Services.Impl
             {
                 LOG.Warn("Contact connot be added as XDMS doesn't support 'resource-lists'");
                 return false;
-            }
-
-            bool ret;
+            }            
 
             entryType entry = this.ContactToEntry(contact);
             byte[] payload = this.Serialize(entry, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID));
-            XcapSelector selector = new XcapSelector(this.xcapStack);
-            selector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
-                .setAttribute("list", "name", contact.GroupName)
-                .setAttribute("entry", "uri", contact.UriString);
-            ret = this.xcapStack.putElement(selector.getString(), payload, (uint)payload.Length);
-            selector.Dispose();
+            String url;
 
-            return ret;
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", contact.GroupName)
+                    .setAttribute("entry", "uri", contact.UriString);
+                url = this.xcapSelector.getString();
+            }
+
+            MyXcapMessage xcapMessage = this.xcapStack.PutElement(url, payload, (uint)payload.Length);
+            return (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code));
         }
 
         public bool ContactUpdate(Contact contact, String prevGroupName)
@@ -169,9 +318,33 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
-            
+            // 1. Add contact
+            entryType entry = this.ContactToEntry(contact);
+            byte[] payload = this.Serialize(entry, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID));
+            String url;
 
-            return false;
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", contact.GroupName)
+                    .setAttribute("entry", "uri", contact.UriString);
+                url = this.xcapSelector.getString();
+            }
+
+            MyXcapMessage xcapMessage = this.xcapStack.PutElement(url, payload, (uint)payload.Length);
+            bool ok = (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code));
+
+            // 2. Remove from old group
+            if (ok && !String.Equals(contact.GroupName, prevGroupName))
+            {
+                Contact clone = new Contact();
+                clone.UriString = contact.UriString;
+                clone.GroupName = prevGroupName;
+                ok &= this.ContactDelete(clone);
+            }
+
+            return ok;
         }
 
         public bool ContactDelete(Contact contact)
@@ -182,22 +355,47 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
-            bool ret;
+            String url;
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", contact.GroupName)
+                    .setAttribute("entry", "uri", contact.UriString);
+                url = this.xcapSelector.getString();
+            }
 
-            XcapSelector selector = new XcapSelector(this.xcapStack);
-            selector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
-                .setAttribute("list", "name", contact.GroupName)
-                .setAttribute("entry", "uri", contact.UriString);
-            ret = this.xcapStack.deleteElement(selector.getString());
-            selector.Dispose();
+            MyXcapMessage xcapMessage = this.xcapStack.DeleteElement(url);
+            return (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code));
+        }
 
-            return ret;
+        public bool ContactAuthorize(Contact contact, BogheXdm.Authorization authorization)
+        {
+            LOG.Error("Not Implemented");
+            return false;
         }
 
         public bool GroupAdd(Group group)
         {
-            LOG.Error("Not Implemented");
-            return false;
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Group connot be added as XDMS doesn't support 'resource-lists'");
+                return false;
+            }
+
+            listType list = this.GroupToList(group);
+            byte[] payload = this.Serialize(list, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID));
+            String url;
+
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", group.Name);
+                url = this.xcapSelector.getString();
+            }
+            MyXcapMessage xcapMessage = this.xcapStack.PutElement(url, payload, (uint)payload.Length);
+            return (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code));
         }
 
         public bool GroupUpdate(Group group)
@@ -207,6 +405,12 @@ namespace BogheCore.Services.Impl
         }
 
         public bool GroupDelete(Group group)
+        {
+            LOG.Error("Not Implemented");
+            return false;
+        }
+
+        public bool GroupAuthorize(Group group, BogheXdm.Authorization authorization)
         {
             LOG.Error("Not Implemented");
             return false;
@@ -234,23 +438,24 @@ namespace BogheCore.Services.Impl
 
             if (this.xcapStack == null)
             {
-                this.xcapStack = new MyXcapStack(this.callback, xcap_ui, xcap_password, xcap_root);
-                this.xcapSelector = new XcapSelector(this.xcapStack);
+                this.xcapStack = new MyXcapStack(this.callback, xcap_ui, xcap_password, xcap_root, xcap_timeout);
+                this.xcapSelector = new XcapSelector(this.xcapStack.Stack);
             }
             else
             {
-                this.xcapStack.setCredentials(xcap_ui, xcap_password);
-                this.xcapStack.setXcapRoot(xcap_root);
-            }
+                // update configuration
+                if (!this.xcapStack.Configure(xcap_ui, xcap_password, xcap_root, xcap_timeout))
+                {
+                    LOG.Error("Failed to configure the XCAP stack");
+                    return false;
+                }
+            }            
 
-            // Set options
-            this.xcapStack.setTimeout((uint)xcap_timeout);
-
-            if ((this.prepared = this.xcapStack.start()))
+            if ((this.prepared = this.xcapStack.Start()))
             {
-                this.xcapStack.addHeader("Connection", "Keep-Alive");
-                this.xcapStack.addHeader("User-Agent", "XDM-client/OMA1.1");
-                this.xcapStack.addHeader("X-3GPP-Intended-Identity", xcap_ui);
+                this.xcapStack.AddHeader("Connection", "Keep-Alive");
+                this.xcapStack.AddHeader("User-Agent", "XDM-client/OMA1.1");
+                this.xcapStack.AddHeader("X-3GPP-Intended-Identity", this.xcapStack.XUI);
             }
             else
             {
@@ -270,7 +475,7 @@ namespace BogheCore.Services.Impl
 
             this.documentsUris.Clear();
 
-            if (this.xcapStack.stop())
+            if (this.xcapStack.Stop())
             {
                 this.prepared = false;
             }
@@ -284,7 +489,7 @@ namespace BogheCore.Services.Impl
 
         #endregion        
 
-        private void downloadDocument(String auid)
+        private MyXcapMessage GetWellKnownDocument(String auid)
         {
 		    String documentUrl;
     		
@@ -305,7 +510,12 @@ namespace BogheCore.Services.Impl
                 }
             }
 
-            this.xcapStack.getDocument(documentUrl);
+            return this.xcapStack.GetDocument(documentUrl);
 	    }
+
+        private static bool IsSuccessCode(short code)
+        {
+            return (code > 199 && code < 300);
+        }
     }
 }

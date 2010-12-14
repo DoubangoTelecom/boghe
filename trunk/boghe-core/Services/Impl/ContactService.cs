@@ -49,9 +49,11 @@ namespace BogheCore.Services.Impl
         private MyObservableCollection<Contact> contacts;
         private MyObservableCollection<Group> groups;
 
+        private IScreenService screenService;
         private IXcapService xcapService;
         private ISipService sipService;
         private IConfigurationService configurationService;
+        private IStateMonitorService stateMonitorService;
         private readonly ServiceManager manager;
 
         public ContactService(ServiceManager manager)
@@ -79,9 +81,11 @@ namespace BogheCore.Services.Impl
 
         public bool Start()
         {
+            this.screenService = this.manager.ScreenService;
             this.xcapService = this.manager.XcapService;
             this.sipService = this.manager.SipService;
             this.configurationService = this.manager.ConfigurationService;
+            this.stateMonitorService = this.manager.StateMonitorService;
 
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
 
@@ -108,6 +112,8 @@ namespace BogheCore.Services.Impl
         {
             ThreadStart asynTask = new ThreadStart(delegate()
             {
+                this.stateMonitorService.AddState("ContactService::Download()", "Loading Contacts...");
+
                 if (this.sipService.IsXcapEnabled)
                 {
                     if (this.xcapService.Prepare())
@@ -119,6 +125,8 @@ namespace BogheCore.Services.Impl
                 {
                     this.ImmediateLoad();
                 }
+
+                this.stateMonitorService.RemoveState("ContactService::Download()");
             });
             new Thread(asynTask).Start();
         }
@@ -135,27 +143,49 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Contact");
                 return false;
             }
-            
+
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
                 {
-                    this.xcapService.ContactAdd(contact);
-                }).Start();
+                    this.stateMonitorService.AddState("ContactService::ContactAdd()", "Adding new Contact...");
+
+                    if (this.xcapService.ContactAdd(contact))
+                    {
+                        this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            lock (this.contacts)
+                            {
+                                this.contacts.Add(contact);
+                            }
+                        }, null);
+
+                        this.ContactSignal(contact, ContactEventTypes.CONTACT_ADDED);
+                    }
+                    else
+                    {
+                        this.stateMonitorService.AddState("ContactService::ContactAdd()", "Failed to add new contact");
+                    }
+
+                    this.stateMonitorService.RemoveState("ContactService::ContactAdd()");
+                })
+                .Start();
             }
             else
-            { 
+            {
+                this.stateMonitorService.AddState("ContactService::ContactAdd()", "Adding new Contact...");
+
                 this.saveContacts = true;
                 lock (this.contacts)
                 {
                     this.contacts.Add(contact);
                 }
 
-                ContactEventArgs eargs = new ContactEventArgs(ContactEventTypes.CONTACT_ADDED);
-                eargs.AddExtra(ContactEventArgs.EXTRA_CONTACT, contact);
-                EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, eargs);
+                this.ContactSignal(contact, ContactEventTypes.CONTACT_ADDED);
 
                 this.DeferredSave();
+
+                this.stateMonitorService.RemoveState("ContactService::ContactAdd()");
             }
 
             return true;
@@ -168,16 +198,42 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Contact");
                 return false;
             }
-            
+
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
                 {
-                    this.xcapService.ContactUpdate(contact, prevGroupName);
-                }).Start();
+                    this.stateMonitorService.AddState("ContactService::ContactUpdate()", "Updating Contact...");
+
+                    if (this.xcapService.ContactUpdate(contact, prevGroupName))
+                    {
+                        this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            lock (this.contacts)
+                            {
+                                int index = this.contacts.IndexOf(contact);
+                                if (index != -1)
+                                {
+                                    this.contacts[index] = contact;
+                                }
+                            }
+                        }, null);
+
+                        this.ContactSignal(contact, ContactEventTypes.CONTACT_UPDATED);
+                    }
+                    else
+                    {
+                        this.screenService.SetProgressInfo("Failed to update contact");
+                    }
+
+                    this.stateMonitorService.RemoveState("ContactService::ContactUpdate()");
+                })
+                .Start();
             }
             else
             {
+                this.stateMonitorService.AddState("ContactService::ContactUpdate()", "Updating Contact...");
+
                 this.saveContacts = true;
                 lock (this.contacts)
                 {
@@ -186,8 +242,11 @@ namespace BogheCore.Services.Impl
                     {
                         this.contacts[index] = contact;
                         this.DeferredSave();
+                        this.ContactSignal(contact, ContactEventTypes.CONTACT_UPDATED);
                     }
                 }
+
+                this.stateMonitorService.RemoveState("ContactService::ContactUpdate()");
             }
 
             return true;
@@ -200,20 +259,97 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Contact");
                 return false;
             }
-            
+
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
                 {
-                    this.xcapService.ContactDelete(contact);
-                }).Start();
+                    this.stateMonitorService.AddState("ContactService::ContactDelete()", "Deleting Contact...");
+
+                    if (this.xcapService.ContactDelete(contact))
+                    {
+                        this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            lock (this.contacts)
+                            {
+                                this.contacts.Remove(contact);
+                            }
+                        }, null);
+
+                        this.ContactSignal(contact, ContactEventTypes.CONTACT_REMOVED);
+                    }
+                    else
+                    {
+                        this.screenService.SetProgressInfo("Failed to delete contact");
+                    }
+
+                    this.stateMonitorService.RemoveState("ContactService::ContactDelete()");
+                })
+                .Start();
             }
             else
             {
+                this.stateMonitorService.AddState("ContactService::ContactDelete()", "Deleting Contact...");
+
                 this.saveContacts = true;
+                lock (this.contacts)
+                {
+                    this.contacts.Remove(contact);
+                }
+
+                this.ContactSignal(contact, ContactEventTypes.CONTACT_REMOVED);
+
+                this.DeferredSave();
+
+                this.stateMonitorService.RemoveState("ContactService::ContactDelete()");
             }
 
             return true;
+        }
+
+        public bool ContactAuthorize(Contact contact, BogheXdm.Authorization authorization)
+        {
+            if (this.sipService.IsXcapEnabled)
+            {
+                lock (this.groups)
+                {
+                    Group group = this.groups.FirstOrDefault(x => x.Authorization == authorization);
+                    if (group == null)
+                    {
+                        LOG.Error("Failed to find a group matching this authorization");
+                    }
+                    else if (!String.Equals(contact.GroupName, group.Name))
+                    {
+                        Contact clone = contact.Clone() as Contact; // Clone() to avoid triggering OnPropertyChanged() before the end of the event
+                        clone.GroupName = group.Name; // update group
+                        String prevGroupName = contact.GroupName;
+                        if (this.ContactUpdate(clone, prevGroupName))
+                        {
+                            // Trigger OnPropertyChanged()
+                            lock (this.contacts)
+                            {
+                                int index = this.contacts.IndexOf(contact);
+                                if (index != -1)
+                                {
+                                    this.contacts[index] = clone;
+                                }
+                            }
+                            this.ContactSignal(contact, ContactEventTypes.CONTACT_UPDATED);
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                LOG.Error("Must enable XCAP storage to change authorizations");
+                return false;
+            }
         }
 
         public Contact ContactFind(String uri)
@@ -243,20 +379,46 @@ namespace BogheCore.Services.Impl
             {
                 new Thread(delegate()
                 {
-                    this.xcapService.GroupAdd(group);
-                }).Start();
+                    this.stateMonitorService.AddState("ContactService::GroupAdd()", "Adding new Group...");
+
+                    if (this.xcapService.GroupAdd(group))
+                    {
+                        this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            lock (this.groups)
+                            {
+                                this.groups.Add(group);
+                            }
+                        }, null);
+
+                        this.GroupSignal(group, ContactEventTypes.GROUP_ADDED);
+                    }
+                    else
+                    {
+                        this.screenService.SetProgressInfo("Failed to add new Group");
+                    }
+
+                    this.stateMonitorService.RemoveState("ContactService::GroupAdd()");
+                })
+                .Start();
             }
             else
             {
-                this.saveGroups = true;
-                this.groups.Add(group);
+                this.stateMonitorService.AddState("ContactService::GroupAdd()", "Adding new Group...");
 
-                ContactEventArgs eargs = new ContactEventArgs(ContactEventTypes.GROUP_ADDED);
-                eargs.AddExtra(ContactEventArgs.EXTRA_GROUP, group);
-                EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, eargs);
+                this.saveGroups = true;
+                lock (this.groups)
+                {
+                    this.groups.Add(group);
+                }
+
+                this.GroupSignal(group, ContactEventTypes.GROUP_ADDED);
 
                 this.DeferredSave();
+
+                this.stateMonitorService.RemoveState("ContactService::GroupAdd()");
             }
+
 
             return true;
         }
@@ -269,6 +431,24 @@ namespace BogheCore.Services.Impl
         public bool GroupDelete(Group group)
         {
             return false;
+        }
+
+        public bool GroupAuthorize(Group group, BogheXdm.Authorization authorization)
+        {
+            if (this.sipService.IsXcapEnabled)
+            {
+                new Thread(delegate()
+                {
+                    this.xcapService.GroupAuthorize(group, authorization);
+                }).Start();
+
+                return true;
+            }
+            else
+            {
+                LOG.Error("Must enable XCAP storage to change authorizations");
+                return false;
+            }
         }
 
         public Group GroupFind(String name)
@@ -309,6 +489,19 @@ namespace BogheCore.Services.Impl
 
         #endregion
 
+        private void ContactSignal(Contact contact, ContactEventTypes eventType)
+        {
+            ContactEventArgs eargs = new ContactEventArgs(eventType);
+            eargs.AddExtra(ContactEventArgs.EXTRA_CONTACT, contact);
+            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, eargs);
+        }
+
+        private void GroupSignal(Group group, ContactEventTypes eventType)
+        {
+            ContactEventArgs eargs = new ContactEventArgs(eventType);
+            eargs.AddExtra(ContactEventArgs.EXTRA_GROUP, group);
+            EventHandlerTrigger.TriggerEvent<ContactEventArgs>(this.onContactEvent, this, eargs);
+        }
 
         private void sipService_onRegistrationEvent(object sender, RegistrationEventArgs e)
         {

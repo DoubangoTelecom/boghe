@@ -27,5 +27,6 @@ namespace BogheCore.Services
 {
     public interface IScreenService : IService
     {
+        void SetProgressInfo(String text);
     }
 }

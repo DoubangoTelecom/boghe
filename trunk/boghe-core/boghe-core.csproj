@@ -59,6 +59,8 @@
     <Compile Include="Events\EventHandlerTrigger.cs" />
     <Compile Include="Events\HistoryEventArgs.cs" />
     <Compile Include="Events\HistoryEventTypes.cs" />
+    <Compile Include="Events\StateMonitorEventArgs.cs" />
+    <Compile Include="Events\StateMonitorEventTypes.cs" />
     <Compile Include="Model\HistoryChatEvent.cs" />
     <Compile Include="Model\HistoryAVCallEvent.cs" />
     <Compile Include="Model\HistoryEvent.cs" />
@@ -69,7 +71,18 @@
       <DependentUpon>ContactService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\HistoryService.cs" />
+    <Compile Include="Services\Impl\StateMonitorService.cs" />
+    <Compile Include="Services\Impl\XcapService.Directory.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.PresenceContent.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.XcapCaps.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\Impl\XmlConfigurationService.cs" />
+    <Compile Include="Services\IStateMonitorService.cs" />
     <Compile Include="Sip\Events\InviteEventArgs.cs" />
     <Compile Include="Sip\Events\InviteEventTypes.cs" />
     <Compile Include="Events\MyEventArgs.cs" />
@@ -97,9 +110,6 @@
       <DependentUpon>SipService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.Auid.cs">
-      <DependentUpon>XcapService.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Services\Impl\XcapService.Callback.cs">
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.cs" />
@@ -146,6 +156,9 @@
     <Compile Include="Utils\UriUtils.cs" />
     <Compile Include="Xcap\Events\XcapEventArgs.cs" />
     <Compile Include="Xcap\Events\XcapEventTypes.cs" />
+    <Compile Include="Xcap\MySyncXcapCallback.cs" />
+    <Compile Include="Xcap\MyAsyncXcapCallback.cs" />
+    <Compile Include="Xcap\MyXcapMessage.cs" />
     <Compile Include="Xcap\MyXcapStack.cs" />
   </ItemGroup>
   <ItemGroup>

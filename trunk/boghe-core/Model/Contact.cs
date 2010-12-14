@@ -30,15 +30,19 @@ namespace BogheCore.Model
 {
     [Serializable]
     [XmlRoot("Contact")]
-    public class Contact : BaseObject, IComparable<Contact>, INotifyPropertyChanged
+    public class Contact : BaseObject, IComparable<Contact>, INotifyPropertyChanged, ICloneable
     {
         private String displayName;
         private String uriString;
         private String groupName;
+        // Think about Clone() when you add new fields
+
+        private Authorization authorization;
 
         public Contact()
         {
             this.groupName = SpecialNames.SHARED_DOUBANGO;
+            this.authorization = Authorization.UnKnown;
         }
 
         [XmlElement("display-name")]
@@ -74,6 +78,32 @@ namespace BogheCore.Model
             }
         }
 
+        [XmlIgnore]
+        public Authorization Authorization
+        {
+            get 
+            {
+                if (this.authorization == Authorization.UnKnown)
+                {
+                    this.authorization = SpecialNames.GetAutorization(this.GroupName);
+                }
+                return this.authorization; 
+            }
+        }
+
+        #region ICloneable
+
+        public object Clone()
+        {
+            Contact clone = new Contact();
+            clone.uriString = this.uriString;
+            clone.displayName = this.displayName;
+            clone.groupName = this.groupName;
+            return clone;
+        }
+
+        #endregion
+
         #region IComparable
 
         public int CompareTo(Contact other)
@@ -82,7 +112,7 @@ namespace BogheCore.Model
             {
                 throw new ArgumentNullException("other");
             }
-            return this.DisplayName.CompareTo(other.DisplayName);
+            return String.Compare(this.DisplayName, other.DisplayName);
         }
 
         #endregion

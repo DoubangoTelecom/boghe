@@ -22,37 +22,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Events;
+using BogheCore.Sip.Events;
+using BogheCore.Model;
 
-namespace BogheCore.Xcap.Events
+namespace BogheApp
 {
-    public class XcapEventArgs : MyEventArgs
+    partial class MessagingWindow
     {
-        private readonly XcapEventTypes type;
-        private readonly String phrase;
-        private readonly short code;
-
-        public XcapEventArgs(XcapEventTypes type, short code, String phrase)
-            :base()
+        private void sipService_onInviteEvent(object sender, InviteEventArgs e)
         {
-            this.type = type;
-            this.code = code;
-            this.phrase = phrase;
-        }
-
-        public XcapEventTypes Type
-        {
-            get { return this.type; }
-        }
-
-        public short Code
-        {
-            get { return this.code; }
-        }
-
-        public String Phrase
-        {
-            get { return this.phrase; }
+            if (e.Type == InviteEventTypes.DISCONNECTED)
+            {
+                HistoryEvent @event;
+                if ((@event = this.historyDataSource.FirstOrDefault(x => x.MediaType == BogheCore.MediaType.FileTransfer && x.SipSessionId == e.SessionId)) != null)
+                {
+                    this.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                    {
+                        this.historyService.AddEvent(@event);
+                    });
+                }
+            }
         }
     }
 }

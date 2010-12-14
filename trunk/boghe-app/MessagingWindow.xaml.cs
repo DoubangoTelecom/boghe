@@ -91,6 +91,9 @@ namespace BogheApp
             this.participants.Add(new Participant(this.remotePartyUri));
             this.listBoxParticipants.ItemsSource = this.participants;
 
+            // Events
+            this.sipService.onInviteEvent += this.sipService_onInviteEvent;
+
             lock (MessagingWindow.windows)
             {
                 MessagingWindow.windows.Add(this);

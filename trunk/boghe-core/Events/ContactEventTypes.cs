@@ -28,7 +28,11 @@ namespace BogheCore.Events
     public enum ContactEventTypes
     {
         CONTACT_ADDED,
+        CONTACT_REMOVED,
+        CONTACT_UPDATED,
         GROUP_ADDED,
+        GROUP_REMOVED,
+        GROUP_UPDATED,
         RESET,
     }
 }
