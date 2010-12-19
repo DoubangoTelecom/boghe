@@ -29,10 +29,11 @@ svn checkout http://doubango.googlecode.com/svn/trunk/ doubango
 svn checkout http://boghe.googlecode.com/svn/trunk/ boghe
 }}}
 
-At the end of the process, you *MUST* have something like this:
+You *MUST* have something like this:
 <br />
-+--myboghe<br />
-+----doubango<br />
-+----boghe<br />
++---|myboghe<br />
+----|<br />
++------|doubango<br />
++------|boghe<br />
 <br />
 To open & build all projects, open *myboghe/boghe/boghe-win32.sln*
