@@ -58,7 +58,7 @@ namespace BogheCore.Services.Impl
 
         public ContactService(ServiceManager manager)
         {
-            this.contacts = new MyObservableCollection<Contact>();
+            this.contacts = new MyObservableCollection<Contact>(true);
             this.groups = new MyObservableCollection<Group>();
 
             this.manager = manager;
@@ -211,11 +211,11 @@ namespace BogheCore.Services.Impl
                         {
                             lock (this.contacts)
                             {
-                                int index = this.contacts.IndexOf(contact);
-                                if (index != -1)
-                                {
-                                    this.contacts[index] = contact;
-                                }
+                                //int index = this.contacts.IndexOf(contact);
+                                //if (index != -1)
+                                //{
+                                //    this.contacts[index] = contact;
+                                //}
                             }
                         }, null);
 
@@ -237,10 +237,10 @@ namespace BogheCore.Services.Impl
                 this.saveContacts = true;
                 lock (this.contacts)
                 {
-                    int index = this.contacts.IndexOf(contact);
-                    if (index != -1)
+                   //int index = this.contacts.IndexOf(contact);
+                    //if (index != -1)
                     {
-                        this.contacts[index] = contact;
+                   //     this.contacts[index] = contact;
                         this.DeferredSave();
                         this.ContactSignal(contact, ContactEventTypes.CONTACT_UPDATED);
                     }
@@ -325,13 +325,17 @@ namespace BogheCore.Services.Impl
                         String prevGroupName = contact.GroupName;
                         if (this.ContactUpdate(clone, prevGroupName))
                         {
-                            // Trigger OnPropertyChanged()
+                            // Trigger OnCollectionChanged()
                             lock (this.contacts)
                             {
                                 int index = this.contacts.IndexOf(contact);
                                 if (index != -1)
                                 {
                                     this.contacts[index] = clone;
+                                }
+                                else
+                                {
+                                    this.contacts.Add(clone);
                                 }
                             }
                             this.ContactSignal(contact, ContactEventTypes.CONTACT_UPDATED);
@@ -425,12 +429,109 @@ namespace BogheCore.Services.Impl
 
         public bool GroupUpdate(Group group)
         {
-            return false;
+            if (group == null)
+            {
+                LOG.Error("Null Group");
+                return false;
+            }
+
+            if (this.sipService.IsXcapEnabled)
+            {
+                new Thread(delegate()
+                {
+                    this.stateMonitorService.AddState("ContactService::GroupUpdate()", "Updating Group...");
+
+                    if (this.xcapService.GroupUpdate(group))
+                    {
+                        this.GroupSignal(group, ContactEventTypes.GROUP_UPDATED);
+                    }
+                    else
+                    {
+                        this.screenService.SetProgressInfo("Failed to update group");
+                    }
+
+                    this.stateMonitorService.RemoveState("ContactService::GroupUpdate()");
+                })
+                .Start();
+            }
+            else
+            {
+                this.stateMonitorService.AddState("ContactService::GroupUpdate()", "Updating Group...");
+
+                this.saveContacts = true;
+                this.saveGroups = true;                
+                
+                this.DeferredSave();
+                this.GroupSignal(group, ContactEventTypes.GROUP_UPDATED);
+
+                this.stateMonitorService.RemoveState("ContactService::GroupUpdate()");
+            }
+
+            return true;
         }
 
         public bool GroupDelete(Group group)
         {
-            return false;
+            if (group == null)
+            {
+                LOG.Error("Null Group");
+                return false;
+            }
+
+            if (this.sipService.IsXcapEnabled)
+            {
+                new Thread(delegate()
+                {
+                    this.stateMonitorService.AddState("ContactService::GroupDelete()", "Deleting Contact...");
+
+                    if (this.xcapService.GroupDelete(group))
+                    {
+                        this.manager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            lock (this.contacts)
+                            {
+                                this.contacts.RemoveAll(c => String.Equals(c.GroupName, group.Name));
+                            }
+                            lock (this.groups)
+                            {
+                                this.groups.Remove(group);
+                            }
+                        }, null);
+
+                        this.GroupSignal(group, ContactEventTypes.GROUP_REMOVED);
+                    }
+                    else
+                    {
+                        this.screenService.SetProgressInfo("Failed to delete group");
+                    }
+
+                    this.stateMonitorService.RemoveState("ContactService::GroupDelete()");
+                })
+                .Start();
+            }
+            else
+            {
+                this.stateMonitorService.AddState("ContactService::GroupDelete()", "Deleting group...");
+
+                this.saveContacts = true;
+                this.saveGroups = true;
+                lock (this.contacts)
+                {
+                    this.contacts.RemoveAll(c => String.Equals(c.GroupName, group.Name));
+                }
+                lock (this.groups)
+                {
+                    this.groups.Remove(group);
+                }
+
+                this.GroupSignal(group, ContactEventTypes.GROUP_REMOVED);
+
+                this.DeferredSave();
+
+                this.stateMonitorService.RemoveState("ContactService::GroupDelete()");
+            }
+
+            return true;
         }
 
         public bool GroupAuthorize(Group group, BogheXdm.Authorization authorization)

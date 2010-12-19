@@ -89,12 +89,12 @@ namespace BogheApp.Items
 
         private void ctxMenu_MakeVoiceCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeAudioCall(this.Value.RemoteParty);
+            MediaActionHanler.MakeAudioCall(this.Value.RemoteParty);
         }
 
         private void ctxMenu_MakeVideoCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeVideoCall(this.Value.RemoteParty);
+            MediaActionHanler.MakeVideoCall(this.Value.RemoteParty);
         }
 
         private void ctxMenu_SendFile_Click(object sender, RoutedEventArgs e)
@@ -104,7 +104,7 @@ namespace BogheApp.Items
 
         private void ctxMenu_StartChat_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.StartChat(this.Value.RemoteParty);
+            MediaActionHanler.StartChat(this.Value.RemoteParty);
         }
 
         private void ctxMenu_SendSMS_Click(object sender, RoutedEventArgs e)

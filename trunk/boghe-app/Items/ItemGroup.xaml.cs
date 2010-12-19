@@ -35,6 +35,9 @@ using BogheControls;
 using BogheCore.Model;
 using BogheControls.Utils;
 using BogheApp.Services.Impl;
+using BogheApp.Screens;
+using BogheCore.Services;
+using BogheApp.Services;
 
 namespace BogheApp.Items
 {
@@ -43,16 +46,17 @@ namespace BogheApp.Items
     /// </summary>
     public partial class ItemGroup : BaseItem<String>
     {
+        private Group group;
+
         public ItemGroup()
         {
             InitializeComponent();
-
             this.ValueLoaded += ItemGroup_ValueLoaded;
         }
 
         private void ItemGroup_ValueLoaded(object sender, EventArgs e)
         {
-            Group group = Win32ServiceManager.SharedManager.ContactService.GroupFind(this.Value);
+            this.group = Win32ServiceManager.SharedManager.ContactService.GroupFind(this.Value);
             if (group == null)
             {
                 return;
@@ -74,6 +78,23 @@ namespace BogheApp.Items
                     this.GridGradienStop.Color = Colors.Salmon;
                     break;
             }
+        }
+
+        private void ctxMenu_AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            ScreenContactEdit screenEditContact = new ScreenContactEdit(null, this.group);
+            Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenEditContact);
+        }
+
+        private void ctxMenu_EditGroup_Click(object sender, RoutedEventArgs e)
+        {
+            ScreenGroupEdit screenGroupEdit = new ScreenGroupEdit(this.group);
+            Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenGroupEdit);
+        }
+
+        private void ctxMenu_DeleteGroup_Click(object sender, RoutedEventArgs e)
+        {
+            Win32ServiceManager.SharedManager.ContactService.GroupDelete(this.group);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace BogheApp.Screens
         private readonly IContactService contactService;
         private readonly IWin32ScreenService screenService;
 
-        public ScreenContactEdit(Contact contact) : base()
+        public ScreenContactEdit(Contact contact, Group group) : base()
         {
             InitializeComponent();
 
@@ -67,6 +67,10 @@ namespace BogheApp.Screens
                 String realm = Win32ServiceManager.SharedManager.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, 
                     Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
                 this.contact = new Contact();
+                if (group != null)
+                {
+                    this.contact.GroupName = group.Name;
+                }
                 this.textBoxSipUri.Text = this.contact.UriString = String.Format("sip:johndoe@{0}", realm.Replace("sip:", String.Empty));
                 this.textBoxDisplayName.Text = this.contact.DisplayName = "John Doe";
                 this.textBoxSipUri.IsEnabled = true;

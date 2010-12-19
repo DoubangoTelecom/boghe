@@ -34,6 +34,7 @@ namespace BogheCore.Sip.Events
         public const String EXTRA_SESSION= InviteEventArgs.EXTRA_SESSION;
         public const String EXTRA_DATA = "data";
         public const String EXTRA_CONTENT_TYPE = "content-type";
+        public const String EXTRA_WRAPPED_CONTENT_TYPE = "w-content-type";
         public const String EXTRA_BYTE_RANGE_START = "byte-start";
         public const String EXTRA_BYTE_RANGE_END = "byte-end";
         public const String EXTRA_BYTE_RANGE_TOTAL = "byte-total";

@@ -37,6 +37,7 @@ namespace BogheCore.Services.Impl
 
         private IConfigurationService configurationService;
         private IXcapService xcapService;
+        private IContactService contactService;
         private readonly ServiceManager manager;
 
         private readonly Preferences preferences;
@@ -45,20 +46,33 @@ namespace BogheCore.Services.Impl
         private readonly MySipDebugCallback debugCallback;
 
         private MyRegistrationSession regSession;
+
+        private byte[] subRLSContent;
         private MySubscriptionSession subRLS;
+        private readonly List<MySubscriptionSession> subPresence;
+
+        private byte[] subRegContent;
         private MySubscriptionSession subReg;
+
+        private byte[] subWinfoContent;
         private MySubscriptionSession subWinfo;
+
+        private byte[] subMwiContent;
         private MySubscriptionSession subMwi;
-        //private MySubscriptionSession subDebug;
-        //private MyPublicationSession pubPres;
+        
+        private MyPublicationSession pubPres;
 
         private String defaultIdentity;
+        private int codecs;
+
+        private System.Timers.Timer hyperAvailabilityTimer;
 
         public SipService(ServiceManager serviceManager)
         {
             this.preferences = new Preferences();
             this.sipCallback = new MySipCallback(this);
             this.debugCallback = new MySipDebugCallback();
+            this.subPresence = new List<MySubscriptionSession>();
 
             this.manager = serviceManager;
         }
@@ -69,8 +83,13 @@ namespace BogheCore.Services.Impl
         {
             this.configurationService = this.manager.ConfigurationService;
             this.xcapService = this.manager.XcapService;
+            this.contactService = this.manager.ContactService;
 
             this.xcapService.onXcapEvent += this.xcapService_onXcapEvent;
+            this.contactService.onContactEvent += this.contactService_onContactEvent;
+
+            this.Codecs = this.configurationService.Get(Configuration.ConfFolder.MEDIA,
+                        Configuration.ConfEntry.CODECS, Configuration.DEFAULT_MEDIA_CODECS);
 
             return true;
         }
@@ -85,6 +104,7 @@ namespace BogheCore.Services.Impl
             }
 
             this.xcapService.onXcapEvent -= this.xcapService_onXcapEvent;
+            this.contactService.onContactEvent -= this.contactService_onContactEvent;
 
             return ret;
         }
@@ -97,6 +117,8 @@ namespace BogheCore.Services.Impl
         public event EventHandler<StackEventArgs> onStackEvent;
         public event EventHandler<InviteEventArgs> onInviteEvent;
         public event EventHandler<MessagingEventArgs> onMessagingEvent;
+        public event EventHandler<SubscriptionEventArgs> onSubscriptionEvent;
+        public event EventHandler onHyperAvailabilityTimedout;
 
         public String DefaultIdentity 
         {
@@ -129,6 +151,47 @@ namespace BogheCore.Services.Impl
             }
         }
 
+        public bool IsPublicationEnabled 
+        {
+            get
+            {
+                return
+                    this.preferences.presence_pub && this.IsRegistered && this.pubPres != null && this.pubPres.IsConnected;
+            }
+        }
+
+        public bool IsSubscriptionEnabled 
+        {
+            get
+            {
+                return 
+                    this.preferences.presence_sub && this.IsRegistered;
+            }
+        }
+        public bool IsSubscriptionToRLSEnabled 
+        {
+            get
+            {
+                return
+                    this.preferences.presence_rls && this.IsSubscriptionEnabled && this.IsXcapEnabled;
+            }
+        }
+
+        public byte[] SubRLSContent { get { return this.subRLSContent; } }
+        public byte[] SubRegContent { get { return this.subRegContent; } }
+        public byte[] SubMwiContent { get { return this.subMwiContent; } }
+        public byte[] SubWinfoContent { get { return this.subWinfoContent; } }
+
+        public int Codecs 
+        {
+            get { return this.codecs; }
+            set 
+            {
+                this.codecs = value;
+                org.doubango.tinyWRAP.SipStack.setCodecs_2(value);
+            }
+        }
+
         public bool StopStack()
         {
             if (this.sipStack != null)
@@ -157,9 +220,7 @@ namespace BogheCore.Services.Impl
             {
                 this.sipStack = new MySipStack(this.sipCallback, this.preferences.realm, this.preferences.impi, this.preferences.impu);
                 this.sipStack.setDebugCallback(this.debugCallback);
-                // FIXME
-                //SipStack.setCodecs_2(this.configurationService.getInt(Configuration.ConfFolder.MEDIA, 
-                //	    Configuration.ConfEntry.CODECS, Configuration.DEFAULT_MEDIA_CODECS));
+                // Set UserAgent
             }
             else
             {
@@ -205,7 +266,7 @@ namespace BogheCore.Services.Impl
             // Set STUN information
             if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN))
             {
-                LOG.Info("STUN=yes");
+                LOG.Debug("STUN=yes");
                 if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, Configuration.DEFAULT_NATT_STUN_DISCO))
                 {
                     String domain = this.preferences.realm.Substring(this.preferences.realm.IndexOf(':') + 1);
@@ -215,7 +276,7 @@ namespace BogheCore.Services.Impl
                     {
                         LOG.Error("STUN discovery has failed");
                     }
-                    LOG.Info(String.Format("STUN1 - server={0} and port={1}", server, port));
+                    LOG.Debug(String.Format("STUN1 - server={0} and port={1}", server, port));
                     this.sipStack.setSTUNServer(server, port);// Needed event if null
                 }
                 else
@@ -228,7 +289,7 @@ namespace BogheCore.Services.Impl
             }
             else
             {
-                LOG.Info("STUN=no");
+                LOG.Debug("STUN=no");
                 this.sipStack.setSTUNServer(null, 0);
             }
 
@@ -246,7 +307,7 @@ namespace BogheCore.Services.Impl
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION,
                     Configuration.DEFAULT_IP_VERSION);
 
-            LOG.Info(String.Format(
+            LOG.Debug(String.Format(
                     "pcscf-host='{0}', pcscf-port='{1}', transport='{2}', ipversion='{3}'",
                     this.preferences.pcscf_host, this.preferences.pcscf_port, this.preferences.transport, this.preferences.ipversion));
 
@@ -256,6 +317,45 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Failed to set Proxy-CSCF parameters");
                 return false;
             }
+
+            // Set TLS parameters
+            if ("tls".Equals(this.preferences.transport, StringComparison.InvariantCultureIgnoreCase))
+            {
+                String privKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PRIV_KEY_FILE, Configuration.DEFAULT_TLS_PRIV_KEY_FILE);
+                String pubKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, Configuration.DEFAULT_TLS_PUB_KEY_FILE);
+                String caKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, Configuration.DEFAULT_TLS_CA_FILE);
+                LOG.Debug(String.Format("TLS pubKey={0} privKey={1} caKey={2}", privKey, pubKey, caKey));
+                if (!String.IsNullOrEmpty(privKey) || !String.IsNullOrEmpty(pubKey) || !String.IsNullOrEmpty(caKey))
+                {
+                    if (!this.sipStack.setSSLCretificates(privKey, pubKey, caKey))
+                    {
+                        LOG.Error("Failed to set SSL certificates");
+                    }
+                }
+            }
+
+            // Set IPSec => only if TLS is disabled
+            if (this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_SEC_AGREE, Configuration.DEFAULT_SECURITY_IPSEC_SEC_AGREE))
+            {
+                this.preferences.ipsec_secagree = true;
+                String algo = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_ALGO, Configuration.DEFAULT_SECURITY_IPSEC_ALGO);
+                String ealgo = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_EALGO, Configuration.DEFAULT_SECURITY_IPSEC_EALGO);
+                String mode = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_MODE, Configuration.DEFAULT_SECURITY_IPSEC_MODE);
+                String proto = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, Configuration.DEFAULT_SECURITY_IPSEC_PROTO);
+
+                LOG.Debug(String.Format("IPSec secagree enable with algo={0} ealgo={1} mode={2} proto={3}", algo, ealgo, mode, proto));
+                if (!this.sipStack.setIPSecParameters(algo, ealgo, mode, mode) || !this.sipStack.setIPSecSecAgree(true))
+                {
+                    LOG.Error("Failed to set IPSec parameters");
+                }
+            }
+            else if (this.preferences.ipsec_secagree)
+            {
+                this.preferences.ipsec_secagree = false;
+                // Disable IPSec secagree
+                this.sipStack.setIPSecSecAgree(false);
+            }
+           
 
             // Whether to use DNS NAPTR+SRV for the Proxy-CSCF discovery (even if the DNS requests are sent only when the stack starts,
             // should be done after setProxyCSCF())
@@ -271,11 +371,15 @@ namespace BogheCore.Services.Impl
             {
                 String compId = String.Format("urn:uuid:%s", Guid.NewGuid().ToString());
                 this.sipStack.SigCompId = compId;
+                LOG.Debug(String.Format("SigComp enable with uuid={0}", compId));
             }
             else
             {
                 this.sipStack.SigCompId = null;
             }
+
+            // Set Privacy
+            this.sipStack.Privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_PRIVACY);
 
             // Start the Stack
             if (!this.sipStack.start())
@@ -284,13 +388,16 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
-            // Preference values
+            // Other Preference values
             this.preferences.xcap_enabled = this.configurationService.Get(
                     Configuration.ConfFolder.XCAP, Configuration.ConfEntry.ENABLED,
                     Configuration.DEFAULT_XCAP_ENABLED);
             this.preferences.presence_sub = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_SUB,
                     Configuration.DEFAULT_RCS_PRESENCE_SUB);
+            this.preferences.presence_rls = this.configurationService.Get(
+                    Configuration.ConfFolder.RCS, Configuration.ConfEntry.RLS,
+                    Configuration.DEFAULT_RCS_RLS);
             this.preferences.presence_pub = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_PUB,
                     Configuration.DEFAULT_RCS_PRESENCE_PUB);
@@ -313,14 +420,14 @@ namespace BogheCore.Services.Impl
             this.regSession.FromUri = this.preferences.impu;
             /* this.regSession.setToUri(this.preferences.impu); */
 
+            // Update default identity to the current IMPU before registering
+            this.DefaultIdentity = this.preferences.impu;
+
             if (!this.regSession.register())
             {
                 LOG.Error("Failed to send REGISTER request");
                 return false;
             }
-
-            // Update default identity to the current IMPU
-            this.defaultIdentity = this.preferences.impu;
 
             return true;
         }
@@ -341,6 +448,24 @@ namespace BogheCore.Services.Impl
             return true;
         }
 
+        public bool PresencePublish()
+        {
+            if (this.IsPublicationEnabled)
+            {
+                return this.PublishPresence();
+            }
+            return false;
+        }
+
+        public bool PresencePublish(PresenceStatus status)
+        {
+            if (this.IsPublicationEnabled)
+            {
+                return this.PublishPresence(status);
+            }
+            return false;
+        }
+
         #endregion
 
 
@@ -357,11 +482,25 @@ namespace BogheCore.Services.Impl
             // Subscribe to 'reg' event package
             this.SubscribeToRegInfo();
 
-            // Subscription to RLS presence will be done when 'RLS_DONE' event is raised
-            // ...
+            // Subscribe to 'presence' event package
+            if (this.IsSubscriptionToRLSEnabled)
+            {
+                // Subscription to RLS presence will be done when 'RLS_DONE' event is raised
+                // ...
+            }
+            else if(this.IsSubscriptionEnabled)
+            {
+                // Subscription to each contact will be done when contact service alert us
+            }
 
             // Subscribe to message waiting indication
             if (this.preferences.mwi)
+            {
+                this.SubscribeToWinfo();
+            }
+
+            // Subscribe to watcherInfo
+            if (this.preferences.xcap_enabled)
             {
                 this.SubscribeToWinfo();
             }

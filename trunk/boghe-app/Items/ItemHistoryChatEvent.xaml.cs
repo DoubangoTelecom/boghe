@@ -74,27 +74,27 @@ namespace BogheApp.Items
 
         private void ctxMenu_MakeVoiceCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeAudioCall(this.Value.RemoteParty);
+            MediaActionHanler.MakeAudioCall(this.Value.RemoteParty);
         }
 
         private void ctxMenu_MakeVideoCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeVideoCall(this.Value.RemoteParty);
+            MediaActionHanler.MakeVideoCall(this.Value.RemoteParty);
         }
 
         private void ctxMenu_SendFile_Click(object sender, RoutedEventArgs e)
         {
-            MessagingWindow.SendFile(this.Value.RemoteParty, null);
+            MediaActionHanler.SendFile(this.Value.RemoteParty, null);
         }
 
         private void ctxMenu_StartChat_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.StartChat(this.Value.RemoteParty);
+            MediaActionHanler.StartChat(this.Value.RemoteParty);
         }
 
         private void ctxMenu_SendSMS_Click(object sender, RoutedEventArgs e)
         {
-            MessagingWindow.SendSMS(this.Value.RemoteParty);
+            MediaActionHanler.SendSMS(this.Value.RemoteParty);
         }
 
         private void ctxMenu_AddToContacts_Click(object sender, RoutedEventArgs e)

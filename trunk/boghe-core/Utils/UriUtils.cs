@@ -92,7 +92,7 @@ namespace BogheCore.Utils
         }
 
         // Very very basic and bad
-        public static String MakeValidSipUri(String uri)
+        public static String GetValidSipUri(String uri)
         {
             if (String.IsNullOrEmpty(uri))
             {

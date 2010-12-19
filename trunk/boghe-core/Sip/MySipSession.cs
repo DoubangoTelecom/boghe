@@ -28,7 +28,7 @@ using BogheCore.Utils;
 
 namespace BogheCore.Sip
 {
-    public abstract class MySipSession : IComparable<MySipSession>, IDisposable
+    public abstract class MySipSession : IComparable<MySipSession>, IEquatable<MySipSession>, IDisposable
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MySipSession));
 
@@ -173,7 +173,12 @@ namespace BogheCore.Sip
             {
                 throw new ArgumentNullException("other");
             }
-            return (int)(this.Session.getId() - other.Session.getId());
+            return (int)(this.Id - other.Id);
+        }
+
+        public bool Equals(MySipSession other)
+        {
+            return (this.CompareTo(other) == 0);
         }
     }
 }

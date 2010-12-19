@@ -62,6 +62,10 @@ namespace BogheCore.Services.Impl
         {
             Group group = new Group(list.name, list.displayname.Value);
             group.Authorization = SpecialNames.GetAutorization(group.Name);
+            if (group.Authorization == Authorization.UnKnown)
+            {
+                group.Authorization = Authorization.Allowed; // FIXME
+            }
             return group;
         }
     }

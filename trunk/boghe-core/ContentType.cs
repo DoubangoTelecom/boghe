@@ -34,6 +34,7 @@ namespace BogheCore
         public const String MULTIPART_RELATED = "multipart/related";
         public const String OMA_DEFERRED_LIST = "application/vnd.oma.im.deferred-list+xml";
         public const String PIDF = "application/pidf+xml";
+        public const String PIDF_DIFF = "application/pidf-diff+xml";
         public const String REG_INFO = "application/reginfo+xml";
         public const String RLMI = "application/rlmi+xml";
         public const String RPID = "application/rpid+xml";
@@ -43,7 +44,10 @@ namespace BogheCore
 
         public const String SMS_3GPP = "application/vnd.3gpp.sms";
 
+        public const String CPIM = "message/CPIM";
         public const String TEXT_PLAIN = "text/plain";
+        public const String IS_COMPOSING = "application/im-iscomposing+xml";
+
 
         public const String UNKNOWN = "unknown/unknown";
     }

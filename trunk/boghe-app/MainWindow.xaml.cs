@@ -38,6 +38,10 @@ using BogheCore.Services;
 using BogheControls.Utils;
 using BogheCore.Model;
 using BogheCore.Events;
+using BogheCore.Xcap.Events;
+using System.IO;
+using log4net;
+using BogheCore;
 
 
 /*
@@ -59,6 +63,8 @@ namespace BogheApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly ILog LOG = LogManager.GetLogger(typeof(MainWindow));
+
         private readonly IWin32ScreenService screenService;
         private readonly ISipService sipService;
         private readonly IConfigurationService configurationService;
@@ -66,8 +72,12 @@ namespace BogheApp
         private readonly ISoundService soundService;
         private readonly IHistoryService historyService;
         private readonly IStateMonitorService stateMonitorService;
+        private readonly IXcapService xcapService;
 
-        private const String AVATAR_PATH = "./avatar.png";
+        public const String AVATAR_PATH = ".\\avatar.png";
+
+        private readonly MyObservableCollection<RegistrationInfo> registrations;
+        private readonly MyObservableCollection<WatcherInfo> watchers;
 
         public MainWindow()
         {
@@ -84,6 +94,8 @@ namespace BogheApp
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
             this.sipService.onMessagingEvent += this.sipService_onMessagingEvent;
+            this.sipService.onSubscriptionEvent += this.sipService_onSubscriptionEvent;
+            this.sipService.onHyperAvailabilityTimedout += this.sipService_onHyperAvailabilityTimedout;
             
             // Initialize other Services
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
@@ -91,12 +103,16 @@ namespace BogheApp
             this.soundService = Win32ServiceManager.SharedManager.SoundService;
             this.historyService = Win32ServiceManager.SharedManager.HistoryService;
             this.stateMonitorService = Win32ServiceManager.SharedManager.StateMonitorService;
+            this.xcapService = Win32ServiceManager.SharedManager.XcapService;
             this.configurationService.onConfigurationEvent += this.configurationService_onConfigurationEvent;
+            this.xcapService.onXcapEvent += this.xcapService_onXcapEvent;
             this.stateMonitorService.onStateChangedEvent += this.stateMonitorService_onStateChangedEvent;
 
             // Hook Closeable items
             this.AddHandler(CloseableTabItem.CloseTabEvent, new RoutedEventHandler(this.CloseTab));
-            
+
+            this.registrations = new MyObservableCollection<RegistrationInfo>();
+            this.watchers = new MyObservableCollection<WatcherInfo>();
 
             // Show Authentication Screen
             //this.screenService.Show(ScreenType.Contacts);
@@ -129,18 +145,46 @@ namespace BogheApp
                 this.imageAvatar.Source = new ImageSourceConverter().ConvertFromInvariantString(MainWindow.AVATAR_PATH) as ImageSource;
             }
 
-            this.comboBoxStatus.ItemsSource = new Status[]
+            
+            Status[] statues = new Status[]
             {
-                new Status("Busy", "/BogheApp;component/embedded/16/user_offline_16.png"),
-                new Status("Be Right Back", "/BogheApp;component/embedded/16/user_back16.png"),
-                new Status("Away", "/BogheApp;component/embedded/16/user_time_16.png"),
-                new Status("On The Phone", "/BogheApp;component/embedded/16/user_onthephone_16.png"),
-                new Status("HyperAvailable", "/BogheApp;component/embedded/16/user_hyper_avail_16.png"),
-                new Status("Offline", "/BogheApp;component/embedded/16/user_offline_16.png")
+                new Status("Online", PresenceStatus.Online,"/BogheApp;component/embedded/16/user_16.png"),
+                new Status("Busy", PresenceStatus.Busy,"/BogheApp;component/embedded/16/user_busy_16.png"),
+                new Status("Be Right Back", PresenceStatus.BeRightBack,"/BogheApp;component/embedded/16/user_back16.png"),
+                new Status("Away", PresenceStatus.Away,"/BogheApp;component/embedded/16/user_time_16.png"),
+                new Status("On The Phone", PresenceStatus.OnThePhone,"/BogheApp;component/embedded/16/user_onthephone_16.png"),
+                new Status("HyperAvailable", PresenceStatus.HyperAvailable,"/BogheApp;component/embedded/16/user_hyper_avail_16.png"),
+                new Status("Offline", PresenceStatus.Offline,"/BogheApp;component/embedded/16/user_offline_16.png")
             };
-            this.comboBoxStatus.SelectedIndex = 5;
+            PresenceStatus status = (PresenceStatus)Enum.Parse(typeof(PresenceStatus),
+                this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.STATUS, Configuration.DEFAULT_RCS_STATUS.ToString()));
+            int statusIndex = statues.ToList().FindIndex(x => x.Value == status);
+
+            this.comboBoxStatus.ItemsSource = statues;
+            this.comboBoxStatus.SelectedIndex = statusIndex >= 0 ? statusIndex : 6;
+
+
+            this.registrations.CollectionChanged += (_sender, _e) =>
+            {
+                this.MenuItemFile_Registrations.Header = String.Format("Registrations ({0})", this.registrations.Count);
+            };
+            this.watchers.CollectionChanged += (_sender, _e) =>
+            {
+                this.MenuItemEAB_Authorizations.Header = String.Format("Authorizations ({0})", this.watchers.Count);
+            };
 
             this.Cursor = Cursors.Arrow;
+        }
+
+        private void comboBoxStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PresenceStatus status = (this.comboBoxStatus.SelectedValue as Status).Value;
+            this.configurationService.Set(Configuration.ConfFolder.RCS, Configuration.ConfEntry.STATUS, status.ToString());
+
+            if (this.sipService.IsPublicationEnabled)
+            {
+                this.sipService.PresencePublish(status);
+            }
         }
 
         private void configurationService_onConfigurationEvent(object sender, ConfigurationEventArgs e)
@@ -200,6 +244,74 @@ namespace BogheApp
                 this.imageIndicatorHourGlass.Visibility = Visibility.Visible;
                 this.labelProgressInfo.Content = topState[1];
             }
+        }
+
+        private void xcapService_onXcapEvent(object sender, XcapEventArgs e)
+        {
+            if (e.Type != XcapEventTypes.PRESCONTENT_DONE)
+            {
+                return;
+            }
+
+            if (this.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+            {
+                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                        new EventHandler<XcapEventArgs>(this.xcapService_onXcapEvent), sender, new object[] { e });
+                return;
+            }
+
+            switch (e.Type)
+            {
+                case XcapEventTypes.PRESCONTENT_DONE:
+                    {
+                        System.Drawing.Image avatar;
+                        object content = e.GetExtra(XcapEventArgs.EXTRA_CONTENT);
+                        if (content != null && content is String)
+                        {
+                            try
+                            {
+                                using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(content as String)))
+                                {
+                                    avatar = System.Drawing.Bitmap.FromStream(stream);
+                                    this.imageAvatar.Source = MyImageConverter.FromBitmap(avatar as System.Drawing.Bitmap);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                LOG.Error("Failed to get avatar", ex);
+                            }
+                        }
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            lock (SessionWindow.Windows)
+            {
+                SessionWindow.Windows.ForEach(w => w.Close());
+            }
+
+            lock (MessagingWindow.Windows)
+            {
+                MessagingWindow.Windows.ForEach(w => w.Close());
+            }
+        }
+
+        private void labelFreeText_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.screenService.ScreenOptions.SelectPresenceTab();
+            this.screenService.Show(ScreenType.Options);
+        }
+
+        private void Border_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.screenService.ScreenOptions.SelectPresenceTab();
+            this.screenService.Show(ScreenType.Options);
         }
     }
 }

@@ -25,6 +25,9 @@ using System.Text;
 using BogheXdm.Generated.rls_services;
 using org.doubango.tinyWRAP;
 using BogheXdm;
+using System.Globalization;
+using BogheCore.Xcap;
+using BogheXdm.Generated.xcap_error;
 
 namespace BogheCore.Services.Impl
 {
@@ -39,11 +42,14 @@ namespace BogheCore.Services.Impl
             }
 
             String resourceList; // e.g.:http://doubango.org:8080/services/resource-lists/users/sip:boghe@doubango.org/index/~~/resource-lists/list%5B@name=%22rcs%22%5D
-            XcapSelector selector = new XcapSelector(this.xcapStack.Stack);
-            selector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
-                .setAttribute("list", "name", presList);
-            resourceList = selector.getString();
-            selector.Dispose();
+
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", presList);
+                resourceList = this.xcapSelector.getString();
+            }
             
             foreach (serviceType service in services.service)
             {
@@ -65,29 +71,145 @@ namespace BogheCore.Services.Impl
             return String.Empty;
         }
 
-        private bool handleRLSEvent(short code, byte[] content)
+        private bool HandleRLSEvent(short code, byte[] content)
         {
+            rlsservices rls = null;
+
             try
             {
                 if (XcapService.IsSuccessCode(code))
                 {
-                    rlsservices rls = this.Deserialize(content, typeof(rlsservices)) as rlsservices;
-                    if (rls == null)
-                    {
-                        return false;
-                    }
+                    rls = this.Deserialize(content, typeof(rlsservices)) as rlsservices;
+                }
+                else if (code == 404)
+                {
+                    rls = this.CreateRLSDocument();
+                }
 
-                    // RCS Service Uri
+                // RCS Service Uri used as request URI in the SUBSCRIBE requests
+                if (rls != null)
+                {
                     this.rlsPresUri = this.GetPresenceServiceUri(rls, SpecialNames.SHARED_RCS);
                 }
             }
             catch (Exception e)
             {
-                XcapService.LOG.Error("Fialed to handle 'resource-lists' event", e);
+                XcapService.LOG.Error("Fialed to handle 'rls-services' event", e);
                 return false;
             }
 
-            return true;
+            return (rls != null);
+        }
+
+        private rlsservices CreateRLSDocument()
+        {
+            rlsservices rls = new rlsservices();
+
+            rls.service = new serviceType[]
+            {
+                // RCS service
+                this.CreatePresenceService(SpecialNames.SHARED_RCS),
+                // OMA services
+                this.CreatePresenceService(SpecialNames.SHARED_OMA_BUDDYLIST),
+                this.CreatePresenceService(SpecialNames.SHARED_OMA_POCBUDDYLIST)
+            };
+
+            String documentUrl;
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RLS_SERVICES_ID);
+                documentUrl = this.xcapSelector.getString();
+            }
+
+            byte[] payload = this.Serialize(rls, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RLS_SERVICES_ID));
+            MyXcapMessage xcapMessage = this.xcapStack.PutDocument(documentUrl, payload, (uint)payload.Length, XcapService.XCAP_AUID_IETF_RLS_SERVICES_MIME_TYPE);
+
+            if (xcapMessage != null)
+            {
+                if (XcapService.IsSuccessCode(xcapMessage.Code))
+                {
+                    return rls;
+                }
+                else if (xcapMessage.Content != null && xcapMessage.Code == 409/*Conflict*/ || xcapMessage.Code == 415/*Unsupported Media Type*/)
+                {
+                    object content = this.Deserialize(xcapMessage.Content, typeof(xcaperror));
+                    xcaperror xerror;
+
+                    if (content != null && ((xerror = content as xcaperror) != null))
+                    {
+                        LOG.Error(String.Format("XCAP Error={0}", xerror.ErrorPhrase));
+                        if (xerror.ErrorType == xcaperror.xcaperrorItemType.ErrorElementUniquenessfailure)
+                        {
+                            xcaperrorErrorelementUniquenessfailure errorUniquenessfailure = xerror.Item as xcaperrorErrorelementUniquenessfailure;
+                            if (errorUniquenessfailure != null && errorUniquenessfailure.exists != null && errorUniquenessfailure.exists.Length > 0)
+                            {
+                                xcaperrorErrorelementUniquenessfailureExists errorUniquenessfailureExists = errorUniquenessfailure.exists[0];
+                                if (errorUniquenessfailureExists != null)
+                                {
+                                    String field = errorUniquenessfailureExists.field;
+                                    String altvalue = (errorUniquenessfailureExists.altvalue != null && errorUniquenessfailureExists.altvalue.Length > 0) ? errorUniquenessfailureExists.altvalue[0] : null;
+
+                                    if (String.IsNullOrEmpty(altvalue))
+                                    {
+                                        SipUri sipUri = new SipUri(this.xcapStack.XUI);
+                                        if (sipUri.isValid())
+                                        {
+                                            altvalue = String.Format(CultureInfo.CurrentCulture,
+                                                "{0}:{1}_alt{2}",
+                                                sipUri.getScheme(), sipUri.getUserName(), DateTime.Now.Ticks);
+                                        }
+                                        else
+                                        {
+                                            altvalue = "sip:error@doubango.org";
+                                        }
+                                    }
+                                    rls.service[0].uri = altvalue;
+
+                                    payload = this.Serialize(rls, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RLS_SERVICES_ID));
+                                    xcapMessage = this.xcapStack.PutDocument(documentUrl, payload, (uint)payload.Length, XcapService.XCAP_AUID_IETF_RLS_SERVICES_MIME_TYPE);
+                                    if (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code))
+                                    {
+                                        return rls;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }            
+            return null;
+        }
+
+        private serviceType CreatePresenceService(String presList)
+        {
+            serviceType service = new serviceType();
+            service.packages = new packagesType();
+
+            // "sip:test@doubango.org;pres-list=rcs
+            service.uri = String.Format(CultureInfo.CurrentCulture,
+                "{0};{1}={2}",
+                this.xcapStack.XUI, "pres-list", presList
+                );
+            // <packages> <package>presence</package> </packages>
+            service.packages.Items = new String[] { "presence" };
+            // <resource-list>http://doubango.org:8080/services/resource-lists/users/sip:test@doubango.org/index/~~/resource-lists/list%5B@name=%22rcs%22%5D</resource-list>
+            if (this.xcapDocumentsUris.ContainsKey(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID))
+            {
+                service.Item = this.xcapDocumentsUris[XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID];
+            }
+            else
+            {
+                lock (this.xcapSelector)
+                {
+                    this.xcapSelector.reset();
+                    this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                        .setAttribute("list", "name", presList);
+                    service.Item = this.xcapSelector.getString();
+                }
+            }
+
+            return service;
         }
     }
 }

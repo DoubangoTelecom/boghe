@@ -25,16 +25,17 @@ using System.Text;
 using org.doubango.tinyWRAP;
 using System.Windows.Data;
 using System.ComponentModel;
+using BogheCore.Model;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        List<Codec> codecs;
+
         private void InitializeCodecs()
         {
-            
-
-            List<Codec> codecs = new List<Codec>(new Codec[]{
+            codecs = new List<Codec>(new Codec[]{
                 new Codec("PCMA", "PCMA (8 KHz)", tdav_codec_id_t.tdav_codec_id_pcma),
                 new Codec("PCMU", "PCMU (8 KHz)", tdav_codec_id_t.tdav_codec_id_pcmu),
                 new Codec("GSM", "GSM (8 KHz)", tdav_codec_id_t.tdav_codec_id_gsm),
@@ -79,10 +80,18 @@ namespace BogheApp.Screens
 
         private void LoadCodecs()
         {
-        }
+            codecs.ForEach(x => x.IsEnabled = ((x.Id & (tdav_codec_id_t)this.sipService.Codecs) == x.Id));
+        }        
 
         private bool UpdateCodecs()
         {
+            tdav_codec_id_t codecIds = tdav_codec_id_t.tdav_codec_id_none;
+            this.codecs.ForEach(x => codecIds |= x.IsEnabled ? x.Id : tdav_codec_id_t.tdav_codec_id_none);
+            this.sipService.Codecs = (int)codecIds;
+
+            this.configurationService.Set(Configuration.ConfFolder.MEDIA,
+                        Configuration.ConfEntry.CODECS, this.sipService.Codecs);
+
             return true;
         }
 
@@ -91,6 +100,7 @@ namespace BogheApp.Screens
             readonly String name;
             readonly String description;
             readonly tdav_codec_id_t id;
+            bool enabled;
 
             internal Codec(String name, String description, tdav_codec_id_t id)
             {
@@ -112,6 +122,12 @@ namespace BogheApp.Screens
             public tdav_codec_id_t Id
             {
                 get { return this.id; }
+            }
+
+            public bool IsEnabled
+            {
+                get { return this.enabled; }
+                set { this.enabled = value; }
             }
 
             public String CodecType

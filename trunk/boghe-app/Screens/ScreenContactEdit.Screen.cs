@@ -47,7 +47,7 @@ namespace BogheApp.Screens
 
         public override void AfterLoading()
         {
-            this.comboBoxGroup.ItemsSource = this.contactService.Groups;
+            this.comboBoxGroup.ItemsSource = this.contactService.Groups.FindAll(x=>x.Authorization == BogheXdm.Authorization.Allowed);
             if (this.contact != null)
             {
                 this.comboBoxGroup.SelectedValue = this.contactService.GroupFind(this.contact.GroupName);

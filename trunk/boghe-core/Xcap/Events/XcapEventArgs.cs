@@ -32,6 +32,8 @@ namespace BogheCore.Xcap.Events
         private readonly String phrase;
         private readonly short code;
 
+        public const String EXTRA_CONTENT = "content";
+
         public XcapEventArgs(XcapEventTypes type, short code, String phrase)
             :base()
         {

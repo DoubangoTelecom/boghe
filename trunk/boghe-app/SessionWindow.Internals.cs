@@ -34,9 +34,43 @@ namespace BogheApp
 {
     partial class SessionWindow
     {
+        private bool MsrpFailureReport
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_FAILURE, Configuration.DEFAULT_RCS_MSRP_FAILURE);
+            }
+        }
+
+        private bool MsrpSuccessReport
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_SUCCESS, Configuration.DEFAULT_RCS_MSRP_SUCCESS);
+            }
+        }
+
+        private bool MsrpOmaFinalDeliveryReport
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.OMAFDR, Configuration.DEFAULT_RCS_OMAFDR);
+            }
+        }
+
+        private MyMsrpSession CreateOutgoingSession(MediaType mediaType)
+        {
+            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, mediaType, this.remotePartyUri);
+            msrpSession.SuccessReport = this.MsrpSuccessReport;
+            msrpSession.FailureReport = this.MsrpFailureReport;
+            msrpSession.OmaFinalDeliveryReport = this.MsrpOmaFinalDeliveryReport;
+
+            return msrpSession;
+        }
+
         private void SendFile(String filePath)
         {
-            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.FileTransfer, this.remotePartyUri);
+            MyMsrpSession msrpSession = this.CreateOutgoingSession(MediaType.FileTransfer);
             lock (this.fileTransferSessions)
             {
                 this.fileTransferSessions.Add(msrpSession);
@@ -126,22 +160,46 @@ namespace BogheApp
                             this.labelInfo.Content = String.Format("Incoming call from {0}", this.AVSession.RemotePartyDisplayName);
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(true, "Answer", Properties.Resources.phone_pick_up_32);
+                            
+                            this.MenuItemCall_MakeAudioCall.IsEnabled = false;
+                            this.MenuItemCall_MakeVideoCall.IsEnabled = false;
+                            this.MenuItemCall_HoldResume.IsEnabled = false;
+                            this.MenuItemCall_MakeTransfer.IsEnabled = false;
+                            this.MenuItemCall_HangUp.IsEnabled = true;
                             break;
 
                         case MyInviteSession.InviteState.INPROGRESS:
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(false, "Call", Properties.Resources.phone_pick_up_32);
+
+                            this.MenuItemCall_MakeAudioCall.IsEnabled = false;
+                            this.MenuItemCall_MakeVideoCall.IsEnabled = false;
+                            this.MenuItemCall_HoldResume.IsEnabled = false;
+                            this.MenuItemCall_MakeTransfer.IsEnabled = false;
+                            this.MenuItemCall_HangUp.IsEnabled = true;
                             break;
 
                         case MyInviteSession.InviteState.INCALL:
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(false, "Call", Properties.Resources.phone_pick_up_32);
+
+                            this.MenuItemCall_MakeAudioCall.IsEnabled = false;
+                            this.MenuItemCall_MakeVideoCall.IsEnabled = false;
+                            this.MenuItemCall_HoldResume.IsEnabled = true;
+                            this.MenuItemCall_MakeTransfer.IsEnabled = false;
+                            this.MenuItemCall_HangUp.IsEnabled = true;
                             break;
 
                         case MyInviteSession.InviteState.TERMINATED:
                         case MyInviteSession.InviteState.TERMINATING:
                             this.buttonHangUp.IsEnabled = false;
                             this.UpdateButtonCallOrAnswer(true, "Call", Properties.Resources.phone_pick_up_32);
+
+                            this.MenuItemCall_MakeAudioCall.IsEnabled = true;
+                            this.MenuItemCall_MakeVideoCall.IsEnabled = true;
+                            this.MenuItemCall_HoldResume.IsEnabled = false;
+                            this.MenuItemCall_MakeTransfer.IsEnabled = false;
+                            this.MenuItemCall_HangUp.IsEnabled = false;
                             break;
                     }
                 }

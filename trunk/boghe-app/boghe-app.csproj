@@ -177,7 +177,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Items\ItemRegistration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Items\ItemShortMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Items\ItemWatcher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,8 +229,14 @@
     <Compile Include="Items\ItemHistoryShortMessageEvent.xaml.cs">
       <DependentUpon>ItemHistoryShortMessageEvent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Items\ItemRegistration.xaml.cs">
+      <DependentUpon>ItemRegistration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Items\ItemShortMessage.xaml.cs">
       <DependentUpon>ItemShortMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Items\ItemWatcher.xaml.cs">
+      <DependentUpon>ItemWatcher.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.SipEvents.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -230,6 +244,7 @@
     <Compile Include="MainWindow.Status.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaActionHanler.cs" />
     <Compile Include="MessagingWindow.Internals.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>
@@ -308,6 +323,18 @@
     <Compile Include="Screens\ScreenOptions.Security.cs">
       <DependentUpon>ScreenOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\ScreenRegistrations.Screen.cs">
+      <DependentUpon>ScreenRegistrations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenRegistrations.xaml.cs">
+      <DependentUpon>ScreenRegistrations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenWatchers.Screen.cs">
+      <DependentUpon>ScreenWatchers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ScreenWatchers.xaml.cs">
+      <DependentUpon>ScreenWatchers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\Impl\SoundService.cs" />
     <Compile Include="SessionWindow.Internals.cs">
       <DependentUpon>SessionWindow.xaml</DependentUpon>
@@ -341,6 +368,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Screens\ScreenOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ScreenRegistrations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\ScreenWatchers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -595,6 +630,26 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\16\image_gallery_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\folder_view_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\user_preferences_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\user_information_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\dialog-accept_16.png" />
+    <Resource Include="embedded\16\dialog-block_16.png" />
+    <Resource Include="embedded\16\dialog-close-2_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\family_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="embedded\16\dialog-question-2_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

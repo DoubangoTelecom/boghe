@@ -35,7 +35,7 @@ namespace BogheCore.Services.Impl
             {
                 if (XcapService.IsSuccessCode(code))
                 {
-                    this.documentsUris.Clear();
+                    this.xcapDocumentsUris.Clear();
 
                     xcapdirectory xcap_dir = this.Deserialize(content, typeof(xcapdirectory)) as xcapdirectory;
                     if (xcap_dir == null || xcap_dir.folder == null)
@@ -61,7 +61,7 @@ namespace BogheCore.Services.Impl
                         }
                         if (entry != null)
                         {
-                            this.documentsUris.Add(folder.auid, entry.uri);
+                            this.xcapDocumentsUris.Add(folder.auid, entry.uri);
                         }
                     }
 

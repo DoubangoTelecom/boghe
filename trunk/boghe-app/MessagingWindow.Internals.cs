@@ -31,9 +31,43 @@ namespace BogheApp
 {
     partial class MessagingWindow
     {
+        private bool MsrpFailureReport
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_FAILURE, Configuration.DEFAULT_RCS_MSRP_FAILURE);
+            }
+        }
+
+        private bool MsrpSuccessReport
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.MSRP_SUCCESS, Configuration.DEFAULT_RCS_MSRP_SUCCESS);
+            }
+        }
+
+        private bool MsrpOmaFinalDeliveryReport
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.OMAFDR, Configuration.DEFAULT_RCS_OMAFDR);
+            }
+        }
+
+        private MyMsrpSession CreateOutgoingSession(MediaType mediaType)
+        {
+            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, mediaType, this.remotePartyUri);
+            msrpSession.SuccessReport = this.MsrpSuccessReport;
+            msrpSession.FailureReport = this.MsrpFailureReport;
+            msrpSession.OmaFinalDeliveryReport = this.MsrpOmaFinalDeliveryReport;
+
+            return msrpSession;
+        }
+
         private void SendFile(String filePath)
         {
-            MyMsrpSession msrpSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.FileTransfer, this.remotePartyUri);
+            MyMsrpSession msrpSession = this.CreateOutgoingSession(MediaType.FileTransfer);
             lock (this.fileTransferSessions)
             {
                 this.fileTransferSessions.Add(msrpSession);

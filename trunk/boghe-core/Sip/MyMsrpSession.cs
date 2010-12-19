@@ -34,10 +34,10 @@ namespace BogheCore.Sip
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMsrpSession));
         private const String DESTINATION_FOLDER = "./SharedContent";
 
-        //private const String CHAT_ACCEPT_TYPES = "text/plain message/CPIM";
-        private const String CHAT_ACCEPT_TYPES = "text/plain";
+        private const String CHAT_ACCEPT_TYPES = "text/plain message/CPIM";
         private const String CHAT_ACCEPT_WRAPPED_TYPES = "text/plain image/jpeg image/gif image/bmp image/png";
-        private const String FILE_ACCEPT_TYPES = "*";
+        private const String FILE_ACCEPT_TYPES = "message/CPIM application/octet-stream";
+        private const String FILE_ACCEPT_WRAPPED_TYPES = "application/octet-stream image/jpeg image/gif image/bmp image/png";
         private const int CHUNK_DURATION = 25;
 
         public event EventHandler<MsrpEventArgs> onMsrpEvent;
@@ -48,6 +48,9 @@ namespace BogheCore.Sip
         private String filePath;
         private String fileType;
         private FileStream outFileStream;
+        private bool failureReport = true;
+        private bool successReport;
+        private bool omaFinalDeliveryReport;
 
         private static IDictionary<long, MyMsrpSession> sessions = new Dictionary<long, MyMsrpSession>();
 
@@ -73,7 +76,7 @@ namespace BogheCore.Sip
 
             if (mediaType == MediaType.Chat)
             {
-                
+                msrpSession = MyMsrpSession.CreateIncomingSession(sipStack, session, mediaType, fromUri);
             }
             else
             {
@@ -209,6 +212,24 @@ namespace BogheCore.Sip
             get { return this.filePath; }
         }
 
+        public bool FailureReport
+        {
+            get { return this.failureReport; }
+            set { this.failureReport = value; }
+        }
+
+        public bool SuccessReport
+        {
+            get { return this.successReport; }
+            set { this.successReport = value; }
+        }
+
+        public bool OmaFinalDeliveryReport
+        {
+            get { return this.omaFinalDeliveryReport; }
+            set { this.omaFinalDeliveryReport = value; }
+        }
+
         public bool Accept()
         {
             if (base.State == InviteState.INCOMING && base.MediaType == MediaType.FileTransfer)
@@ -284,8 +305,11 @@ namespace BogheCore.Sip
                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-path", this.filePath)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-selector", fileSelector)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.FILE_ACCEPT_TYPES)
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-wrapped-types", MyMsrpSession.FILE_ACCEPT_WRAPPED_TYPES)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-disposition", "attachment")
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-icon", "cid:test@doubango.org")
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "Failure-Report", this.FailureReport ? "yes" : "no")
+                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "Success-Report", this.SuccessReport ? "yes" : "no")
                  .setMediaInt(twrap_media_type_t.twrap_media_msrp, "chunck-duration", MyMsrpSession.CHUNK_DURATION)
                  ;
 
@@ -328,6 +352,9 @@ namespace BogheCore.Sip
 
                 ActionConfig config = new ActionConfig();
                 config.setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.CHAT_ACCEPT_TYPES)
+                    .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-wrapped-types", MyMsrpSession.CHAT_ACCEPT_WRAPPED_TYPES)
+                    .setMediaString(twrap_media_type_t.twrap_media_msrp, "Failure-Report", this.FailureReport ? "yes" : "no")
+                    .setMediaString(twrap_media_type_t.twrap_media_msrp, "Success-Report", this.SuccessReport ? "yes" : "no")
                     .setMediaInt(twrap_media_type_t.twrap_media_msrp, "chunck-duration", 50);
 
                 bool ret = this.session.callMsrp(base.RemotePartyUri, config);

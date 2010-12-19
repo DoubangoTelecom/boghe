@@ -43,6 +43,8 @@ namespace BogheApp.Services.Impl
         private ScreenOptions screenOptions;
         private ScreenContacts screenContacts;
         private ScreenHistory screenHistory;
+        private ScreenRegistrations screenRegistrations;
+        private ScreenWatchers screenWatchers;
 
         BaseScreen lastScreen = null;
 
@@ -165,6 +167,30 @@ namespace BogheApp.Services.Impl
             }
         }
 
+        public ScreenRegistrations ScreenRegistrations
+        {
+            get
+            {
+                if (this.screenRegistrations == null)
+                {
+                    this.screenRegistrations = new ScreenRegistrations();
+                }
+                return this.screenRegistrations;
+            }
+        }
+        
+        public ScreenWatchers ScreenWatchers
+        {
+            get
+            {
+                if (this.screenWatchers == null)
+                {
+                    this.screenWatchers = new ScreenWatchers();
+                }
+                return this.screenWatchers;
+            }
+        }
+
         public void Show(BaseScreen baseScreen, int insertIndex)
         {
             int index = -1;
@@ -241,6 +267,12 @@ namespace BogheApp.Services.Impl
                 case ScreenType.Contacts:
                     tabItem = this.CreateTabItem(this.ScreenContacts, false);
                     break;
+                case ScreenType.Registrations:
+                    tabItem = this.CreateTabItem(this.ScreenRegistrations, true);
+                    break;
+                case ScreenType.Authorizations:
+                    tabItem = this.CreateTabItem(this.ScreenWatchers, true);
+                    break;
             }
 
             if (tabItem != null)
@@ -309,6 +341,20 @@ namespace BogheApp.Services.Impl
 
                 // Events
                 baseScreen.AfterUnLoading();
+            }
+        }
+
+        public void HideAllExcept(ScreenType type)
+        {
+again:
+            foreach (TabItem tabItem in this.tabControl.Items)
+            {
+                BaseScreen baseScreen = tabItem.Content as BaseScreen;
+                if ((baseScreen.BaseScreenType & (int)type) != baseScreen.BaseScreenType)
+                {
+                    this.Hide(baseScreen);
+                    goto again;
+                }
             }
         }
 

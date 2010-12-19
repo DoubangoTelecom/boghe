@@ -34,22 +34,29 @@ namespace BogheCore.Services.Impl
         {
             Object result = null;
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-
-            using (MemoryStream stream = new MemoryStream(content))
+            if (content != null)
             {
-                using (XmlReader reader = XmlReader.Create(stream, settings))
+                XmlReaderSettings settings = new XmlReaderSettings();
+
+                using (MemoryStream stream = new MemoryStream(content))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(type);
-                    try
+                    using (XmlReader reader = XmlReader.Create(stream, settings))
                     {
-                        result = xmlSerializer.Deserialize(reader);
-                    }
-                    catch (Exception e)
-                    {
-                        LOG.Error("Failed to deserialize xml content", e);
+                        XmlSerializer xmlSerializer = new XmlSerializer(type);
+                        try
+                        {
+                            result = xmlSerializer.Deserialize(reader);
+                        }
+                        catch (Exception e)
+                        {
+                            LOG.Error("Failed to deserialize xml content", e);
+                        }
                     }
                 }
+            }
+            else
+            {
+                LOG.Error("Null content");
             }
 
             return result;

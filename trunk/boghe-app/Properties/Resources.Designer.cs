@@ -67,9 +67,23 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap bullet_ball_glass_blue_16 {
+            get {
+                object obj = ResourceManager.GetObject("bullet_ball_glass_blue_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap bullet_ball_glass_blue_24 {
             get {
                 object obj = ResourceManager.GetObject("bullet_ball_glass_blue_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap bullet_ball_glass_green_16 {
+            get {
+                object obj = ResourceManager.GetObject("bullet_ball_glass_green_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -81,6 +95,13 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap bullet_ball_glass_grey_16 {
+            get {
+                object obj = ResourceManager.GetObject("bullet_ball_glass_grey_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap bullet_ball_glass_grey_24 {
             get {
                 object obj = ResourceManager.GetObject("bullet_ball_glass_grey_24", resourceCulture);
@@ -88,9 +109,23 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap bullet_ball_glass_red_16 {
+            get {
+                object obj = ResourceManager.GetObject("bullet_ball_glass_red_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap bullet_ball_glass_red_24 {
             get {
                 object obj = ResourceManager.GetObject("bullet_ball_glass_red_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap bullet_ball_glass_yellow_16 {
+            get {
+                object obj = ResourceManager.GetObject("bullet_ball_glass_yellow_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

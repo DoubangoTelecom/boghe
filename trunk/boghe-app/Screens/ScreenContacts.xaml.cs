@@ -44,6 +44,7 @@ using System.ComponentModel;
 using System.Collections;
 using BogheXdm;
 using System.Globalization;
+using log4net;
 
 namespace BogheApp.Screens
 {
@@ -52,7 +53,10 @@ namespace BogheApp.Screens
     /// </summary>
     public partial class ScreenContacts : BaseScreen
     {
+        private static readonly ILog LOG = LogManager.GetLogger(typeof(ScreenContacts));
+
         private ICollectionView contactsView;
+        private MyObservableCollection<Contact> dataSource;
 
         private readonly IContactService contactService;
         private readonly ISipService sipService;
@@ -66,9 +70,10 @@ namespace BogheApp.Screens
 
             // important to do it here before setting ItemsSource
             this.contactService.onContactEvent += this.contactService_onContactEvent;
+            this.sipService.onSubscriptionEvent += this.sipService_onSubscriptionEvent;
 
             this.UpdateSource();
-        }
+        }        
 
         private void BaseScreen_Loaded(object sender, RoutedEventArgs e)
         {
@@ -79,10 +84,10 @@ namespace BogheApp.Screens
         {
             if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
             {
-                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                String remoteUri = UriUtils.GetValidSipUri(this.textBoxFreeContact.Text);
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
-                    MessagingWindow.StartChat(remoteUri);
+                    MediaActionHanler.StartChat(remoteUri);
                 }
             }
         }
@@ -91,10 +96,10 @@ namespace BogheApp.Screens
         {
             if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
             {
-                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                String remoteUri = UriUtils.GetValidSipUri(this.textBoxFreeContact.Text);
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
-                    MessagingWindow.SendSMS(remoteUri);
+                    MediaActionHanler.SendSMS(remoteUri);
                 }
             }
         }
@@ -129,10 +134,10 @@ namespace BogheApp.Screens
         {
             if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
             {
-                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                String remoteUri = UriUtils.GetValidSipUri(this.textBoxFreeContact.Text);
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
-                    SessionWindow.MakeAudioCall(remoteUri);
+                    MediaActionHanler.MakeAudioCall(remoteUri);
                 }
             }
         }
@@ -141,10 +146,10 @@ namespace BogheApp.Screens
         {
             if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
             {
-                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                String remoteUri = UriUtils.GetValidSipUri(this.textBoxFreeContact.Text);
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
-                    SessionWindow.MakeVideoCall(remoteUri);
+                    MediaActionHanler.MakeVideoCall(remoteUri);
                 }
             }
         }
@@ -153,10 +158,10 @@ namespace BogheApp.Screens
         {
             if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
             {
-                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                String remoteUri = UriUtils.GetValidSipUri(this.textBoxFreeContact.Text);
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
-                    MessagingWindow.SendFile(remoteUri, null);
+                    MediaActionHanler.SendFile(remoteUri, null);
                 }
             }
         }
@@ -165,10 +170,10 @@ namespace BogheApp.Screens
         {
             if (!String.IsNullOrEmpty(this.textBoxFreeContact.Text))
             {
-                String remoteUri = UriUtils.MakeValidSipUri(this.textBoxFreeContact.Text);
+                String remoteUri = UriUtils.GetValidSipUri(this.textBoxFreeContact.Text);
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
-                    MessagingWindow.StartChat(remoteUri);
+                    MediaActionHanler.StartChat(remoteUri);
                 }
             }
         }
@@ -204,13 +209,13 @@ namespace BogheApp.Screens
         {
             readonly String name;
             readonly String displayName;
-            readonly Color color;
+            readonly String imageSource;
 
-            internal FilterItem(String name, String displayName, Color color)
+            internal FilterItem(String name, String displayName, String imageSource)
             {
                 this.name = name;
                 this.displayName = displayName;
-                this.color = color;
+                this.imageSource = imageSource;
             }
 
             public String Name
@@ -223,10 +228,29 @@ namespace BogheApp.Screens
                 get { return this.displayName; }
             }
 
-            public Brush Color
+            public String ImageSource
             {
-                get { return new SolidColorBrush(this.color); }
+                get { return this.imageSource; }
             }
+
+            public static String ImageSourceFromAuthorization(Authorization auth)
+            {
+                switch (auth)
+                {
+                    case Authorization.Allowed:
+                        return "/BogheApp;component/embedded/16/dialog-accept_16.png";
+                    case Authorization.Blocked:
+                    case Authorization.PoliteBlocked:
+                        return "/BogheApp;component/embedded/16/dialog-block_16.png";
+                    case Authorization.Revoked:
+                        return "/BogheApp;component/embedded/16/dialog-close-2_16.png";
+                    case Authorization.All:
+                        return "/BogheApp;component/embedded/16/family_16.png";
+                    default:
+                        return "/BogheApp;component/embedded/16/dialog-question-2_16.png";
+                }
+            }
+
         }
 
         #endregion

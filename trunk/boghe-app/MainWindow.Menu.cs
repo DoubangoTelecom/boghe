@@ -27,6 +27,7 @@ using System.Windows.Controls;
 using BogheApp.Services.Impl;
 using BogheApp.Screens;
 using BogheCore.Model;
+using System.Windows.Media;
 
 namespace BogheApp
 {
@@ -47,6 +48,11 @@ namespace BogheApp
             else if (menuItem == this.MenuItemFile_SignOut)
             {
                 this.sipService.UnRegister();
+            }
+            else if (menuItem == this.MenuItemFile_Registrations)
+            {
+                this.screenService.ScreenRegistrations.Registrations = this.registrations;
+                this.screenService.Show(ScreenType.Registrations);
             }
             else if (menuItem == this.MenuItemFile_Exit)
             {
@@ -72,7 +78,7 @@ namespace BogheApp
             }
             else if (menuItem == this.MenuItemEAB_AddContact)
             {
-                ScreenContactEdit screenEditContact = new ScreenContactEdit(null);
+                ScreenContactEdit screenEditContact = new ScreenContactEdit(null, null);
                 this.screenService.Show(screenEditContact);
             }
             else if (menuItem == this.MenuItemEAB_EditContact)
@@ -94,6 +100,8 @@ namespace BogheApp
             }
             else if (menuItem == this.MenuItemEAB_Authorizations)
             {
+                this.screenService.ScreenWatchers.Watchers = this.watchers;
+                this.screenService.Show(ScreenType.Authorizations);
             }
         }
 
@@ -108,6 +116,22 @@ namespace BogheApp
 
             if (menuItem == this.MenuItemHistory_ShowHistory)
             {
+                this.screenService.ScreenHistory.Select(HistoryEvent.StatusType.All, BogheCore.MediaType.All);
+                this.screenService.Show(ScreenType.History);
+            }
+            else if (menuItem == this.MenuItemHistory_ShowCalls)
+            {
+                this.screenService.ScreenHistory.Select(HistoryEvent.StatusType.All, BogheCore.MediaType.AudioVideo);
+                this.screenService.Show(ScreenType.History);
+            }
+            else if (menuItem == this.MenuItemHistory_ShowFileTransfers)
+            {
+                this.screenService.ScreenHistory.Select(HistoryEvent.StatusType.All, BogheCore.MediaType.FileTransfer);
+                this.screenService.Show(ScreenType.History);
+            }
+            else if (menuItem == this.MenuItemHistory_ShowMessages)
+            {
+                this.screenService.ScreenHistory.Select(HistoryEvent.StatusType.All, BogheCore.MediaType.Messaging);
                 this.screenService.Show(ScreenType.History);
             }
             else if (menuItem == this.MenuItemHistory_Clear)
@@ -128,7 +152,14 @@ namespace BogheApp
 
             if (menuItem == this.MenuItemTools_Options)
             {
-                Win32ServiceManager.SharedManager.Win32ScreenService.Show(ScreenType.Options);
+                this.screenService.ScreenOptions.onAvatarChanded += (_sender, _e) =>
+                {
+                    if (System.IO.File.Exists(_e.Value))
+                    {
+                        this.imageAvatar.Source = new ImageSourceConverter().ConvertFromInvariantString(_e.Value) as ImageSource;
+                    }
+                };
+                this.screenService.Show(ScreenType.Options);
             }
         }
 

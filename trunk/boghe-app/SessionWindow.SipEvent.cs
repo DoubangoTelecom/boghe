@@ -15,6 +15,7 @@ namespace BogheApp
         {
             if (this.AVSession == null || this.AVSession.Id != e.SessionId)
             {
+                /* Messaging */
                 if (e.Type == InviteEventTypes.DISCONNECTED)
                 {
                     if (this.historyDataSource.Any(x => x.SipSessionId == e.SessionId))
@@ -31,6 +32,8 @@ namespace BogheApp
                 }
                 return;
             }
+
+            /* Audio/Video */
 
             if (this.Dispatcher.Thread != Thread.CurrentThread)
             {
@@ -81,9 +84,7 @@ namespace BogheApp
 
                     this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
                     this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
-
-                    //this.startTime = DateTime.Now;
-                    //this.endTime = this.startTime;
+                    
                     this.timerCall.Start();
                     if (this.avHistoryEvent != null)
                     {
