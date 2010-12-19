@@ -37,6 +37,7 @@ using System.ComponentModel;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
 using BogheApp.Screens;
+using BogheControls.Utils;
 
 namespace BogheApp.Items
 {
@@ -68,7 +69,10 @@ namespace BogheApp.Items
             String uriString = String.IsNullOrEmpty(this.contactValue.UriString) ? "sip:(null)@(null)" : this.contactValue.UriString;
 
             this.labelDisplayName.Content = String.IsNullOrEmpty(this.contactValue.DisplayName) ? uriString : this.contactValue.DisplayName;
-            this.labelUriString.Content = String.IsNullOrEmpty(this.contactValue.UriString) ? uriString : this.contactValue.UriString;
+            this.labelFreeText.Content = String.IsNullOrEmpty(this.contactValue.FreeText) ? uriString : this.contactValue.FreeText;
+            this.imageStatus.Source = ItemContact.GetPresenceIcon(this.contactValue);
+
+            this.Width = Double.NaN;
         }
 
         private void ctxMenu_Edit_Click(object sender, RoutedEventArgs e)
@@ -77,7 +81,7 @@ namespace BogheApp.Items
             {
                 return;
             }
-            ScreenContactEdit screenContactEdit = new ScreenContactEdit(this.contactValue);
+            ScreenContactEdit screenContactEdit = new ScreenContactEdit(this.contactValue, null);
             Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenContactEdit);
         }
 
@@ -121,7 +125,7 @@ namespace BogheApp.Items
                 return;
             }
 
-            SessionWindow.MakeAudioCall(this.contactValue.UriString);
+            MediaActionHanler.MakeAudioCall(this.contactValue.UriString);
         }
 
         private void ctxMenu_Visio_Click(object sender, RoutedEventArgs e)
@@ -131,7 +135,7 @@ namespace BogheApp.Items
                 return;
             }
 
-            SessionWindow.MakeVideoCall(this.contactValue.UriString);
+            MediaActionHanler.MakeVideoCall(this.contactValue.UriString);
         }
 
         private void ctxMenu_SendFile_Click(object sender, RoutedEventArgs e)
@@ -141,7 +145,7 @@ namespace BogheApp.Items
                 return;
             }
 
-            MessagingWindow.SendFile(this.contactValue.UriString, null);
+            MediaActionHanler.SendFile(this.contactValue.UriString, null);
         }
 
         private void ctxMenu_Chat_Click(object sender, RoutedEventArgs e)
@@ -151,7 +155,7 @@ namespace BogheApp.Items
                 return;
             }
 
-            MessagingWindow.StartChat(this.contactValue.UriString);
+            MediaActionHanler.StartChat(this.contactValue.UriString);
         }
 
         private void ctxMenu_SMS_Click(object sender, RoutedEventArgs e)
@@ -161,7 +165,7 @@ namespace BogheApp.Items
                 return;
             }
 
-            MessagingWindow.SendSMS(this.contactValue.UriString);
+            MediaActionHanler.SendSMS(this.contactValue.UriString);
         }
 
         private void ctxMenu_Conference_Click(object sender, RoutedEventArgs e)
@@ -170,6 +174,32 @@ namespace BogheApp.Items
             {
                 return;
             }
-        }             
+        }
+
+        private static ImageSource GetPresenceIcon(Contact contact)
+        {
+            switch (contact.PresenceStatus)
+            {
+                case BogheCore.PresenceStatus.Away:
+                    return MyImageConverter.FromBitmap(Properties.Resources.user_time_16);
+
+                case BogheCore.PresenceStatus.BeRightBack:
+                    return MyImageConverter.FromBitmap(Properties.Resources.user_back16);
+
+                case BogheCore.PresenceStatus.Busy:
+                    return MyImageConverter.FromBitmap(Properties.Resources.user_busy_16);
+
+                case BogheCore.PresenceStatus.Online:
+                    return MyImageConverter.FromBitmap(Properties.Resources.user_16);
+
+                case BogheCore.PresenceStatus.OnThePhone:
+                    return MyImageConverter.FromBitmap(Properties.Resources.user_onthephone_16);
+
+                case BogheCore.PresenceStatus.OutToLunch:
+                case BogheCore.PresenceStatus.Offline:
+                default:
+                    return MyImageConverter.FromBitmap(Properties.Resources.user_offline_16);
+            }
+        }
     }
 }

@@ -65,6 +65,7 @@ namespace BogheApp
         private readonly ISipService sipService;
         private readonly IHistoryService historyService;
         private readonly ISoundService soundService;
+        private readonly IConfigurationService configurationService;
 
         private readonly Timer timerCall;
 
@@ -105,6 +106,7 @@ namespace BogheApp
             this.sipService = Win32ServiceManager.SharedManager.SipService;
             this.historyService = Win32ServiceManager.SharedManager.HistoryService;
             this.soundService = Win32ServiceManager.SharedManager.SoundService;
+            this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
 
             // Messaging
             this.historyDataSource = new MyObservableCollection<HistoryEvent>();
@@ -178,97 +180,122 @@ namespace BogheApp
             }
         }
 
-        public static void MakeAudioCall(String remoteUri)
+        public bool CanMakeAudioVideoCall(String remoteUri)
         {
-            SessionWindow window = null;
-
-            lock (SessionWindow.windows)
+            if (String.Equals(this.remotePartyUri, remoteUri))
             {
-                window = SessionWindow.windows.FirstOrDefault((x) =>
-                    x.AVSession == null && String.Equals(x.remotePartyUri, remoteUri)
-                    );
+                return (this.AVSession == null);
             }
-
-            if (window == null)
-            {
-                window = new SessionWindow(remoteUri);
-            }
-            window.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.Audio);
-            window.Show();
-            window.AVSession.MakeCall(remoteUri);
-
-            window.InitializeView();
+            return false;
         }
 
-        public static void MakeVideoCall(String remoteUri)
+        public bool CanStartChat(String remoteUri)
         {
-            SessionWindow window = null;
-
-            lock (SessionWindow.windows)
+            if (String.Equals(this.remotePartyUri, remoteUri))
             {
-                window = SessionWindow.windows.FirstOrDefault((x) =>
-                    x.AVSession == null && String.Equals(x.remotePartyUri, remoteUri)
-                    );
+                return (this.ChatSession == null);
             }
-
-            if (window == null)
-            {
-                window = new SessionWindow(remoteUri);
-            }
-            
-            window.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.AudioVideo);
-            window.Show();
-            window.AVSession.MakeCall(remoteUri);
-
-            window.InitializeView();
+            return false;
         }
 
-        public static void StartChat(String remoteUri)
+        public bool CanReceiveCall(MyInviteSession session)
         {
-            SessionWindow window = new SessionWindow(remoteUri);
-            window.Show();
-            window.InitializeView();
+            if (String.Equals(this.remotePartyUri, session.RemotePartyUri))
+            {
+                if (session is MyMsrpSession)
+                {
+                    if (session.MediaType == MediaType.Chat)
+                    {
+                        return (this.ChatSession == null);
+                    }
+                    else
+                    {
+                        // Can always receive file transfer session as long as it's from the same remote uri
+                        return true;
+                    }
+                }
+                else if (session is MyAVSession)
+                {
+                    return (this.AVSession == null);
+                }
+            }
+            return false;
         }
 
-        public static void ReceiveCall(MyInviteSession session)
+        public bool CanReceiveFile(String remoteUri)
         {
-            SessionWindow window = null;
+            return String.Equals(this.remotePartyUri, remoteUri);
+        }
+
+        public bool CanSendFile(String remoteUri)
+        {
+            return String.Equals(this.remotePartyUri, remoteUri);
+        }
+
+        public void MakeAudioCall(String remoteUri)
+        {
+            System.Diagnostics.Debug.Assert(this.AVSession == null);
+
+            this.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.Audio);
+            this.Show();
+            this.AVSession.MakeCall(remoteUri);
+
+            this.InitializeView();
+        }
+
+        public void MakeVideoCall(String remoteUri)
+        {
+            System.Diagnostics.Debug.Assert(this.AVSession == null);
+
+            this.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.AudioVideo);
+            this.Show();
+            this.AVSession.MakeCall(remoteUri);
+
+            this.InitializeView();
+        }
+
+        public void StartChat(String remoteUri)
+        {
+            System.Diagnostics.Debug.Assert(this.ChatSession == null);
+
+            this.Show();
+            this.InitializeView();
+        }
+
+        public void ReceiveCall(MyInviteSession session)
+        {
             bool isAV = (session is MyAVSession);
-
-            lock (SessionWindow.windows)
-            {
-                window = SessionWindow.windows.FirstOrDefault((x) =>
-                    ((isAV && x.AVSession == null) || (x.ChatSession == null)) && String.Equals(x.remotePartyUri, session.RemotePartyUri)
-                    );
-            }
-
-            if (window == null)
-            {
-                window = new SessionWindow(session.RemotePartyUri);
-            }
 
             if(isAV)
             {
-                window.AVSession = session as MyAVSession;
-                window.avHistoryEvent = new HistoryAVCallEvent(((window.avSession.MediaType & MediaType.Video) == MediaType.Video), window.avSession.RemotePartyUri);
-                window.avHistoryEvent.SipSessionId = session.Id;
-                window.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
+                System.Diagnostics.Debug.Assert(this.AVSession == null);
+
+                this.AVSession = session as MyAVSession;
+                this.avHistoryEvent = new HistoryAVCallEvent(((session.MediaType & MediaType.Video) == MediaType.Video), session.RemotePartyUri);
+                this.avHistoryEvent.SipSessionId = session.Id;
+                this.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
+                
             }
             else if (session is MyMsrpSession)
             {
                 MyMsrpSession msrpSession = session as MyMsrpSession;
+                msrpSession.SuccessReport = this.MsrpSuccessReport;
+                msrpSession.FailureReport = this.MsrpFailureReport;
+                msrpSession.OmaFinalDeliveryReport = this.MsrpOmaFinalDeliveryReport;
 
                 if (session.MediaType == MediaType.Chat)
                 {
-                    window.ChatSession = msrpSession;
+                    System.Diagnostics.Debug.Assert(this.ChatSession == null);
+
+                     this.ChatSession = msrpSession;
                 }
                 else if (session.MediaType == MediaType.FileTransfer)
                 {
-                    HistoryFileTransferEvent @event = new HistoryFileTransferEvent(window.remotePartyUri, msrpSession.FilePath);
+                    HistoryFileTransferEvent @event = new HistoryFileTransferEvent(this.remotePartyUri, msrpSession.FilePath);
                     @event.Status = HistoryEvent.StatusType.Incoming;
                     @event.SipSessionId = session.Id;
                     @event.MsrpSession = msrpSession;
-                    window.AddMessagingEvent(@event);
+                    this.AddMessagingEvent(@event);
                 }
                 else
                 {
@@ -280,17 +307,43 @@ namespace BogheApp
                 throw new Exception("Unsupported session Type");
             }
             
-            window.InitializeView();
-            window.Show();
+            this.InitializeView();
+            this.Show();
 
 
             if (isAV)
             {
-                if (((window.AVSession.MediaType & MediaType.Video) == MediaType.Video))
+                if (((session.MediaType & MediaType.Video) == MediaType.Video))
                 {
-                    window.AttachDisplays();
+                    this.AttachDisplays();
                 }
-                window.soundService.PlayRingTone();
+                this.soundService.PlayRingTone();
+            }
+            else if (session.MediaType == MediaType.Chat && this.ChatSession != null)
+            {
+                this.ChatSession.Accept();
+            }
+        }
+
+        public void SendFile(String remoteUri, String filePath)
+        {
+            if (String.IsNullOrEmpty(filePath))
+            {
+                Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+                fileDialog.Multiselect = false;
+                Nullable<bool> result = fileDialog.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    filePath = fileDialog.FileName;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(filePath))
+            {
+                this.Show();
+
+                this.InitializeView();
+                this.SendFile(filePath);
             }
         }
 
@@ -342,7 +395,7 @@ namespace BogheApp
         {
             if (this.ChatSession == null)
             {
-                this.ChatSession = MyMsrpSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.Chat, this.remotePartyUri);
+                this.ChatSession = this.CreateOutgoingSession(MediaType.Chat);
             }
             HistoryShortMessageEvent @event = new HistoryShortMessageEvent(this.remotePartyUri);
             @event.Status = HistoryEvent.StatusType.Outgoing;
@@ -356,13 +409,24 @@ namespace BogheApp
 
         private void SessionWindowName_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.AVSession != null && this.AVSession.State != MyInviteSession.InviteState.TERMINATING && this.AVSession.State != MyInviteSession.InviteState.TERMINATED)
+            if (this.AVSession != null && this.AVSession.IsActive)
             {
                 this.AVSession.HangUpCall();
             }
-            if (this.ChatSession != null && this.ChatSession.State != MyInviteSession.InviteState.TERMINATING && this.ChatSession.State != MyInviteSession.InviteState.TERMINATED)
+            if (this.ChatSession != null && this.ChatSession.IsActive)
             {
                 this.ChatSession.HangUp();
+            }
+
+            lock (this.fileTransferSessions)
+            {
+                this.fileTransferSessions.ForEach((x) =>
+                {
+                    if (x != null && x.IsActive)
+                    {
+                        x.HangUp();
+                    }
+                });
             }
         }
 

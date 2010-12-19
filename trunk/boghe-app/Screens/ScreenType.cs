@@ -34,6 +34,8 @@ namespace BogheApp.Screens
         Contacts = 0x000001 << 3,
         ContactEdit = 0x000001 << 4,
         GroupEdit = 0x000001 << 5,
-        Options = 0x000001 << 6
+        Options = 0x000001 << 6,
+        Registrations = 0x000001 << 7,
+        Authorizations = 0x000001 << 8
     }
 }

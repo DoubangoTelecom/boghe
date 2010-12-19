@@ -39,7 +39,7 @@
                         <Image Source="/BogheApp;component/embedded/16/image_gallery_16.png" Stretch="None" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Share Video" Name="MenuItemCall_ShareVideo" Click="MenuItemCall_ShareVideo_Click">
+                <MenuItem Header="Share Video" Name="MenuItemCall_ShareVideo" Click="MenuItemCall_ShareVideo_Click" IsEnabled="False">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/image_gallery_16.png" Stretch="None" />
                     </MenuItem.Icon>

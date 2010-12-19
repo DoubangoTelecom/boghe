@@ -23,11 +23,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BogheCore.Model;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        List<Privacy> privacies;
+        ICollectionView privaciesView;
+
+        private void Initializeidentity()
+        {
+            privacies = new List<Privacy>(new Privacy[]
+            {
+                new Privacy("none"),
+                new Privacy("header"),
+                new Privacy("session"),
+                new Privacy("user"),
+                new Privacy("critical"),
+                new Privacy("id"),
+            });
+
+            this.listBoxPrivacy.ItemsSource = this.privacies;
+            this.privaciesView = CollectionViewSource.GetDefaultView(this.listBoxPrivacy.ItemsSource);
+        }
+
         private void LoadIdentity()
         {
             this.textBoxDisplayName.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
@@ -39,6 +60,10 @@ namespace BogheApp.Screens
 
             this.textBoxAMF.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_AMF, Configuration.DEFAULT_IMSAKA_AMF);
             this.textBoxOperatorId.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_OPID, Configuration.DEFAULT_IMSAKA_OPID);
+            
+            String privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_PRIVACY);
+            String[] privaciesList = privacy.Split(";".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            this.privacies.ForEach(x => x.IsEnabled = privaciesList.Contains(x.Name));
         }
 
         private bool UpdateIdentity()
@@ -53,7 +78,59 @@ namespace BogheApp.Screens
             this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_AMF, this.textBoxAMF.Text);
             this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_OPID, this.textBoxOperatorId.Text);
 
+            String privacy = String.Empty;
+            this.privacies.ForEach(x => privacy = x.IsEnabled ? (privacy == String.Empty ? x.Name : String.Format("{0};{1}", privacy, x.Name)) : privacy);
+            if (String.IsNullOrEmpty(privacy))
+            {
+                privacy = Configuration.DEFAULT_PRIVACY;
+            }
+            this.configurationService.Set(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, privacy);
+
             return true;
+        }
+
+
+        private void CheckBoxPrivacy_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            System.Windows.Controls.CheckBox checkbox = e.OriginalSource as System.Windows.Controls.CheckBox;
+            if (checkbox != null)
+            {
+                if (checkbox.IsChecked.Value)
+                {
+                    if (checkbox.Tag.ToString().Equals("none"))
+                    {
+                        this.privacies.ForEach(x => x.IsEnabled = x.Name.Equals("none"));
+                    }
+                    else
+                    {
+                        this.privacies.Find(x => x.Name.Equals("none")).IsEnabled = false;
+                    }
+
+                    this.privaciesView.Refresh();
+                }
+            }
+        }
+
+        class Privacy
+        {
+            readonly String name;
+            bool enabled;
+
+            internal Privacy(String name)
+            {
+                this.name = name;
+            }
+
+            public String Name
+            {
+                get { return this.name; }
+            }
+
+            public bool IsEnabled
+            {
+                get { return this.enabled; }
+                set { this.enabled = value; }
+            }
         }
     }
 }

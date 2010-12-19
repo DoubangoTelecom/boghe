@@ -72,6 +72,7 @@ namespace BogheApp
 
             this.remotePartyUri = remotePartyUri;
             this.Title = String.Empty;
+            this.messagingType = MediaType.None;
             this.fileTransferSessions = new List<MyMsrpSession>();
 
             // Services
@@ -100,6 +101,11 @@ namespace BogheApp
             }
         }
 
+        public static List<MessagingWindow> Windows
+        {
+            get { return MessagingWindow.windows; }
+
+        }
         private bool UseBinarySMS
         {
             get
@@ -141,51 +147,120 @@ namespace BogheApp
             }
         }
 
-        public static void SendSMS(String remoteUri)
+        private MyMsrpSession ChatSession
         {
-            MessagingWindow window = new MessagingWindow(remoteUri);
-            window.MessagingType = MediaType.SMS;
-            window.Show();
-
-            window.InitializeView();
+            get { return this.chatSession; }
+            set
+            {
+                if (this.chatSession != null)
+                {
+                    this.chatSession.onMsrpEvent -= this.ChatSession_onMsrpEvent;
+                    if (this.chatHistoryEvent != null)
+                    {
+                        this.historyService.AddEvent(this.chatHistoryEvent);
+                    }
+                }
+                if ((this.chatSession = value) != null)
+                {
+                    this.chatSession.onMsrpEvent += this.ChatSession_onMsrpEvent;
+                    this.chatHistoryEvent = new HistoryChatEvent(this.remotePartyUri);
+                    this.chatHistoryEvent.SipSessionId = value.Id;
+                }
+            }
         }
 
-        public static void ReceiveShortMessage(String remoteUri, byte[] payload, String contentType)
+        public bool CanSendSMS(String remoteUri)
         {
-            MessagingWindow window = null;
-
-            lock (MessagingWindow.windows)
+            if(String.Equals(this.remotePartyUri, remoteUri))
             {
-                window = MessagingWindow.windows.FirstOrDefault((x) =>
-                    /*(x.MessagingType == MediaType.ShortMessage || x.MessagingType == MediaType.SMS) &&*/ String.Equals(x.remotePartyUri, remoteUri)
-                    );
+                return this.MessagingType == MediaType.SMS;
             }
+            return false;
+        }
 
-            if (window == null)
+        public bool CanSendShortMessage(String remoteUri)
+        {
+            if (String.Equals(this.remotePartyUri, remoteUri))
             {
-                window = new MessagingWindow(remoteUri);
-                window.MessagingType = MediaType.SMS;
-                window.InitializeView();
+                return this.MessagingType == MediaType.ShortMessage;
+            }
+            return false;
+        }
+
+        public bool CanSendFile(String remoteUri)
+        {
+            return String.Equals(this.remotePartyUri, remoteUri);
+        }
+
+        public bool CanReceiveShortMessage(String remoteUri)
+        {
+            if (String.Equals(this.remotePartyUri, remoteUri))
+            {
+                return (this.MessagingType == MediaType.ShortMessage || this.MessagingType == MediaType.SMS);
+            }
+            return false;
+        }
+
+        public bool CanStartChat(String remoteUri)
+        {
+            if (String.Equals(this.remotePartyUri, remoteUri))
+            {
+                if (this.MessagingType == MediaType.Chat)
+                {
+                    return (this.ChatSession == null);
+                }
+            }
+            return false;
+        }
+
+        public void SendSMS(String remoteUri)
+        {
+            System.Diagnostics.Debug.Assert(this.messagingType == MediaType.None 
+            || this.MessagingType == MediaType.SMS || this.MessagingType == MediaType.ShortMessage);
+
+            if (this.messagingType == MediaType.None)
+            {
+                this.MessagingType = MediaType.SMS;
+            }
+            this.Show();
+
+            this.InitializeView();
+        }
+
+        public void ReceiveShortMessage(String remoteUri, byte[] payload, String contentType)
+        {
+            System.Diagnostics.Debug.Assert(this.messagingType == MediaType.None
+            || this.MessagingType == MediaType.SMS || this.MessagingType == MediaType.ShortMessage);
+
+            if (this.MessagingType == MediaType.None)
+            {
+                this.MessagingType = MediaType.SMS;
             }
                         
-            window.Show();
+            this.Show();
 
             HistoryShortMessageEvent @event = new HistoryShortMessageEvent(remoteUri);
             @event.Status = HistoryEvent.StatusType.Incoming;
             @event.Content = Encoding.UTF8.GetString(payload);
-            window.AddMessagingEvent(@event);
+            this.AddMessagingEvent(@event);
         }
 
-        public static void StartChat(String remoteUri)
+        public void StartChat(String remoteUri)
         {
-            MessagingWindow window = new MessagingWindow(remoteUri);
-            window.MessagingType = MediaType.Chat;
-            window.Show();
+            System.Diagnostics.Debug.Assert(this.MessagingType == MediaType.None
+            || this.MessagingType == MediaType.Chat);
 
-            window.InitializeView();
+
+            if (this.MessagingType == MediaType.None)
+            {
+                this.MessagingType = MediaType.Chat;
+            }
+            
+            this.Show();
+            this.InitializeView();
         }
 
-        public static void SendFile(String remoteUri, String filePath)
+        public void SendFile(String remoteUri, String filePath)
         {
             if (String.IsNullOrEmpty(filePath))
             {
@@ -200,12 +275,14 @@ namespace BogheApp
 
             if (!String.IsNullOrEmpty(filePath))
             {
-                MessagingWindow window = new MessagingWindow(remoteUri);
-                window.MessagingType = MediaType.Chat;
-                window.Show();
+                if (this.MessagingType == MediaType.None)
+                {
+                    this.MessagingType = MediaType.Chat;
+                }
+                this.Show();
 
-                window.InitializeView();
-                window.SendFile(filePath);
+                this.InitializeView();
+                this.SendFile(filePath);
             }
         }
 
@@ -223,7 +300,16 @@ namespace BogheApp
             switch (this.messagingType)
             {
                 case MediaType.Chat:
-                    break;
+                    {
+                        if (this.ChatSession == null)
+                        {
+                            this.ChatSession = this.CreateOutgoingSession(MediaType.Chat);
+                        }
+                        @event.SipSessionId = this.ChatSession.Id;
+                        this.ChatSession.SendMessage(this.textBoxInput.Text, ContentType.TEXT_PLAIN);
+                        this.textBoxInput.Text = String.Empty;
+                        break;
+                    }
 
                 case MediaType.ShortMessage:
                 case MediaType.SMS:
@@ -249,17 +335,25 @@ namespace BogheApp
 
         private void MenuItemCall_MakeAudioCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeAudioCall(this.remotePartyUri);
+            MediaActionHanler.MakeAudioCall(this.remotePartyUri);
         }
 
         private void MenuItemCall_MakeVideoCall_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow.MakeVideoCall(this.remotePartyUri);
+            MediaActionHanler.MakeVideoCall(this.remotePartyUri);
         }
 
         private void MenuItemCall_ShareImage_Click(object sender, RoutedEventArgs e)
         {
-
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                Multiselect = false,
+                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG" // From IR.79
+            };
+            if (fileDialog.ShowDialog() == true)
+            {
+                this.SendFile(fileDialog.FileName);
+            }
         }
 
         private void MenuItemCall_ShareVideo_Click(object sender, RoutedEventArgs e)
@@ -269,10 +363,11 @@ namespace BogheApp
 
         private void buttonSendFile_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-            fileDialog.Multiselect = false;
-            Nullable<bool> result = fileDialog.ShowDialog(this);
-            if (result.HasValue && result.Value)
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                Multiselect = false
+            };
+            if (fileDialog.ShowDialog() == true)
             {
                 this.SendFile(fileDialog.FileName);
             }
@@ -284,11 +379,16 @@ namespace BogheApp
             {
                 this.fileTransferSessions.ForEach((x) =>
                     {
-                        if (x != null && x.State != MyInviteSession.InviteState.TERMINATING && x.State != MyInviteSession.InviteState.TERMINATED)
+                        if (x != null && x.IsActive)
                         {
                             x.HangUp();
                         }
                     });
+            }
+
+            if (this.ChatSession != null && this.ChatSession.IsActive)
+            {
+                this.ChatSession.HangUp();
             }
         }
 

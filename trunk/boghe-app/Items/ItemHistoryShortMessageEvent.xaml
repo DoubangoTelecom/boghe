@@ -35,7 +35,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Add To contacts" Name="ctxMenu_AddToContacts" Click="ctxMenu_AddToContacts_Click">
+                <MenuItem Header="Add To contacts" Name="ctxMenu_AddToContacts" Click="ctxMenu_AddToContacts_Click" IsEnabled="False">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/user_add_16.png" />
                     </MenuItem.Icon>

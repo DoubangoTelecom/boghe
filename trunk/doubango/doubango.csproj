@@ -63,6 +63,12 @@
     <Compile Include="..\..\Doubango\bindings\csharp\InviteSession.cs">
       <Link>InviteSession.cs</Link>
     </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\MediaContent.cs">
+      <Link>MediaContent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\MediaContentCPIM.cs">
+      <Link>MediaContentCPIM.cs</Link>
+    </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\MediaSessionMgr.cs">
       <Link>MediaSessionMgr.cs</Link>
     </Compile>

@@ -6,6 +6,31 @@
      BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="SkyBlue" Height="41" Padding="0,0,0,4">
     
     <Grid x:Name="Grid">
+
+        <Grid.ContextMenu>
+            <ContextMenu Name="ctxMenu" Background="White" BorderBrush="SkyBlue">
+                <MenuItem Name="ctxMenu_AddContact" Header="Add Contact" Click="ctxMenu_AddContact_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_add_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="ctxMenu_EditGroup" Header="Edit Group" Click="ctxMenu_EditGroup_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/users4_edit_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="ctxMenu_DeleteGroup" Header="Delete Group" Click="ctxMenu_DeleteGroup_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/users4_delete_16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                
+            </ContextMenu>
+        </Grid.ContextMenu>
+        
+        
+        
         <Grid.Background>
             <LinearGradientBrush x:Name="GridGradien">
                 <GradientStop x:Name="GridGradienStop" Color="Green" Offset="1.5"/>

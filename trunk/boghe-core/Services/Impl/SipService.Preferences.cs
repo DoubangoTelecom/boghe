@@ -30,8 +30,7 @@ namespace BogheCore.Services.Impl
         internal class Preferences
         {
             public bool xcap_enabled;
-            //private boolean preslist;
-            //private boolean deferredMsg;
+            public bool presence_rls;
             public bool presence_pub;
             public bool presence_sub;
             public bool mwi;
@@ -42,7 +41,7 @@ namespace BogheCore.Services.Impl
             public int pcscf_port;
             public String transport;
             public String ipversion;
-            //public String localIP;
+            public bool ipsec_secagree;
         }
     }
 }

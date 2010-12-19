@@ -7,7 +7,7 @@
      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="510" Width="367" Loaded="BaseScreen_Loaded">
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,32,0,44" >
+        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,32,0,44" HorizontalContentAlignment="Stretch" BorderBrush="SkyBlue">
             <ListBox.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -41,7 +41,7 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Rectangle Fill="{Binding Path=Color}" Width="18" Height="18" Margin="2" />
+                        <Image Margin="0,0,2,0" Source="{Binding Path=ImageSource}" Width="16" Height="16" />
                         <TextBlock Text = "{Binding Path=DisplayName}"/>
                     </StackPanel>
                 </DataTemplate>

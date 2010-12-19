@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheCore;
 
 namespace BogheApp
 {
@@ -9,18 +10,25 @@ namespace BogheApp
     {
         public class Status
         {
-            string text;
-            string imageSource;
+            readonly string text;
+            readonly PresenceStatus value;
+            readonly string imageSource;
 
-            public Status(string text, String imageSource)
+            public Status(string text, PresenceStatus value, String imageSource)
             {
                 this.text = text;
+                this.value = value;
                 this.imageSource = imageSource;
             }
 
             public String Text
             {
                 get { return this.text; }
+            }
+
+            public PresenceStatus Value
+            {
+                get { return this.value; }
             }
 
             public String ImageSource

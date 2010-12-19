@@ -111,18 +111,34 @@ namespace BogheApp
                         if (data != null)
                         {
                             String contentType = (e.GetExtra(MsrpEventArgs.EXTRA_CONTENT_TYPE) as String);
+                            
                             if (contentType != null)
                             {
                                 contentType = contentType.Split(";".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
-                                if (!contentType.Equals(ContentType.TEXT_PLAIN, StringComparison.InvariantCultureIgnoreCase))
+                                if (contentType.Equals(ContentType.CPIM, StringComparison.InvariantCultureIgnoreCase))
                                 {
-                                    LOG.Warn(String.Format("{0} not supported as content type", contentType));
-                                    return;
+                                    Object wrappedContentType = e.GetExtra(MsrpEventArgs.EXTRA_WRAPPED_CONTENT_TYPE);
+                                    contentType = wrappedContentType == null ? "UnknowWrappedType" : wrappedContentType as String;
                                 }
                             }
+
+                            if (ContentType.IS_COMPOSING.Equals(contentType, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                LOG.Warn("Ignore is-composing content");
+                                return;
+                            }
+
                             HistoryShortMessageEvent @event = new HistoryShortMessageEvent(this.remotePartyUri);
                             @event.Status = HistoryEvent.StatusType.Incoming;
-                            @event.Content = Encoding.UTF8.GetString(data);
+                            if (contentType.Equals(ContentType.TEXT_PLAIN, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                @event.Content = Encoding.UTF8.GetString(data);
+                            }
+                            else
+                            {
+                                @event.Content = String.Format("{0} not supported as content type", contentType);
+                                LOG.Warn(@event.Content);
+                            }
                             this.AddMessagingEvent(@event);
                         }
                         break;

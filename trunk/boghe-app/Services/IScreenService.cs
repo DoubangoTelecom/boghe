@@ -37,6 +37,9 @@ namespace BogheApp.Services
         ScreenAbout ScreenAbout { get; }
         ScreenAuthentication ScreenAuthentication { get; }
         ScreenOptions ScreenOptions { get; }
+        ScreenRegistrations ScreenRegistrations { get; }
+        ScreenWatchers ScreenWatchers { get; }
+        ScreenHistory ScreenHistory { get; }
 
         void Show(BaseScreen baseScreen, int insertIndex);
         void Show(BaseScreen baseScreen);
@@ -44,5 +47,6 @@ namespace BogheApp.Services
         void Show(ScreenType type);
         void Hide(ScreenType type);
         void Hide(BaseScreen baseScreen);
+        void HideAllExcept(ScreenType type);
     }
 }

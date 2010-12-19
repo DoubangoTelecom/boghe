@@ -47,13 +47,10 @@ namespace BogheCore.Services.Impl
         {
             this.manager = manager;
 
+            this.xmlSerializer = new XmlSerializer(typeof(MyObservableCollection<XmlSection>));
+
             this.deferredSaveTimer = new Timer(2500);
             this.deferredSaveTimer.AutoReset = false;
-            this.deferredSaveTimer.Elapsed += delegate
-            {
-                this.ImmediateSave();
-            };
-            this.xmlSerializer = new XmlSerializer(typeof(MyObservableCollection<XmlSection>));
         }
 
         #region IService
@@ -90,6 +87,11 @@ namespace BogheCore.Services.Impl
                         File.Delete(XmlConfigurationService.FILE_NAME);
                     }
                 }
+
+                this.deferredSaveTimer.Elapsed += delegate
+                {
+                    this.ImmediateSave();
+                };
             }
             catch (Exception e)
             {

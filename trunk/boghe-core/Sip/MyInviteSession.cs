@@ -31,6 +31,7 @@ namespace BogheCore.Sip
         protected MediaType mediaType;
         protected MediaSessionMgr mediaSessionMgr = null;
         protected InviteState state;
+        
 
         public enum InviteState
         {
@@ -59,6 +60,15 @@ namespace BogheCore.Sip
         {
             get { return this.state; }
             set { this.state = value; }
+        }
+
+        public bool IsActive
+        {
+            get {
+                return this.State != MyInviteSession.InviteState.NONE
+                && this.State != MyInviteSession.InviteState.TERMINATING 
+                && this.State != MyInviteSession.InviteState.TERMINATED; 
+            }
         }
 
         public MediaSessionMgr MediaSessionMgr

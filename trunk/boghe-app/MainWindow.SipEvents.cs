@@ -8,6 +8,11 @@ using BogheApp.Screens;
 using BogheCore.Sip;
 using BogheApp.Services.Impl;
 using BogheControls.Utils;
+using BogheCore.Generated.regingo;
+using System.Xml.Serialization;
+using BogheCore.Model;
+using System.IO;
+using BogheXdm.Generated.watcherinfo;
 
 namespace BogheApp
 {
@@ -66,6 +71,7 @@ namespace BogheApp
                     // Menus
                     this.MenuItemFile_SignIn.IsEnabled = false;
                     this.MenuItemFile_SignOut.IsEnabled = true;
+                    this.MenuItemFile_Registrations.IsEnabled = true;
                     this.MenuItemEAB.IsEnabled = true;
                     this.MenuItemHistory.IsEnabled = true;
 
@@ -92,15 +98,22 @@ namespace BogheApp
                     this.screenService.SetProgressInfo("Signed Out");
 
                     // Screens
-                    this.screenService.Hide(ScreenType.Contacts);
-                    this.screenService.Hide(ScreenType.History);
-                    this.screenService.Show(ScreenType.Authentication, 0);
+                    //new Thread(delegate()
+                    //{
+                        this.screenService.HideAllExcept(ScreenType.Options | ScreenType.Authorizations);
+                        this.screenService.Show(ScreenType.Authentication, 0);
+                    //}).Start();
 
                     // Menus
                     this.MenuItemFile_SignIn.IsEnabled = true;
                     this.MenuItemFile_SignOut.IsEnabled = false;
+                    this.MenuItemFile_Registrations.IsEnabled = false;
                     this.MenuItemEAB.IsEnabled = false;
                     this.MenuItemHistory.IsEnabled = false;
+
+                    //...
+                    this.registrations.Clear();
+                    this.watchers.Clear();
 
                     // indicators
                     this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_red_24);
@@ -119,7 +132,7 @@ namespace BogheApp
                 case InviteEventTypes.INCOMING:
                     Win32ServiceManager.SharedManager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
                     {
-                        SessionWindow.ReceiveCall(e.GetExtra(InviteEventArgs.EXTRA_SESSION) as MyInviteSession);
+                        MediaActionHanler.ReceiveCall(e.GetExtra(InviteEventArgs.EXTRA_SESSION) as MyInviteSession);
                     }, null);
                     
                     break;
@@ -136,7 +149,7 @@ namespace BogheApp
                 case MessagingEventTypes.INCOMING:
                     Win32ServiceManager.SharedManager.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
                     {
-                        MessagingWindow.ReceiveShortMessage(e.GetExtra(MessagingEventArgs.EXTRA_REMOTE_PARTY) as String,
+                        MediaActionHanler.ReceiveShortMessage(e.GetExtra(MessagingEventArgs.EXTRA_REMOTE_PARTY) as String,
                             e.Payload, e.GetExtra(MessagingEventArgs.EXTRA_CONTENT_TYPE) as String);
                     }, null);
 
@@ -144,6 +157,173 @@ namespace BogheApp
 
                 default:
                     break;
+            }
+        }
+
+        private void sipService_onHyperAvailabilityTimedout(object sender, EventArgs e)
+        {
+            if (this.Dispatcher.Thread != Thread.CurrentThread)
+            {
+                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                        new EventHandler<EventArgs>(this.sipService_onHyperAvailabilityTimedout), sender, new object[] { e });
+                return;
+            }
+
+            this.comboBoxStatus.SelectedIndex = 0; // Online
+        }
+
+        private void sipService_onSubscriptionEvent(object sender, SubscriptionEventArgs e)
+        {
+            if (e.Type != SubscriptionEventTypes.INCOMING_NOTIFY 
+                || e.Content == null
+                || (e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.REG && e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO)
+                )
+            {
+                return;
+            }
+
+            switch (e.Type)
+            {
+                case SubscriptionEventTypes.INCOMING_NOTIFY:
+                    {
+                        new Thread(delegate()
+                        {
+                            this.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                                {
+                                    if (e.Package == MySubscriptionSession.EVENT_PACKAGE_TYPE.REG)
+                                    {
+                                        this.ParseRegInfo(e.Content);
+                                    }
+                                    else if (e.Package == MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO)
+                                    {
+                                        this.ParseWatcherInfo(e.Content);
+                                    }
+                                });
+                        })
+                        .Start();
+                        break;
+                    }
+            }
+        }
+
+        private void ParseRegInfo(byte[] Content)
+        {
+            try
+            {
+                reginfo info = null;
+                using (Stream stream = new MemoryStream(Content))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(reginfo));
+                    info = serializer.Deserialize(stream) as reginfo;
+                    if (info.registration != null)
+                    {
+                        if (String.Equals("full", info.state.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            this.registrations.Clear();
+                        }
+                        foreach (registration reg in info.registration)
+                        {
+                            if (reg.contact == null || reg.contact.Length == 0)
+                            {
+                                continue;
+                            }
+                            foreach (contact c in reg.contact)
+                            {
+                                RegistrationInfo registrationInfo = this.registrations.FirstOrDefault(x =>
+                                    String.Equals(x.Id, reg.id) && String.Equals(x.ContactId, c.id));
+                                bool isNew = (registrationInfo == null);
+                                if (isNew)
+                                {
+                                    registrationInfo = new RegistrationInfo();
+                                    registrationInfo.Id = reg.id;
+                                    registrationInfo.AoR = reg.aor;
+                                    registrationInfo.ContactId = c.id;
+                                    registrationInfo.ContactUriString = c.uri;
+                                }
+
+                                registrationInfo.RegistrationState = reg.state;
+                                registrationInfo.ContactDisplayName = (c.displayname == null) ? String.Empty : c.displayname.Value;
+                                registrationInfo.ContactEvent = c.@event;
+                                registrationInfo.ContactExpires = (Int32)((c.expiresSpecified) ? c.expires : 0);
+                                registrationInfo.ContactState = c.state;
+
+                                if (isNew)
+                                {
+                                    this.registrations.Add(registrationInfo);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Remove terminated registration
+                this.registrations.RemoveAll(x =>
+                    x.ContactState == contactState.terminated);
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex);
+            }
+        }
+
+        private void ParseWatcherInfo(byte[] Content)
+        {
+            try
+            {
+                watcherinfo winfo = null;
+                using (Stream stream = new MemoryStream(Content))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(watcherinfo));
+                    winfo = serializer.Deserialize(stream) as watcherinfo;
+                    if (winfo.watcherlist != null)
+                    {
+                        if (String.Equals("full", winfo.state.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            this.watchers.Clear();
+                        }
+
+                        foreach (watcherlist wlist in winfo.watcherlist)
+                        {
+                            if (wlist.watcher == null || wlist.watcher.Length == 0)
+                            {
+                                continue;
+                            }
+                            foreach (watcher w in wlist.watcher)
+                            {
+                                WatcherInfo watcherInfo = this.watchers.FirstOrDefault(x =>
+                                    String.Equals(x.Resource, wlist.resource) && String.Equals(x.WatcherId, w.id));
+                                bool isNew = (watcherInfo == null);
+                                if (isNew)
+                                {
+                                    watcherInfo = new WatcherInfo();
+                                    watcherInfo.Resource = wlist.resource;
+                                    watcherInfo.Package = wlist.package;
+                                    watcherInfo.WatcherId = w.id;
+                                    watcherInfo.WatcherUriString = w.Value;
+                                }
+
+                                watcherInfo.WatcherDisplayName = w.displayname;
+                                watcherInfo.WatcherDurationSubscribed = (int)((w.durationsubscribedSpecified) ? w.durationsubscribed : 0);
+                                watcherInfo.WatcherEvent = w.@event;
+                                watcherInfo.WatcherExpiration = (int)((w.expirationSpecified) ? w.expiration : 0);
+                                watcherInfo.WatcherStatus = w.status;
+
+                                if (isNew)
+                                {
+                                    this.watchers.Add(watcherInfo);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Remove terminated registration
+                this.watchers.RemoveAll(x =>
+                    x.WatcherStatus == watcherStatus.terminated);
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex);
             }
         }
     }

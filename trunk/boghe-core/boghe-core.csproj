@@ -61,12 +61,33 @@
     <Compile Include="Events\HistoryEventTypes.cs" />
     <Compile Include="Events\StateMonitorEventArgs.cs" />
     <Compile Include="Events\StateMonitorEventTypes.cs" />
+    <Compile Include="Events\StringEventArgs.cs" />
+    <Compile Include="Generated\data-model.cs" />
+    <Compile Include="Generated\data-model.Extra.cs">
+      <DependentUpon>data-model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\pidf-caps.cs" />
+    <Compile Include="Generated\pidf.cs" />
+    <Compile Include="Generated\pidf.Extra.cs">
+      <DependentUpon>pidf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\prs_pidf_omapres-v1_0.cs" />
+    <Compile Include="Generated\prs_pidf_omapres-v1_0.Extra.cs">
+      <DependentUpon>prs_pidf_omapres-v1_0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\reginfo.cs" />
+    <Compile Include="Generated\rpid.cs" />
     <Compile Include="Model\HistoryChatEvent.cs" />
     <Compile Include="Model\HistoryAVCallEvent.cs" />
     <Compile Include="Model\HistoryEvent.cs" />
     <Compile Include="Model\HistoryFileTransferEvent.cs" />
     <Compile Include="Model\HistoryShortMessageEvent.cs" />
+    <Compile Include="Model\RCSService.cs" />
+    <Compile Include="Model\RCSServiceDescription.cs" />
+    <Compile Include="Model\RegistrationInfo.cs" />
+    <Compile Include="Model\WatcherInfo.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="PresenceStatus.cs" />
     <Compile Include="Services\Impl\ContactService.Local.cs">
       <DependentUpon>ContactService.cs</DependentUpon>
     </Compile>
@@ -76,6 +97,9 @@
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.PresenceContent.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.PresRules.cs">
       <DependentUpon>XcapService.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Impl\XcapService.XcapCaps.cs">
@@ -140,6 +164,8 @@
     <Compile Include="Sip\Events\RegistrationEventTypes.cs" />
     <Compile Include="Sip\Events\StackEventArgs.cs" />
     <Compile Include="Sip\Events\StackEventTypes.cs" />
+    <Compile Include="Sip\Events\SubscriptionEventArgs.cs" />
+    <Compile Include="Sip\Events\SubscriptionEventTypes.cs" />
     <Compile Include="Sip\MyAVSession.cs" />
     <Compile Include="Sip\MyInviteSession.cs" />
     <Compile Include="Sip\MyMessagingSession.cs" />
@@ -153,6 +179,8 @@
     <Compile Include="Sip\MySipStack.cs" />
     <Compile Include="Sip\MySubscriptionSession.cs" />
     <Compile Include="Utils\MySoundPlayer.cs" />
+    <Compile Include="Utils\MyXmlSerializer.cs" />
+    <Compile Include="Utils\Rfc3339DateTime.cs" />
     <Compile Include="Utils\UriUtils.cs" />
     <Compile Include="Xcap\Events\XcapEventArgs.cs" />
     <Compile Include="Xcap\Events\XcapEventTypes.cs" />

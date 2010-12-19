@@ -34,6 +34,9 @@ namespace BogheCore.Sip
 
 	    private STACK_STATE state = STACK_STATE.NONE;
 	    private String compId;
+        private String privacy;
+        private String userAgent;
+        private String pAccessNetworkInfo;
 
         public MySipStack(SipCallback callback, String realmUri, String impiUri, String impuUri)
             : base(callback, realmUri, impiUri, impuUri)
@@ -59,6 +62,36 @@ namespace BogheCore.Sip
         {
             get { return this.state; }
             set { this.state = value; }
+        }
+
+        public String Privacy
+        {
+            get { return this.privacy; }
+            set
+            {
+                this.privacy = value;
+                this.addHeader("Privacy", value);
+            }
+        }
+
+        public String UserAgent
+        {
+            get { return this.userAgent; }
+            set
+            {
+                this.userAgent = value;
+                this.addHeader("User-Agent", value);
+            }
+        }
+
+        public String PAccessNetworkInfo
+        {
+            get { return this.pAccessNetworkInfo; }
+            set
+            {
+                this.pAccessNetworkInfo = value;
+                this.addHeader("P-Access-Network-Info", value);
+            }
         }
 
         public String SigCompId

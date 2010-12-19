@@ -36,10 +36,9 @@ namespace BogheCore.Services.Impl
     public partial class XcapService : IXcapService
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(XcapService));
-        private const bool SYNCHRONOUSLY = true; 
 
         private readonly XcapCallback callback;
-        private readonly IDictionary<String, String> documentsUris;
+        private readonly IDictionary<String, String> xcapDocumentsUris;
 
         private IConfigurationService configurationService;
         private ISipService sipService;
@@ -50,7 +49,6 @@ namespace BogheCore.Services.Impl
         private MyXcapStack xcapStack;
         private XcapSelector xcapSelector;
         private bool prepared;
-        private State currentState;
 
         private bool hasOMADirectory;
         private bool hasResourceLists;
@@ -60,17 +58,8 @@ namespace BogheCore.Services.Impl
         private bool hasOMAPresenceContent;
 
         private String rlsPresUri;
+        private String avatar;
         private bool ready;
-
-        public enum State
-        {
-            NONE,
-            GET_XCAP_CAPS,
-            GET_OMA_DIRECTORY,
-            GET_RESOURCE_LISTS,
-            PUT_RESOURCE_LISTS,
-            GET_RLS
-        }
 
         public XcapService(ServiceManager manager)
         {
@@ -79,21 +68,10 @@ namespace BogheCore.Services.Impl
 #else
             this.callback = new MySyncXcapCallback(this);
 #endif
-            this.documentsUris = new Dictionary<String, String>();
+            this.xcapDocumentsUris = new Dictionary<String, String>();
 
             this.manager = manager;
-            this.CurrentState = State.NONE;
             this.ready = false;
-        }
-
-        private State CurrentState
-        {
-            get { return this.currentState; }
-            set
-            {
-                LOG.Debug(String.Format("XCAP Current State={0}", value));
-                this.currentState = value;
-            }
         }
 
         internal int Timeout
@@ -158,6 +136,12 @@ namespace BogheCore.Services.Impl
             get { return this.rlsPresUri; }
         }
 
+        public String Avatar 
+        {
+            get { return this.avatar; }
+            set { this.avatar = value; }
+        }
+
         public bool DownloadDocuments()
         {
             if (!this.prepared)
@@ -167,16 +151,22 @@ namespace BogheCore.Services.Impl
             }
 
             this.ready = false;
-            this.CurrentState = State.GET_XCAP_CAPS;
+            this.xcapDocumentsUris.Clear();
+            this.rlsPresUri = null;
 
             lock (this.xcapSelector)
             {
                 MyXcapMessage xcapMessage;
 
                 // ============== xcap-caps ============== //
-                this.xcapSelector.reset();
-                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_XCAP_CAPS_ID);
-                xcapMessage = this.xcapStack.GetDocument(this.xcapSelector.getString());
+                String xcapCapsUrl;
+                lock (this.xcapSelector)
+                {
+                    this.xcapSelector.reset();
+                    this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_XCAP_CAPS_ID);
+                    xcapCapsUrl = this.xcapSelector.getString();
+                }
+                xcapMessage = this.xcapStack.GetDocument(xcapCapsUrl);
                 // xcap-caps is mandatory ==> continue the process only if all is ok
                 if (xcapMessage == null)
                 {
@@ -226,7 +216,7 @@ namespace BogheCore.Services.Impl
                         xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID);
                         if (xcapMessage != null)
                         {
-                            if (!this.handleResourceListsEvent(xcapMessage.Code, xcapMessage.Content))
+                            if (!this.HandleResourceListsEvent(xcapMessage.Code, xcapMessage.Content))
                             {
                                 LOG.Error("Failed to handle 'resource-lists' document");
                             }
@@ -259,9 +249,14 @@ namespace BogheCore.Services.Impl
                         xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_IETF_RLS_SERVICES_ID);
                         if (xcapMessage != null)
                         {
-                            if (!this.handleRLSEvent(xcapMessage.Code, xcapMessage.Content))
+                            if (!this.HandleRLSEvent(xcapMessage.Code, xcapMessage.Content))
                             {
                                 LOG.Error("Failed to handle 'resource-lists' document");
+                            }
+                            else
+                            {
+                                EventHandlerTrigger.TriggerEvent<XcapEventArgs>(this.onXcapEvent, this,
+                                    new XcapEventArgs(XcapEventTypes.RLS_DONE, xcapMessage.Code, xcapMessage.Phrase));
                             }
                         }
                         else
@@ -278,6 +273,75 @@ namespace BogheCore.Services.Impl
                 {
                     LOG.Error("'rls-services' not supported");
                 }
+
+                // ============== org.openmobilealliance.pres-content ============== //
+                if (this.hasOMAPresRules)
+                {
+                    if (this.xcapStack.IsRunning)
+                    {
+                        xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_OMA_PRES_RULES_ID);
+                        if (xcapMessage != null)
+                        {
+                            if (!this.HandleOMAPresRules(xcapMessage.Code, xcapMessage.Content))
+                            {
+                                LOG.Error("Failed to handle 'org.openmobilealliance.pres-content' document");
+                            }
+                        }
+                        else
+                        {
+                            LOG.Error("Failed to get 'org.openmobilealliance.pres-content' document");
+                        }
+                    }
+                    else
+                    {
+                        LOG.Warn("XCAP Stack not running");
+                    }
+                }
+                else
+                {
+                    LOG.Error("'org.openmobilealliance.pres-content' not supported");
+                }
+
+                // ============== org.openmobilealliance.pres-content ============== //
+                if (this.hasOMAPresenceContent)
+                {
+                    if (this.xcapStack.IsRunning)
+                    {
+                        xcapMessage = this.GetWellKnownDocument(XcapService.XCAP_AUID_OMA_PRES_CONTENT_ID);
+                        if (xcapMessage != null)
+                        {
+                            if (!this.HandlePresContent(xcapMessage.Code, xcapMessage.Content))
+                            {
+                                LOG.Error("Failed to handle 'org.openmobilealliance.pres-content' document");
+                            }
+                            else
+                            {
+                                XcapEventArgs eargs = new XcapEventArgs(XcapEventTypes.PRESCONTENT_DONE, xcapMessage.Code, xcapMessage.Phrase);
+                                eargs.AddExtra(XcapEventArgs.EXTRA_CONTENT, this.Avatar);
+                                EventHandlerTrigger.TriggerEvent<XcapEventArgs>(this.onXcapEvent, this, eargs);
+                            }
+                        }
+                        else
+                        {
+                            LOG.Error("Failed to get 'org.openmobilealliance.pres-content' document");
+                        }
+                    }
+                    else
+                    {
+                        LOG.Warn("XCAP Stack not running");
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
             }
 
             this.ready = true;
@@ -400,14 +464,50 @@ namespace BogheCore.Services.Impl
 
         public bool GroupUpdate(Group group)
         {
-            LOG.Error("Not Implemented");
-            return false;
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Group connot be updated as XDMS doesn't support 'resource-lists'");
+                return false;
+            }
+
+            listType list = this.GroupToList(group);
+            byte[] payload = this.Serialize(list, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID));
+            String url;
+
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", group.Name);
+                url = this.xcapSelector.getString();
+            }
+            MyXcapMessage xcapMessage = this.xcapStack.PutElement(url, payload, (uint)payload.Length);
+            return (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code));
         }
 
         public bool GroupDelete(Group group)
         {
-            LOG.Error("Not Implemented");
-            return false;
+            if (!this.hasResourceLists)
+            {
+                LOG.Warn("Group connot be updated as XDMS doesn't support 'resource-lists'");
+                return false;
+            }
+
+            String url;
+            lock (this.xcapSelector)
+            {
+                this.xcapSelector.reset();
+                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                    .setAttribute("list", "name", group.Name);
+                url = this.xcapSelector.getString();
+            }
+            MyXcapMessage xcapMessage = this.xcapStack.DeleteElement(url);
+            bool ok = (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code));
+
+            // FIXME: Delete all anchors
+            LOG.Error("Anchors must also be deleted");
+
+            return ok;
         }
 
         public bool GroupAuthorize(Group group, BogheXdm.Authorization authorization)
@@ -416,6 +516,33 @@ namespace BogheCore.Services.Impl
             return false;
         }
 
+        public bool AvatarPublish(String base64Content, String mimeType)
+        {
+            if (!this.prepared)
+            {
+                LOG.Error("XCAP sevice not prepared");
+                return false;
+            }
+            if (!this.hasOMAPresenceContent)
+            {
+                LOG.Error("OMAPresenceContent not supported");
+                return false;
+            }
+
+            new System.Threading.Thread(delegate()
+                {
+                    if (this.CreatePresenceContentDocument(base64Content, mimeType))
+                    {
+                        this.Avatar = base64Content;
+                        XcapEventArgs eargs = new XcapEventArgs(XcapEventTypes.PRESCONTENT_DONE, 200, "OK");
+                        eargs.AddExtra(XcapEventArgs.EXTRA_CONTENT, this.Avatar);
+                        EventHandlerTrigger.TriggerEvent<XcapEventArgs>(this.onXcapEvent, this, eargs);
+                    }
+                })
+                .Start();
+
+            return true;
+        }
 
         public bool Prepare()
         {
@@ -473,7 +600,8 @@ namespace BogheCore.Services.Impl
                 return true;
             }
 
-            this.documentsUris.Clear();
+            this.xcapDocumentsUris.Clear();
+            this.Avatar = null;
 
             if (this.xcapStack.Stop())
             {
@@ -496,9 +624,9 @@ namespace BogheCore.Services.Impl
 		    LOG.Debug("Downloading '"+ auid +"' document...");
 
 
-            if (this.documentsUris.ContainsKey(auid))
+            if (this.xcapDocumentsUris.ContainsKey(auid))
             {
-                documentUrl = this.documentsUris[auid];
+                documentUrl = this.xcapDocumentsUris[auid];
             }
             else
             {

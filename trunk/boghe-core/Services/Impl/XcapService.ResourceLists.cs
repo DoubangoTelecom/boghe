@@ -83,7 +83,7 @@ namespace BogheCore.Services.Impl
             return true;
         }        
 
-        private bool handleResourceListsEvent(short code, byte[] content)
+        private bool HandleResourceListsEvent(short code, byte[] content)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace BogheCore.Services.Impl
             }
             catch (Exception e)
             {
-                XcapService.LOG.Error("Fialed to handle 'resource-lists' event", e);
+                XcapService.LOG.Error("Failed to handle 'resource-lists' event", e);
                 return false;
             }
 
@@ -134,6 +134,7 @@ namespace BogheCore.Services.Impl
             list.list[count].name = SpecialNames.SHARED_DOUBANGO;
 
             String documentUrl;
+            //if(this.xcapDocumentsUris.ContainsKey())
             lock (this.xcapSelector)
             {
                 this.xcapSelector.reset();
@@ -141,8 +142,6 @@ namespace BogheCore.Services.Impl
                 documentUrl = this.xcapSelector.getString();
             }
             byte[] payload = this.Serialize(list, true, true, this.GetSerializerNSFromAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID));
-
-            String test = Encoding.UTF8.GetString(payload);
 
             MyXcapMessage xcapMessage = this.xcapStack.PutDocument(documentUrl, payload, (uint)payload.Length, XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_MIME_TYPE);
             if (xcapMessage != null && XcapService.IsSuccessCode(xcapMessage.Code))
@@ -155,6 +154,7 @@ namespace BogheCore.Services.Impl
         private String GetResourceListAnchorAsString(String list)
         {
             String ret;
+            //if(this.xcapDocumentsUris.ContainsKey())
             lock (this.xcapSelector)
             {
                 this.xcapSelector.reset();
@@ -179,8 +179,6 @@ namespace BogheCore.Services.Impl
 
         #region RCS
 
-        private listType[] rcsLists = null;
-
         /*  oma_buddylist (not explicitly used in RCS)  
          *      -->rcs
          *      -->oma_pocbuddylist
@@ -200,39 +198,37 @@ namespace BogheCore.Services.Impl
          */
         private listType[] GetRCSLists()
         {
-            if (this.rcsLists == null)
-            {
-                this.rcsLists = new listType[3] { new listType(), new listType(), new listType() };
+            listType[] rcsLists; // Do not cache
+            
+            rcsLists = new listType[3] { new listType(), new listType(), new listType() };
 
-                /*==  rcs ==*/
-                this.rcsLists[0].displayname = new displaynameType();
-                this.rcsLists[0].name = SpecialNames.SHARED_RCS;
-                this.rcsLists[0].displayname.Value = "All Contacts";
-                this.rcsLists[0].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_DOUBANGO));
-                /* rcs 2: The RCS presentity is always part of this list, refer to § 11.4 */
-                entryType me = new entryType();
-                me.uri = this.xcapStack.XUI;
-                rcsLists[0].EntryTypes.Add(me);
+            /*==  rcs ==*/
+            rcsLists[0].displayname = new displaynameType();
+            rcsLists[0].name = SpecialNames.SHARED_RCS;
+            rcsLists[0].displayname.Value = "All Contacts";
+            rcsLists[0].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_DOUBANGO));
+            /* rcs 2: The RCS presentity is always part of this list, refer to § 11.4 */
+            entryType me = new entryType();
+            me.uri = this.xcapStack.XUI;
+            rcsLists[0].EntryTypes.Add(me);
 
-                /*==  rcs_blockedcontacts ==*/
-                this.rcsLists[1].displayname = new displaynameType();
-                this.rcsLists[1].name = SpecialNames.SHARED_RCS_BLOCKEDCONTACTS;
-                this.rcsLists[1].displayname.Value = "Blocked Contacts";
+            /*==  rcs_blockedcontacts ==*/
+            rcsLists[1].displayname = new displaynameType();
+            rcsLists[1].name = SpecialNames.SHARED_RCS_BLOCKEDCONTACTS;
+            rcsLists[1].displayname.Value = "Blocked Contacts";
 
-                /*==  rcs_revokedcontacts ==*/
-                this.rcsLists[2].displayname = new displaynameType();
-                this.rcsLists[2].name = SpecialNames.SHARED_RCS_REVOKEDCONTACTS;
-                this.rcsLists[2].displayname.Value = "Revoked Contacts";
-            }
+            /*==  rcs_revokedcontacts ==*/
+            rcsLists[2].displayname = new displaynameType();
+            rcsLists[2].name = SpecialNames.SHARED_RCS_REVOKEDCONTACTS;
+            rcsLists[2].displayname.Value = "Revoked Contacts";
+            
 
-            return this.rcsLists;
+            return rcsLists;
         }
 
         #endregion
 
         #region OMA
-
-        private listType[] omaLists = null;
 
         /*  oma_buddylist (not explicitly used in RCS)  
          *      -->rcs
@@ -252,48 +248,48 @@ namespace BogheCore.Services.Impl
          */
         private listType[] GetOMALists()
         {
-            if (this.omaLists == null)
-            {
-                this.omaLists = new listType[5] { new listType(), new listType(), new listType(), new listType(), new listType() };
+            listType[] omaLists; // Do not cache
+ 
+            omaLists = new listType[5] { new listType(), new listType(), new listType(), new listType(), new listType() };
 
-                /*== oma_allcontacts ==*/
-                this.omaLists[0] = new listType();
-                this.omaLists[0].displayname = new displaynameType();
-                this.omaLists[0].name = SpecialNames.SHARED_OMA_ALLCONTACTS;
-                this.omaLists[0].displayname.Value = "OMA All Contacts";
+            /*== oma_allcontacts ==*/
+            omaLists[0] = new listType();
+            omaLists[0].displayname = new displaynameType();
+            omaLists[0].name = SpecialNames.SHARED_OMA_ALLCONTACTS;
+            omaLists[0].displayname.Value = "OMA All Contacts";
 
-                /*== oma_blockedcontacts ==*/
-                this.omaLists[1] = new listType();
-                this.omaLists[1].displayname = new displaynameType();
-                this.omaLists[1].name = SpecialNames.SHARED_OMA_BLOCKEDCONTACTS;
-                this.omaLists[1].displayname.Value = "OMA Blocked Contacts";
-                this.omaLists[1].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS_BLOCKEDCONTACTS));
-                this.omaLists[1].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS_REVOKEDCONTACTS));
+            /*== oma_blockedcontacts ==*/
+            omaLists[1] = new listType();
+            omaLists[1].displayname = new displaynameType();
+            omaLists[1].name = SpecialNames.SHARED_OMA_BLOCKEDCONTACTS;
+            omaLists[1].displayname.Value = "OMA Blocked Contacts";
+            omaLists[1].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS_BLOCKEDCONTACTS));
+            omaLists[1].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS_REVOKEDCONTACTS));
 
-                /*== oma_buddylist ==*/
-                this.omaLists[2] = new listType();
-                this.omaLists[2].displayname = new displaynameType();
-                this.omaLists[2].name = SpecialNames.SHARED_OMA_BUDDYLIST;
-                this.omaLists[2].displayname.Value = "OMA BuddyList";
-                this.omaLists[2].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS));
-                this.omaLists[2].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_OMA_POCBUDDYLIST));
+            /*== oma_buddylist ==*/
+            omaLists[2] = new listType();
+            omaLists[2].displayname = new displaynameType();
+            omaLists[2].name = SpecialNames.SHARED_OMA_BUDDYLIST;
+            omaLists[2].displayname.Value = "OMA BuddyList";
+            omaLists[2].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS));
+            omaLists[2].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_OMA_POCBUDDYLIST));
 
-                /*== oma_grantedcontacts ==*/
-                this.omaLists[3] = new listType();
-                this.omaLists[3].displayname = new displaynameType();
-                this.omaLists[3].name = SpecialNames.SHARED_OMA_GRANTEDCONTACTS;
-                this.omaLists[3].displayname.Value = "OMA Granted Contacts";
-                this.omaLists[3].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS));
-                this.omaLists[3].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_OMA_BUDDYLIST));
+            /*== oma_grantedcontacts ==*/
+            omaLists[3] = new listType();
+            omaLists[3].displayname = new displaynameType();
+            omaLists[3].name = SpecialNames.SHARED_OMA_GRANTEDCONTACTS;
+            omaLists[3].displayname.Value = "OMA Granted Contacts";
+            omaLists[3].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_RCS));
+            omaLists[3].ExternalTypes.Add(this.GetResourceListAnchorAsExternalType(SpecialNames.SHARED_OMA_BUDDYLIST));
 
-                /*== oma_pocbuddylist ==*/
-                this.omaLists[4] = new listType();
-                this.omaLists[4].displayname = new displaynameType();
-                this.omaLists[4].name = SpecialNames.SHARED_OMA_POCBUDDYLIST;
-                this.omaLists[4].displayname.Value = "OMA POC BuddyList";
-            }
+            /*== oma_pocbuddylist ==*/
+            omaLists[4] = new listType();
+            omaLists[4].displayname = new displaynameType();
+            omaLists[4].name = SpecialNames.SHARED_OMA_POCBUDDYLIST;
+            omaLists[4].displayname.Value = "OMA POC BuddyList";
 
-            return this.omaLists;
+
+            return omaLists;
         }
 
         #endregion

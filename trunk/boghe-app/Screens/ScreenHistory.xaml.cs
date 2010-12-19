@@ -53,6 +53,8 @@ namespace BogheApp.Screens
         private HistoryEvent.StatusType statusToDisplay = HistoryEvent.StatusType.All;
         private MediaType mediaTypeToDisplay = MediaType.All;
 
+        private readonly List<FilterItem> filterItems;
+
         public ScreenHistory()
         {
             InitializeComponent();
@@ -61,8 +63,37 @@ namespace BogheApp.Screens
 
             this.historyService.onHistoryEvent += this.historyService_onHistoryEvent;
 
+            this.filterItems = new List<FilterItem>(new FilterItem[]
+            {
+                new FilterItem("All Events", "/BogheApp;component/embedded/16/date_time_16.png", HistoryEvent.StatusType.All, MediaType.All),
+                new FilterItem("All Calls", "/BogheApp;component/embedded/16/call_16.png", HistoryEvent.StatusType.All, MediaType.AudioVideo),
+                new FilterItem("Outgoing Calls", "/BogheApp;component/embedded/16/call_outgoing_16.png", HistoryEvent.StatusType.Outgoing, MediaType.AudioVideo),
+                new FilterItem("Incoming Calls", "/BogheApp;component/embedded/16/call_incoming_16.png", HistoryEvent.StatusType.Incoming, MediaType.AudioVideo),
+                new FilterItem("Missed Calls", "/BogheApp;component/embedded/16/call_missed_16.png", HistoryEvent.StatusType.Missed, MediaType.AudioVideo),
+                new FilterItem("Messaging", "/BogheApp;component/embedded/16/messages_16.png", HistoryEvent.StatusType.All, MediaType.Messaging),
+                new FilterItem("File Transfers", "/BogheApp;component/embedded/16/document_up_down_16.png", HistoryEvent.StatusType.All, MediaType.FileTransfer),
+            });
+
             this.listBox.ItemTemplateSelector = new DataTemplateSelectorHistory();
             this.UpdateSource();
+
+            this.comboBoxFilterCriteria.ItemsSource = this.filterItems;
+            this.comboBoxFilterCriteria.SelectedIndex = 0;
+
+            this.historyView.Filter = delegate(object @event)
+            {
+                HistoryEvent hEvent = @event as HistoryEvent;
+                if (hEvent == null)
+                {
+                    return false;
+                }
+                if (((hEvent.Status & this.statusToDisplay) == hEvent.Status) &&
+                    ((hEvent.MediaType & this.mediaTypeToDisplay) == hEvent.MediaType))
+                {
+                    return hEvent.DisplayName.StartsWith(this.textBoxSearchCriteria.Text, StringComparison.InvariantCultureIgnoreCase);
+                }
+                return false;
+            };
         }
 
         private void historyService_onHistoryEvent(object sender, HistoryEventArgs e)
@@ -87,8 +118,18 @@ namespace BogheApp.Screens
             this.listBox.ItemsSource = this.historyService.Events;
             this.historyView = CollectionViewSource.GetDefaultView(this.listBox.ItemsSource);
         }
+        
+        // OnSelctionChangedEvent will apply filter
+        public void Select(HistoryEvent.StatusType statusToDisplay, MediaType mediaTypeToDisplay)
+        {
+            int index = this.filterItems.FindIndex(x => x.Media == mediaTypeToDisplay && x.Status == statusToDisplay);
+            if (index != -1)
+            {
+                this.comboBoxFilterCriteria.SelectedIndex = index;
+            }
+        }
 
-        public void Filter(HistoryEvent.StatusType statusToDisplay, MediaType mediaTypeToDisplay)
+        private void Filter(HistoryEvent.StatusType statusToDisplay, MediaType mediaTypeToDisplay)
         {
             this.statusToDisplay = statusToDisplay;
             this.mediaTypeToDisplay = mediaTypeToDisplay;
@@ -100,32 +141,7 @@ namespace BogheApp.Screens
         {
             this.Cursor = Cursors.Wait;
 
-            this.comboBoxFilterCriteria.ItemsSource = new FilterItem[]
-            {
-                new FilterItem("All Events", "/BogheApp;component/embedded/16/date_time_16.png", HistoryEvent.StatusType.All, MediaType.All),
-                new FilterItem("All Calls", "/BogheApp;component/embedded/16/call_16.png", HistoryEvent.StatusType.All, MediaType.AudioVideo),
-                new FilterItem("Outgoing Calls", "/BogheApp;component/embedded/16/call_outgoing_16.png", HistoryEvent.StatusType.Outgoing, MediaType.AudioVideo),
-                new FilterItem("Incoming Calls", "/BogheApp;component/embedded/16/call_incoming_16.png", HistoryEvent.StatusType.Incoming, MediaType.AudioVideo),
-                new FilterItem("Missed Calls", "/BogheApp;component/embedded/16/call_missed_16.png", HistoryEvent.StatusType.Missed, MediaType.AudioVideo),
-                new FilterItem("Messaging", "/BogheApp;component/embedded/16/messages_16.png", HistoryEvent.StatusType.All, MediaType.Messaging),
-                new FilterItem("File Transfers", "/BogheApp;component/embedded/16/document_up_down_16.png", HistoryEvent.StatusType.All, MediaType.FileTransfer),
-            };
-            this.comboBoxFilterCriteria.SelectedIndex = 0;
-
-            this.historyView.Filter = delegate(object @event)
-            {
-                HistoryEvent hEvent = @event as HistoryEvent;
-                if (hEvent == null)
-                {
-                    return false;
-                }
-                if (((hEvent.Status & this.statusToDisplay) == hEvent.Status) &&
-                    ((hEvent.MediaType & this.mediaTypeToDisplay) == hEvent.MediaType))
-                {
-                    return hEvent.DisplayName.StartsWith(this.textBoxSearchCriteria.Text, StringComparison.InvariantCultureIgnoreCase);
-                }
-                return false;
-            };
+            
 
             this.Cursor = Cursors.Arrow;
         }

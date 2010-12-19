@@ -138,7 +138,7 @@ namespace BogheCore.Services.Impl
                                         
                                         /* Destination address */
                                         if(origPhoneNumber != null){
-                                	        from = UriUtils.MakeValidSipUri(origPhoneNumber);
+                                	        from = UriUtils.GetValidSipUri(origPhoneNumber);
                                         }
                                         else if((origPhoneNumber = UriUtils.GetValidPhoneNumber(from)) == null){
                                 	        LOG.Error("Invalid destination address");
@@ -247,6 +247,76 @@ namespace BogheCore.Services.Impl
             /// <returns></returns>
             public override int OnSubscriptionEvent(SubscriptionEvent e)
             {
+                tsip_subscribe_event_type_t type = e.getType();
+
+                switch (type)
+                {
+                    case tsip_subscribe_event_type_t.tsip_i_notify:
+                        {
+                            SubscriptionSession session = e.getSession();
+                            MySubscriptionSession mysession;
+                            if (session == null || (mysession = this.sipService.FindSubscription(session.getId())) == null)
+                            {
+                                LOG.Error("Null session");
+                                return -1;
+                            }
+                            SipMessage message = e.getSipMessage();
+                            if (message == null)
+                            {
+                                LOG.Error("Null message");
+                                return -1;
+                            }
+                            String contentType = message.getSipHeaderValue("c");
+                            byte[] content = message.getSipContent();
+                            if (String.IsNullOrEmpty(contentType) || content == null)
+                            {
+                                LOG.Error("Invalid content");
+                                return -1;
+                            }                            
+
+                            // Save content: To allow the end user to request this content at any time
+                            if (String.Equals(contentType, ContentType.REG_INFO))
+                            {
+                                this.sipService.subRegContent = content;
+                            }
+                            else if (String.Equals(contentType, ContentType.WATCHER_INFO))
+                            {
+                                this.sipService.subWinfoContent = content;
+                            }
+
+                            short code = e.getCode();
+                            String phrase = e.getPhrase();
+
+                            SubscriptionEventArgs eargs = new SubscriptionEventArgs(SubscriptionEventTypes.INCOMING_NOTIFY,
+                                code, phrase, content, contentType, mysession.EventPackage);
+                            eargs.AddExtra(SubscriptionEventArgs.EXTRA_SESSION, mysession);
+                            if (ContentType.MULTIPART_RELATED.Equals(contentType, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                String ctype = message.getSipHeaderParamValue("c", "type");
+                                eargs.AddExtra(SubscriptionEventArgs.EXTRA_CONTENTYPE_TYPE, ctype == null ? String.Empty : ctype.Replace("\"", String.Empty));
+
+                                String start = message.getSipHeaderParamValue("c", "start");
+                                eargs.AddExtra(SubscriptionEventArgs.EXTRA_CONTENTYPE_START, start == null ? String.Empty : start.Replace("\"", String.Empty));
+
+                                String boundary = message.getSipHeaderParamValue("c", "boundary");
+                                eargs.AddExtra(SubscriptionEventArgs.EXTRA_CONTENTYPE_BOUNDARY, boundary == null ? String.Empty : boundary.Replace("\"", String.Empty));
+                            }
+                            EventHandlerTrigger.TriggerEvent<SubscriptionEventArgs>(this.sipService.onSubscriptionEvent, this.sipService, eargs);
+
+                            break;
+                        }
+
+                    default:
+                    case tsip_subscribe_event_type_t.tsip_i_subscribe:
+                    case tsip_subscribe_event_type_t.tsip_ao_subscribe:
+                    case tsip_subscribe_event_type_t.tsip_i_unsubscribe:
+                    case tsip_subscribe_event_type_t.tsip_ao_unsubscribe:
+                    case tsip_subscribe_event_type_t.tsip_ao_notify:
+                        {
+                            break;
+                        }
+                }
+
                 return 0;
             }
 
@@ -266,7 +336,7 @@ namespace BogheCore.Services.Impl
                 }
 
                 uint sessionId = session.getId();
-                MyInviteSession invSession = null;
+                MySipSession mySession = null;
 
                 SipService.LOG.Info(String.Format("OnDialogEvent ({0})", phrase));
 
@@ -279,17 +349,18 @@ namespace BogheCore.Services.Impl
                             new RegistrationEventArgs(RegistrationEventTypes.REGISTRATION_INPROGRESS, code, phrase));
                     }
                     // Audio/Video/MSRP
-                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    else if (((mySession = MyAVSession.GetSession(sessionId)) != null) || ((mySession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
-                        invSession.State = MyInviteSession.InviteState.INPROGRESS;
+                        (mySession as MyInviteSession).State = MyInviteSession.InviteState.INPROGRESS;
                         InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.INPROGRESS, phrase);
-                        eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, invSession);
+                        eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, mySession);
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
                     } 
 
                     // Subscription
 
                     // Publication
+                    
                 }
 
 
@@ -305,26 +376,35 @@ namespace BogheCore.Services.Impl
                         {
                             this.sipService.defaultIdentity = _defaultIdentity;
                         }
-                        // To PostRegistrationOp() in new thread to avoid blocking callbacks
+                        // Do PostRegistrationOp() in new thread to avoid blocking callbacks
                         new Thread(new ThreadStart(delegate
                         {
                             this.sipService.DoPostRegistrationOp();
-                        })).Start();
+                        }))
+                        .Start();
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService, 
                             new RegistrationEventArgs(RegistrationEventTypes.REGISTRATION_OK, code, phrase));
                     }
 
                     // Audio/Video/MSRP
-                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    else if (((mySession = MyAVSession.GetSession(sessionId)) != null) || ((mySession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
-                        invSession.State = MyInviteSession.InviteState.INCALL;
-                        invSession.IsConnected = true;
+                        (mySession as MyInviteSession).State = MyInviteSession.InviteState.INCALL;
+                        mySession.IsConnected = true;
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.CONNECTED, phrase));
                     }
 
                     // Subscription
+                    else if ((mySession = this.sipService.subPresence.FirstOrDefault(x => x.Id == sessionId)) != null)
+                    {
+                        mySession.IsConnected = true;
+                    }
 
                     // Publication
+                    else if (this.sipService.pubPres != null && this.sipService.pubPres.Id == sessionId)
+                    {
+                        this.sipService.pubPres.IsConnected = true;
+                    }
                 }
 
 
@@ -338,9 +418,9 @@ namespace BogheCore.Services.Impl
                     }
 
                     // Audio/Video/MSRP
-                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    else if (((mySession = MyAVSession.GetSession(sessionId)) != null) || ((mySession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
-                        invSession.State = MyInviteSession.InviteState.TERMINATING;
+                        (mySession as MyInviteSession).State = MyInviteSession.InviteState.TERMINATING;
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.TERMWAIT, phrase));
                     }
 
@@ -370,16 +450,33 @@ namespace BogheCore.Services.Impl
                     }
 
                     // Audio/Video/MSRP
-                    else if (((invSession = MyAVSession.GetSession(sessionId)) != null) || ((invSession = MyMsrpSession.GetSession(sessionId)) != null))
+                    else if (((mySession = MyAVSession.GetSession(sessionId)) != null) || ((mySession = MyMsrpSession.GetSession(sessionId)) != null))
                     {
-                        invSession.IsConnected = false;
-                        invSession.State = MyInviteSession.InviteState.TERMINATED;
+                        mySession.IsConnected = false;
+                        (mySession as MyInviteSession).State = MyInviteSession.InviteState.TERMINATED;
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.DISCONNECTED, phrase));
                     }
 
                     // Subscription
+                    else if ((mySession = this.sipService.subPresence.FirstOrDefault(x => x.Id == sessionId)) != null)
+                    {
+                        mySession.IsConnected = false;
+                        this.sipService.subPresence.Remove(mySession as MySubscriptionSession);
+                    }
 
                     // Publication
+                    else if (this.sipService.pubPres != null && this.sipService.pubPres.Id == sessionId)
+                    {
+                        this.sipService.pubPres.IsConnected = false;
+                        if (this.sipService.hyperAvailabilityTimer != null)
+                        {
+                            if (this.sipService.hyperAvailabilityTimer.Enabled)
+                            {
+                                this.sipService.hyperAvailabilityTimer.Stop();
+                            }
+                            this.sipService.hyperAvailabilityTimer = null;
+                        }
+                    }
                 }
 
                 return 0;
@@ -418,6 +515,12 @@ namespace BogheCore.Services.Impl
                 else if (code == tinyWRAP.tsip_event_code_stack_stopped)
                 {
                     this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPED;
+
+                    // Reset contents
+                    this.sipService.subWinfoContent = null;
+                    this.sipService.subRegContent = null;
+                    this.sipService.subRLSContent = null;
+                    this.sipService.subMwiContent = null;
 
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.STOP_OK, phrase));

@@ -105,18 +105,26 @@ namespace BogheApp
             MenuItem menuItem = e.OriginalSource as MenuItem;
             if (menuItem == null) return;
 
+            var fileDialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                Multiselect = false,
+                Title = "Content Sharing"
+            };
+
             if (menuItem == this.MenuItemCS_SendFile)
             {
-                Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-                fileDialog.Multiselect = false;
-                Nullable<bool> result = fileDialog.ShowDialog();
-                if (result.HasValue && result.Value)
+                if (fileDialog.ShowDialog() == true)
                 {
                     this.SendFile(fileDialog.FileName);
                 }
             }
             else if (menuItem == this.MenuItemCS_ShareImage)
             {
+                fileDialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG"; // From IR.79
+                if (fileDialog.ShowDialog() == true)
+                {
+                    this.SendFile(fileDialog.FileName);
+                }
             }
             else if (menuItem == this.MenuItemCS_ShareVideo)
             {

@@ -22,10 +22,70 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using BogheCore.Model;
+using System.Windows;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        private void LoadSecurity()
+        {
+            this.textBoxTLSPrivateKey.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PRIV_KEY_FILE, Configuration.DEFAULT_TLS_PRIV_KEY_FILE);
+            this.textBoxTLSPublicKey.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, Configuration.DEFAULT_TLS_PUB_KEY_FILE);
+            this.textBoxTLSCert.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, Configuration.DEFAULT_TLS_CA_FILE);
+
+            this.checkBoxIPSecSecAgreeEnabled.IsChecked = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_SEC_AGREE, Configuration.DEFAULT_SECURITY_IPSEC_SEC_AGREE);
+            this.comboBoxIPSecAlgorithm.SelectedValue = this.comboBoxIPSecAlgorithm.FindName(
+                this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_ALGO, Configuration.DEFAULT_SECURITY_IPSEC_ALGO)
+                .Replace("-", "_"));
+            this.comboBoxIPSecEAlgorithm.SelectedValue = this.comboBoxIPSecEAlgorithm.FindName(
+                this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_EALGO, Configuration.DEFAULT_SECURITY_IPSEC_EALGO)
+                .Replace("-", "_"));
+            this.comboBoxIPSecMode.SelectedValue = this.comboBoxIPSecMode.FindName(
+                this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_MODE, Configuration.DEFAULT_SECURITY_IPSEC_MODE));
+            this.comboBoxIPSecProtocol.SelectedValue = this.comboBoxIPSecProtocol.FindName(
+                this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, Configuration.DEFAULT_SECURITY_IPSEC_PROTO));
+        }
+
+        private bool UpdateSecurity()
+        {
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PRIV_KEY_FILE, this.textBoxTLSPrivateKey.Text);
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, this.textBoxTLSPublicKey.Text);
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, this.textBoxTLSCert.Text);
+
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_SEC_AGREE, this.checkBoxIPSecSecAgreeEnabled.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_ALGO, (this.comboBoxIPSecAlgorithm.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_EALGO, (this.comboBoxIPSecEAlgorithm.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_MODE, (this.comboBoxIPSecMode.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, (this.comboBoxIPSecProtocol.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
+
+            return true;
+        }
+
+        private void buttonTLS_Click(object sender, RoutedEventArgs e)
+        {
+            var fileDialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                Multiselect = false
+            };
+            if (fileDialog.ShowDialog() == true)
+            {
+                if (e.Source == this.buttonTlsPrivateKey)
+                {
+                    this.textBoxTLSPrivateKey.Text = fileDialog.FileName;
+                }
+                else if (e.Source == this.buttonTLSPublicKey)
+                {
+                    this.textBoxTLSPublicKey.Text = fileDialog.FileName;
+                }
+                else if (e.Source == this.buttonTLSCert)
+                {
+                    this.textBoxTLSCert.Text = fileDialog.FileName;
+                }
+            }
+        }
+
     }
 }

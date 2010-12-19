@@ -35,14 +35,28 @@ namespace BogheCore.Services
         MySipStack SipStack { get; }
         bool IsRegistered { get; }
         bool IsXcapEnabled { get; }
+        bool IsPublicationEnabled { get; }
+        bool IsSubscriptionEnabled { get; }
+        bool IsSubscriptionToRLSEnabled { get; }
+        int Codecs { get; set; }
+
+        byte[] SubRLSContent { get; }
+        byte[] SubRegContent { get; }
+        byte[] SubMwiContent { get; }
+        byte[] SubWinfoContent { get; }
 
         bool StopStack();
         bool Register();
         bool UnRegister();
 
+        bool PresencePublish();
+        bool PresencePublish(PresenceStatus status);
+
         event EventHandler<RegistrationEventArgs> onRegistrationEvent;
         event EventHandler<StackEventArgs> onStackEvent;
         event EventHandler<InviteEventArgs> onInviteEvent;
         event EventHandler<MessagingEventArgs> onMessagingEvent;
+        event EventHandler<SubscriptionEventArgs> onSubscriptionEvent;
+        event EventHandler onHyperAvailabilityTimedout;
     }
 }

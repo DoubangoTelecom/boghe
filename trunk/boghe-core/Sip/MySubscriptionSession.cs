@@ -70,8 +70,8 @@ namespace BogheCore.Sip
                     }
                     this.session.addHeader("Accept",
                             String.Format("{0}, {1}, {2}, {3}",
-                                    ContentType.PIDF,
                                     ContentType.MULTIPART_RELATED,
+                                    ContentType.PIDF,
                                     ContentType.RLMI,
                                     ContentType.RPID
                                     ));
@@ -100,7 +100,7 @@ namespace BogheCore.Sip
                     break;
             }
 
-            this.session.setToUri(toUri);
+            this.ToUri = toUri;
             // common to all subscription sessions
             this.session.addHeader("Allow-Events", "refer, presence, presence.winfo, xcap-diff, conference");
         }

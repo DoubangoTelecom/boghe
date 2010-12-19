@@ -28,6 +28,8 @@ namespace BogheCore
     [Flags]
     public enum MediaType
     {
+        None = 0,
+
         Audio = 0x01 << 0,
         Video = 0x01 << 1,
         AudioVideo = Audio | Video,

@@ -31,6 +31,7 @@ namespace BogheCore.Services
     {
         bool IsReady { get; }
         String RLSPresUri { get; }
+        String Avatar { get; }
 
         bool DownloadDocuments();
 
@@ -43,6 +44,8 @@ namespace BogheCore.Services
         bool GroupUpdate(Group group);
         bool GroupDelete(Group group);
         bool GroupAuthorize(Group group, BogheXdm.Authorization authorization);
+
+        bool AvatarPublish(String base64Content, String mimeType);
 
         bool Prepare();
         bool UnPrepare();

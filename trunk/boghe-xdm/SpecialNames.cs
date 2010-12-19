@@ -50,7 +50,7 @@ namespace BogheXdm
             );
         }
 
-        public static bool IsReserved(String name)
+        public static bool IsSpecial(String name)
         {
             if (!String.IsNullOrEmpty(name))
             {
@@ -155,5 +155,13 @@ namespace BogheXdm
         /// •	not include references to the “oma_allcontacts” URI List in any other application services (AUIDs) or URI List.
         /// </summary>
         public const String SHARED_OMA_ALLCONTACTS = "oma_allcontacts";
+
+
+        
+        public const String PRESRULES_OMA_ALLOW_OWN = "wp_prs_allow_own";
+        public const String PRESRULES_RCS_ALLOW_SERVICE_ANONYMOUS = "rcs_allow_services_anonymous";
+        public const String PRESRULES_OMA_UNLISTED = "wp_prs_unlisted";
+        public const String PRESRULES_OMA_GRANTED_CONTACTS = "wp_prs_grantedcontacts";
+        public const String PRESRULES_OMA_BLOCKED_CONTACTS = "wp_prs_blockedcontacts";
     }
 }

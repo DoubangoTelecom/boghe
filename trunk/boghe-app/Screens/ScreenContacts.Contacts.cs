@@ -29,14 +29,262 @@ using System.Threading;
 using BogheCore;
 using System.Windows.Data;
 using System.Windows.Media;
+using BogheCore.Sip.Events;
+using BogheCore.Sip;
+using BogheCore.Generated.pidf;
+using System.IO;
+using System.Xml.Serialization;
+using BogheCore.Generated.data_model;
+using BogheCore.Utils;
+using BogheCore.Generated.oma.pidf_pres;
 
 namespace BogheApp.Screens
 {
     partial class ScreenContacts
     {
+        private void sipService_onSubscriptionEvent(object sender, SubscriptionEventArgs e)
+        {
+            if (e.Type != SubscriptionEventTypes.INCOMING_NOTIFY || 
+                (e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE && e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE_LIST)
+                || e.Content == null)
+            {
+                return;
+            }
+
+            switch (e.Type)
+            {
+                case SubscriptionEventTypes.INCOMING_NOTIFY:
+                    {
+                        new Thread(delegate()
+                        {
+                            this.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                            {
+                                this.ParsePresenceContent(e);
+                            });
+                        })
+                        .Start();
+                        break;
+                    }
+            }
+        }
+
+        private void ParsePidf(byte[] pidfContent)
+        {
+            presence presence;
+
+            using (MemoryStream stream = new MemoryStream(pidfContent))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(presence));
+                presence = serializer.Deserialize(stream) as presence;
+            }
+
+            PresenceStatus status = PresenceStatus.Offline;
+
+            if (presence != null)
+            {
+                person[] persons = presence.Persons;
+                person person = null;
+                if (persons != null)
+                {
+                    if (persons.Length > 0)
+                    {
+                        person = persons[0];
+                    }
+
+                    DateTime lastTimeStamp = DateTime.MinValue;
+                    foreach (person p in persons)
+                    {
+                        String timeStamp = p.GetTimeStamp();
+                        if (!String.IsNullOrEmpty(timeStamp))
+                        {
+                            DateTime timestamp = Rfc3339DateTime.Parse(timeStamp);
+                            if (timestamp.CompareTo(lastTimeStamp) > 0)
+                            {
+                                lastTimeStamp = timestamp;
+                                person = p;
+                            }
+                        }
+                    }
+                }
+                String statusicon = (person != null && person.statusicon != null) ? person.statusicon.Value : null;
+
+                Contact contact = this.contactService.ContactFind(presence.entity);
+                if (contact != null)
+                {
+                    if (person != null)
+                    {
+                        //
+                        // Basic
+                        //
+                        if (person.overridingWillingness != null)
+                        {
+                            status = (person.overridingWillingness.basic == basicType.closed) ? PresenceStatus.Offline : PresenceStatus.Online;
+                            if (!String.IsNullOrEmpty(person.overridingWillingness.Until))
+                            {
+                                contact.HyperAvaiability = Rfc3339DateTime.Parse(person.overridingWillingness.Until).ToLocalTime();
+                            }
+                        }
+
+                        //
+                        //  Activities
+                        //
+                        if (person.activities != null && person.activities.ItemsElementName != null)
+                        {
+                            if (person.activities.ItemsElementName.Length > 0)
+                            {
+                                switch (person.activities.ItemsElementName[0])
+                                {
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.away:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.shopping:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.sleeping:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.working:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.appointment:
+                                        status = PresenceStatus.Away;
+                                        break;
+
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.busy:
+                                        status = PresenceStatus.Busy;
+                                        break;
+
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.vacation:
+                                        status = PresenceStatus.BeRightBack;
+                                        break;
+
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.onthephone:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.playing:
+                                        status = PresenceStatus.OnThePhone;
+                                        break;
+
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.dinner:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.breakfast:
+                                    case BogheCore.Generated.rpid.ItemsChoiceType.meal:
+                                        status = PresenceStatus.OutToLunch;
+                                        break;
+                                }
+                            }
+                        }
+
+                        // Assign status
+                        contact.PresenceStatus = status;
+
+                        // Free Text
+                        String note = person.GetNote();
+                        if (!String.IsNullOrEmpty(note))
+                        {
+                            contact.FreeText = note;
+                        }
+
+                        // Avatar
+                        /*if (!String.IsNullOrEmpty(statusicon))
+                        {
+                            contact.Avatar = this.GetContactStatusIcon(statusicon);
+                        }*/
+
+                        // Home Page
+                        String hp = person.homepage;
+                        if (!String.IsNullOrEmpty(hp))
+                        {
+                            contact.HomePage = hp;
+                        }
+
+                        // Service willingness (open/closed)
+                        // IMPORTANT: ignore availability[service.status]
+                        /*if (presence.tuple != null && presence.tuple.Length > 0)
+                        {
+                            foreach (tuple service in presence.tuple)
+                            {
+                                if (service != null && service.willingness != null && service.serviceDescription != null)
+                                {
+                                    if (service.willingness.basic == basicType.closed)
+                                    {
+                                        contact.AddClosedServices(service.serviceDescription.serviceid);
+                                    }
+                                    else if (contact.ClosedServices.Contains(service.serviceDescription.serviceid))
+                                    {
+                                        contact.RemoveClosedServices(service.serviceDescription.serviceid);
+                                    }
+                                }
+                            }
+                        }*/
+                    }
+                    else
+                    {
+                        // Get the first tuple
+                        tuple tuple = (presence.tuple != null && presence.tuple.Length > 0) ? presence.tuple[0] : null;
+                        contact.PresenceStatus = (tuple != null && tuple.status != null && tuple.status.basic == basic.open) ? PresenceStatus.Online : PresenceStatus.Offline;
+                    }
+                }
+            }
+        }
+
+        private void ParseRLMI(byte[] rmliContent)
+        {
+        }
+
+        private void ParsePresenceContent(SubscriptionEventArgs e)
+        {
+            try
+            {
+                if (ContentType.MULTIPART_RELATED.Equals(e.ContentType) && (e.GetExtra(SubscriptionEventArgs.EXTRA_CONTENTYPE_TYPE) as String).Contains(ContentType.RLMI))
+                {
+                    String boundary = e.GetExtra(SubscriptionEventArgs.EXTRA_CONTENTYPE_BOUNDARY) as String;
+                    // to support both \r\n and \n\n
+                   String[] contents = Encoding.UTF8.GetString(e.Content).Split(new String[] { ("\n--" + boundary), ("\r--" + boundary) }, StringSplitOptions.RemoveEmptyEntries);
+                   int indexStart, indexEnd, contentStart;
+                   String contentType;
+                   foreach(String content in contents)
+                   {
+                       String _content = content.Trim();
+                       if (_content == String.Empty)
+                       {
+                           continue;
+                       }
+                       indexStart = _content.IndexOf("Content-Type:", StringComparison.InvariantCultureIgnoreCase);
+                       if (indexStart == -1)
+                       {
+                           continue;
+                       }
+                       indexEnd = _content.IndexOf("\n", indexStart);
+                       if (indexEnd == -1)
+                       {
+                           continue;
+                       }
+                       contentType = _content.Substring(indexStart + 13, (indexEnd - indexStart)).Split(";".ToCharArray(),  StringSplitOptions.RemoveEmptyEntries)[0].Trim();
+
+                       if ((contentStart = _content.IndexOf("\r\n")) == -1 && (contentStart = _content.IndexOf("\n\n")) == -1)
+                       {
+                           continue;
+                       }
+                       _content = _content.Substring(contentStart).Trim();
+
+                       if (ContentType.RLMI.Equals(contentType, StringComparison.InvariantCultureIgnoreCase))
+                       {
+                           this.ParseRLMI(Encoding.UTF8.GetBytes(_content));
+                       }
+                       else if (ContentType.PIDF.Equals(contentType, StringComparison.InvariantCultureIgnoreCase))
+                       {
+                           this.ParsePidf(Encoding.UTF8.GetBytes(_content));
+                       }
+                   }
+                }
+                else if (ContentType.RLMI.Equals(e.ContentType))
+                {
+                    this.ParseRLMI(e.Content);
+                }
+                else if (ContentType.PIDF.Equals(e.ContentType))
+                {
+                    this.ParsePidf(e.Content);
+                }
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex);
+            }
+        }
+
         private void contactService_onContactEvent(object sender, ContactEventArgs e)
         {
-            if (e.Type != ContactEventTypes.RESET)
+            if (e.Type != ContactEventTypes.RESET && e.Type != ContactEventTypes.GROUP_UPDATED && e.Type != ContactEventTypes.GROUP_REMOVED)
             {
                 return;
             }
@@ -53,33 +301,39 @@ namespace BogheApp.Screens
 
         private void UpdateSource()
         {
-            this.listBox.ItemsSource = this.contactService.Contacts;
+            bool firstTime = (this.contactsView == null);
+            if (this.dataSource != null)
+            {
+                this.dataSource.onItemPropChanged -= this.dataSource_onItemPropChanged;
+            }
+            this.dataSource = this.contactService.Contacts;
+            this.dataSource.onItemPropChanged += this.dataSource_onItemPropChanged;
+
+            this.listBox.ItemsSource = this.dataSource;
             this.contactsView = CollectionViewSource.GetDefaultView(this.listBox.ItemsSource);
             (this.contactsView as ListCollectionView).CustomSort = new ContactsSorter();
-            if (this.contactsView.GroupDescriptions.Count == 0)
-            {
-                this.contactsView.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
-            }
+            this.contactsView.GroupDescriptions.Clear();
+            this.contactsView.GroupDescriptions.Add(new PropertyGroupDescription("GroupName"));
+            
 
             IList<FilterItem> filterItems = new List<FilterItem>();
-            filterItems.Add(new FilterItem(null, "All Contacts", Colors.Green));
+            filterItems.Add(new FilterItem(null, "All Contacts", FilterItem.ImageSourceFromAuthorization(BogheXdm.Authorization.All)));
             foreach(Group g in this.contactService.Groups)
             {
-                Color color = Colors.Green;
-                switch (g.Authorization)
+                if (BogheXdm.SpecialNames.IsSpecial(g.Name))
                 {
-                    case BogheXdm.Authorization.PoliteBlocked:
-                    case BogheXdm.Authorization.Revoked:
-                    case BogheXdm.Authorization.Blocked:
-                        color = Colors.Red;
-                        break;
-                    case BogheXdm.Authorization.Pending:
-                        color = Colors.Gainsboro;
-                        break;
-                    default:
-                        break;
+                    switch (g.Name)
+                    {
+                        case BogheXdm.SpecialNames.SHARED_RCS:
+                        case BogheXdm.SpecialNames.SHARED_RCS_BLOCKEDCONTACTS:
+                        case BogheXdm.SpecialNames.SHARED_RCS_REVOKEDCONTACTS:
+                            break;
+                        default:
+                            continue;
+                    }
                 }
-                filterItems.Add(new FilterItem(g.Name, g.DisplayName, color));
+
+                filterItems.Add(new FilterItem(g.Name, g.DisplayName, FilterItem.ImageSourceFromAuthorization(g.Authorization)));
             }
 
             this.comboBoxGroups.ItemsSource = filterItems;
@@ -100,6 +354,14 @@ namespace BogheApp.Screens
                 }
                 return (contact.DisplayName == null || contact.DisplayName.StartsWith(this.textBoxSearchCriteria.Text, StringComparison.InvariantCultureIgnoreCase)) && (fItem.Name == null || contact.GroupName.Equals(fItem.Name));
             };
+        }
+
+        private void dataSource_onItemPropChanged(object sender, StringEventArgs e)
+        {
+            if (this.contactsView != null)
+            {
+                this.contactsView.Refresh();
+            }
         }
     }
 }

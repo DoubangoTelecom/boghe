@@ -35,14 +35,20 @@ namespace BogheCore.Model
         private String displayName;
         private String uriString;
         private String groupName;
+        private String freeText;
+        private String homePage;
+        private PresenceStatus presenceStatus;
+        private DateTime hyperAvaiability;
         // Think about Clone() when you add new fields
 
         private Authorization authorization;
 
         public Contact()
         {
+            this.presenceStatus = PresenceStatus.Offline;
             this.groupName = SpecialNames.SHARED_DOUBANGO;
             this.authorization = Authorization.UnKnown;
+            this.hyperAvaiability = DateTime.Now;
         }
 
         [XmlElement("display-name")]
@@ -91,6 +97,60 @@ namespace BogheCore.Model
             }
         }
 
+        [XmlIgnore]
+        public String FreeText
+        {
+            get { return this.freeText ?? String.Empty; }
+            set
+            {
+                this.freeText = value;
+                this.OnPropertyChanged("FreeText");
+            }
+        }
+
+        [XmlIgnore]
+        public String HomePage
+        {
+            get { return this.homePage ?? String.Empty; }
+            set
+            {
+                this.homePage = value;
+                this.OnPropertyChanged("HomePage");
+            }
+        }
+
+        [XmlIgnore]
+        public PresenceStatus PresenceStatus
+        {
+            get { return this.presenceStatus; }
+            set
+            {
+                this.presenceStatus = value;
+                this.OnPropertyChanged("PresenceStatus");
+            }
+        }
+
+        [XmlIgnore]
+        public DateTime HyperAvaiability
+        {
+            get { return this.hyperAvaiability; }
+            set
+            {
+                this.hyperAvaiability = value;
+                if (value > DateTime.Now)
+                {
+                    TimeSpan tspan = value - DateTime.Now;
+                    System.Timers.Timer timer = new System.Timers.Timer(tspan.TotalMilliseconds);
+                    timer.AutoReset = false;
+                    timer.Enabled = true;
+                    timer.Elapsed += delegate
+                    {
+                        this.HyperAvaiability = DateTime.Now;
+                    };
+                }
+                this.OnPropertyChanged("HyperAvaiability");
+            }
+        }
         #region ICloneable
 
         public object Clone()
@@ -99,6 +159,11 @@ namespace BogheCore.Model
             clone.uriString = this.uriString;
             clone.displayName = this.displayName;
             clone.groupName = this.groupName;
+            clone.freeText = this.freeText;
+            clone.homePage = this.homePage;
+            clone.presenceStatus = this.presenceStatus;
+            clone.hyperAvaiability = this.hyperAvaiability;
+
             return clone;
         }
 

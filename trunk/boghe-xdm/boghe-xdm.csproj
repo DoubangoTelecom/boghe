@@ -47,7 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization.cs" />
+    <Compile Include="Generated\common-policy.cs" />
     <Compile Include="DoubangoProperty.cs" />
+    <Compile Include="Generated\common-policy.Extra.cs">
+      <DependentUpon>common-policy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\OMA-SUP-XSD_prs_presContent-V1_0-20081223-C.cs" />
+    <Compile Include="Generated\OMA-SUP-XSD_prs_pubRules-V1_0-20081223-C.cs" />
     <Compile Include="Generated\resource-lists.cs" />
     <Compile Include="Generated\resource-lists.Extra.cs">
       <DependentUpon>resource-lists.cs</DependentUpon>
@@ -56,7 +62,16 @@
     <Compile Include="Generated\rls-services.Extra.cs">
       <DependentUpon>rls-services.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generated\watcherinfo.cs" />
     <Compile Include="Generated\xcap-caps.cs" />
+    <Compile Include="Generated\xcap-error.cs" />
+    <Compile Include="Generated\xcap-error.Extra.cs">
+      <DependentUpon>xcap-error.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\xdm_commonPolicy-v1_0.cs" />
+    <Compile Include="Generated\xdm_commonPolicy-v1_0.Extra.cs">
+      <DependentUpon>xdm_commonPolicy-v1_0.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generated\xdm_xcapDirectory-v1_0.cs" />
     <Compile Include="Generated\xdm_xcapDirectory-v1_0.Extra.cs">
       <DependentUpon>xdm_xcapDirectory-v1_0.cs</DependentUpon>

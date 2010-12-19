@@ -24,11 +24,38 @@ using System.Linq;
 using System.Text;
 using BogheCore.Xcap.Events;
 using BogheCore.Sip;
+using BogheCore.Model;
+using BogheCore.Events;
 
 namespace BogheCore.Services.Impl
 {
     partial class SipService
     {
+        private MySubscriptionSession FindSubscription(long id)
+        {
+            if (this.subReg != null && this.subReg.Id == id)
+            {
+                return this.subReg;
+            }
+
+            if (this.subMwi != null && this.subMwi.Id == id)
+            {
+                return this.subMwi;
+            }
+
+            if (this.subWinfo != null && this.subWinfo.Id == id)
+            {
+                return this.subWinfo;
+            }
+
+            if (this.subRLS != null && this.subRLS.Id == id)
+            {
+                return this.subRLS;
+            }
+
+            return this.subPresence.FirstOrDefault(x => x.Id == id);
+        }
+
         private bool SubscribeToRegInfo()
         {
             LOG.Debug("Subscribe to 'reg' event package");
@@ -74,7 +101,7 @@ namespace BogheCore.Services.Impl
 
             if (this.subWinfo == null)
             {
-                this.subWinfo = new MySubscriptionSession(this.sipStack, defaultIdentity, MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO);
+                this.subWinfo = new MySubscriptionSession(this.sipStack, this.DefaultIdentity, MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO);
             }
             else
             {
@@ -86,34 +113,85 @@ namespace BogheCore.Services.Impl
             return this.subWinfo.Subscribe();
         }
 
-        private bool SubscribeToPresence()
+        private bool SubscribeToRLSPresence()
         {
-            bool rlsEnabled = true;
-
-            if (rlsEnabled && !String.IsNullOrEmpty(this.xcapService.RLSPresUri))
+            if (String.IsNullOrEmpty(this.xcapService.RLSPresUri))
             {
-                if (this.subRLS == null)
-                {
-                    this.subRLS = new MySubscriptionSession(this.sipStack, this.xcapService.RLSPresUri, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE_LIST);
-                }
-                else
-                {
-                    this.subRLS.ToUri = this.xcapService.RLSPresUri;
-                    this.subRLS.FromUri = this.DefaultIdentity;
-                    this.subRLS.SigCompId = this.SipStack.SigCompId;
-                }
-                return this.subRLS.Subscribe();
+                LOG.Error("Invalid rls presence uri");
+                return false;
             }
-            
-            LOG.Error("Not implemented!");
-            return false;
+
+            if (this.subRLS == null)
+            {
+                this.subRLS = new MySubscriptionSession(this.sipStack, this.xcapService.RLSPresUri, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE_LIST);
+            }
+            else
+            {
+                this.subRLS.ToUri = this.xcapService.RLSPresUri;
+                this.subRLS.FromUri = this.DefaultIdentity;
+                this.subRLS.SigCompId = this.SipStack.SigCompId;
+            }
+            return this.subRLS.Subscribe();
         }
 
         private bool PublishPresence()
         {
-            LOG.Debug("Publish presence");
+            if (this.pubPres == null)
+            {
+                this.pubPres = new MyPublicationSession(this.sipStack, this.DefaultIdentity);
+            }
+            else
+            {
+                this.pubPres.ToUri = this.DefaultIdentity;
+                this.pubPres.FromUri = this.DefaultIdentity;
+                this.pubPres.SigCompId = this.SipStack.SigCompId;
+            }
 
+            this.pubPres.FreeText = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, Configuration.DEFAULT_RCS_FREE_TEXT);
+            this.pubPres.HomePage = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.HOME_PAGE, Configuration.DEFAULT_RCS_HOME_PAGE);
+            this.pubPres.PresenceStatus = (PresenceStatus)Enum.Parse(typeof(PresenceStatus),
+                this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.STATUS, Configuration.DEFAULT_RCS_STATUS.ToString()));
+            if (this.pubPres.PresenceStatus == PresenceStatus.HyperAvailable)
+            {
+                this.pubPres.HyperAvailabilityTimeout = this.StartHyperAvailabilityTimer();
+            }
+
+            return this.pubPres.Publish();
+        }
+
+        private bool PublishPresence(PresenceStatus status)
+        {
+            if (this.pubPres != null)
+            {
+                if (status == PresenceStatus.HyperAvailable)
+                {
+                    this.pubPres.HyperAvailabilityTimeout = this.StartHyperAvailabilityTimer();
+                }
+                return this.pubPres.Publish(status);
+            }
             return false;
+        }
+
+        private int StartHyperAvailabilityTimer()
+        {
+            int timeout = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.HYPERAVAILABILITY_TIMEOUT, Configuration.DEFAULT_RCS_HYPERAVAILABILITY_TIMEOUT);
+            if (this.hyperAvailabilityTimer == null)
+            {
+                this.hyperAvailabilityTimer = new System.Timers.Timer(timeout * 60000);
+                this.hyperAvailabilityTimer.AutoReset = false;
+                this.hyperAvailabilityTimer.Elapsed += delegate
+                {
+                    EventHandlerTrigger.TriggerEvent(this.onHyperAvailabilityTimedout, this);
+                };
+            }
+            else
+            {
+                this.hyperAvailabilityTimer.Stop();
+                this.hyperAvailabilityTimer.Interval = timeout * 60000;
+            }
+
+            this.hyperAvailabilityTimer.Start();
+            return timeout;
         }
 
         private void xcapService_onXcapEvent(object sender, XcapEventArgs e)
@@ -121,14 +199,64 @@ namespace BogheCore.Services.Impl
             switch (e.Type)
             {
                 case XcapEventTypes.RLS_DONE:
-                    if (this.preferences.presence_sub)
+                    if (this.IsSubscriptionToRLSEnabled)
                     {
-                        this.SubscribeToPresence();
+                        this.SubscribeToRLSPresence();
                     }
                     break;
 
                 default:
                     break;
+            }
+        }
+
+        private void contactService_onContactEvent(object sender, ContactEventArgs e)
+        {
+            if (!this.IsSubscriptionEnabled || this.IsSubscriptionToRLSEnabled)
+            {
+                return;
+            }
+
+            switch (e.Type)
+            {
+                case ContactEventTypes.CONTACT_ADDED:
+                    {
+                        MySubscriptionSession session = new MySubscriptionSession(this.sipStack,  (e.GetExtra(ContactEventArgs.EXTRA_CONTACT) as Contact).UriString, 
+                            MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE);
+                        this.subPresence.Add(session);
+                        session.Subscribe();
+                        break;
+                    }
+
+                case ContactEventTypes.CONTACT_REMOVED:
+                    {
+                        MySubscriptionSession session = this.subPresence.FirstOrDefault(x => String.Equals(x.ToUri, (e.GetExtra(ContactEventArgs.EXTRA_CONTACT) as Contact).UriString));
+                        if (session != null)
+                        {
+                            if (session.IsConnected)
+                            {
+                                session.UnSubscribe();
+                            }
+                            this.subPresence.Remove(session);
+                        }
+                        break;
+                    }
+
+                case ContactEventTypes.RESET:
+                    {
+                        this.subPresence.ForEach(x=>
+                        {
+                            if (x.IsConnected) x.UnSubscribe();
+                        });
+
+                        foreach (Contact contact in this.contactService.Contacts)
+                        {
+                            MySubscriptionSession session = new MySubscriptionSession(this.sipStack, contact.UriString, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE);
+                            this.subPresence.Add(session);
+                            session.Subscribe();
+                        }
+                        break;
+                    }
             }
         }
     }

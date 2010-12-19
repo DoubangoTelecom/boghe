@@ -77,7 +77,14 @@ namespace BogheCore.Xcap
                     {
                         if (this.xcapService.Synchronizer != null)
                         {
-                            this.xcapService.Synchronizer.Release();
+                            try
+                            {
+                                this.xcapService.Synchronizer.Release();
+                            }
+                            catch (SemaphoreFullException ex)
+                            {
+                                LOG.Error(ex);
+                            }
                         }
                         break;
                     }

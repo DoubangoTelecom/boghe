@@ -36,6 +36,8 @@ namespace BogheCore.Sip
             private readonly MyMsrpSession session;
             private byte[] tempBuffer;
             private MemoryStream chatStream;
+            private String contentType;
+            private String wContentType;
 
             internal MyMsrpCallback(MyMsrpSession session)
                 : base()
@@ -127,6 +129,7 @@ namespace BogheCore.Sip
                     case tmsrp_request_type_t.tmsrp_SEND:
                         {
                             uint clen = message.getMsrpContentLength();
+                            uint read = 0;
                             if (clen == 0)
                             {
                                 LOG.Info("Empty MSRP message");
@@ -137,7 +140,28 @@ namespace BogheCore.Sip
                             {
                                 this.tempBuffer = new byte[(int)clen];
                             }
-                            uint read = message.getMsrpContent(this.tempBuffer, (uint)this.tempBuffer.Length);
+
+                            read = message.getMsrpContent(this.tempBuffer, (uint)this.tempBuffer.Length);
+                            if (message.isFirstChunck())
+                            {
+                                this.contentType = message.getMsrpHeaderValue("Content-Type");
+                                if (!String.IsNullOrEmpty(contentType) && contentType.StartsWith(ContentType.CPIM, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    MediaContentCPIM mediaContent = MediaContent.parse(this.tempBuffer, read);
+                                    if (mediaContent != null)
+                                    {
+                                        this.wContentType = mediaContent.getHeaderValue("Content-Type");
+
+                                        String test = Encoding.UTF8.GetString(this.tempBuffer);
+                                        this.tempBuffer = mediaContent.getPayload();
+                                        test = Encoding.UTF8.GetString(this.tempBuffer);
+                                        
+                                        read = (uint)this.tempBuffer.Length;
+                                        mediaContent.Dispose(); // Hi GC, I want my memory right now
+                                    }
+                                }
+                            }
+                             
                             this.AppenData(this.tempBuffer, read);
 
                             // File Transfer => ProgressBar
@@ -159,7 +183,8 @@ namespace BogheCore.Sip
                                 if (this.session.MediaType == MediaType.Chat && this.chatStream != null)
                                 {
                                     MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.DATA);
-                                    eargs.AddExtra(MsrpEventArgs.EXTRA_CONTENT_TYPE, message.getMsrpHeaderValue("Content-Type"))
+                                    eargs.AddExtra(MsrpEventArgs.EXTRA_CONTENT_TYPE, this.contentType)
+                                        .AddExtra(MsrpEventArgs.EXTRA_WRAPPED_CONTENT_TYPE, this.wContentType)
                                         .AddExtra(MsrpEventArgs.EXTRA_DATA, this.chatStream.ToArray())
                                         .AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
                                     EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
@@ -232,12 +257,15 @@ namespace BogheCore.Sip
 
                     case tmsrp_event_type_t.tmsrp_event_type_disconnected:
                         {
-                            lock (this.session.outFileStream)
+                            if (this.session.outFileStream != null)
                             {
-                                if (this.session.outFileStream != null)
+                                lock (this.session.outFileStream)
                                 {
-                                    this.session.outFileStream.Close();
-                                    this.session.outFileStream = null;
+                                    if (this.session.outFileStream != null)
+                                    {
+                                        this.session.outFileStream.Close();
+                                        this.session.outFileStream = null;
+                                    }
                                 }
                             }
 

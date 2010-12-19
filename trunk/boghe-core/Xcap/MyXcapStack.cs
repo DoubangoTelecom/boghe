@@ -130,6 +130,7 @@ namespace BogheCore.Xcap
 
         internal bool Start()
         {
+            LOG.Debug(String.Format("XCAP-ROOT={0}", this.XcapRoot));
             if (this.stack == null)
             {
                 LOG.Error("Invalid Internal XCAP Stack");

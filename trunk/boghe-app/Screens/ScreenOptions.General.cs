@@ -22,10 +22,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheCore.Model;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        private void LoadGeneral()
+        {
+            this.checkBoxLaunchWhenStart.IsChecked = this.configurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUTO_START, Configuration.DEFAULT_GENERAL_AUTOSTART);
+            this.textBoxENUM.Text = this.configurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.ENUM_DOMAIN, Configuration.DEFAULT_GENERAL_ENUM_DOMAIN);
+        }
+
+        private bool UpdateGeneral()
+        {
+            this.configurationService.Set(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUTO_START, this.checkBoxLaunchWhenStart.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.ENUM_DOMAIN, this.textBoxENUM.Text);
+
+            return true;
+        }
     }
 }
