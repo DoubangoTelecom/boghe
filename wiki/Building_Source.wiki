@@ -22,7 +22,7 @@ cd myboghe
 }}}
  * Checkout doubango source code into *myboghe*. Important: The destination directory MUST be called *doubango*
 {{{
-svn checkout http://doubango.googlecode.com/svn/trunk/ Doubango
+svn checkout http://doubango.googlecode.com/svn/trunk/ doubango
 }}}
  * Checkout Boghe source code into *myboghe*
 {{{
