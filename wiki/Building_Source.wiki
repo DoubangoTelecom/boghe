@@ -32,7 +32,6 @@ svn checkout http://boghe.googlecode.com/svn/trunk/ boghe
 You *MUST* have something like this:
 <br />
 +---|myboghe<br />
-----|<br />
 +------|doubango<br />
 +------|boghe<br />
 <br />
