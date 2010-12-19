@@ -31,6 +31,8 @@ svn checkout http://boghe.googlecode.com/svn/trunk/ boghe
 
 You *MUST* have something like this:
 <br />
+<br />
 [http://boghe.googlecode.com/svn-history/r27/trunk/screenshots/Folders.png]
+<br />
 <br />
 To open & build all projects, open *myboghe/boghe/boghe-win32.sln*
