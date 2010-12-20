@@ -3,10 +3,10 @@
 
 <wiki:toc max_depth="3" />
 
-To build the source code you need Visual Studio 2008 with the .NET Framework 3.5.
+To build the source code you need Visual Studio 2008 with the .NET Framework 3.5 *SP1*.
 
 == Supported systems ==
- * Windows XP SP3 with .NET Framework 3.5
+ * Windows XP SP3 with .NET Framework 3.5 *SP1*
  * Windows Vista
  * Windows 7
 
