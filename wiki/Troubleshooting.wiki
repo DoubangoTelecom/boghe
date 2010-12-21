@@ -30,3 +30,8 @@ To download .NET Framework 3.5 SP1: [http://www.microsoft.com/downloads/en/detai
  # If the C++ runtime is missing then, Dependency walker will fail to find *MSVCR90.DLL*.
 
 To download C++ Runtime for x86: [http://www.microsoft.com/downloads/en/details.aspx?familyid=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2&displaylang=en]
+
+
+=Troubleshooting "Failed to start service manager"=
+
+On Windows Vista and 7 this is most likely caused by insufficient rights to create files in the current folder. As a workaround right click on *BogheApp.exe* and select *Run as administrator*.
