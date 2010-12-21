@@ -1,6 +1,8 @@
 #summary Troubleshooting
 #labels Featured,Phase-Support
 
+<wiki:toc max_depth="4" />
+
 This wiki page help you troubleshooting issues related to the client.
 
 = Cheeking for .NET Framework 3.5 SP1  =
