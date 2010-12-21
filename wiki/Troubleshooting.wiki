@@ -15,7 +15,7 @@ To check that .NET framework 3.5 SP1 is correctly installed on your machine yous
 <td>[http://boghe.googlecode.com/svn/trunk/screenshots/netfx_setupverifier.png]</td>
 </tr>
 <tr>
-<td>_.NET Framework Verifier_</td>
+<td align=center>_.NET Framework Verifier_</td>
 </tr>
 </table>
 
