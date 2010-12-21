@@ -18,3 +18,5 @@ To check that .NET framework 3.5 SP1 is correctly installed on your machine yous
 <td>_.NET Framework Verifier_</td>
 </tr>
 </table>
+
+To download .NET Framework 3.5 SP1: [http://www.microsoft.com/downloads/en/details.aspx?FamilyID=ab99342f-5d1a-413d-8319-81da479ab0d7&displaylang=en]
