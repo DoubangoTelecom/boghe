@@ -5,7 +5,9 @@
 
 This wiki page help you troubleshooting issues related to the client.
 
-= Cheeking for .NET Framework 3.5 SP1 =
+=Troubleshooting "Boghe - IMS/RCS Client has stopped working"=
+
+== Cheeking for .NET Framework 3.5 SP1 ==
 To check that .NET framework 3.5 SP1 is correctly installed on your machine yous should:
  # Download the .NET verifier from here: [http://boghe.googlecode.com/svn/trunk/boghe-thirdparties/win32/netfx_setupverifier_new.zip http://boghe.googlecode.com/svn/trunk/boghe-thirdparties/win32/netfx_setupverifier_new.zip]
  # Unzip the file and run *netfx_setupverifier.exe*. From the dialog box (see below), select *.NET Framework 3.5 SP1* and press on *Verify Now*.
@@ -21,7 +23,7 @@ To check that .NET framework 3.5 SP1 is correctly installed on your machine yous
 
 To download .NET Framework 3.5 SP1: [http://www.microsoft.com/downloads/en/details.aspx?FamilyID=ab99342f-5d1a-413d-8319-81da479ab0d7&displaylang=en]
 
-= Checking for C++ Runtime =
+== Checking for C++ Runtime ==
  # Download Dependency walker (http://www.dependencywalker.com/) and Install it
  # Open Dependency walker
  # Drag&Drop *tinyWRAP.dll* into Dependency Walker
