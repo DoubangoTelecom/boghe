@@ -99,17 +99,38 @@
     <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioConsumer.cs">
       <Link>ProxyAudioConsumer.cs</Link>
     </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioConsumerCallback.cs">
+      <Link>ProxyAudioConsumerCallback.cs</Link>
+    </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioProducer.cs">
       <Link>ProxyAudioProducer.cs</Link>
     </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioProducerCallback.cs">
+      <Link>ProxyAudioProducerCallback.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyPlugin.cs">
+      <Link>ProxyPlugin.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyPluginMgr.cs">
+      <Link>ProxyPluginMgr.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyPluginMgrCallback.cs">
+      <Link>ProxyPluginMgrCallback.cs</Link>
+    </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoConsumer.cs">
       <Link>ProxyVideoConsumer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoConsumerCallback.cs">
+      <Link>ProxyVideoConsumerCallback.cs</Link>
     </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoFrame.cs">
       <Link>ProxyVideoFrame.cs</Link>
     </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoProducer.cs">
       <Link>ProxyVideoProducer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoProducerCallback.cs">
+      <Link>ProxyVideoProducerCallback.cs</Link>
     </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\PublicationEvent.cs">
       <Link>PublicationEvent.cs</Link>
@@ -218,6 +239,9 @@
     </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\twrap_media_type_t.cs">
       <Link>twrap_media_type_t.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Doubango\bindings\csharp\twrap_proxy_plugin_type_t.cs">
+      <Link>twrap_proxy_plugin_type_t.cs</Link>
     </Compile>
     <Compile Include="..\..\Doubango\bindings\csharp\twrap_rpmessage_type_t.cs">
       <Link>twrap_rpmessage_type_t.cs</Link>
