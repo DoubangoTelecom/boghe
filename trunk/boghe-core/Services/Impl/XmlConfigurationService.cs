@@ -81,7 +81,7 @@ namespace BogheCore.Services.Impl
                     }
                     catch (InvalidOperationException ie)
                     {
-                        LOG.Error("Failed to load history", ie);
+                        LOG.Error("Failed to load configuration", ie);
 
                         reader.Close();
                         File.Delete(XmlConfigurationService.FILE_NAME);
