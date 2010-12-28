@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:items="clr-namespace:BogheApp.Items"
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
-    Title="Talking with John Doe" Height="570" Width="400" Name="SessionWindowName" MinWidth="400" MinHeight="570" Closing="SessionWindowName_Closing" Loaded="SessionWindowName_Loaded" Icon="/BogheApp;component/embedded/16/icon_16.ico" Closed="SessionWindowName_Closed">
+    Title="Talking with John Doe" Height="570" Width="400" Name="SessionWindowName" MinWidth="400" MinHeight="570" Closing="SessionWindowName_Closing" Loaded="SessionWindowName_Loaded" Icon="/BogheApp;component/embedded/icon.ico" Closed="SessionWindowName_Closed">
 
     <Window.Resources>
         <DataTemplate x:Key="DataTemplateItemShortMessage">
@@ -83,7 +83,7 @@
         </Button>
         <Button Height="54" HorizontalAlignment="Right" Margin="0,0,3,1" Name="buttonSendText" VerticalAlignment="Bottom" Width="73" Padding="0" BorderBrush="SkyBlue" Background="Transparent" Click="buttonSendText_Click">
             <DockPanel Width="69">
-                <Image Name="buttonSendTextImage" Source="/BogheApp;component/embedded/24/messages_24.png" DockPanel.Dock="Top" Width="24" Height="24"></Image>
+                <Image Name="buttonSendTextImage" Source="/BogheApp;component/embedded/24/messages_24.png" DockPanel.Dock="Top" Stretch="None"></Image>
                 <Label Name="buttonSendTextLabel"  DockPanel.Dock="Bottom" HorizontalContentAlignment="Center" FontSize="12">Send Text</Label>
             </DockPanel>
         </Button>

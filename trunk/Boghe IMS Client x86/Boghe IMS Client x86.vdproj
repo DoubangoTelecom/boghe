@@ -15,13 +15,37 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0292FFB875C54E3AA6F4A2C091E72253"
+        "MsmKey" = "8:_0FE22A948223445D98D748A549A8C097"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_26DA69ABE1BD4584AF8B8800812CA3ED"
+        "MsmKey" = "8:_1318558DF8DD4FE093088BA213ACFE11"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1BBFAC6BFC864065A86CB7E5ED93155A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1FCEBD5670C5475BB93A57D7C36C86F4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_23D7CDCC27784D5C837A8B9FE7D2D932"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_29D9C77C020B4245BD2492904CCA2E42"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -34,156 +58,90 @@
         "Entry"
         {
         "MsmKey" = "8:_2C2F8083D7EDB118CBA267DA24E3AF03"
-        "OwnerKey" = "8:_DD715756362A46D7AD6381B3541A20BB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2C2F8083D7EDB118CBA267DA24E3AF03"
-        "OwnerKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_31DEACE060784018992A12C9FB99F8FD"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4832B3677609E9C46536938E04A39B75"
-        "OwnerKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4F7842C54E8C4AF99B28E1FA8083F1D1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_50E4CA7BC2064910B7B7A8B3AD502FD1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6566B0527D21805F9A1565E9FC2F8A2C"
-        "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6566B0527D21805F9A1565E9FC2F8A2C"
-        "OwnerKey" = "8:_DD715756362A46D7AD6381B3541A20BB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6566B0527D21805F9A1565E9FC2F8A2C"
-        "OwnerKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6B2EAC2667384E35948C8B796B03035E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6B58C68EB6374CBB85B71278E8A2C8B9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_72AD362CCC904357A5B763F37B6CB387"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_775A8C3718887F7E113788C213023435"
-        "OwnerKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7DE9DD9F993C48FBA885FF9F85A185F2"
+        "MsmKey" = "8:_7804E541BC41438C8121CE4DC8076411"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_89FBE5CC1A5449569DBBD8C7A5164C01"
+        "MsmKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_917BDBCAD0514DF99CA922743D654778"
+        "MsmKey" = "8:_8CA50EE516124DD7BAD183EB000491BE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
+        "MsmKey" = "8:_A9CE1D39487549F78146586DA8F53382"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9C9E681E055E4878A93956745FC77B67"
+        "MsmKey" = "8:_BE10523D8AD9499BB62ED9265EF3C03F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A7A7916D655D4398A9C6C7A8D9A7FC9E"
+        "MsmKey" = "8:_BF222D64FF9A41769BE44DB871CBD7E2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_AD7D8E3D7FB442EE97E776BA58290815"
+        "MsmKey" = "8:_DC3A1E03865945EEA637CF3A0912F3DA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B659AE449E004A2AB80864B97EBB8D7A"
+        "MsmKey" = "8:_E25BAFC1ED8F4BF3B3878BDDA10707D3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B7AD1C9D754648F5A42398EA6C9843F3"
+        "MsmKey" = "8:_E594359DAC9DE7EE198F617721F4E260"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E594359DAC9DE7EE198F617721F4E260"
+        "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E6F630F9AA32493782BE143A3B48BD68"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C2A52177921B48F7AEB3C6EAD547801B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CBB40462FC2A40749B260C748101C45B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DD715756362A46D7AD6381B3541A20BB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E77D44D11E3C42EB9B39DEBBAC001A59"
+        "MsmKey" = "8:_EA85E1FE0EEF4637AE5F26E7EE3DEE90"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -196,55 +154,25 @@
         "Entry"
         {
         "MsmKey" = "8:_EDE815668E4615F8B61EC8C6290DB086"
-        "OwnerKey" = "8:_DD715756362A46D7AD6381B3541A20BB"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EDE815668E4615F8B61EC8C6290DB086"
-        "OwnerKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_93FCD2A6777441C4997B9BC953B34E09"
+        "MsmKey" = "8:_F05756A91D904AD9904919BF2017FAC7"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DD715756362A46D7AD6381B3541A20BB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CBB40462FC2A40749B260C748101C45B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C2A52177921B48F7AEB3C6EAD547801B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A7A7916D655D4398A9C6C7A8D9A7FC9E"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6566B0527D21805F9A1565E9FC2F8A2C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -268,7 +196,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_917BDBCAD0514DF99CA922743D654778"
+        "OwnerKey" = "8:_E594359DAC9DE7EE198F617721F4E260"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -340,11 +268,6 @@
                     "Name" = "8:.NET Framework 3.5 SP1"
                     "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
                     }
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Visual.C++.9.0.x86"
-                    {
-                    "Name" = "8:Visual C++ Runtime Libraries (x86)"
-                    "ProductCode" = "8:Microsoft.Visual.C++.9.0.x86"
-                    }
                 }
             }
         }
@@ -376,10 +299,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0292FFB875C54E3AA6F4A2C091E72253"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0FE22A948223445D98D748A549A8C097"
             {
-            "SourcePath" = "8:..\\Release\\tinySMS.dll"
-            "TargetName" = "8:tinySMS.dll"
+            "SourcePath" = "8:..\\Release\\tinyMEDIA.dll"
+            "TargetName" = "8:tinyMEDIA.dll"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
             "Condition" = "8:"
@@ -396,10 +319,90 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_26DA69ABE1BD4584AF8B8800812CA3ED"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1318558DF8DD4FE093088BA213ACFE11"
+            {
+            "SourcePath" = "8:..\\Release\\tinyRTP.dll"
+            "TargetName" = "8:tinyRTP.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1BBFAC6BFC864065A86CB7E5ED93155A"
+            {
+            "SourcePath" = "8:..\\Release\\tinyMSRP.dll"
+            "TargetName" = "8:tinyMSRP.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1FCEBD5670C5475BB93A57D7C36C86F4"
+            {
+            "SourcePath" = "8:..\\Release\\tinyNET.dll"
+            "TargetName" = "8:tinyNET.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23D7CDCC27784D5C837A8B9FE7D2D932"
             {
             "SourcePath" = "8:..\\Release\\tinySAK.dll"
             "TargetName" = "8:tinySAK.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_29D9C77C020B4245BD2492904CCA2E42"
+            {
+            "SourcePath" = "8:..\\Release\\tinyHTTP.dll"
+            "TargetName" = "8:tinyHTTP.dll"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
             "Condition" = "8:"
@@ -420,16 +423,16 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=1.0.53.539, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_2C2F8083D7EDB118CBA267DA24E3AF03"
                     {
-                    "Name" = "8:BogheXdm.DLL"
+                    "Name" = "8:BogheXdm.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:BogheXdm.DLL"
+            "SourcePath" = "8:BogheXdm.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
@@ -445,42 +448,22 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_31DEACE060784018992A12C9FB99F8FD"
-            {
-            "SourcePath" = "8:..\\Release\\tinySIP.dll"
-            "TargetName" = "8:tinySIP.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4832B3677609E9C46536938E04A39B75"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:BogheControls, Version=1.0.53.539, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_4832B3677609E9C46536938E04A39B75"
                     {
-                    "Name" = "8:BogheControls.DLL"
+                    "Name" = "8:BogheControls.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:BogheControls.DLL"
+            "SourcePath" = "8:BogheControls.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
@@ -496,153 +479,22 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4F7842C54E8C4AF99B28E1FA8083F1D1"
-            {
-            "SourcePath" = "8:..\\Release\\tinyMSRP.dll"
-            "TargetName" = "8:tinyMSRP.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_50E4CA7BC2064910B7B7A8B3AD502FD1"
-            {
-            "SourcePath" = "8:..\\Release\\tinyXCAP.dll"
-            "TargetName" = "8:tinyXCAP.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6566B0527D21805F9A1565E9FC2F8A2C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c198e78e289aebd0, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_6566B0527D21805F9A1565E9FC2F8A2C"
-                    {
-                    "Name" = "8:log4net.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:log4net.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6B2EAC2667384E35948C8B796B03035E"
-            {
-            "SourcePath" = "8:..\\Release\\tinyDAV.dll"
-            "TargetName" = "8:tinyDAV.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6B58C68EB6374CBB85B71278E8A2C8B9"
-            {
-            "SourcePath" = "8:..\\Release\\tinyRTP.dll"
-            "TargetName" = "8:tinyRTP.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_72AD362CCC904357A5B763F37B6CB387"
-            {
-            "SourcePath" = "8:..\\Release\\tinyNET.dll"
-            "TargetName" = "8:tinyNET.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_775A8C3718887F7E113788C213023435"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:BogheCore, Version=1.0.53.539, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_775A8C3718887F7E113788C213023435"
                     {
-                    "Name" = "8:BogheCore.DLL"
+                    "Name" = "8:BogheCore.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:BogheCore.DLL"
+            "SourcePath" = "8:BogheCore.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
@@ -660,10 +512,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DE9DD9F993C48FBA885FF9F85A185F2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7804E541BC41438C8121CE4DC8076411"
             {
-            "SourcePath" = "8:..\\Release\\tinyHTTP.dll"
-            "TargetName" = "8:tinyHTTP.dll"
+            "SourcePath" = "8:..\\Release\\tinySDP.dll"
+            "TargetName" = "8:tinySDP.dll"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
             "Condition" = "8:"
@@ -680,160 +532,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_89FBE5CC1A5449569DBBD8C7A5164C01"
-            {
-            "SourcePath" = "8:..\\Release\\tinyWRAP.dll"
-            "TargetName" = "8:tinyWRAP.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_917BDBCAD0514DF99CA922743D654778"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_917BDBCAD0514DF99CA922743D654778"
-                    {
-                    "Name" = "8:BogheXdm.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Release\\BogheXdm.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_93FCD2A6777441C4997B9BC953B34E09"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_93FCD2A6777441C4997B9BC953B34E09"
-                    {
-                    "Name" = "8:BogheApp.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Release\\BogheApp.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9C9E681E055E4878A93956745FC77B67"
-            {
-            "SourcePath" = "8:..\\Release\\tinyMEDIA.dll"
-            "TargetName" = "8:tinyMEDIA.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A7A7916D655D4398A9C6C7A8D9A7FC9E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:doubango, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A7A7916D655D4398A9C6C7A8D9A7FC9E"
-                    {
-                    "Name" = "8:doubango.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Release\\doubango.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AD7D8E3D7FB442EE97E776BA58290815"
-            {
-            "SourcePath" = "8:..\\Release\\tinyIPSec.dll"
-            "TargetName" = "8:tinyIPSec.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B659AE449E004A2AB80864B97EBB8D7A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8CA50EE516124DD7BAD183EB000491BE"
             {
             "SourcePath" = "8:..\\Release\\tinyDSHOW.dll"
             "TargetName" = "8:tinyDSHOW.dll"
@@ -853,7 +552,138 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B7AD1C9D754648F5A42398EA6C9843F3"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A9CE1D39487549F78146586DA8F53382"
+            {
+            "SourcePath" = "8:..\\Release\\tinySIP.dll"
+            "TargetName" = "8:tinySIP.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BE10523D8AD9499BB62ED9265EF3C03F"
+            {
+            "SourcePath" = "8:..\\Release\\tinyXCAP.dll"
+            "TargetName" = "8:tinyXCAP.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF222D64FF9A41769BE44DB871CBD7E2"
+            {
+            "SourcePath" = "8:..\\Release\\tinySMS.dll"
+            "TargetName" = "8:tinySMS.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DC3A1E03865945EEA637CF3A0912F3DA"
+            {
+            "SourcePath" = "8:..\\Release\\tinyIPSec.dll"
+            "TargetName" = "8:tinyIPSec.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E25BAFC1ED8F4BF3B3878BDDA10707D3"
+            {
+            "SourcePath" = "8:..\\Release\\tinyWRAP.dll"
+            "TargetName" = "8:tinyWRAP.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E594359DAC9DE7EE198F617721F4E260"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c198e78e289aebd0, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E594359DAC9DE7EE198F617721F4E260"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E6F630F9AA32493782BE143A3B48BD68"
             {
             "SourcePath" = "8:..\\Release\\tinySIGCOMP.dll"
             "TargetName" = "8:tinySIGCOMP.dll"
@@ -873,103 +703,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C2A52177921B48F7AEB3C6EAD547801B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EA85E1FE0EEF4637AE5F26E7EE3DEE90"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c198e78e289aebd0, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C2A52177921B48F7AEB3C6EAD547801B"
-                    {
-                    "Name" = "8:log4net.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Release\\log4net.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CBB40462FC2A40749B260C748101C45B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_CBB40462FC2A40749B260C748101C45B"
-                    {
-                    "Name" = "8:BogheControls.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Release\\BogheControls.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DD715756362A46D7AD6381B3541A20BB"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_DD715756362A46D7AD6381B3541A20BB"
-                    {
-                    "Name" = "8:BogheCore.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Release\\BogheCore.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E77D44D11E3C42EB9B39DEBBAC001A59"
-            {
-            "SourcePath" = "8:..\\Release\\tinySDP.dll"
-            "TargetName" = "8:tinySDP.dll"
+            "SourcePath" = "8:..\\Release\\tinyDAV.dll"
+            "TargetName" = "8:tinyDAV.dll"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
             "Condition" = "8:"
@@ -990,16 +727,16 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:doubango, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:doubango, Version=1.0.53.539, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_EDE815668E4615F8B61EC8C6290DB086"
                     {
-                    "Name" = "8:doubango.DLL"
+                    "Name" = "8:doubango.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:doubango.DLL"
+            "SourcePath" = "8:doubango.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
@@ -1017,6 +754,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F05756A91D904AD9904919BF2017FAC7"
+            {
+            "SourcePath" = "8:..\\boghe-app\\embedded\\icon.ico"
+            "TargetName" = "8:icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -1026,7 +783,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_9C7E2F4DC391420F8401F086D1881DF0"
             {
             "Name" = "8:#1916"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:DesktopFolder"
@@ -1038,7 +795,7 @@
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:TARGETDIR"
@@ -1049,7 +806,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_FACEC40F3FA84371BF5506234AC69100"
             {
             "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:ProgramMenuFolder"
@@ -1073,23 +830,23 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Boghe IMS Client x86"
-        "ProductCode" = "8:{FC71D46A-4082-4A4D-A9E3-F41A786B0AE3}"
-        "PackageCode" = "8:{98D4675E-AFA8-459F-A58F-C506047520EA}"
+        "ProductCode" = "8:{44A8F678-0510-400B-94E8-2FD7AFC781FB}"
+        "PackageCode" = "8:{0F875AB9-5A09-4516-84A5-D6E9F0D01E47}"
         "UpgradeCode" = "8:{EB50840C-1303-444B-B408-AB7C70DE942F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.53"
         "Manufacturer" = "8:Doubango"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Boghe IMS Client x86"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Doubango Telecom"
-        "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "Keywords" = "8:SIP;IMS;Boghe;VoIP;RCS"
+        "ARPCOMMENTS" = "8:Boghe IMS Client For Windows"
+        "ARPURLINFOABOUT" = "8:http://www.doubango.org/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -1193,6 +950,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3F98FFD883A14696BA1B5116F48758F2"
+            {
+            "Name" = "8:Boghe IMS Client"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+            "Folder" = "8:_FACEC40F3FA84371BF5506234AC69100"
+            "WorkingFolder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Icon" = "8:_F05756A91D904AD9904919BF2017FAC7"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F07745F22B464039A8770E81F421E828"
+            {
+            "Name" = "8:Boghe IMS Client"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+            "Folder" = "8:_9C7E2F4DC391420F8401F086D1881DF0"
+            "WorkingFolder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Icon" = "8:_F05756A91D904AD9904919BF2017FAC7"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -1592,6 +1377,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_896C7141D3D4476A8D22AB00E68B4E85"
+            {
+            "SourcePath" = "8:..\\boghe-app\\obj\\Release\\BogheApp.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{AA9DE4E7-5C53-4DDE-BD95-B478CE2E369E}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
         }
     }
 }

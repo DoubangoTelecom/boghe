@@ -81,7 +81,7 @@ namespace BogheApp
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             // Initialize Screen Service
             this.screenService = Win32ServiceManager.SharedManager.Win32ScreenService;

@@ -37,6 +37,7 @@ namespace BogheCore.Services.Impl
         private static readonly ILog LOG = LogManager.GetLogger(typeof(XmlConfigurationService));
 
         private const String FILE_NAME = "configuration.xml";
+        private String fileFullPath;
         private readonly ServiceManager manager;
 
         private MyObservableCollection<XmlSection> sections;
@@ -59,21 +60,22 @@ namespace BogheCore.Services.Impl
         {
             bool ret = true;
 
-            LOG.Debug(String.Format("Loading XML configuration from {0}", XmlConfigurationService.FILE_NAME));
+            this.fileFullPath = this.manager.BuildStoragePath(XmlConfigurationService.FILE_NAME);
+            LOG.Debug(String.Format("Loading XML configuration from {0}", this.fileFullPath));
 
             try
             {
-                if (!File.Exists(XmlConfigurationService.FILE_NAME))
+                if (!File.Exists(this.fileFullPath))
                 {
-                    LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", XmlConfigurationService.FILE_NAME));
-                    File.Create(XmlConfigurationService.FILE_NAME).Close();
+                    LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", this.fileFullPath));
+                    File.Create(this.fileFullPath).Close();
 
                     // create xml declaration
                     this.sections = new MyObservableCollection<XmlSection>();
                     this.ImmediateSave();
                 }
 
-                using (StreamReader reader = new StreamReader(XmlConfigurationService.FILE_NAME))
+                using (StreamReader reader = new StreamReader(this.fileFullPath))
                 {
                     try
                     {
@@ -84,7 +86,7 @@ namespace BogheCore.Services.Impl
                         LOG.Error("Failed to load configuration", ie);
 
                         reader.Close();
-                        File.Delete(XmlConfigurationService.FILE_NAME);
+                        File.Delete(this.fileFullPath);
                     }
                 }
 
@@ -230,7 +232,7 @@ namespace BogheCore.Services.Impl
                 LOG.Debug("Saving configuration...");
                 try
                 {
-                    using (StreamWriter writer = new StreamWriter(XmlConfigurationService.FILE_NAME))
+                    using (StreamWriter writer = new StreamWriter(this.fileFullPath))
                     {
                         this.xmlSerializer.Serialize(writer, this.sections);
                         writer.Flush();

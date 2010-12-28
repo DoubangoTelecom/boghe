@@ -27,5 +27,9 @@ namespace BogheCore.Services
 {
     public interface IStorageService : IService
     {
+        String ApplicationDataPath { get; }
+        bool IsMultiInstanceEnabled { get; }
+
+        String BuildStoragePath(String folder);
     }
 }

@@ -26,6 +26,8 @@ using BogheCore.Services.Impl;
 using BogheCore.Services;
 using log4net;
 using BogheCore.Utils;
+using System.IO;
+using System.Windows.Forms;
 
 namespace BogheApp.Services.Impl
 {
@@ -34,6 +36,9 @@ namespace BogheApp.Services.Impl
         private static ILog LOG = LogManager.GetLogger(typeof(Win32ServiceManager));
 
         private static Win32ServiceManager singleton = null;
+        private const String MULI_INSTANCE_FILE = "./.multiinstance";
+        private readonly bool multiInstance;
+        private String applicationDataPath;
 
         private IWin32ScreenService screenService;
         private ILogService logService;
@@ -61,6 +66,11 @@ namespace BogheApp.Services.Impl
             }
         }
 
+        public Win32ServiceManager()
+        {
+            this.multiInstance = System.IO.File.Exists(Win32ServiceManager.MULI_INSTANCE_FILE);
+        }
+
         /// <summary>
         /// Starts the manager
         /// </summary>
@@ -71,7 +81,6 @@ namespace BogheApp.Services.Impl
 
             LOG.Debug("Start Service Manager");
 
-            // Log service should be the first to start
 
             ret &= this.LogService.Start();
             ret &= this.ConfigurationService.Start();
@@ -112,6 +121,42 @@ namespace BogheApp.Services.Impl
 
             return ret;
         }
+
+        public override String ApplicationDataPath
+        {
+            get
+            {
+                if (this.applicationDataPath == null)
+                {
+                    if (this.multiInstance)
+                    {
+                        this.applicationDataPath = Path.Combine(Application.StartupPath, "User");
+                    }
+                    else
+                    {
+                        String applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                        this.applicationDataPath = Path.Combine(applicationData, "Doubango\\Boghe IMS Client");
+                    }
+                    Directory.CreateDirectory(this.applicationDataPath);
+                }
+                return this.applicationDataPath;
+            }
+        }
+
+        public override bool IsMultiInstanceEnabled
+        {
+            get
+            {
+                return this.multiInstance;
+            }
+        }
+
+        public override String BuildStoragePath(String folder)
+        {
+            return Path.Combine(this.ApplicationDataPath, folder);
+        }
+
+        
 
         /// <summary>
         /// Screen Service

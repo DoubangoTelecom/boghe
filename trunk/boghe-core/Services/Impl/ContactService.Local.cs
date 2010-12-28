@@ -25,6 +25,7 @@ using System.Text;
 using System.IO;
 using BogheCore.Model;
 using BogheCore.Events;
+using System.Collections.ObjectModel;
 
 namespace BogheCore.Services.Impl
 {
@@ -62,7 +63,8 @@ namespace BogheCore.Services.Impl
 
         private bool ImmediateSave(bool isSavingContacts)
         {
-            String fileName = isSavingContacts ? ContactService.CONTACTS_FILE_NAME : ContactService.GROUPS_FILE_NAME;
+            String fileName = this.manager.BuildStoragePath(
+                isSavingContacts ? ContactService.CONTACTS_FILE_NAME : ContactService.GROUPS_FILE_NAME);
             
             LOG.Debug(String.Format("Saving to {0}...", fileName));
             try
@@ -113,7 +115,8 @@ namespace BogheCore.Services.Impl
 
         private void ImmediateLoad(bool isLoadingContacts)
         {
-            String fileName = isLoadingContacts ? ContactService.CONTACTS_FILE_NAME : ContactService.GROUPS_FILE_NAME;
+            String fileName = this.manager.BuildStoragePath
+                (isLoadingContacts ? ContactService.CONTACTS_FILE_NAME : ContactService.GROUPS_FILE_NAME);
 
             LOG.Debug(String.Format("Loading from {0}", fileName));
 
@@ -127,7 +130,7 @@ namespace BogheCore.Services.Impl
                     // create xml declaration
                     if (isLoadingContacts)
                     {
-                        this.contacts = new MyObservableCollection<Contact>();
+                        this.contacts = new MyObservableCollection<Contact>(true);
                     }
                     else
                     {
@@ -142,7 +145,9 @@ namespace BogheCore.Services.Impl
                     {
                         if (isLoadingContacts)
                         {
-                            this.contacts = this.xmlContactSerializer.Deserialize(reader) as MyObservableCollection<Contact>;
+                            ObservableCollection<Contact> _contacts = this.xmlContactSerializer.Deserialize(reader) as ObservableCollection<Contact>;
+                            this.contacts = new MyObservableCollection<Contact>(true);
+                            this.contacts.AddRange(_contacts);// Force tracking
                         }
                         else
                         {
