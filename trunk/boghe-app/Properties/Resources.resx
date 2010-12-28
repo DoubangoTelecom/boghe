@@ -236,7 +236,7 @@
     <value>..\embedded\32\lock_warning_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="log4net_xml" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\embedded\log4net.xml;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\embedded\log4net.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="messages_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\messages_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -249,9 +249,6 @@
   </data>
   <data name="phone_hang_up_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\32\phone_hang_up_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phone_hold_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\embedded\32\phone_hold_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="phone_pick_up_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\32\phone_pick_up_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -285,9 +282,6 @@
   </data>
   <data name="user_mobilephone_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\32\user_mobilephone_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="user_monitor_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\embedded\32\user_monitor_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user_offline_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\embedded\16\user_offline_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

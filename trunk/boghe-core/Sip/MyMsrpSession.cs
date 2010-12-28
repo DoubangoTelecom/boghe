@@ -32,7 +32,7 @@ namespace BogheCore.Sip
     public partial class MyMsrpSession : MyInviteSession
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMsrpSession));
-        private const String DESTINATION_FOLDER = "./SharedContent";
+        private const String DESTINATION_FOLDER = "Doubango\\SharedContent";
 
         private const String CHAT_ACCEPT_TYPES = "text/plain message/CPIM";
         private const String CHAT_ACCEPT_WRAPPED_TYPES = "text/plain image/jpeg image/gif image/bmp image/png";
@@ -105,7 +105,7 @@ namespace BogheCore.Sip
                 }
 
                 msrpSession = MyMsrpSession.CreateIncomingSession(sipStack, session, mediaType, fromUri);
-                msrpSession.filePath = String.Format("{0}/{1}", MyMsrpSession.DESTINATION_FOLDER, name);
+                msrpSession.filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), String.Format("{0}/{1}", MyMsrpSession.DESTINATION_FOLDER, name));
                 msrpSession.fileType = type;
             }
 

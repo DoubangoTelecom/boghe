@@ -27,6 +27,18 @@ namespace BogheCore.Services.Impl
 {
     public abstract class ServiceManager
     {
+        public abstract String ApplicationDataPath
+        {
+            get;
+        }
+
+        public abstract bool IsMultiInstanceEnabled
+        {
+            get;
+        }
+
+        public abstract String BuildStoragePath(String folder);
+
         public abstract IConfigurationService ConfigurationService
         {
             get;

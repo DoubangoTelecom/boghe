@@ -62,7 +62,7 @@
             <Image Source="/BogheApp;component/embedded/32/visio_call_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
         </Button>
         <Button HorizontalAlignment="Right" Margin="0,4,39,2" Name="buttonFile"    Click="buttonFile_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Send File" VerticalAlignment="Bottom">
-            <Image Source="/BogheApp;component/embedded/32/document_up_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+            <Image Source="/BogheApp;component/embedded/32/image_gallery_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
         </Button>
         <Button HorizontalAlignment="Right" Margin="0,4,1,2" Name="buttonMessaging"    Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Start Chat" VerticalAlignment="Bottom" Click="buttonMessaging_Click">
             <Button.ContextMenu>

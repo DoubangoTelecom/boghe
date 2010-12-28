@@ -41,10 +41,12 @@ namespace BogheApp
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            
+
             try
             {
-                System.Threading.Thread.CurrentThread.Name = "Main Thread";
-                using (Stream stream = new MemoryStream(BogheApp.Properties.Resources.log4net_xml))
+                String log4net = String.Format(BogheApp.Properties.Resources.log4net_xml, Win32ServiceManager.SharedManager.ApplicationDataPath);
+                using (Stream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(log4net)))
                 {
                     XmlConfigurator.Configure(stream);
                     LOG = LogManager.GetLogger(typeof(App));
@@ -57,7 +59,7 @@ namespace BogheApp
             }
 
             LOG.Debug("====================================================");
-            LOG.Debug("======Starting Boghe - IMS/RCS Client v1.0.0 r501====");
+            LOG.Debug(String.Format("======Starting Boghe - IMS/RCS Client v{0} ====", System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
             LOG.Debug("====================================================");
 
 

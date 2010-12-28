@@ -32,7 +32,7 @@ namespace BogheCore
     public class MyObservableCollection<T> : ObservableCollection<T>
         where T : IComparable<T>, INotifyPropertyChanged
     {
-        private bool trackItemsPropChanges;
+        private readonly bool trackItemsPropChanges;
         public event EventHandler<StringEventArgs> onItemPropChanged;
 
         public MyObservableCollection()

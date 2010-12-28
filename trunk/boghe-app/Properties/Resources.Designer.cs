@@ -404,10 +404,25 @@ namespace BogheApp.Properties {
             }
         }
         
-        public static byte[] log4net_xml {
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;log4net&gt;
+        ///  
+        ///  &lt;appender name=&quot;ConsoleAppender&quot; type=&quot;log4net.Appender.ConsoleAppender&quot;&gt;
+        ///    &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;
+        ///      &lt;conversionPattern value=&quot;%date %-5level [%thread] %logger:%line - %message%newline&quot;/&gt;
+        ///    &lt;/layout&gt;
+        ///  &lt;/appender&gt;
+        ///
+        ///  &lt;appender name=&quot;FileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;
+        ///    &lt;file value=&quot;{0}\Boghe.log&quot;/&gt;
+        ///    &lt;appendToFile value=&quot;true&quot;/&gt;
+        ///    &lt;rollingStyle value=&quot;Date&quot;/&gt;
+        ///    &lt;datePattern value [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string log4net_xml {
             get {
-                object obj = ResourceManager.GetObject("log4net_xml", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("log4net_xml", resourceCulture);
             }
         }
         
@@ -455,13 +470,6 @@ namespace BogheApp.Properties {
         public static System.Drawing.Bitmap phone_hang_up_32 {
             get {
                 object obj = ResourceManager.GetObject("phone_hang_up_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        public static System.Drawing.Bitmap phone_hold_32 {
-            get {
-                object obj = ResourceManager.GetObject("phone_hold_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -537,13 +545,6 @@ namespace BogheApp.Properties {
         public static System.Drawing.Bitmap user_mobilephone_32 {
             get {
                 object obj = ResourceManager.GetObject("user_mobilephone_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        public static System.Drawing.Bitmap user_monitor_32 {
-            get {
-                object obj = ResourceManager.GetObject("user_monitor_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

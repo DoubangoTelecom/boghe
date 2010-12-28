@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BogheApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Boghe - IMS/RCS Client" Width="450" Height="690" SizeToContent="Manual"  Icon="/BogheApp;component/embedded/16/icon_16.png" Background="SkyBlue" MinWidth="450" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded" Closing="Window_Closing">
+    Title="Boghe - IMS/RCS Client" Width="450" Height="690" SizeToContent="Manual"  Background="SkyBlue" MinWidth="450" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded" Closing="Window_Closing" Icon="/BogheApp;component/embedded/icon.ico">
 
     <Grid Background="White">
         <StatusBar Height="32" Name="statusBar" VerticalAlignment="Bottom" Background="White" />

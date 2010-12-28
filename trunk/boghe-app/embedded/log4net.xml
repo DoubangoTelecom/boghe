@@ -8,7 +8,7 @@
   </appender>
 
   <appender name="FileAppender" type="log4net.Appender.RollingFileAppender">
-    <file value=".\Boghe.log"/>
+    <file value="{0}\Boghe.log"/>
     <appendToFile value="true"/>
     <rollingStyle value="Date"/>
     <datePattern value="yyyyMMdd"/>

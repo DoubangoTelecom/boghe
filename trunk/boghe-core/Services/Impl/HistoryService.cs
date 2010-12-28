@@ -36,6 +36,7 @@ namespace BogheCore.Services.Impl
         private static readonly ILog LOG = LogManager.GetLogger(typeof(HistoryService));
 
         private const String FILE_NAME = "history.xml";
+        private String fileFullPath;
         private readonly ServiceManager manager;
 
         private MyObservableCollection<HistoryEvent> events;
@@ -64,6 +65,7 @@ namespace BogheCore.Services.Impl
 
         public bool Start()
         {
+            this.fileFullPath = this.manager.BuildStoragePath(HistoryService.FILE_NAME);
             new System.Threading.Thread((System.Threading.ThreadStart)this.LoadHistory).Start();
 
             return true;
@@ -157,7 +159,7 @@ namespace BogheCore.Services.Impl
                 LOG.Debug("Saving history...");
                 try
                 {
-                    using (StreamWriter writer = new StreamWriter(HistoryService.FILE_NAME))
+                    using (StreamWriter writer = new StreamWriter(this.fileFullPath))
                     {
                         this.xmlSerializer.Serialize(writer, this.events);
                         writer.Flush();
@@ -177,21 +179,21 @@ namespace BogheCore.Services.Impl
         {
             this.loading = true;
 
-            LOG.Debug(String.Format("Loading history from {0}", HistoryService.FILE_NAME));
+            LOG.Debug(String.Format("Loading history from {0}", this.fileFullPath));
 
             try
             {
-                if (!File.Exists(HistoryService.FILE_NAME))
+                if (!File.Exists(this.fileFullPath))
                 {
-                    LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", HistoryService.FILE_NAME));
-                    File.Create(HistoryService.FILE_NAME).Close();
+                    LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", this.fileFullPath));
+                    File.Create(this.fileFullPath).Close();
 
                     // create xml declaration
                     this.events = new MyObservableCollection<HistoryEvent>();
                     this.ImmediateSave();
                 }
 
-                using (StreamReader reader = new StreamReader(HistoryService.FILE_NAME))
+                using (StreamReader reader = new StreamReader(this.fileFullPath))
                 {
                     try
                     {
@@ -202,7 +204,7 @@ namespace BogheCore.Services.Impl
                         LOG.Error("Failed to load history", ie);
 
                         reader.Close();
-                        File.Delete(HistoryService.FILE_NAME);
+                        File.Delete(this.fileFullPath);
                     }
                 }
             }
