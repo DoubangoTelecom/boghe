@@ -46,8 +46,8 @@ namespace BogheCore.Sip
 		    this.addHeader("Allow", "INVITE, ACK, CANCEL, BYE, MESSAGE, OPTIONS, NOTIFY, PRACK, UPDATE, REFER");
 		    this.addHeader("Privacy", "none");
 		    this.addHeader("P-Access-Network-Info", "ADSL;utran-cell-id-3gpp=00000000");
-		    this.addHeader("User-Agent", String.Format("IM-client/OMA1.0 Boghe/v{0} (doubango r{1})", 
-				    "1.0.0", "500"));
+		    this.addHeader("User-Agent", String.Format("IM-client/OMA1.0 Boghe/v{0}",
+                    System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
 
         }
 
