@@ -306,7 +306,7 @@ namespace BogheApp
                             this.ChatSession = this.CreateOutgoingSession(MediaType.Chat);
                         }
                         @event.SipSessionId = this.ChatSession.Id;
-                        this.ChatSession.SendMessage(this.textBoxInput.Text, ContentType.TEXT_PLAIN);
+                        this.ChatSession.SendMessage(this.textBoxInput.Text);
                         this.textBoxInput.Text = String.Empty;
                         break;
                     }

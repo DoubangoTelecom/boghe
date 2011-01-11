@@ -244,8 +244,9 @@ namespace BogheCore.Sip
                                     foreach (PendingMessage pendingMsg in this.session.pendingMessages)
                                     {
                                         LOG.Info("Sending pending message...");
-                                        this.session.SendMessage(pendingMsg.Message, pendingMsg.ContentType);
+                                        this.session.SendMessage(pendingMsg.Message, pendingMsg.ContentType, pendingMsg.WContentType);
                                     }
+                                    this.session.pendingMessages.Clear();
                                 }
                                 else
                                 {

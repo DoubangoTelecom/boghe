@@ -50,6 +50,11 @@ namespace BogheCore.Sip
             /* this.init(); */
         }
 
+        ~MySipSession()
+        {
+            this.Dispose();
+        }
+
         public long Id
         {
             get 

@@ -57,6 +57,11 @@ namespace BogheCore.Xcap
             this.stack.setTimeout((uint)timeout);
         }
 
+        ~MyXcapStack()
+        {
+            this.Dispose();
+        }
+
         public void Dispose()
         {
             if (this.stack != null)
