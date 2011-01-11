@@ -51,6 +51,30 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2C2F8083D7EDB118CBA267DA24E3AF03"
+        "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2C2F8083D7EDB118CBA267DA24E3AF03"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4832B3677609E9C46536938E04A39B75"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_775A8C3718887F7E113788C213023435"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7804E541BC41438C8121CE4DC8076411"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -105,6 +129,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E594359DAC9DE7EE198F617721F4E260"
+        "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E6F630F9AA32493782BE143A3B48BD68"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -117,6 +147,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_EDE815668E4615F8B61EC8C6290DB086"
+        "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EDE815668E4615F8B61EC8C6290DB086"
+        "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F05756A91D904AD9904919BF2017FAC7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -125,6 +167,30 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_775A8C3718887F7E113788C213023435"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EDE815668E4615F8B61EC8C6290DB086"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2C2F8083D7EDB118CBA267DA24E3AF03"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4832B3677609E9C46536938E04A39B75"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -353,6 +419,99 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2C2F8083D7EDB118CBA267DA24E3AF03"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_2C2F8083D7EDB118CBA267DA24E3AF03"
+                    {
+                    "Name" = "8:BogheXdm.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:BogheXdm.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4832B3677609E9C46536938E04A39B75"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BogheControls, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_4832B3677609E9C46536938E04A39B75"
+                    {
+                    "Name" = "8:BogheControls.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:BogheControls.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_775A8C3718887F7E113788C213023435"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BogheCore, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_775A8C3718887F7E113788C213023435"
+                    {
+                    "Name" = "8:BogheCore.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:BogheCore.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7804E541BC41438C8121CE4DC8076411"
             {
             "SourcePath" = "8:..\\Release\\tinySDP.dll"
@@ -564,6 +723,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EDE815668E4615F8B61EC8C6290DB086"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:doubango, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_EDE815668E4615F8B61EC8C6290DB086"
+                    {
+                    "Name" = "8:doubango.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:doubango.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F05756A91D904AD9904919BF2017FAC7"
             {
             "SourcePath" = "8:..\\boghe-app\\embedded\\icon.ico"
@@ -640,14 +830,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Boghe IMS Client x86"
-        "ProductCode" = "8:{974132C2-6C94-4B56-8956-B1E500BE8388}"
-        "PackageCode" = "8:{F4608827-BF0E-4A49-8A13-5F126F047343}"
+        "ProductCode" = "8:{4314B987-B79A-46F1-A622-064DCFDD5451}"
+        "PackageCode" = "8:{3D61E687-E36A-455A-A1AE-0BC7303C7788}"
         "UpgradeCode" = "8:{EB50840C-1303-444B-B408-AB7C70DE942F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.55"
+        "ProductVersion" = "8:1.0.56"
         "Manufacturer" = "8:Doubango"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
