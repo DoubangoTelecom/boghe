@@ -318,7 +318,13 @@ namespace BogheCore.Sip
             return ret;
         }
 
-        public bool SendMessage(String message, String contentType)
+        public bool SendMessage(String message)
+        {
+            // if content-type is null, then the application will use the neg. ctype
+            return this.SendMessage(message, null, null);
+        }
+
+        public bool SendMessage(String message, String contentType, String wContentType)
         {
             if(String.IsNullOrEmpty(message))
             {
@@ -335,7 +341,19 @@ namespace BogheCore.Sip
             if (base.IsConnected)
             {
                 ActionConfig config = new ActionConfig();
-                config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", contentType);
+                if (!String.IsNullOrEmpty(contentType))
+                {
+                    config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", contentType);
+                }
+                if (!String.IsNullOrEmpty(wContentType))
+                {
+                    config.setMediaString(twrap_media_type_t.twrap_media_msrp, "w-content-type", wContentType);
+                }
+                //config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", contentType);
+                // == OR ==
+                //config.setMediaString(twrap_media_type_t.twrap_media_msrp,
+                //    "content-type", "message/CPIM")
+                //    .setMediaString(twrap_media_type_t.twrap_media_msrp, "w-content-type", "text/plain");
                 byte[] payload = Encoding.UTF8.GetBytes(message);
                 bool ret = this.session.sendMessage(payload, (uint)payload.Length, config);
                 config.Dispose();
@@ -348,7 +366,7 @@ namespace BogheCore.Sip
                 {
                     this.pendingMessages = new List<PendingMessage>();
                 }
-                this.pendingMessages.Add(new PendingMessage(message, contentType));
+                this.pendingMessages.Add(new PendingMessage(message, contentType, wContentType));
 
                 ActionConfig config = new ActionConfig();
                 config.setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.CHAT_ACCEPT_TYPES)
@@ -383,11 +401,13 @@ namespace BogheCore.Sip
         {
             readonly String message;
             readonly String contentType;
+            readonly String wContentType;
 
-            internal PendingMessage(String message, String contentType)
+            internal PendingMessage(String message, String contentType, String wContentType)
             {
                 this.message = message;
                 this.contentType = contentType;
+                this.wContentType = wContentType;
             }
 
             internal String Message
@@ -398,6 +418,11 @@ namespace BogheCore.Sip
             internal String ContentType
             {
                 get { return this.contentType; }
+            }
+
+            internal String WContentType
+            {
+                get { return this.wContentType; }
             }
         }
     }

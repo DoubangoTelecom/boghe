@@ -403,7 +403,7 @@ namespace BogheApp
             @event.Content = this.textBoxInput.Text;
             this.AddMessagingEvent(@event);
 
-            this.ChatSession.SendMessage(this.textBoxInput.Text, ContentType.TEXT_PLAIN);
+            this.ChatSession.SendMessage(this.textBoxInput.Text);
             this.textBoxInput.Text = String.Empty;
         }
 

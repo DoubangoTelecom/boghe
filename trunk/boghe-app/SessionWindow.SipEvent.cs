@@ -29,6 +29,13 @@ namespace BogheApp
                             }
                         }, null);
                     }
+                    else if (this.ChatSession != null && this.ChatSession.Id == e.SessionId)
+                    {
+                        this.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                        {
+                            this.ChatSession = null;
+                        });
+                    }
                 }
                 return;
             }
