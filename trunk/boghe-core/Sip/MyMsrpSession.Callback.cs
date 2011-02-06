@@ -151,11 +151,7 @@ namespace BogheCore.Sip
                                     if (mediaContent != null)
                                     {
                                         this.wContentType = mediaContent.getHeaderValue("Content-Type");
-
-                                        String test = Encoding.UTF8.GetString(this.tempBuffer);
                                         this.tempBuffer = mediaContent.getPayload();
-                                        test = Encoding.UTF8.GetString(this.tempBuffer);
-                                        
                                         read = (uint)this.tempBuffer.Length;
                                         mediaContent.Dispose(); // Hi GC, I want my memory right now
                                     }

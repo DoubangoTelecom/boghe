@@ -44,6 +44,8 @@ namespace BogheApp.Screens
         public ScreenAbout()
         {
             InitializeComponent();
+
+            labelVersion.Content = String.Format(labelVersion.Content.ToString(), System.Reflection.Assembly.GetEntryAssembly().GetName().Version);
         }
     }
 }

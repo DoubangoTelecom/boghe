@@ -92,6 +92,7 @@ namespace BogheApp
             this.videoDisplayLocal.Visibility = Visibility.Hidden;
             this.videoDisplayRemote = new VideoDisplay();
             this.videoDisplayRemote.Visibility = Visibility.Hidden;
+            this.videoDisplayRemote.ToolTip = this.borderVideoDispalyRemote.ToolTip;
 
             this.borderVideoDispalyRemote.Child = this.videoDisplayRemote;
             this.borderVideoDispalyLocal.Child = this.videoDisplayLocal;
