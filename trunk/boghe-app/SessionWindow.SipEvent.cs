@@ -102,7 +102,7 @@ namespace BogheApp
                         this.avHistoryEvent.StartTime = DateTime.Now;
                         this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
                     }
-                    
+
                     break;
 
                 case InviteEventTypes.DISCONNECTED:
@@ -122,8 +122,8 @@ namespace BogheApp
                         }
                     }
 
-                    this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
-                    this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
+                    //--this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
+                    //--this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
                     this.AVSession = null;
                     break;
 

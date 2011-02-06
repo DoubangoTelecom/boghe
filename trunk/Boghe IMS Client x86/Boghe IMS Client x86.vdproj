@@ -423,7 +423,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=1.0.57.543, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_2C2F8083D7EDB118CBA267DA24E3AF03"
@@ -454,7 +454,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheControls, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:BogheControls, Version=1.0.57.543, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_4832B3677609E9C46536938E04A39B75"
@@ -485,7 +485,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheCore, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:BogheCore, Version=1.0.57.543, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_775A8C3718887F7E113788C213023435"
@@ -727,7 +727,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:doubango, Version=1.0.56.542, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:doubango, Version=1.0.57.543, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_EDE815668E4615F8B61EC8C6290DB086"
@@ -830,14 +830,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Boghe IMS Client x86"
-        "ProductCode" = "8:{4314B987-B79A-46F1-A622-064DCFDD5451}"
-        "PackageCode" = "8:{3D61E687-E36A-455A-A1AE-0BC7303C7788}"
+        "ProductCode" = "8:{254005D4-D3A8-4D5E-B3E9-1CD0B8B38333}"
+        "PackageCode" = "8:{656A32DC-64EF-4F33-98F7-49A39AF15330}"
         "UpgradeCode" = "8:{EB50840C-1303-444B-B408-AB7C70DE942F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.56"
+        "ProductVersion" = "8:1.0.58"
         "Manufacturer" = "8:Doubango"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
