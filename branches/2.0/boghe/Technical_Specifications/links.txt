@@ -1,0 +1,8 @@
+--
+-	Documents from 3GPP, OMA, IETF, 3GPP2, GSMA, ....
+--
+
+RCS - http://www.gsmworld.com/our-work/mobile_lifestyle/rcs/RCS_Release_Docs.htm
+RCS - http://www.gsmworld.com/our-work/mobile_lifestyle/rcs/rcs_specification_documents.htm
+GSMA Documents - http://gsmworld.com/newsroom/document-library/all_documents.htm
+OMA Documents - http://member.openmobilealliance.org/ftp/Public_documents/PAG/Permanent_documents/
