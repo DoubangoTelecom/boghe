@@ -47,226 +47,226 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Doubango\bindings\csharp\ActionConfig.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ActionConfig.cs">
       <Link>ActionConfig.cs</Link>
     </Compile>
-    <Compile Include="..\..\doubango\bindings\csharp\AudioResampler.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\AudioResampler.cs">
       <Link>AudioResampler.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\CallSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\CallSession.cs">
       <Link>CallSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\DDebugCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\DDebugCallback.cs">
       <Link>DDebugCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\DialogEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\DialogEvent.cs">
       <Link>DialogEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\InviteEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\InviteEvent.cs">
       <Link>InviteEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\InviteSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\InviteSession.cs">
       <Link>InviteSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MediaContent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MediaContent.cs">
       <Link>MediaContent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MediaContentCPIM.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MediaContentCPIM.cs">
       <Link>MediaContentCPIM.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MediaSessionMgr.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MediaSessionMgr.cs">
       <Link>MediaSessionMgr.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MessagingEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MessagingEvent.cs">
       <Link>MessagingEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MessagingSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MessagingSession.cs">
       <Link>MessagingSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MsrpCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MsrpCallback.cs">
       <Link>MsrpCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MsrpEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MsrpEvent.cs">
       <Link>MsrpEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MsrpMessage.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MsrpMessage.cs">
       <Link>MsrpMessage.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\MsrpSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\MsrpSession.cs">
       <Link>MsrpSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\OptionsEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\OptionsEvent.cs">
       <Link>OptionsEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\OptionsSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\OptionsSession.cs">
       <Link>OptionsSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioConsumer.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyAudioConsumer.cs">
       <Link>ProxyAudioConsumer.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioConsumerCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyAudioConsumerCallback.cs">
       <Link>ProxyAudioConsumerCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioProducer.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyAudioProducer.cs">
       <Link>ProxyAudioProducer.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyAudioProducerCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyAudioProducerCallback.cs">
       <Link>ProxyAudioProducerCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyPlugin.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyPlugin.cs">
       <Link>ProxyPlugin.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyPluginMgr.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyPluginMgr.cs">
       <Link>ProxyPluginMgr.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyPluginMgrCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyPluginMgrCallback.cs">
       <Link>ProxyPluginMgrCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoConsumer.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyVideoConsumer.cs">
       <Link>ProxyVideoConsumer.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoConsumerCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyVideoConsumerCallback.cs">
       <Link>ProxyVideoConsumerCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoFrame.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyVideoFrame.cs">
       <Link>ProxyVideoFrame.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoProducer.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyVideoProducer.cs">
       <Link>ProxyVideoProducer.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\ProxyVideoProducerCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\ProxyVideoProducerCallback.cs">
       <Link>ProxyVideoProducerCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\PublicationEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\PublicationEvent.cs">
       <Link>PublicationEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\PublicationSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\PublicationSession.cs">
       <Link>PublicationSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\RegistrationEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\RegistrationEvent.cs">
       <Link>RegistrationEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\RegistrationSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\RegistrationSession.cs">
       <Link>RegistrationSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\RPMessage.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\RPMessage.cs">
       <Link>RPMessage.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SafeObject.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SafeObject.cs">
       <Link>SafeObject.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SdpMessage.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SdpMessage.cs">
       <Link>SdpMessage.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SipCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SipCallback.cs">
       <Link>SipCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SipEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SipEvent.cs">
       <Link>SipEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SipMessage.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SipMessage.cs">
       <Link>SipMessage.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SipSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SipSession.cs">
       <Link>SipSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SipStack.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SipStack.cs">
       <Link>SipStack.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SipUri.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SipUri.cs">
       <Link>SipUri.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SMSData.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SMSData.cs">
       <Link>SMSData.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SMSEncoder.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SMSEncoder.cs">
       <Link>SMSEncoder.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\StackEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\StackEvent.cs">
       <Link>StackEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SubscriptionEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SubscriptionEvent.cs">
       <Link>SubscriptionEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\SubscriptionSession.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SubscriptionSession.cs">
       <Link>SubscriptionSession.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tdav_codec_id_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tdav_codec_id_t.cs">
       <Link>tdav_codec_id_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\thttp_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\thttp_event_type_t.cs">
       <Link>thttp_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tinyWRAP.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tinyWRAP.cs">
       <Link>tinyWRAP.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tinyWRAPPINVOKE.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tinyWRAPPINVOKE.cs">
       <Link>tinyWRAPPINVOKE.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tmedia_bandwidth_level_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_bandwidth_level_t.cs">
       <Link>tmedia_bandwidth_level_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tmedia_chroma_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_chroma_t.cs">
       <Link>tmedia_chroma_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tmedia_qos_strength_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_qos_strength_t.cs">
       <Link>tmedia_qos_strength_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tmedia_qos_stype_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_qos_stype_t.cs">
       <Link>tmedia_qos_stype_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tmsrp_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmsrp_event_type_t.cs">
       <Link>tmsrp_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tmsrp_request_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmsrp_request_type_t.cs">
       <Link>tmsrp_request_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_event_type_t.cs">
       <Link>tsip_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_invite_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_invite_event_type_t.cs">
       <Link>tsip_invite_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_message_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_message_event_type_t.cs">
       <Link>tsip_message_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_options_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_options_event_type_t.cs">
       <Link>tsip_options_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_publish_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_publish_event_type_t.cs">
       <Link>tsip_publish_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_register_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_register_event_type_t.cs">
       <Link>tsip_register_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\tsip_subscribe_event_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_subscribe_event_type_t.cs">
       <Link>tsip_subscribe_event_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\twrap_media_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\twrap_media_type_t.cs">
       <Link>twrap_media_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\twrap_proxy_plugin_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\twrap_proxy_plugin_type_t.cs">
       <Link>twrap_proxy_plugin_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\twrap_rpmessage_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\twrap_rpmessage_type_t.cs">
       <Link>twrap_rpmessage_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\twrap_sms_type_t.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\twrap_sms_type_t.cs">
       <Link>twrap_sms_type_t.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\XcapCallback.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\XcapCallback.cs">
       <Link>XcapCallback.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\XcapEvent.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\XcapEvent.cs">
       <Link>XcapEvent.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\XcapMessage.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\XcapMessage.cs">
       <Link>XcapMessage.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\XcapSelector.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\XcapSelector.cs">
       <Link>XcapSelector.cs</Link>
     </Compile>
-    <Compile Include="..\..\Doubango\bindings\csharp\XcapStack.cs">
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\XcapStack.cs">
       <Link>XcapStack.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
