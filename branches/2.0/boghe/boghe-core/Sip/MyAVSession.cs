@@ -28,7 +28,7 @@ namespace BogheCore.Sip
 {
     public class MyAVSession : MyInviteSession
     {
-        private readonly CallSession session;
+        private readonly CallSession mSession;
         private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
         
         public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
@@ -107,7 +107,7 @@ namespace BogheCore.Sip
         public MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, InviteState callState)
             : base(sipStack)
         {
-            this.session = (session == null) ? new CallSession(sipStack) : session;
+            this.mSession = (session == null) ? new CallSession(sipStack) : session;
             base.mediaType = mediaType;
             this.state = callState;
 
@@ -118,7 +118,7 @@ namespace BogheCore.Sip
             base.SigCompId = sipStack.SigCompId;
 
             // 100rel
-            this.session.set100rel(true); // will add "Supported: 100rel"
+            mSession.set100rel(true); // will add "Supported: 100rel"
 
             /* 3GPP TS 24.173
 		    *
@@ -131,41 +131,41 @@ namespace BogheCore.Sip
 		    * Accept-Contact: *;+g.3gpp.icsi-ref="urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel"
 		    * P-Preferred-Service: urn:urn-7:3gpp-service.ims.icsi.mmtel
 		    */
-            this.session.addCaps("+g.3gpp.icsi-ref", "\"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel\"");
-            this.session.addHeader("Accept-Contact", "*;+g.3gpp.icsi-ref=\"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel\"");
-            this.session.addHeader("P-Preferred-Service", "urn:urn-7:3gpp-service.ims.icsi.mmtel");
+            mSession.addCaps("+g.3gpp.icsi-ref", "\"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel\"");
+            mSession.addHeader("Accept-Contact", "*;+g.3gpp.icsi-ref=\"urn%3Aurn-7%3A3gpp-service.ims.icsi.mmtel\"");
+            mSession.addHeader("P-Preferred-Service", "urn:urn-7:3gpp-service.ims.icsi.mmtel");
         }
 
         protected override SipSession Session
         {
-            get { return this.session; }
+            get { return this.mSession; }
         }
 
         public bool AcceptCall()
         {
-            return this.session.accept();
+            return this.mSession.accept();
         }
 
         public bool HangUpCall()
         {
             if (base.connected)
             {
-                return this.session.hangup();
+                return this.mSession.hangup();
             }
             else
             {
-                return this.session.reject();
+                return this.mSession.reject();
             }
         }
 
         public bool HoldCall()
         {
-            return this.session.hold();
+            return this.mSession.hold();
         }
 
         public bool ResumeCall()
         {
-            return this.session.resume();
+            return this.mSession.resume();
         }
 
         public bool MakeCall(String remoteUri)
@@ -180,10 +180,10 @@ namespace BogheCore.Sip
             {
                 case MediaType.AudioVideo:
                 case MediaType.Video:
-                    ret = this.session.callAudioVideo(remoteUri, config);
+                    ret = this.mSession.callAudioVideo(remoteUri, config);
                     break;
                 case MediaType.Audio:
-                    ret = this.session.callAudio(remoteUri, config);
+                    ret = this.mSession.callAudio(remoteUri, config);
                     break;
                 default:
                     throw new Exception("This session doesn't support this media type");
@@ -200,7 +200,7 @@ namespace BogheCore.Sip
             base.outgoing = true;
 
             ActionConfig config = new ActionConfig();
-            ret = this.session.callVideo(remoteUri, config);
+            ret = this.mSession.callVideo(remoteUri, config);
             config.Dispose();
 
             return ret;
@@ -208,7 +208,7 @@ namespace BogheCore.Sip
 
         public bool SendDTMF(int digit)
         {
-            return this.session.sendDTMF(digit);
+            return this.mSession.sendDTMF(digit);
         }
 
     }

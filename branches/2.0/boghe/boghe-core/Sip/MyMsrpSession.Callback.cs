@@ -68,16 +68,16 @@ namespace BogheCore.Sip
                     }
                     else if (this.session.MediaType == MediaType.FileTransfer)
                     {
-                        if (this.session.outFileStream == null)
+                        if (this.session.mOutFileStream == null)
                         {
                             LOG.Error("Null FileStream");
                             return false;
                         }
                         else
                         {
-                            lock (this.session.outFileStream)
+                            lock (this.session.mOutFileStream)
                             {
-                                this.session.outFileStream.Write(data, 0, (int)len);
+                                this.session.mOutFileStream.Write(data, 0, (int)len);
                             }
                         }
                     }
@@ -108,7 +108,7 @@ namespace BogheCore.Sip
                             .AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_TOTAL, total)
                             .AddExtra(MsrpEventArgs.EXTRA_RESPONSE_CODE, code)
                             .AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
-                        EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
+                        EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
                     }
                 }
                 else if (code >= 300)
@@ -116,7 +116,7 @@ namespace BogheCore.Sip
                     MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.ERROR);
                         eargs.AddExtra(MsrpEventArgs.EXTRA_RESPONSE_CODE, code)
                             .AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
-                    EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
+                    EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
                 }
             }
 
@@ -171,7 +171,7 @@ namespace BogheCore.Sip
                                     .AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_TOTAL, total)
                                     .AddExtra(MsrpEventArgs.EXTRA_REQUEST_TYPE, "SEND")
                                     .AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
-                                EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
+                                EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
                             }
 
                             if (message.isLastChunck())
@@ -183,17 +183,17 @@ namespace BogheCore.Sip
                                         .AddExtra(MsrpEventArgs.EXTRA_WRAPPED_CONTENT_TYPE, this.wContentType)
                                         .AddExtra(MsrpEventArgs.EXTRA_DATA, this.chatStream.ToArray())
                                         .AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
-                                    EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
+                                    EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
                                     this.chatStream.SetLength(0);
                                 }
                                 else if (this.session.MediaType == MediaType.FileTransfer)
                                 {
-                                    if (this.session.outFileStream != null)
+                                    if (this.session.mOutFileStream != null)
                                     {
-                                        lock (this.session.outFileStream)
+                                        lock (this.session.mOutFileStream)
                                         {
-                                            this.session.outFileStream.Close();
-                                            this.session.outFileStream = null;
+                                            this.session.mOutFileStream.Close();
+                                            this.session.mOutFileStream = null;
                                         }
                                     }
                                 }
@@ -231,18 +231,18 @@ namespace BogheCore.Sip
                         {
                             MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.CONNECTED);
                             eargs.AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
-                            EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
+                            EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
 
-                            if (this.session.pendingMessages != null && this.session.pendingMessages.Count > 0)
+                            if (this.session.mPendingMessages != null && this.session.mPendingMessages.Count > 0)
                             {
                                 if (this.session.IsConnected)
                                 {
-                                    foreach (PendingMessage pendingMsg in this.session.pendingMessages)
+                                    foreach (PendingMessage pendingMsg in this.session.mPendingMessages)
                                     {
                                         LOG.Info("Sending pending message...");
                                         this.session.SendMessage(pendingMsg.Message, pendingMsg.ContentType, pendingMsg.WContentType);
                                     }
-                                    this.session.pendingMessages.Clear();
+                                    this.session.mPendingMessages.Clear();
                                 }
                                 else
                                 {
@@ -254,21 +254,21 @@ namespace BogheCore.Sip
 
                     case tmsrp_event_type_t.tmsrp_event_type_disconnected:
                         {
-                            if (this.session.outFileStream != null)
+                            if (this.session.mOutFileStream != null)
                             {
-                                lock (this.session.outFileStream)
+                                lock (this.session.mOutFileStream)
                                 {
-                                    if (this.session.outFileStream != null)
+                                    if (this.session.mOutFileStream != null)
                                     {
-                                        this.session.outFileStream.Close();
-                                        this.session.outFileStream = null;
+                                        this.session.mOutFileStream.Close();
+                                        this.session.mOutFileStream = null;
                                     }
                                 }
                             }
 
                             MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.DISCONNECTED);
                             eargs.AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
-                            EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.onMsrpEvent, this.session, eargs);
+                            EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
                             break;
                         }
 

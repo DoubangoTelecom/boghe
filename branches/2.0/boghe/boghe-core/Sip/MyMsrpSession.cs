@@ -40,19 +40,19 @@ namespace BogheCore.Sip
         private const String FILE_ACCEPT_WRAPPED_TYPES = "application/octet-stream image/jpeg image/gif image/bmp image/png";
         private const int CHUNK_DURATION = 25;
 
-        public event EventHandler<MsrpEventArgs> onMsrpEvent;
+        public event EventHandler<MsrpEventArgs> mOnMsrpEvent;
 
-        private readonly MsrpSession session;
-        private readonly MyMsrpCallback callback;
-        private List<PendingMessage> pendingMessages = null;
-        private String filePath;
-        private String fileType;
-        private FileStream outFileStream;
-        private bool failureReport = true;
-        private bool successReport;
-        private bool omaFinalDeliveryReport;
+        private readonly MsrpSession mSession;
+        private readonly MyMsrpCallback mCallback;
+        private List<PendingMessage> mPendingMessages = null;
+        private String mFilePath;
+        private String mFileType;
+        private FileStream mOutFileStream;
+        private bool mFailureReport = true;
+        private bool mSuccessReport;
+        private bool mOmaFinalDeliveryReport;
 
-        private static IDictionary<long, MyMsrpSession> sessions = new Dictionary<long, MyMsrpSession>();
+        private static IDictionary<long, MyMsrpSession> sSessions = new Dictionary<long, MyMsrpSession>();
 
         public static MyMsrpSession TakeIncomingSession(MySipStack sipStack, MsrpSession session, SipMessage message)
         {
@@ -105,8 +105,8 @@ namespace BogheCore.Sip
                 }
 
                 msrpSession = MyMsrpSession.CreateIncomingSession(sipStack, session, mediaType, fromUri);
-                msrpSession.filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), String.Format("{0}/{1}", MyMsrpSession.DESTINATION_FOLDER, name));
-                msrpSession.fileType = type;
+                msrpSession.mFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), String.Format("{0}/{1}", MyMsrpSession.DESTINATION_FOLDER, name));
+                msrpSession.mFileType = type;
             }
 
             return msrpSession;
@@ -117,7 +117,7 @@ namespace BogheCore.Sip
             if (mediaType == MediaType.FileTransfer || mediaType == MediaType.Chat)
             {
                 MyMsrpSession msrpSession = new MyMsrpSession(sipStack, session, mediaType, remoteUri);
-                MyMsrpSession.sessions.Add(msrpSession.Id, msrpSession);
+                sSessions.Add(msrpSession.Id, msrpSession);
 
                 return msrpSession;
             }
@@ -129,7 +129,7 @@ namespace BogheCore.Sip
             if (mediaType == MediaType.FileTransfer || mediaType == MediaType.Chat)
             {
                 MyMsrpSession msrpSession = new MyMsrpSession(sipStack, null, mediaType, remoteUri);
-                MyMsrpSession.sessions.Add(msrpSession.Id, msrpSession);
+                sSessions.Add(msrpSession.Id, msrpSession);
 
                 return msrpSession;
             }
@@ -140,21 +140,21 @@ namespace BogheCore.Sip
         {
             if (session != null)
             {
-                lock (MyMsrpSession.sessions)
+                lock (MyMsrpSession.sSessions)
                 {
                     long id = session.Id;
                     session.Dispose();
-                    MyMsrpSession.sessions.Remove(id);
+                    sSessions.Remove(id);
                 }
             }
         }
 
         public static MyMsrpSession GetSession(long id)
         {
-            lock (MyMsrpSession.sessions)
+            lock (sSessions)
             {
-                if (MyMsrpSession.sessions.ContainsKey(id))
-                    return MyMsrpSession.sessions[id];
+                if (sSessions.ContainsKey(id))
+                    return sSessions[id];
                 else
                     return null;
             }
@@ -162,28 +162,28 @@ namespace BogheCore.Sip
 
         public static bool HasSession(long id)
         {
-            lock (MyMsrpSession.sessions)
+            lock (sSessions)
             {
-                return MyMsrpSession.sessions.ContainsKey(id);
+                return sSessions.ContainsKey(id);
             }
         }
 
         public MyMsrpSession(MySipStack sipStack, MsrpSession session, MediaType mediaType, String remoteUri) : base(sipStack)
         {
-            this.callback = new MyMsrpCallback(this);
+            this.mCallback = new MyMsrpCallback(this);
             base.mediaType = mediaType;
             base.remotePartyUri = remoteUri;
 
             if (session == null)
             {
                 base.outgoing = true;
-                this.session = new MsrpSession(sipStack, this.callback);
+                mSession = new MsrpSession(sipStack, this.mCallback);
             }
             else 
             {
                 base.outgoing = false;
-                this.session = session;
-                this.session.setCallback(this.callback);
+                mSession = session;
+                mSession.setCallback(this.mCallback);
             }
 
             // commons
@@ -191,43 +191,44 @@ namespace BogheCore.Sip
 
             // SigComp
             base.SigCompId = sipStack.SigCompId;
+            mSession.addHeader("Subject", "FIXME");
         }
 
         protected override SipSession Session
         {
-            get { return this.session; }
+            get { return mSession; }
         }
 
         public new void Dispose()
         {
-            if (this.outFileStream != null)
+            if (this.mOutFileStream != null)
             {
-                this.outFileStream.Close();
+                this.mOutFileStream.Close();
             }
             base.Dispose();
         }
 
         public String FilePath
         {
-            get { return this.filePath; }
+            get { return this.mFilePath; }
         }
 
         public bool FailureReport
         {
-            get { return this.failureReport; }
-            set { this.failureReport = value; }
+            get { return this.mFailureReport; }
+            set { this.mFailureReport = value; }
         }
 
         public bool SuccessReport
         {
-            get { return this.successReport; }
-            set { this.successReport = value; }
+            get { return this.mSuccessReport; }
+            set { this.mSuccessReport = value; }
         }
 
         public bool OmaFinalDeliveryReport
         {
-            get { return this.omaFinalDeliveryReport; }
-            set { this.omaFinalDeliveryReport = value; }
+            get { return this.mOmaFinalDeliveryReport; }
+            set { this.mOmaFinalDeliveryReport = value; }
         }
 
         public bool Accept()
@@ -241,15 +242,15 @@ namespace BogheCore.Sip
                     {
                         Directory.CreateDirectory(fInfo.DirectoryName);
                     }
-                    if (this.outFileStream != null)
+                    if (this.mOutFileStream != null)
                     {
-                        lock (this.outFileStream)
+                        lock (this.mOutFileStream)
                         {
-                            this.outFileStream.Close();
-                            this.outFileStream = null;
+                            this.mOutFileStream.Close();
+                            this.mOutFileStream = null;
                         }
                     }
-                    this.outFileStream = File.Create(this.FilePath);
+                    this.mOutFileStream = File.Create(this.FilePath);
                 }
                 catch (IOException ioE)
                 {
@@ -257,26 +258,26 @@ namespace BogheCore.Sip
                     return this.HangUp();
                 }
             }
-            return this.session.accept();
+            return mSession.accept();
         }
 
         public bool HangUp()
         {
             if (base.connected)
             {
-                if (this.outFileStream != null)
+                if (this.mOutFileStream != null)
                 {
-                    lock (this.outFileStream)
+                    lock (this.mOutFileStream)
                     {
-                        this.outFileStream.Close();
-                        this.outFileStream = null;
+                        this.mOutFileStream.Close();
+                        this.mOutFileStream = null;
                     }
                 }
-                return this.session.hangup();
+                return mSession.hangup();
             }
             else
             {
-                return this.session.reject();
+                return mSession.reject();
             }
         }
 
@@ -295,14 +296,14 @@ namespace BogheCore.Sip
             }
 
             FileInfo finfo = new FileInfo(path);
-            this.filePath = filePath = finfo.FullName;
-            this.fileType = this.GetFileType(finfo.Extension);
+            this.mFilePath = mFilePath = finfo.FullName;
+            this.mFileType = this.GetFileType(finfo.Extension);
             String fileSelector = String.Format("name:\"{0}\" type:{1} size:{2}",
-                finfo.Name, this.fileType, finfo.Length);
+                finfo.Name, this.mFileType, finfo.Length);
 
             ActionConfig config = new ActionConfig();
             config
-                .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-path", this.filePath)
+                .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-path", this.mFilePath)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-selector", fileSelector)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.FILE_ACCEPT_TYPES)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-wrapped-types", MyMsrpSession.FILE_ACCEPT_WRAPPED_TYPES)
@@ -313,7 +314,7 @@ namespace BogheCore.Sip
                  .setMediaInt(twrap_media_type_t.twrap_media_msrp, "chunck-duration", MyMsrpSession.CHUNK_DURATION)
                  ;
 
-            bool ret = this.session.callMsrp(this.RemotePartyUri, config);
+            bool ret = mSession.callMsrp(this.RemotePartyUri, config);
             config.Dispose();
             return ret;
         }
@@ -355,18 +356,18 @@ namespace BogheCore.Sip
                 //    "content-type", "message/CPIM")
                 //    .setMediaString(twrap_media_type_t.twrap_media_msrp, "w-content-type", "text/plain");
                 byte[] payload = Encoding.UTF8.GetBytes(message);
-                bool ret = this.session.sendMessage(payload, (uint)payload.Length, config);
+                bool ret = mSession.sendMessage(payload, (uint)payload.Length, config);
                 config.Dispose();
 
                 return ret;
             }
             else
             {
-                if (this.pendingMessages == null)
+                if (this.mPendingMessages == null)
                 {
-                    this.pendingMessages = new List<PendingMessage>();
+                    this.mPendingMessages = new List<PendingMessage>();
                 }
-                this.pendingMessages.Add(new PendingMessage(message, contentType, wContentType));
+                this.mPendingMessages.Add(new PendingMessage(message, contentType, wContentType));
 
                 ActionConfig config = new ActionConfig();
                 config.setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.CHAT_ACCEPT_TYPES)
@@ -375,7 +376,7 @@ namespace BogheCore.Sip
                     .setMediaString(twrap_media_type_t.twrap_media_msrp, "Success-Report", this.SuccessReport ? "yes" : "no")
                     .setMediaInt(twrap_media_type_t.twrap_media_msrp, "chunck-duration", 50);
 
-                bool ret = this.session.callMsrp(base.RemotePartyUri, config);
+                bool ret = mSession.callMsrp(base.RemotePartyUri, config);
                 config.Dispose();
 
                 return ret;
