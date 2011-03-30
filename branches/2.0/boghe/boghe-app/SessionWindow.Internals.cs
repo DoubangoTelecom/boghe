@@ -75,7 +75,7 @@ namespace BogheApp
             {
                 this.fileTransferSessions.Add(msrpSession);
             }
-            msrpSession.onMsrpEvent += this.FileTransfer_onMsrpEvent;
+            msrpSession.mOnMsrpEvent += this.FileTransfer_onMsrpEvent;
 
             HistoryFileTransferEvent @event = new HistoryFileTransferEvent(this.remotePartyUri, filePath);
             @event.Status = HistoryEvent.StatusType.Outgoing;

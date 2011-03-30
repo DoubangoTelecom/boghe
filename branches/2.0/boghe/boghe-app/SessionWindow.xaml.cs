@@ -166,7 +166,7 @@ namespace BogheApp
             {
                 if (this.chatSession != null)
                 {
-                    this.chatSession.onMsrpEvent -= this.ChatSession_onMsrpEvent;
+                    this.chatSession.mOnMsrpEvent -= this.ChatSession_onMsrpEvent;
                     if (this.chatHistoryEvent != null)
                     {
                         this.historyService.AddEvent(this.chatHistoryEvent);
@@ -174,7 +174,7 @@ namespace BogheApp
                 }
                 if ((this.chatSession = value) != null)
                 {
-                    this.chatSession.onMsrpEvent += this.ChatSession_onMsrpEvent;
+                    this.chatSession.mOnMsrpEvent += this.ChatSession_onMsrpEvent;
                     this.chatHistoryEvent = new HistoryChatEvent(this.remotePartyUri);
                     this.chatHistoryEvent.SipSessionId = value.Id;
                 }

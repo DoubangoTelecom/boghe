@@ -151,7 +151,7 @@ namespace BogheApp.Items
                 return;
             }
 
-            this.@event.MsrpSession.onMsrpEvent += this.MsrpSession_onMsrpEvent;
+            this.@event.MsrpSession.mOnMsrpEvent += this.MsrpSession_onMsrpEvent;
 
             switch (this.@event.Status)
             {
@@ -237,7 +237,7 @@ namespace BogheApp.Items
 
                     if (this.@event != null && this.@event.MsrpSession != null)
                     {
-                        this.@event.MsrpSession.onMsrpEvent -= this.MsrpSession_onMsrpEvent;
+                        this.@event.MsrpSession.mOnMsrpEvent -= this.MsrpSession_onMsrpEvent;
                     }
                     break;
 
