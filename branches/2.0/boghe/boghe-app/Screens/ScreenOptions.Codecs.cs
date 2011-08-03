@@ -54,7 +54,9 @@ namespace BogheApp.Screens
             }
             if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_speex_nb))
             {
-                codecs.Add(new Codec("Speex-NB", "Speex Narrow Band (8 KHz)", tdav_codec_id_t.tdav_codec_id_speex_nb));
+                codecs.Add(new Codec("Speex-NB", "Speex (8 KHz)", tdav_codec_id_t.tdav_codec_id_speex_nb));
+                codecs.Add(new Codec("Speex-WB", "Speex (16 KHz)", tdav_codec_id_t.tdav_codec_id_speex_wb));
+                codecs.Add(new Codec("Speex-UWB", "Speex (32 KHz)", tdav_codec_id_t.tdav_codec_id_speex_uwb));
             }
             if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_g729ab))
             {
@@ -143,6 +145,8 @@ namespace BogheApp.Screens
                         case tdav_codec_id_t.tdav_codec_id_amr_nb_be:
                         case tdav_codec_id_t.tdav_codec_id_ilbc:
                         case tdav_codec_id_t.tdav_codec_id_speex_nb:
+                        case tdav_codec_id_t.tdav_codec_id_speex_wb:
+                        case tdav_codec_id_t.tdav_codec_id_speex_uwb:
                         case tdav_codec_id_t.tdav_codec_id_g729ab:
                             return "Audio Codecs";
                         default:

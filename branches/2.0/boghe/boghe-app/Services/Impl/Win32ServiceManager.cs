@@ -28,6 +28,7 @@ using log4net;
 using BogheCore.Utils;
 using System.IO;
 using System.Windows.Forms;
+using org.doubango.tinyWRAP;
 
 namespace BogheApp.Services.Impl
 {
@@ -36,6 +37,7 @@ namespace BogheApp.Services.Impl
         private static ILog LOG = LogManager.GetLogger(typeof(Win32ServiceManager));
 
         private static Win32ServiceManager singleton = null;
+        private static Boolean initialized = false;
         private const String MULI_INSTANCE_FILE = "./.multiinstance";
         private readonly bool multiInstance;
         private String applicationDataPath;
@@ -69,6 +71,16 @@ namespace BogheApp.Services.Impl
         public Win32ServiceManager()
         {
             this.multiInstance = System.IO.File.Exists(Win32ServiceManager.MULI_INSTANCE_FILE);
+            if (!initialized)
+            {
+                MediaSessionMgr.defaultsSetAgcEnabled(true);
+                MediaSessionMgr.defaultsSetEchoSuppEnabled(true);
+                MediaSessionMgr.defaultsSetEchoTail(100);
+                MediaSessionMgr.defaultsSetEchoSkew(0);
+                MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
+
+                initialized = true;
+            }
         }
 
         /// <summary>
