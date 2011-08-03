@@ -118,7 +118,7 @@ namespace BogheCore.Sip
             base.SigCompId = sipStack.SigCompId;
 
             // 100rel
-            mSession.set100rel(true); // will add "Supported: 100rel"
+            // mSession.set100rel(true); // See defaults
 
             /* 3GPP TS 24.173
 		    *

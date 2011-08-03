@@ -28,6 +28,7 @@ using BogheCore.Sip.Events;
 using BogheCore.Model;
 using System.Threading;
 using BogheCore.Events;
+using org.doubango.tinyWRAP;
 
 namespace BogheCore.Services.Impl
 {
