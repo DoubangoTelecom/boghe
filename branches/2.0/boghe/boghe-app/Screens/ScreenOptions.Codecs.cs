@@ -65,6 +65,7 @@ namespace BogheApp.Screens
 
             codecs.AddRange(new Codec[]
             {
+                new Codec("VP8", "Google's VP8", tdav_codec_id_t.tdav_codec_id_vp8),
                 new Codec("MP4V-ES", "MPEG-4 Part 2", tdav_codec_id_t.tdav_codec_id_mp4ves_es),
                 new Codec("Theora", "Theora", tdav_codec_id_t.tdav_codec_id_theora),
                 new Codec("H264-BP10", "H.264 Base Profile 1.0", tdav_codec_id_t.tdav_codec_id_h264_bp10),
