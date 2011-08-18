@@ -496,6 +496,9 @@ namespace BogheCore.Services.Impl
                 {
                     this.sipService.SipStack.State = MySipStack.STACK_STATE.STARTED;
 
+                    // Now that the stack is up we can set the codecs
+                    org.doubango.tinyWRAP.SipStack.setCodecs_2(this.sipService.Codecs);
+
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.START_OK, phrase));
                 }
