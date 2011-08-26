@@ -36,6 +36,7 @@ namespace BogheApp.Screens
         private void InitializeCodecs()
         {
             codecs = new List<Codec>(new Codec[]{
+                new Codec("G.722", "G.722 (16 KHz)", tdav_codec_id_t.tdav_codec_id_g722),
                 new Codec("PCMA", "PCMA (8 KHz)", tdav_codec_id_t.tdav_codec_id_pcma),
                 new Codec("PCMU", "PCMU (8 KHz)", tdav_codec_id_t.tdav_codec_id_pcmu),
                 new Codec("GSM", "GSM (8 KHz)", tdav_codec_id_t.tdav_codec_id_gsm),
@@ -149,6 +150,7 @@ namespace BogheApp.Screens
                         case tdav_codec_id_t.tdav_codec_id_speex_wb:
                         case tdav_codec_id_t.tdav_codec_id_speex_uwb:
                         case tdav_codec_id_t.tdav_codec_id_g729ab:
+                        case tdav_codec_id_t.tdav_codec_id_g722:
                             return "Audio Codecs";
                         default:
                             return "Video Codecs";
