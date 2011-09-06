@@ -1,5 +1,5 @@
 #summary Building the source code
-#labels Featured,Phase-Implementation
+#labels Featured,Phase-Implementation,Deprecated
 
 <wiki:toc max_depth="3" />
 
