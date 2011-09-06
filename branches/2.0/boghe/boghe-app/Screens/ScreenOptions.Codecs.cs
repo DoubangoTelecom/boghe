@@ -39,8 +39,11 @@ namespace BogheApp.Screens
                 new Codec("G.722", "G.722 (16 KHz)", tdav_codec_id_t.tdav_codec_id_g722),
                 new Codec("PCMA", "PCMA (8 KHz)", tdav_codec_id_t.tdav_codec_id_pcma),
                 new Codec("PCMU", "PCMU (8 KHz)", tdav_codec_id_t.tdav_codec_id_pcmu),
-                new Codec("GSM", "GSM (8 KHz)", tdav_codec_id_t.tdav_codec_id_gsm),
             });
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_gsm))
+            {
+                codecs.Add(new Codec("GSM", "GSM (8 KHz)", tdav_codec_id_t.tdav_codec_id_gsm));
+            }
             if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_amr_nb_oa))
             {
                 codecs.Add(new Codec("AMR-NB-OA", "AMR Narrow Band Octet Aligned (8 KHz)", tdav_codec_id_t.tdav_codec_id_amr_nb_oa));
