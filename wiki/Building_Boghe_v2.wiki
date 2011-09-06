@@ -1,0 +1,34 @@
+#summary Building Boghe v2.x
+#labels Featured,Phase-Implementation
+
+<wiki:toc max_depth="3" />
+
+To build the source code you need Visual Studio 2008 or later with the .NET Framework 3.5 *SP1*.<br />
+Please note that Boghe v2.x requires Doubango v2.x <br />
+
+== Supported systems ==
+ * Windows XP SP3 with .NET Framework 3.5 *SP1*
+ * Windows Vista
+ * Windows 7
+
+== Thirdparties ==
+ * Microsoft DirectX SDK: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=c72d9f1e-53f3-4747-8490-6801d8e8b4ef
+ * Windows Platform SDK: Depends on your system.
+
+== Building the source code ==
+ * Create new directory named *myboghe*
+{{{
+mkdir myboghe
+cd myboghe
+}}}
+ * Checkout doubango source code into *myboghe*. Important: The destination directory MUST be called *doubango*
+{{{
+svn checkout http://doubango.googlecode.com/svn doubango
+}}}
+ * Checkout Boghe source code into *myboghe*
+{{{
+svn checkout http://boghe.googlecode.com/svn boghe
+}}}
+
+<br />
+To open & build all projects, open *myboghe\boghe\branches\2.0\boghe\boghe-win32.sln*
