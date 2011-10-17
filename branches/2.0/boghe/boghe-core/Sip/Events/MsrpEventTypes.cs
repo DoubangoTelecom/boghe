@@ -30,6 +30,7 @@ namespace BogheCore.Sip.Events
         CONNECTED,
         SUCCESS_2XX,
         SUCCESS_REPORT,
+        FAILURE_REPORT,
         DATA,
         ERROR,
         DISCONNECTED,

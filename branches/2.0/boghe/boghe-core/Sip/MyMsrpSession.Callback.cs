@@ -204,6 +204,19 @@ namespace BogheCore.Sip
 
                     case tmsrp_request_type_t.tmsrp_REPORT:
                         {
+                            // File Transfer => ProgressBar
+                            if (this.session.MediaType == MediaType.FileTransfer)
+                            {
+                                long start = -1, end = -1, total = -1;
+                                message.getByteRange(out start, out end, out total);
+                                bool isSuccessReport = message.isSuccessReport();
+                                MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, isSuccessReport ? MsrpEventTypes.SUCCESS_REPORT : MsrpEventTypes.FAILURE_REPORT);
+                                eargs.AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_START, start)
+                                    .AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_END, end)
+                                    .AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_TOTAL, total)
+                                    .AddExtra(MsrpEventArgs.EXTRA_SESSION, this.session);
+                                EventHandlerTrigger.TriggerEvent<MsrpEventArgs>(this.session.mOnMsrpEvent, this.session, eargs);
+                            }
                             break;
                         }
 
