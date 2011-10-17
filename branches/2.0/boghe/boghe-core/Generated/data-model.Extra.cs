@@ -78,10 +78,12 @@ namespace BogheCore.Generated.data_model
         private String homepageField;
         private String iconField;
         private String mapField;
+#if NotOrderOverflow
         private String soundField;
+#endif
 
 
-        [XmlElement("overriding-willingness", Namespace = "urn:oma:xml:prs:pidf:oma-pres", Order = 06)]
+        [XmlElement("overriding-willingness", Namespace = "urn:oma:xml:prs:pidf:oma-pres", Order = 00)]
         public overridingwillingness overridingWillingness
         {
             get
@@ -95,7 +97,7 @@ namespace BogheCore.Generated.data_model
             set { this.overridingWillingnessElement = value; }
         }
 
-        [XmlElement("activities", Namespace = "urn:ietf:params:xml:ns:pidf:rpid", Order = 07)]
+        [XmlElement("activities", Namespace = "urn:ietf:params:xml:ns:pidf:rpid", Order = 01)]
         public activities activities
         {
             get
@@ -109,7 +111,7 @@ namespace BogheCore.Generated.data_model
             set { this.activitiesElement = value; }
         }
 
-        [XmlElement("mood", Namespace = "urn:ietf:params:xml:ns:pidf:rpid", Order = 08)]
+        [XmlElement("mood", Namespace = "urn:ietf:params:xml:ns:pidf:rpid", Order = 02)]
         public mood mood
         {
             get
@@ -123,7 +125,7 @@ namespace BogheCore.Generated.data_model
             set { this.moodElement = value; }
         }
 
-        [XmlElement("status-icon", Namespace = "urn:ietf:params:xml:ns:pidf:rpid", Order = 09)]
+        [XmlElement("status-icon", Namespace = "urn:ietf:params:xml:ns:pidf:rpid", Order = 03)]
         public statusicon statusicon
         {
             get
@@ -165,7 +167,7 @@ namespace BogheCore.Generated.data_model
             return result;
         }
 
-        [XmlElement("card", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 11)]
+        [XmlElement("card", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 04)]
         public String card
         {
             get
@@ -179,7 +181,7 @@ namespace BogheCore.Generated.data_model
             set { this.cardField = value; }
         }
 
-        [XmlElement("display-name", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 12)]
+        [XmlElement("display-name", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 05)]
         public String displayName
         {
             get
@@ -193,7 +195,7 @@ namespace BogheCore.Generated.data_model
             set { this.displayNameField = value; }
         }
 
-        [XmlElement("homepage", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 13)]
+        [XmlElement("homepage", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 06)]
         public String homepage
         {
             get
@@ -207,7 +209,7 @@ namespace BogheCore.Generated.data_model
             set { this.homepageField = value; }
         }
 
-        [XmlElement("icon", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 14)]
+        [XmlElement("icon", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 07)]
         public String icon
         {
             get
@@ -221,7 +223,7 @@ namespace BogheCore.Generated.data_model
             set { this.iconField = value; }
         }
 
-        [XmlElement("map", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 15)]
+        [XmlElement("map", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 08)]
         public String map
         {
             get
@@ -235,7 +237,8 @@ namespace BogheCore.Generated.data_model
             set { this.mapField = value; }
         }
 
-        [XmlElement("sound", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 16)]
+#if NotOrderOverflow // >= 09
+        [XmlElement("sound", Namespace = "urn:ietf:params:xml:ns:pidf:cipid", Order = 08)]
         public String sound
         {
             get
@@ -248,6 +251,7 @@ namespace BogheCore.Generated.data_model
             }
             set { this.soundField = value; }
         }
+#endif
 
         private String GetValue(String name, String ns)
         {
