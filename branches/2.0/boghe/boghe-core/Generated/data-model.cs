@@ -38,7 +38,7 @@ namespace BogheCore.Generated.data_model {
         private string idField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=09)]
         public System.Xml.XmlElement[] Any {
             get {
                 return this.anyField;
@@ -49,7 +49,7 @@ namespace BogheCore.Generated.data_model {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="anyURI", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="anyURI", Order=10)]
         public string deviceID {
             get {
                 return this.deviceIDField;
@@ -60,7 +60,7 @@ namespace BogheCore.Generated.data_model {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("note", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute("note", Order=20)]
         public Note_t[] note {
             get {
                 return this.noteField;
@@ -71,7 +71,7 @@ namespace BogheCore.Generated.data_model {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
         public System.DateTime timestamp {
             get {
                 return this.timestampField;
@@ -159,7 +159,7 @@ namespace BogheCore.Generated.data_model {
         private string idField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=09)]
         public System.Xml.XmlElement[] Any {
             get {
                 return this.anyField;
@@ -170,7 +170,7 @@ namespace BogheCore.Generated.data_model {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("note", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute("note", Order=10)]
         public Note_t[] note {
             get {
                 return this.noteField;
@@ -181,7 +181,7 @@ namespace BogheCore.Generated.data_model {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
         public System.String timestamp {
             get {
                 return this.timestampField;

@@ -41,8 +41,6 @@ namespace BogheApp
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            
-
             try
             {
                 String log4net = String.Format(BogheApp.Properties.Resources.log4net_xml, Win32ServiceManager.SharedManager.ApplicationDataPath);
