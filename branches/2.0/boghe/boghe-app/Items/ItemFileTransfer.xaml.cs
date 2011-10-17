@@ -246,6 +246,7 @@ namespace BogheApp.Items
 
                 case MsrpEventTypes.SUCCESS_2XX:
                 case MsrpEventTypes.DATA:
+                case MsrpEventTypes.SUCCESS_REPORT:
                     {
                         long? end = e.GetExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_END) as long?;
                         long? total = e.GetExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_TOTAL) as long?;
@@ -286,11 +287,6 @@ namespace BogheApp.Items
                             this.progressBar.IsIndeterminate = true;
                         }
                         
-                        break;
-                    }
-
-                case MsrpEventTypes.SUCCESS_REPORT:
-                    {
                         break;
                     }
             }
