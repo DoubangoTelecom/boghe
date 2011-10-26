@@ -41,14 +41,23 @@ namespace BogheCore.Services.Impl
                 return String.Empty;
             }
 
-            String resourceList; // e.g.:http://doubango.org:8080/services/resource-lists/users/sip:boghe@doubango.org/index/~~/resource-lists/list%5B@name=%22rcs%22%5D
+            String resourceList; // e.g.:http://doubango.org:8080/services/resource-lists/users/sip%3Amamadou%40colibria.com/index/~~/resource-lists/list%5B%40name%3D%22rcs%22%5D
 
-            lock (this.xcapSelector)
+            if (this.xcapDocumentsUris.ContainsKey(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID))
             {
-                this.xcapSelector.reset();
-                this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
-                    .setAttribute("list", "name", presList);
-                resourceList = this.xcapSelector.getString();
+                resourceList = String.Format("{0}/~~/resource-lists/list%5B%40name%3D%22{1}%22%5D", 
+                    this.xcapDocumentsUris[XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID],
+                    presList);
+            }
+            else
+            {
+                lock (this.xcapSelector)
+                {
+                    this.xcapSelector.reset();
+                    this.xcapSelector.setAUID(XcapService.XCAP_AUID_IETF_RESOURCE_LISTS_ID)
+                        .setAttribute("list", "name", presList);
+                    resourceList = this.xcapSelector.getString();
+                }
             }
             
             foreach (serviceType service in services.service)
