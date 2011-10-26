@@ -26,6 +26,7 @@ using System.Windows;
 using System.Windows.Controls;
 using BogheCore.Sip;
 using BogheCore;
+using org.doubango.tinyWRAP;
 
 namespace BogheApp
 {

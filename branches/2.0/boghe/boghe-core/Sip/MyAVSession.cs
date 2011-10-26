@@ -107,7 +107,7 @@ namespace BogheCore.Sip
         public MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, InviteState callState)
             : base(sipStack)
         {
-            this.mSession = (session == null) ? new CallSession(sipStack) : session;
+            mSession = (session == null) ? new CallSession(sipStack) : session;
             base.mediaType = mediaType;
             this.state = callState;
 
@@ -138,34 +138,43 @@ namespace BogheCore.Sip
 
         protected override SipSession Session
         {
-            get { return this.mSession; }
+            get { return mSession; }
         }
 
         public bool AcceptCall()
         {
-            return this.mSession.accept();
+            return mSession.accept();
         }
 
         public bool HangUpCall()
         {
             if (base.connected)
             {
-                return this.mSession.hangup();
+                return mSession.hangup();
             }
             else
             {
-                return this.mSession.reject();
+                return mSession.reject();
             }
         }
 
         public bool HoldCall()
         {
-            return this.mSession.hold();
+            return mSession.hold();
+        }
+
+        public bool Mute(bool mute, twrap_media_type_t media)
+        {
+            if (this.MediaSessionMgr != null)
+            {
+                return MediaSessionMgr.producerSetInt32(media, "mute", mute ? 1 : 0);
+            }
+            return false;
         }
 
         public bool ResumeCall()
         {
-            return this.mSession.resume();
+            return mSession.resume();
         }
 
         public bool MakeCall(String remoteUri)
@@ -180,10 +189,10 @@ namespace BogheCore.Sip
             {
                 case MediaType.AudioVideo:
                 case MediaType.Video:
-                    ret = this.mSession.callAudioVideo(remoteUri, config);
+                    ret = mSession.callAudioVideo(remoteUri, config);
                     break;
                 case MediaType.Audio:
-                    ret = this.mSession.callAudio(remoteUri, config);
+                    ret = mSession.callAudio(remoteUri, config);
                     break;
                 default:
                     throw new Exception("This session doesn't support this media type");
@@ -200,7 +209,7 @@ namespace BogheCore.Sip
             base.outgoing = true;
 
             ActionConfig config = new ActionConfig();
-            ret = this.mSession.callVideo(remoteUri, config);
+            ret = mSession.callVideo(remoteUri, config);
             config.Dispose();
 
             return ret;
@@ -208,7 +217,7 @@ namespace BogheCore.Sip
 
         public bool SendDTMF(int digit)
         {
-            return this.mSession.sendDTMF(digit);
+            return mSession.sendDTMF(digit);
         }
 
     }

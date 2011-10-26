@@ -73,11 +73,14 @@ namespace BogheApp.Services.Impl
             this.multiInstance = System.IO.File.Exists(Win32ServiceManager.MULI_INSTANCE_FILE);
             if (!initialized)
             {
+                SipStack.initialize();
+                
                 MediaSessionMgr.defaultsSetAgcEnabled(true);
                 MediaSessionMgr.defaultsSetEchoSuppEnabled(true);
                 MediaSessionMgr.defaultsSetEchoTail(100);
                 MediaSessionMgr.defaultsSetEchoSkew(0);
                 MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
+                MediaSessionMgr.defaultsSetJbMaxLateRate(1);
 
                 initialized = true;
             }

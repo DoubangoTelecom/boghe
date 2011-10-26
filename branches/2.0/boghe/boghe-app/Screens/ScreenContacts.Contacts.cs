@@ -249,9 +249,9 @@ namespace BogheApp.Screens
                        {
                            continue;
                        }
-                       contentType = _content.Substring(indexStart + 13, (indexEnd - indexStart)).Split(";".ToCharArray(),  StringSplitOptions.RemoveEmptyEntries)[0].Trim();
+                       contentType = _content.Substring(indexStart + 13, (indexEnd - indexStart - 13)).Split(";".ToCharArray(),  StringSplitOptions.RemoveEmptyEntries)[0].Trim();
 
-                       if ((contentStart = _content.IndexOf("\r\n")) == -1 && (contentStart = _content.IndexOf("\n\n")) == -1)
+                       if ((contentStart = _content.IndexOf("\r\n\r\n")) == -1 && (contentStart = _content.IndexOf("\n\n\r\n")) == -1)
                        {
                            continue;
                        }
