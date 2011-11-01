@@ -118,6 +118,7 @@ namespace BogheCore.Services.Impl
         public event EventHandler<StackEventArgs> onStackEvent;
         public event EventHandler<InviteEventArgs> onInviteEvent;
         public event EventHandler<MessagingEventArgs> onMessagingEvent;
+        public event EventHandler<InfoEventArgs> onInfoEvent;
         public event EventHandler<SubscriptionEventArgs> onSubscriptionEvent;
         public event EventHandler onHyperAvailabilityTimedout;
 
