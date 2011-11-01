@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{93201A98-88E0-4430-BCEB-643E58C28C66}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -61,6 +61,12 @@
     </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\DialogEvent.cs">
       <Link>DialogEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\InfoEvent.cs">
+      <Link>InfoEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\InfoSession.cs">
+      <Link>InfoSession.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\InviteEvent.cs">
       <Link>InviteEvent.cs</Link>
@@ -224,6 +230,9 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_event_type_t.cs">
       <Link>tsip_event_type_t.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_info_event_type_t.cs">
+      <Link>tsip_info_event_type_t.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_invite_event_type_t.cs">
       <Link>tsip_invite_event_type_t.cs</Link>
     </Compile>
@@ -238,6 +247,9 @@
     </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_register_event_type_t.cs">
       <Link>tsip_register_event_type_t.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_request_type_t.cs">
+      <Link>tsip_request_type_t.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tsip_subscribe_event_type_t.cs">
       <Link>tsip_subscribe_event_type_t.cs</Link>

@@ -172,6 +172,17 @@ namespace BogheCore.Sip
             return false;
         }
 
+        public bool SendInfo(byte[] payload, String contentType)
+        {
+            if (payload != null && !String.IsNullOrEmpty(contentType))
+            {
+                ActionConfig config = new ActionConfig();
+                config.addHeader("Content-Type", contentType);
+                return mSession.sendInfo(payload, (uint)payload.Length, config);
+            }
+            return mSession.sendInfo(null, 0);
+        }
+
         public bool ResumeCall()
         {
             return mSession.resume();

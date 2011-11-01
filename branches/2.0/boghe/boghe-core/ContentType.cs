@@ -48,6 +48,8 @@ namespace BogheCore
         public const String TEXT_PLAIN = "text/plain";
         public const String IS_COMPOSING = "application/im-iscomposing+xml";
 
+        public const String DOUBANGO_DEVICE_INFO = "doubango/device-info";
+
 
         public const String UNKNOWN = "unknown/unknown";
     }

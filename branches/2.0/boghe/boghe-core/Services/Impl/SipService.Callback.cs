@@ -69,6 +69,84 @@ namespace BogheCore.Services.Impl
             /// </summary>
             /// <param name="e"></param>
             /// <returns></returns>
+            public override int OnInfoEvent(InfoEvent e)
+            {
+                tsip_info_event_type_t type = e.getType();
+
+                switch (type)
+                {
+                    case tsip_info_event_type_t.tsip_ao_info:
+                        {
+                            break;
+                        }
+                    case tsip_info_event_type_t.tsip_i_info:
+                        {
+                            SipMessage message = e.getSipMessage();
+                            InfoSession session = e.getSession();
+                            uint sessionId;
+
+                            if (session == null)
+                            {
+                                /* "Server-side-session" e.g. Initial MESSAGE sent by the remote party */
+                                session = e.takeSessionOwnership();
+                            }
+
+                            if (session == null)
+                            {
+                                LOG.Error("Failed to take session ownership");
+                            }
+
+                            if (message == null)
+                            {
+                                LOG.Error("Invalid message");
+
+                                session.reject();
+                                session.Dispose();
+                                return 0;
+                            }
+
+                            sessionId = session.getId();
+                            String from = message.getSipHeaderValue("f");
+                            String contentType = message.getSipHeaderValue("c");
+                            byte[] bytes = message.getSipContent();
+
+                            if (bytes == null || bytes.Length == 0)
+                            {
+                                LOG.Error("Invalid INFO");
+                                session.reject();
+                                session.Dispose();
+                                return 0;
+                            }
+
+                            // Send 200 OK
+                            session.accept();
+                            session.Dispose();
+
+                            if (String.Equals(contentType, ContentType.DOUBANGO_DEVICE_INFO, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                if (bytes != null)
+                                {
+                                    InfoEventArgs eargs = new InfoEventArgs(sessionId, InfoEventTypes.INCOMING, e.getPhrase(), bytes);
+                                    eargs
+                                        .AddExtra(InfoEventArgs.EXTRA_CODE, e.getCode())
+                                        .AddExtra(InfoEventArgs.EXTRA_REMOTE_PARTY, from)
+                                        .AddExtra(InfoEventArgs.EXTRA_CONTENT_TYPE, contentType == null ? ContentType.UNKNOWN : contentType);
+                                    EventHandlerTrigger.TriggerEvent<InfoEventArgs>(this.sipService.onInfoEvent, this.sipService, eargs);
+                                }
+                            }
+
+                            break;
+                        }
+                }
+
+                return 0;
+            }
+
+            /// <summary>
+            /// Messaging events
+            /// </summary>
+            /// <param name="e"></param>
+            /// <returns></returns>
             public override int OnMessagingEvent(MessagingEvent e)
             {
                 tsip_message_event_type_t type = e.getType();
@@ -547,71 +625,73 @@ namespace BogheCore.Services.Impl
                 switch (type)
                 {
                     case tsip_invite_event_type_t.tsip_i_newcall:
-                        if (session != null) /* As we are not the owner, then the session MUST be null */
                         {
-                            LOG.Error("Invalid incoming session");
-                            session.hangup(); // To avoid another callback event
-                            return -1;
-                        }
+                            if (session != null) /* As we are not the owner, then the session MUST be null */
+                            {
+                                LOG.Error("Invalid incoming session");
+                                session.hangup(); // To avoid another callback event
+                                return -1;
+                            }
 
-                        SipMessage message = e.getSipMessage();
-                        if (message == null)
-                        {
-                            LOG.Error("Invalid message");
-                            return -1;
-                        }
-                        twrap_media_type_t sessionType = e.getMediaType();
+                            SipMessage message = e.getSipMessage();
+                            if (message == null)
+                            {
+                                LOG.Error("Invalid message");
+                                return -1;
+                            }
+                            twrap_media_type_t sessionType = e.getMediaType();
 
-                        switch (sessionType)
-                        {
-                            case twrap_media_type_t.twrap_media_msrp:
-                                {
-                                    if ((session = e.takeMsrpSessionOwnership()) == null)
+                            switch (sessionType)
+                            {
+                                case twrap_media_type_t.twrap_media_msrp:
                                     {
-                                        LOG.Error("Failed to take MSRP session ownership");
-                                        return -1;
+                                        if ((session = e.takeMsrpSessionOwnership()) == null)
+                                        {
+                                            LOG.Error("Failed to take MSRP session ownership");
+                                            return -1;
+                                        }
+
+                                        MyMsrpSession msrpSession = MyMsrpSession.TakeIncomingSession(this.sipService.SipStack, session as MsrpSession, message);
+                                        if (msrpSession == null)
+                                        {
+                                            LOG.Error("Failed to create new session");
+                                            session.hangup();
+                                            session.Dispose();
+                                            return 0;
+                                        }
+                                        msrpSession.State = MyInviteSession.InviteState.INCOMING;
+
+                                        InviteEventArgs eargs = new InviteEventArgs(msrpSession.Id, InviteEventTypes.INCOMING, phrase);
+                                        eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, msrpSession);
+                                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                        break;
                                     }
 
-                                    MyMsrpSession msrpSession = MyMsrpSession.TakeIncomingSession(this.sipService.SipStack, session as MsrpSession, message);
-                                    if (msrpSession == null)
+                                case twrap_media_type_t.twrap_media_audio:
+                                case twrap_media_type_t.twrap_media_audiovideo:
+                                case twrap_media_type_t.twrap_media_video:
                                     {
-                                        LOG.Error("Failed to create new session");
-                                        session.hangup();
-                                        session.Dispose();
-                                        return 0;
+                                        if ((session = e.takeCallSessionOwnership()) == null)
+                                        {
+                                            LOG.Error("Failed to take audio/video session ownership");
+                                            return -1;
+                                        }
+                                        MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
+                                        avSession.State = MyInviteSession.InviteState.INCOMING;
+
+                                        InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
+                                        eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
+                                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                        break;
                                     }
-                                    msrpSession.State = MyInviteSession.InviteState.INCOMING;
 
-                                    InviteEventArgs eargs = new InviteEventArgs(msrpSession.Id, InviteEventTypes.INCOMING, phrase);
-                                    eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, msrpSession);
-                                    EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
-                                    break;
-                                }
+                                default:
+                                    LOG.Error("Invalid media type");
+                                    return 0;
 
-                            case twrap_media_type_t.twrap_media_audio:
-                            case twrap_media_type_t.twrap_media_audiovideo:
-                            case twrap_media_type_t.twrap_media_video:
-                                {
-                                    if ((session = e.takeCallSessionOwnership()) == null)
-                                    {
-                                        LOG.Error("Failed to take audio/video session ownership");
-                                        return -1;
-                                    }
-                                    MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
-                                    avSession.State = MyInviteSession.InviteState.INCOMING;
-
-                                    InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
-                                    eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
-                                    EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
-                                    break;
-                                }
-
-                            default:
-                                LOG.Error("Invalid media type");
-                                return 0;
-                            
+                            }
+                            break;
                         }
-                        break;
 
                     case tsip_invite_event_type_t.tsip_ao_request:
                         if (code == 180 && session != null)
@@ -622,6 +702,31 @@ namespace BogheCore.Services.Impl
                         break;
 
                     case tsip_invite_event_type_t.tsip_i_request:
+                        {
+                            SipMessage message = e.getSipMessage();
+                            if (message != null)
+                            {
+                                if (message.getRequestType() == tsip_request_type_t.tsip_INFO)
+                                {
+                                    String from = message.getSipHeaderValue("f");
+                                    String contentType = message.getSipHeaderValue("c");
+                                    byte[] bytes = message.getSipContent();
+                                    if (!String.IsNullOrEmpty(contentType) && String.Equals(contentType, ContentType.DOUBANGO_DEVICE_INFO, StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        if (bytes != null)
+                                        {
+                                            //InviteEventArgs eargs = new InviteEventArgs(session.getId(), InviteEventTypes.INFO, e.getPhrase());
+                                           // eargs
+                                           //     .AddExtra(InviteEventArgs.EXTRA_CONTENT, from)
+                                           //     .AddExtra(InviteEventArgs.EXTRA_REMOTE_PARTY, from)
+                                           //     .AddExtra(InviteEventArgs.EXTRA_CONTENT_TYPE, contentType == null ? ContentType.UNKNOWN : contentType);
+                                           // EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        }
                     case tsip_invite_event_type_t.tsip_o_ect_ok:
                     case tsip_invite_event_type_t.tsip_o_ect_nok:
                     case tsip_invite_event_type_t.tsip_i_ect:

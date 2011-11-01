@@ -1,5 +1,5 @@
-﻿/*
-* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
+﻿/* Copyright (C) 2011 Doubango Telecom <http://www.doubango.org>
+* Boghe IMS/RCS Client - Copyright (C) 2011 Mamadou Diop.
 *
 * Contact: Mamadou Diop <diopmamadou(at)doubango.org>
 *	
@@ -25,21 +25,11 @@ using System.Text;
 
 namespace BogheCore.Sip.Events
 {
-    public enum InviteEventTypes
+    public enum InfoEventTypes
     {
         INCOMING,
-        INPROGRESS,
-        RINGING,
-        EARLY_MEDIA,
-        CONNECTED,
-        TERMWAIT,
-        DISCONNECTED,
-        LOCAL_HOLD_OK,
-        LOCAL_HOLD_NOK,
-        LOCAL_RESUME_OK,
-        LOCAL_RESUME_NOK,
-        REMOTE_HOLD,
-        REMOTE_RESUME,
-        INFO
+        OUTGOING,
+        SUCCESS,
+        FAILURE
     }
 }
