@@ -59,6 +59,7 @@ namespace BogheApp.Screens
         private MyObservableCollection<Contact> dataSource;
 
         private readonly IContactService contactService;
+        private readonly IHistoryService historyService;
         private readonly ISipService sipService;
 
         public ScreenContacts():base()
@@ -67,6 +68,7 @@ namespace BogheApp.Screens
 
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
             this.sipService = Win32ServiceManager.SharedManager.SipService;
+            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
 
             // important to do it here before setting ItemsSource
             this.contactService.onContactEvent += this.contactService_onContactEvent;
@@ -138,6 +140,15 @@ namespace BogheApp.Screens
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
                     MediaActionHanler.MakeAudioCall(remoteUri);
+                    this.textBoxFreeContact.Text = String.Empty;
+                }
+            }
+            else
+            {
+                HistoryEvent @event = this.historyService.Events.FirstOrDefault((x) => { return (x.MediaType & MediaType.Audio) != MediaType.None; });
+                if (@event != null && !String.IsNullOrEmpty(@event.RemoteParty))
+                {
+                    this.textBoxFreeContact.Text = UriUtils.GetUserName(@event.RemoteParty);
                 }
             }
         }
@@ -150,6 +161,15 @@ namespace BogheApp.Screens
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
                     MediaActionHanler.MakeVideoCall(remoteUri);
+                    this.textBoxFreeContact.Text = String.Empty;
+                }
+            }
+            else
+            {
+                HistoryEvent @event = this.historyService.Events.FirstOrDefault((x) => { return (x.MediaType & MediaType.AudioVideo) != MediaType.None; });
+                if (@event != null && !String.IsNullOrEmpty(@event.RemoteParty))
+                {
+                    this.textBoxFreeContact.Text = UriUtils.GetUserName(@event.RemoteParty);
                 }
             }
         }
@@ -162,6 +182,15 @@ namespace BogheApp.Screens
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
                     MediaActionHanler.SendFile(remoteUri, null);
+                    this.textBoxFreeContact.Text = String.Empty;
+                }
+            }
+            else
+            {
+                HistoryEvent @event = this.historyService.Events.FirstOrDefault((x) => { return (x.MediaType & MediaType.FileTransfer) != MediaType.None; });
+                if (@event != null && !String.IsNullOrEmpty(@event.RemoteParty))
+                {
+                    this.textBoxFreeContact.Text = UriUtils.GetUserName(@event.RemoteParty);
                 }
             }
         }
@@ -174,6 +203,15 @@ namespace BogheApp.Screens
                 if (!String.IsNullOrEmpty(remoteUri))
                 {
                     MediaActionHanler.StartChat(remoteUri);
+                    this.textBoxFreeContact.Text = String.Empty;
+                }
+            }
+            else
+            {
+                HistoryEvent @event = this.historyService.Events.FirstOrDefault((x) => { return (x.MediaType & MediaType.Messaging) != MediaType.None; });
+                if (@event != null && !String.IsNullOrEmpty(@event.RemoteParty))
+                {
+                    this.textBoxFreeContact.Text = UriUtils.GetUserName(@event.RemoteParty);
                 }
             }
         }

@@ -40,6 +40,7 @@ namespace BogheCore.Sip
         protected String compId;
         protected String remotePartyUri;
         protected String remotePartyDisplayName = null;
+        protected String remotePartyUserName = null;
         protected long id = -1;
 
         public MySipSession(MySipStack sipStack)
@@ -133,6 +134,19 @@ namespace BogheCore.Sip
                     this.remotePartyDisplayName = String.IsNullOrEmpty(this.remotePartyDisplayName) ? "(null)" : this.remotePartyDisplayName;
                 }
                 return this.remotePartyDisplayName;
+            }
+        }
+
+        public String RemotePartyUserName
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(this.remotePartyUserName))
+                {
+                    this.remotePartyUserName = UriUtils.GetUserName(this.RemotePartyUri);
+                    this.remotePartyUserName = String.IsNullOrEmpty(this.remotePartyUserName) ? "(null)" : this.remotePartyUserName;
+                }
+                return this.remotePartyUserName;
             }
         }
 
