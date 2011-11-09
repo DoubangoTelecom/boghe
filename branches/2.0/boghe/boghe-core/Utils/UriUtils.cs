@@ -74,16 +74,26 @@ namespace BogheCore.Utils
                 {
                     return displayname;
                 }
+                return GetUserName(uri);
+            }
 
+            return uri;
+        }
+
+        public static String GetUserName(String uri)
+        {
+            String userName = null;
+            if (!String.IsNullOrEmpty(uri))
+            {
                 SipUri sipUri = new SipUri(uri);
                 if (sipUri.isValid())
                 {
-                    displayname = sipUri.getUserName();
+                    userName = sipUri.getUserName();
                 }
                 sipUri.Dispose();
             }
 
-            return (displayname == null ? uri : displayname);
+            return (userName == null ? uri : userName);
         }
 
         public static bool IsValidSipUri(String uri)
