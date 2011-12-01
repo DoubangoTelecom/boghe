@@ -6,6 +6,7 @@ using System.Threading;
 using BogheCore.Sip.Events;
 using BogheCore.Model;
 using BogheCore;
+using BogheApp.embedded;
 
 namespace BogheApp
 {
@@ -54,14 +55,14 @@ namespace BogheApp
             switch (e.Type)
             {
                 case InviteEventTypes.INCOMING:
-                    this.labelInfo.Content = String.Format("Incoming call from {0}", this.AVSession.RemotePartyDisplayName);
+                    this.labelInfo.Content = String.Format("{0} {1}", Strings.Text_IncomingCall, this.AVSession.RemotePartyDisplayName);
                     this.avHistoryEvent = new HistoryAVCallEvent(this.AVSession.MediaType != BogheCore.MediaType.Audio, this.AVSession.RemotePartyUri);
                     this.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
                     break;
 
                 case InviteEventTypes.INPROGRESS:
                     // History Event
-                    this.labelInfo.Content = "Call In Progress...";
+                    this.labelInfo.Content = String.Format("{0}...", Strings.Text_CallInProgress);
                     bool isVideo = (this.AVSession.MediaType == MediaType.AudioVideo || this.AVSession.MediaType == MediaType.Video);
                     this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
                     this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
@@ -74,18 +75,18 @@ namespace BogheApp
                     break;
 
                 case InviteEventTypes.RINGING:
-                    this.labelInfo.Content = "Ringing";
+                    this.labelInfo.Content = Strings.Text_Ringing;
                     this.soundService.PlayRingBackTone();
                     break;
 
                 case InviteEventTypes.EARLY_MEDIA:
-                    this.labelInfo.Content = "Early Media Started";
+                    this.labelInfo.Content = Strings.Text_EarlyMediaStarted;
                     this.soundService.StopRingBackTone();
                     this.soundService.StopRingTone();
                     break;
 
                 case InviteEventTypes.CONNECTED:
-                    this.labelInfo.Content = "In Call";
+                    this.labelInfo.Content = Strings.Text_InCall;
                     this.soundService.StopRingBackTone();
                     this.soundService.StopRingTone();
 
@@ -107,7 +108,7 @@ namespace BogheApp
 
                 case InviteEventTypes.DISCONNECTED:
                 case InviteEventTypes.TERMWAIT:
-                    this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? "Call Terminated" : e.Phrase;
+                    this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? Strings.Text_CallTerminated : e.Phrase;
                     this.timerCall.Stop();
                     this.soundService.StopRingBackTone();
                     this.soundService.StopRingTone();
@@ -128,29 +129,29 @@ namespace BogheApp
                     break;
 
                 case InviteEventTypes.LOCAL_HOLD_OK:
-                    this.labelInfo.Content = "Call placed on hold";
+                    this.labelInfo.Content = Strings.Text_CallPlacedOnHold;
                     this.IsHeld = true;
                     break;
 
                 case InviteEventTypes.LOCAL_HOLD_NOK:
-                    this.labelInfo.Content = "Failed to place remote party on hold";
+                    this.labelInfo.Content = Strings.Text_FailedToPlaceRemotePartyOnHold;
                     break;
 
                 case InviteEventTypes.LOCAL_RESUME_OK:
-                    this.labelInfo.Content = "Call taken off hold";
+                    this.labelInfo.Content = Strings.Text_CallTakenOffHold;
                     this.IsHeld = false;
                     break;
 
                 case InviteEventTypes.LOCAL_RESUME_NOK:
-                    this.labelInfo.Content = "Failed to unhold call";
+                    this.labelInfo.Content = Strings.Text_FailedToUnholdCall;
                     break;
 
                 case InviteEventTypes.REMOTE_HOLD:
-                    this.labelInfo.Content = "Placed on hold by remote party";
+                    this.labelInfo.Content = Strings.Text_PlacedOnHoldByRemoteParty;
                     break;
 
                 case InviteEventTypes.REMOTE_RESUME:
-                    this.labelInfo.Content = "Taken off hold by remote party";
+                    this.labelInfo.Content = Strings.Text_TakenOffHoldByRemoteParty;
                     break;                    
             }
         }

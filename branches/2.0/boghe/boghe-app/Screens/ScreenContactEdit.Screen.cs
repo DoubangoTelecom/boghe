@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheApp.embedded;
 
 namespace BogheApp.Screens
 {
@@ -31,7 +32,7 @@ namespace BogheApp.Screens
         {
             get 
             { 
-                return this.editMode ? "Edit Contact" : "Add Contact";
+                return this.editMode ? Strings.Text_EditContact : Strings.Text_AddContact;
             }
         }
 

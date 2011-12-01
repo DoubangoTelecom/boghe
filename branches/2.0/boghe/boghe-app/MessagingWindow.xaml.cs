@@ -39,6 +39,7 @@ using BogheCore.Model;
 using BogheApp.Items;
 using log4net;
 using System.Collections.Specialized;
+using BogheApp.embedded;
 
 namespace BogheApp
 {
@@ -133,12 +134,12 @@ namespace BogheApp
                     case MediaType.SMS:
                     case MediaType.ShortMessage:
                         this.buttonSendTextImage.Source = MyImageConverter.FromBitmap(Properties.Resources.message_24);
-                        this.buttonSendTextLabel.Content = "Send SMS";
+                        this.buttonSendTextLabel.Content = Strings.Text_SendSMS;
                         break;
 
                     case MediaType.Chat:
                         this.buttonSendTextImage.Source = MyImageConverter.FromBitmap(Properties.Resources.messages_24);
-                        this.buttonSendTextLabel.Content = "Send Text";
+                        this.buttonSendTextLabel.Content = Strings.Text_SendText;
                         break;
 
                     default:

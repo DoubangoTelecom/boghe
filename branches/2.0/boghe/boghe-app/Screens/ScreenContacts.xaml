@@ -4,7 +4,8 @@
     xmlns:local="clr-namespace:BogheApp.Screens"
     xmlns:items="clr-namespace:BogheApp.Items"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="510" Width="367" Loaded="BaseScreen_Loaded">
+    xmlns:res="clr-namespace:BogheApp.embedded"
+    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="510" Width="367" Loaded="BaseScreen_Loaded">
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,32,0,44" HorizontalContentAlignment="Stretch" BorderBrush="SkyBlue">
@@ -55,16 +56,16 @@
             </DockPanel>
         </Border>
         
-        <Button HorizontalAlignment="Right" Margin="0,4,113,2" Name="buttonVoice" Click="buttonVoice_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Make Voice Call" VerticalAlignment="Bottom">
+        <Button HorizontalAlignment="Right" Margin="0,4,113,2" Name="buttonVoice" Click="buttonVoice_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipMakeVoiceCall}" VerticalAlignment="Bottom">
             <Image Source="/BogheApp;component/embedded/32/voice_call_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
         </Button>
-        <Button HorizontalAlignment="Right" Margin="0,4,76,2" Name="buttonVisio"   Click="buttonVisio_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Make Video Call" VerticalAlignment="Bottom">
+        <Button HorizontalAlignment="Right" Margin="0,4,76,2" Name="buttonVisio"   Click="buttonVisio_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipMakeVideoCall}" VerticalAlignment="Bottom">
             <Image Source="/BogheApp;component/embedded/32/visio_call_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
         </Button>
-        <Button HorizontalAlignment="Right" Margin="0,4,39,2" Name="buttonFile"    Click="buttonFile_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Send File" VerticalAlignment="Bottom">
+        <Button HorizontalAlignment="Right" Margin="0,4,39,2" Name="buttonFile"    Click="buttonFile_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipSendFile}" VerticalAlignment="Bottom">
             <Image Source="/BogheApp;component/embedded/32/image_gallery_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
         </Button>
-        <Button HorizontalAlignment="Right" Margin="0,4,1,2" Name="buttonMessaging"    Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="Start Chat" VerticalAlignment="Bottom" Click="buttonMessaging_Click">
+        <Button HorizontalAlignment="Right" Margin="0,4,1,2" Name="buttonMessaging"    Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipStartChat}" VerticalAlignment="Bottom" Click="buttonMessaging_Click">
             <Button.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Start Chat" Name="menuItemStartChat" Click="menuItemStartChat_Click">
