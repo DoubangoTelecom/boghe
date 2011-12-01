@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AA9DE4E7-5C53-4DDE-BD95-B478CE2E369E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -223,6 +223,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="embedded\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="embedded\Strings.fr-FR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.fr-FR.resx</DependentUpon>
+    </Compile>
     <Compile Include="Items\DataTemplateSelectorContacts.cs" />
     <Compile Include="Items\DataTemplateSelectorHistory.cs" />
     <Compile Include="Items\DataTemplateSelectorMessaging.cs" />
@@ -437,6 +447,14 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="embedded\log4net.xml" />
+    <EmbeddedResource Include="embedded\Strings.fr-FR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.fr-FR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="embedded\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="embedded\16\lock_error_16.png" />

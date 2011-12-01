@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BogheApp.embedded;
 
 namespace BogheApp.Screens
 {
@@ -29,7 +30,7 @@ namespace BogheApp.Screens
     {
         public override String BaseScreenTitle
         {
-            get { return "About"; }
+            get { return Strings.TabAbout; }
         }
 
         public override int BaseScreenType

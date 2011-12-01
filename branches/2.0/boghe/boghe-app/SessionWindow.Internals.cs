@@ -29,6 +29,7 @@ using System.Drawing;
 using BogheControls.Utils;
 using BogheCore.Model;
 using BogheCore;
+using BogheApp.embedded;
 
 namespace BogheApp
 {
@@ -138,13 +139,13 @@ namespace BogheApp
             {
                 lock (this.AVSession)
                 {
-                    this.Title = String.Format("Talking with {0}", this.AVSession.RemotePartyDisplayName);
+                    this.Title = String.Format("{0} {1}", Strings.Text_TalkingWith, this.AVSession.RemotePartyDisplayName);
                     this.UpdateControls();
                 }
             }
             else
             {
-                this.Title = String.Format("Talking with {0}", UriUtils.GetDisplayName(this.remotePartyUri));
+                this.Title = String.Format("{0} {1}", Strings.Text_TalkingWith, UriUtils.GetDisplayName(this.remotePartyUri));
             }
         }
 
@@ -157,9 +158,9 @@ namespace BogheApp
                     switch (this.AVSession.State)
                     {
                         case MyInviteSession.InviteState.INCOMING:
-                            this.labelInfo.Content = String.Format("Incoming call from {0}", this.AVSession.RemotePartyDisplayName);
+                            this.labelInfo.Content = String.Format("{0} {1}", Strings.Text_IncomingCall, this.AVSession.RemotePartyDisplayName);
                             this.buttonHangUp.IsEnabled = true;
-                            this.UpdateButtonCallOrAnswer(true, "Answer", Properties.Resources.phone_pick_up_32);
+                            this.UpdateButtonCallOrAnswer(true, Strings.Text_Answer, Properties.Resources.phone_pick_up_32);
                             
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -170,7 +171,7 @@ namespace BogheApp
 
                         case MyInviteSession.InviteState.INPROGRESS:
                             this.buttonHangUp.IsEnabled = true;
-                            this.UpdateButtonCallOrAnswer(false, "Call", Properties.Resources.phone_pick_up_32);
+                            this.UpdateButtonCallOrAnswer(false, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -181,7 +182,7 @@ namespace BogheApp
 
                         case MyInviteSession.InviteState.INCALL:
                             this.buttonHangUp.IsEnabled = true;
-                            this.UpdateButtonCallOrAnswer(false, "Call", Properties.Resources.phone_pick_up_32);
+                            this.UpdateButtonCallOrAnswer(false, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -193,7 +194,7 @@ namespace BogheApp
                         case MyInviteSession.InviteState.TERMINATED:
                         case MyInviteSession.InviteState.TERMINATING:
                             this.buttonHangUp.IsEnabled = false;
-                            this.UpdateButtonCallOrAnswer(true, "Call", Properties.Resources.phone_pick_up_32);
+                            this.UpdateButtonCallOrAnswer(true, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = true;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = true;

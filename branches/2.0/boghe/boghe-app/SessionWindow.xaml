@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:items="clr-namespace:BogheApp.Items"
+    xmlns:res="clr-namespace:BogheApp.embedded"
     xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
     Title="Talking with John Doe" Height="570" Width="400" Name="SessionWindowName" MinWidth="400" MinHeight="570" Closing="SessionWindowName_Closing" Loaded="SessionWindowName_Loaded" Icon="/BogheApp;component/embedded/icon.ico" Closed="SessionWindowName_Closed">
 
@@ -18,22 +19,22 @@
         
         
         <Menu Height="28" Name="menu" VerticalAlignment="Top" Background="White" FontWeight="Normal" FontSize="14" BorderBrush="SkyBlue" BorderThickness="1">
-            <MenuItem Header="Call" Name="MenuItemCall" Background="White" BorderThickness="1" Padding="0,2,8,3" Click="MenuItemCall_Click">
+            <MenuItem Header="{x:Static res:Strings.AV_MenuCall}" Name="MenuItemCall" Background="White" BorderThickness="1" Padding="0,2,8,3" Click="MenuItemCall_Click">
                 <MenuItem.Icon>
                     <Image Source="/BogheApp;component/embedded/16/call_16.png" Stretch="None" />
                 </MenuItem.Icon>
-                <MenuItem Header="Make Audio Call" Name="MenuItemCall_MakeAudioCall">
+                <MenuItem Header="{x:Static res:Strings.AV_MenuMakeAudioCall}" Name="MenuItemCall_MakeAudioCall">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/voice_call_16.png" Stretch="None" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="MenuItemCall_MakeVideoCall" Header="Make Video Call">
+                <MenuItem Name="MenuItemCall_MakeVideoCall" Header="{x:Static res:Strings.AV_MenuMakeVideoCall}">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/visio_call_16.png" Stretch="None" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Make Transfer" Name="MenuItemCall_MakeTransfer">
+                <MenuItem Header="{x:Static res:Strings.AV_MenuMakeTransfer}" Name="MenuItemCall_MakeTransfer">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/call_transfer_16.png" Stretch="None" IsEnabled="False" />
                     </MenuItem.Icon>
@@ -44,27 +45,27 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Name="MenuItemCall_HangUp" Header="Hang Up" IsEnabled="False">
+                <MenuItem Name="MenuItemCall_HangUp" Header="{x:Static res:Strings.AV_MenuHangUp}" IsEnabled="False">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/phone_hang_up_16.png" Stretch="None" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Content Sharing" Name="MenuItemCS" Padding="0,2,8,3" Click="MenuItemCS_Click">
+            <MenuItem Header="{x:Static res:Strings.AV_MenuContentSharing}" Name="MenuItemCS" Padding="0,2,8,3" Click="MenuItemCS_Click">
                 <MenuItem.Icon>
                     <Image Source="/BogheApp;component/embedded/16/document_up_down_16.png" Stretch="None" />
                 </MenuItem.Icon>
-                <MenuItem Header="Share Image" Name="MenuItemCS_ShareImage">
+                <MenuItem Header="{x:Static res:Strings.AV_MenuShareImage}" Name="MenuItemCS_ShareImage">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/image_gallery_16.png" Stretch="None" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Share Video" Name="MenuItemCS_ShareVideo" IsEnabled="False">
+                <MenuItem Header="{x:Static res:Strings.AV_MenuShareVideo}" Name="MenuItemCS_ShareVideo" IsEnabled="False">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/image_gallery_16.png" Stretch="None" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Send File" Name="MenuItemCS_SendFile">
+                <MenuItem Header="{x:Static res:Strings.AV_MenuSendFile}" Name="MenuItemCS_SendFile">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/document_up_16.png" Stretch="None" />
                     </MenuItem.Icon>
@@ -78,19 +79,19 @@
         <Button  HorizontalAlignment="Right" Margin="0,61,3,0" Name="buttonCallOrAnswer" VerticalAlignment="Top"  Click="buttonCallOrAnswer_Click" Height="38" Width="113" Background="Transparent" BorderBrush="SkyBlue" Padding="0">
             <DockPanel Width="113">
                 <Image Name="buttonCallOrAnswerImage" Source="/BogheApp;component/embedded/32/phone_pick_up_32.png" DockPanel.Dock="Left" Stretch="None"></Image>
-                <Label Name="buttonCallOrAnswerLabel"  DockPanel.Dock="Right" HorizontalContentAlignment="Left" FontSize="14" FontWeight="Bold">Call</Label>
+                <Label Content="{x:Static res:Strings.AV_ButtonCall}" Name="buttonCallOrAnswerLabel"  DockPanel.Dock="Right" HorizontalContentAlignment="Left" FontSize="14" FontWeight="Bold" />
             </DockPanel>
         </Button>
         <Button Height="54" HorizontalAlignment="Right" Margin="0,0,3,1" Name="buttonSendText" VerticalAlignment="Bottom" Width="73" Padding="0" BorderBrush="SkyBlue" Background="Transparent" Click="buttonSendText_Click">
             <DockPanel Width="69">
                 <Image Name="buttonSendTextImage" Source="/BogheApp;component/embedded/24/messages_24.png" DockPanel.Dock="Top" Stretch="None"></Image>
-                <Label Name="buttonSendTextLabel"  DockPanel.Dock="Bottom" HorizontalContentAlignment="Center" FontSize="12">Send Text</Label>
+                <Label Content="{x:Static res:Strings.AV_ButtonSendText}" Name="buttonSendTextLabel"  DockPanel.Dock="Bottom" HorizontalContentAlignment="Center" FontSize="12" />
             </DockPanel>
         </Button>
         <Button Height="37" HorizontalAlignment="Right" Margin="0,110,3,0" Name="buttonHangUp" VerticalAlignment="Top" Width="113" Click="buttonHangUp_Click" IsEnabled="False" Padding="0" Background="Transparent" BorderBrush="SkyBlue">
             <DockPanel Width="113">
                 <Image Name="buttonHangUpImage" Source="/BogheApp;component/embedded/32/phone_hang_up_32.png" DockPanel.Dock="Left" Stretch="None"></Image>
-                <Label Name="buttonHangUpLabel"  DockPanel.Dock="Right" HorizontalContentAlignment="Left" FontSize="14" FontWeight="Bold">End call</Label>
+                <Label Content="{x:Static res:Strings.AV_ButtonEndCall}" Name="buttonHangUpLabel"  DockPanel.Dock="Right" HorizontalContentAlignment="Left" FontSize="14" FontWeight="Bold" />
             </DockPanel>
         </Button>
         <Label Height="28" HorizontalAlignment="Right" Margin="0,27,0,0" Name="labelDuration" VerticalAlignment="Top" Width="77" FontWeight="Bold" FontSize="16" Foreground="Blue">00:00:00</Label>

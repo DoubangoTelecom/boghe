@@ -26,6 +26,7 @@ using BogheCore.Utils;
 using BogheCore.Model;
 using BogheCore;
 using BogheCore.Sip;
+using BogheApp.embedded;
 
 namespace BogheApp
 {
@@ -85,7 +86,7 @@ namespace BogheApp
 
         private void InitializeView()
         {
-            this.Title = String.Format("Talking with {0}", UriUtils.GetDisplayName(this.remotePartyUri));
+            this.Title = String.Format("{0} {1}", Strings.Text_TalkingWith, UriUtils.GetDisplayName(this.remotePartyUri));
         }
 
         private void AddMessagingEvent(HistoryEvent @event)

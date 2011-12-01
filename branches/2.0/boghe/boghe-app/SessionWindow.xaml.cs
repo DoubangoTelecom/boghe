@@ -44,6 +44,7 @@ using BogheControls;
 using BogheApp.Items;
 using System.Collections.Specialized;
 using BogheControls.Utils;
+using BogheApp.embedded;
 
 namespace BogheApp
 {
@@ -138,12 +139,12 @@ namespace BogheApp
                     this.isHeld = value;
                     if (this.isHeld)
                     {
-                        this.MenuItemCall_HoldResume.Header = "Resume Call";
+                        this.MenuItemCall_HoldResume.Header = Strings.Text_ResumeCall;
                         this.MenuItemCall_HoldResumeImage.Source = MyImageConverter.FromBitmap(Properties.Resources.call_resume_16);
                     }
                     else
                     {
-                        this.MenuItemCall_HoldResume.Header = "Hold Call";
+                        this.MenuItemCall_HoldResume.Header = Strings.Text_HoldCall;
                         this.MenuItemCall_HoldResumeImage.Source = MyImageConverter.FromBitmap(Properties.Resources.call_hold_16);
                     }
                 }
