@@ -62,9 +62,9 @@ namespace BogheApp
             LOG.Debug(String.Format("======Starting Boghe - IMS/RCS Client v{0} ====", System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
             LOG.Debug("====================================================");
 
-            CultureInfo culture = new CultureInfo("fr-FR");     
-            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            //CultureInfo culture = new CultureInfo("fr-FR");     
+           // System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+           // System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             FrameworkElement.LanguageProperty.OverrideMetadata(
                 typeof(FrameworkElement),
