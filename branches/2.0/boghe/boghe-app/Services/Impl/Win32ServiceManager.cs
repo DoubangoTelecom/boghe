@@ -29,6 +29,7 @@ using BogheCore.Utils;
 using System.IO;
 using System.Windows.Forms;
 using org.doubango.tinyWRAP;
+using BogheCore.Model;
 
 namespace BogheApp.Services.Impl
 {
@@ -75,6 +76,7 @@ namespace BogheApp.Services.Impl
             {
                 SipStack.initialize();
                 
+                // Set default values: To be moved into the configuration service
                 MediaSessionMgr.defaultsSetAgcEnabled(true);
                 MediaSessionMgr.defaultsSetEchoSuppEnabled(true);
                 MediaSessionMgr.defaultsSetEchoTail(100);
@@ -107,6 +109,9 @@ namespace BogheApp.Services.Impl
             ret &= this.HistoryService.Start();
             ret &= this.SoundService.Start();
             ret &= this.StateMonitorService.Start();
+
+            // Set user preferences
+            MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
 
             return ret;
         }

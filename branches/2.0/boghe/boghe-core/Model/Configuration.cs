@@ -48,6 +48,7 @@ namespace BogheCore.Model
         public static bool DEFAULT_GENERAL_AUTOSTART = true;
         public static float DEFAULT_GENERAL_AUDIO_PLAY_LEVEL = 0.25f;
         public static String DEFAULT_GENERAL_ENUM_DOMAIN = "e164.org";
+        public static int DEFAULT_GENERAL_AUDIO_VOLUME = 100;
 
         public static String DEFAULT_RCS_AVATAR_PATH = "";
         public static bool DEFAULT_RCS_BINARY_SMS = true;
@@ -121,7 +122,7 @@ namespace BogheCore.Model
             DISPLAY_NAME, IMPI, IMPU, /*PASSWORD,*/ PRIVACY,
 
             /* === GENERAL === */
-            FULL_SCREEN_VIDEO, FFC, AUDIO_PLAY_LEVEL, ENUM_DOMAIN, AUTO_START,
+            FULL_SCREEN_VIDEO, FFC, AUDIO_PLAY_LEVEL, AUDIO_VOLUME, ENUM_DOMAIN, AUTO_START,
 
             /* === VoLTE === */
 

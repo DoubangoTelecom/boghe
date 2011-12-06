@@ -76,7 +76,7 @@
         <Label Height="28" Name="labelInfo" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="Black" Margin="0,27,83,0">Call Terminated</Label>
          
         <TextBox Height="50" Margin="2,0,80,3" Name="textBoxInput" VerticalAlignment="Bottom" BorderBrush="SkyBlue" AcceptsReturn="True"></TextBox>
-        <Button  HorizontalAlignment="Right" Margin="0,61,3,0" Name="buttonCallOrAnswer" VerticalAlignment="Top"  Click="buttonCallOrAnswer_Click" Height="38" Width="113" Background="Transparent" BorderBrush="SkyBlue" Padding="0">
+        <Button  HorizontalAlignment="Right" Margin="0,61,3,0" Name="buttonCallOrAnswer" VerticalAlignment="Top"  Click="buttonCallOrAnswer_Click" Height="38" Width="121" Background="Transparent" BorderBrush="SkyBlue" Padding="0">
             <DockPanel Width="113">
                 <Image Name="buttonCallOrAnswerImage" Source="/BogheApp;component/embedded/32/phone_pick_up_32.png" DockPanel.Dock="Left" Stretch="None"></Image>
                 <Label Content="{x:Static res:Strings.AV_ButtonCall}" Name="buttonCallOrAnswerLabel"  DockPanel.Dock="Right" HorizontalContentAlignment="Left" FontSize="14" FontWeight="Bold" />
@@ -88,7 +88,7 @@
                 <Label Content="{x:Static res:Strings.AV_ButtonSendText}" Name="buttonSendTextLabel"  DockPanel.Dock="Bottom" HorizontalContentAlignment="Center" FontSize="12" />
             </DockPanel>
         </Button>
-        <Button Height="37" HorizontalAlignment="Right" Margin="0,110,3,0" Name="buttonHangUp" VerticalAlignment="Top" Width="113" Click="buttonHangUp_Click" IsEnabled="False" Padding="0" Background="Transparent" BorderBrush="SkyBlue">
+        <Button Height="37" HorizontalAlignment="Right" Margin="0,110,3,0" Name="buttonHangUp" VerticalAlignment="Top" Width="121" Click="buttonHangUp_Click" IsEnabled="False" Padding="0" Background="Transparent" BorderBrush="SkyBlue">
             <DockPanel Width="113">
                 <Image Name="buttonHangUpImage" Source="/BogheApp;component/embedded/32/phone_hang_up_32.png" DockPanel.Dock="Left" Stretch="None"></Image>
                 <Label Content="{x:Static res:Strings.AV_ButtonEndCall}" Name="buttonHangUpLabel"  DockPanel.Dock="Right" HorizontalContentAlignment="Left" FontSize="14" FontWeight="Bold" />
@@ -102,5 +102,9 @@
             </ScrollViewer>
         </Border>
         <Border Margin="12,52,188,337" Name="borderVideoDispalyRemote" MinWidth="176" MinHeight="144" Background="SkyBlue" CornerRadius="5,5,5,5" ToolTip="Double click to fullscreen" />
+        <Slider Height="22" Margin="0,160,3,0" Name="sliderVolume" VerticalAlignment="Top" Maximum="100" FlowDirection="RightToLeft" ValueChanged="sliderVolume_ValueChanged" IsEnabled="False" HorizontalAlignment="Right" Width="83" ToolTip="Speaker volume" />
+        <Button Height="32" HorizontalAlignment="Right" Margin="0,154,92,0" Name="buttonSound" VerticalAlignment="Top" Width="32" Click="buttonSound_Click" IsEnabled="False" Background="White" ToolTip="Click to mute microphone">
+            <Image Name="imageSound" Source="/BogheApp;component/embedded/16/sound_on_16.png" DockPanel.Dock="Left" Stretch="None" Height="16" Width="16" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+        </Button>
     </Grid>
 </Window>

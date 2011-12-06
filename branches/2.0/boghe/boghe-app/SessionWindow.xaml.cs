@@ -59,6 +59,8 @@ namespace BogheApp
         private bool isHeld = false;
         private MyMsrpSession chatSession = null;
         private MyAVSession avSession = null;
+        private int volume = 0;
+        private bool mute = false;
         private readonly List<MyMsrpSession> fileTransferSessions;
         private readonly String remotePartyUri = null;
 
@@ -118,6 +120,9 @@ namespace BogheApp
             // Register to SIP events
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
 
+            this.volume = this.configurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME);
+            this.sliderVolume.Value = (double)this.volume;
+
             lock (SessionWindow.windows)
             {
                 SessionWindow.windows.Add(this);
@@ -159,6 +164,24 @@ namespace BogheApp
                 this.IsHeld = false;
             }
         }
+
+        private int Volume
+        {
+            get
+            {
+                return this.volume;
+            }
+            set
+            {
+                if (this.AVSession != null)
+                {
+                    this.AVSession.SetVolume(value);
+                }
+                this.configurationService.Set(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, value);
+                MediaSessionMgr.defaultsSetVolume(value);
+            }
+        }
+        
 
         private MyMsrpSession ChatSession
         {
@@ -383,6 +406,24 @@ namespace BogheApp
             {
                 this.AVSession.AcceptCall();
             }
+        }
+
+        private void buttonSound_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.AVSession != null)
+            {
+                this.AVSession.Mute(!this.AVSession.IsMute, twrap_media_type_t.twrap_media_audio);
+                this.imageSound.Source = MyImageConverter.FromBitmap(this.AVSession.IsMute ? Properties.Resources.sound_off_16 : Properties.Resources.sound_on_16);
+            }
+        }
+
+        private void sliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.Volume = (int)e.NewValue;
+            // if ((e.OldValue == 0.0 && e.NewValue != 0.0) || (e.OldValue != 0.0 && e.NewValue == 0.0))
+            //{
+            //    this.imageSound.Source = MyImageConverter.FromBitmap(e.NewValue == 0.0 ? Properties.Resources.sound_off_16 : Properties.Resources.sound_on_16);
+            //}
         }
 
         private void buttonHangUp_Click(object sender, RoutedEventArgs e)

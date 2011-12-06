@@ -30,6 +30,7 @@ namespace BogheCore.Sip
     {
         private readonly CallSession mSession;
         private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
+        private bool mMute;
         
         public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
         {
@@ -108,8 +109,9 @@ namespace BogheCore.Sip
             : base(sipStack)
         {
             mSession = (session == null) ? new CallSession(sipStack) : session;
-            base.mediaType = mediaType;
-            this.state = callState;
+            base.mMediaType = mediaType;
+            this.mState = callState;
+            mMute = false;
 
             // commons
             base.init();
@@ -167,7 +169,22 @@ namespace BogheCore.Sip
         {
             if (this.MediaSessionMgr != null)
             {
-                return MediaSessionMgr.producerSetInt32(media, "mute", mute ? 1 : 0);
+                if (MediaSessionMgr.producerSetInt32(media, "mute", mute ? 1 : 0))
+                {
+                    mMute = mute;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool SetVolume(int volume)
+        {
+            if (this.MediaSessionMgr != null)
+            {
+                bool ok = MediaSessionMgr.producerSetInt32(twrap_media_type_t.twrap_media_audio, "volume", volume);
+                ok &= MediaSessionMgr.consumerSetInt32(twrap_media_type_t.twrap_media_audio, "volume", volume);
+                return ok;
             }
             return false;
         }
@@ -196,7 +213,7 @@ namespace BogheCore.Sip
             base.ToUri = remoteUri;
 
             ActionConfig config = new ActionConfig();
-            switch (this.mediaType)
+            switch (this.mMediaType)
             {
                 case MediaType.AudioVideo:
                 case MediaType.Video:
@@ -231,5 +248,9 @@ namespace BogheCore.Sip
             return mSession.sendDTMF(digit);
         }
 
+        public bool IsMute
+        {
+            get { return mMute; }
+        }
     }
 }
