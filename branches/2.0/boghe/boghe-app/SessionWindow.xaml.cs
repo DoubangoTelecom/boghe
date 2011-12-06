@@ -60,7 +60,6 @@ namespace BogheApp
         private MyMsrpSession chatSession = null;
         private MyAVSession avSession = null;
         private int volume = 0;
-        private bool mute = false;
         private readonly List<MyMsrpSession> fileTransferSessions;
         private readonly String remotePartyUri = null;
 
@@ -454,6 +453,14 @@ namespace BogheApp
         {
             if (this.AVSession != null && this.AVSession.IsActive)
             {
+                if (this.AVSession.State == MyInviteSession.InviteState.INCOMING)
+                {
+                    this.soundService.StopRingTone();
+                }
+                else if (this.AVSession.State == MyInviteSession.InviteState.INPROGRESS)
+                {
+                    this.soundService.StopRingBackTone();
+                }
                 this.AVSession.HangUpCall();
             }
             if (this.ChatSession != null && this.ChatSession.IsActive)
