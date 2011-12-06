@@ -167,6 +167,8 @@ namespace BogheApp
                             this.MenuItemCall_HoldResume.IsEnabled = false;
                             this.MenuItemCall_MakeTransfer.IsEnabled = false;
                             this.MenuItemCall_HangUp.IsEnabled = true;
+                            this.sliderVolume.IsEnabled = true;
+                            this.buttonSound.IsEnabled = true;
                             break;
 
                         case MyInviteSession.InviteState.INPROGRESS:
@@ -178,6 +180,8 @@ namespace BogheApp
                             this.MenuItemCall_HoldResume.IsEnabled = false;
                             this.MenuItemCall_MakeTransfer.IsEnabled = false;
                             this.MenuItemCall_HangUp.IsEnabled = true;
+                            this.sliderVolume.IsEnabled = true;
+                            this.buttonSound.IsEnabled = true;
                             break;
 
                         case MyInviteSession.InviteState.INCALL:
@@ -189,6 +193,8 @@ namespace BogheApp
                             this.MenuItemCall_HoldResume.IsEnabled = true;
                             this.MenuItemCall_MakeTransfer.IsEnabled = false;
                             this.MenuItemCall_HangUp.IsEnabled = true;
+                            this.sliderVolume.IsEnabled = true;
+                            this.buttonSound.IsEnabled = true;
                             break;
 
                         case MyInviteSession.InviteState.TERMINATED:
@@ -201,6 +207,8 @@ namespace BogheApp
                             this.MenuItemCall_HoldResume.IsEnabled = false;
                             this.MenuItemCall_MakeTransfer.IsEnabled = false;
                             this.MenuItemCall_HangUp.IsEnabled = false;
+                            this.sliderVolume.IsEnabled = false;
+                            this.buttonSound.IsEnabled = false;
                             break;
                     }
                 }

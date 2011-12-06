@@ -171,7 +171,7 @@ namespace BogheCore.Sip
         public MyMsrpSession(MySipStack sipStack, MsrpSession session, MediaType mediaType, String remoteUri) : base(sipStack)
         {
             this.mCallback = new MyMsrpCallback(this);
-            base.mediaType = mediaType;
+            base.mMediaType = mediaType;
             base.remotePartyUri = remoteUri;
 
             if (session == null)
@@ -289,7 +289,7 @@ namespace BogheCore.Sip
                 return false;
             }
 
-            if (this.mediaType != MediaType.FileTransfer)
+            if (this.mMediaType != MediaType.FileTransfer)
             {
                 LOG.Error("Invalid media type");
                 return false;
@@ -333,7 +333,7 @@ namespace BogheCore.Sip
                 return false;
             }
 
-            if (this.mediaType != MediaType.Chat)
+            if (this.mMediaType != MediaType.Chat)
             {
                 LOG.Error("Invalid media type");
                 return false;

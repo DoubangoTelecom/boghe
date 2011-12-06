@@ -28,9 +28,9 @@ namespace BogheCore.Sip
 {
     public abstract class MyInviteSession : MySipSession
     {
-        protected MediaType mediaType;
-        protected MediaSessionMgr mediaSessionMgr = null;
-        protected InviteState state;
+        protected MediaType mMediaType;
+        protected MediaSessionMgr mMediaSessionMgr = null;
+        protected InviteState mState;
         
 
         public enum InviteState
@@ -48,18 +48,18 @@ namespace BogheCore.Sip
         protected MyInviteSession(MySipStack sipStack)
             :base(sipStack)
         {
-            this.state = InviteState.NONE;
+            mState = InviteState.NONE;
         }
 
         public MediaType MediaType
         {
-            get { return this.mediaType; }
+            get { return mMediaType; }
         }
 
         public InviteState State
         {
-            get { return this.state; }
-            set { this.state = value; }
+            get { return mState; }
+            set { mState = value; }
         }
 
         public bool IsActive
@@ -75,11 +75,11 @@ namespace BogheCore.Sip
         {
             get
             {
-                if (this.mediaSessionMgr == null)
+                if (mMediaSessionMgr == null)
                 {
-                    this.mediaSessionMgr = (this.Session as InviteSession).getMediaMgr();
+                    mMediaSessionMgr = (this.Session as InviteSession).getMediaMgr();
                 }
-                return this.mediaSessionMgr;
+                return mMediaSessionMgr;
             }
         }
     }

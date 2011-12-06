@@ -514,6 +514,34 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap sound_off_16 {
+            get {
+                object obj = ResourceManager.GetObject("sound_off_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap sound_off_32 {
+            get {
+                object obj = ResourceManager.GetObject("sound_off_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap sound_on_16 {
+            get {
+                object obj = ResourceManager.GetObject("sound_on_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap sound_on_32 {
+            get {
+                object obj = ResourceManager.GetObject("sound_on_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;root&gt;
@@ -542,22 +570,21 @@ namespace BogheApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;root&gt;
-        ///	&lt;!-- 
-        ///		Microsoft ResX Schema
-        ///
-        ///		Version 1.3
-        ///
-        ///		The primary goals of this format is to allow a simple XML format 
-        ///		that is mostly human readable. The generation and parsing of the 
-        ///		various data types are done through the TypeConverter classes 
-        ///		associated with the data types.
-        ///
-        ///		Example:
-        ///
-        ///		... ado.net/XML headers &amp; schema ...
-        ///		&lt;resheader name=&quot;resmimetype&quot;&gt;text/microsoft-resx&lt;/resheader&gt;
-        ///		&lt;resheader name=&quot;version&quot;&gt;1.3&lt;/resheader&gt;
-        ///		&lt;resh [rest of string was truncated]&quot;;.
+        ///  &lt;!-- 
+        ///    Microsoft ResX Schema 
+        ///    
+        ///    Version 2.0
+        ///    
+        ///    The primary goals of this format is to allow a simple XML format 
+        ///    that is mostly human readable. The generation and parsing of the 
+        ///    various data types are done through the TypeConverter classes 
+        ///    associated with the data types.
+        ///    
+        ///    Example:
+        ///    
+        ///    ... ado.net/XML headers &amp; schema ...
+        ///    &lt;resheader name=&quot;resmimetype&quot;&gt;text/microsoft-resx&lt;/resheader&gt;
+        ///    &lt;resheader n [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Strings_fr_FR {
             get {
