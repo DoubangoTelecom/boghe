@@ -96,6 +96,11 @@ namespace BogheApp.Screens
             };
         }
 
+        public void Refresh()
+        {
+            this.historyView.Refresh();
+        }
+
         private void historyService_onHistoryEvent(object sender, HistoryEventArgs e)
         {
             if (e.Type != HistoryEventTypes.RESET)

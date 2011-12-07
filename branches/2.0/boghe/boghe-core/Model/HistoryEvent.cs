@@ -43,6 +43,7 @@ namespace BogheCore.Model
         protected DateTime date;
         protected String displayName;
         protected long sipSessionId;
+        protected Contact contact;
 
         [Flags]
         public enum StatusType
@@ -123,15 +124,39 @@ namespace BogheCore.Model
         }
 
         [XmlIgnore]
+        public Contact Contact
+        {
+            get
+            {
+                if (this.contact == null && !String.IsNullOrEmpty(this.RemoteParty))
+                {
+                    this.contact = UriUtils.ServiceManager.ContactService.ContactFind(this.RemoteParty);
+                }
+                return this.contact;
+            }
+        }
+
+        [XmlIgnore]
         public String DisplayName
         {
             get
             {
                 if (String.IsNullOrEmpty(this.displayName))
                 {
-                    this.displayName = UriUtils.GetDisplayName(this.RemoteParty);
+                    if (this.Contact != null && !String.IsNullOrEmpty(this.Contact.DisplayName))
+                    {
+                        this.displayName = this.Contact.DisplayName;
+                    }
+                    else
+                    {
+                        this.displayName = UriUtils.GetUserName(this.RemoteParty);
+                    }
                 }
                 return String.IsNullOrEmpty(this.displayName) ? "(null)" : this.displayName;
+            }
+            set
+            {
+                this.displayName = value;
             }
         }
 
