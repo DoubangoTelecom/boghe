@@ -45,6 +45,7 @@ using BogheApp.Items;
 using System.Collections.Specialized;
 using BogheControls.Utils;
 using BogheApp.embedded;
+using BogheCore.Utils;
 
 namespace BogheApp
 {
@@ -62,6 +63,7 @@ namespace BogheApp
         private int volume = 0;
         private readonly List<MyMsrpSession> fileTransferSessions;
         private readonly String remotePartyUri = null;
+        private readonly IMActivityIndicator imActivityIndicator;
 
         private readonly IContactService contactService;
         private readonly ISipService sipService;
@@ -89,6 +91,7 @@ namespace BogheApp
             this.buttonCallOrAnswer.Tag = "Call";
 
             this.fileTransferSessions = new List<MyMsrpSession>();
+            this.imActivityIndicator = new IMActivityIndicator(this.remotePartyUri);
 
             this.videoDisplayLocal = new VideoDisplay();
             this.videoDisplayLocal.Visibility = Visibility.Hidden;
@@ -116,8 +119,10 @@ namespace BogheApp
             this.historyCtrl.ItemTemplateSelector = new DataTemplateSelectorMessaging();
             this.historyCtrl.ItemsSource = this.historyDataSource;
 
-            // Register to SIP events
+            // Register events
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
+            this.imActivityIndicator.RemoteStateChangedEvent += this.imActivityIndicator_RemoteStateChangedEvent;
+            this.imActivityIndicator.SendMessageEvent += this.imActivityIndicator_SendMessageEvent;
 
             this.volume = this.configurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME);
             this.sliderVolume.Value = (double)this.volume;
@@ -200,6 +205,10 @@ namespace BogheApp
                     this.chatSession.mOnMsrpEvent += this.ChatSession_onMsrpEvent;
                     this.chatHistoryEvent = new HistoryChatEvent(this.remotePartyUri);
                     this.chatHistoryEvent.SipSessionId = value.Id;
+                }
+                else
+                {
+                    this.imageIsComposing.Visibility = System.Windows.Visibility.Hidden;
                 }
             }
         }
@@ -433,6 +442,14 @@ namespace BogheApp
             }
         }
 
+        private void textBoxInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (this.IsComposingAlertEnabled && !String.IsNullOrEmpty(this.textBoxInput.Text))
+            {
+                this.imActivityIndicator.OnComposing();
+            }
+        }
+
         private void buttonSendText_Click(object sender, RoutedEventArgs e)
         {
             if (this.ChatSession == null)
@@ -447,6 +464,11 @@ namespace BogheApp
 
             this.ChatSession.SendMessage(this.textBoxInput.Text);
             this.textBoxInput.Text = String.Empty;
+
+            if (this.IsComposingAlertEnabled)
+            {
+                this.imActivityIndicator.OnContentSent();
+            }
         }
 
         private void SessionWindowName_Closing(object sender, System.ComponentModel.CancelEventArgs e)

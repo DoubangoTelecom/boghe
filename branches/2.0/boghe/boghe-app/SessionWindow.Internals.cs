@@ -30,6 +30,7 @@ using BogheControls.Utils;
 using BogheCore.Model;
 using BogheCore;
 using BogheApp.embedded;
+using System.Threading;
 
 namespace BogheApp
 {
@@ -56,6 +57,46 @@ namespace BogheApp
             get
             {
                 return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.OMAFDR, Configuration.DEFAULT_RCS_OMAFDR);
+            }
+        }
+
+        private bool IsComposingAlertEnabled
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.ISCOMOPING, Configuration.DEFAULT_RCS_ISCOMOPING);
+            }
+        }
+
+        private void imActivityIndicator_SendMessageEvent(object sender, EventArgs e)
+        {
+            if (this.IsComposingAlertEnabled && this.ChatSession != null)
+            {
+                if (this.Dispatcher.Thread != Thread.CurrentThread)
+                {
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new EventHandler<EventArgs>(this.imActivityIndicator_SendMessageEvent), sender, new object[] { e });
+                    return;
+                }
+
+                if (this.ChatSession != null)
+                {
+                    this.ChatSession.SendMessage(this.imActivityIndicator.GetMessageIndicator(), ContentType.IS_COMPOSING, null);
+                }
+            }
+        }
+
+        private void imActivityIndicator_RemoteStateChangedEvent(object sender, EventArgs e)
+        {
+            if (this.IsComposingAlertEnabled)
+            {
+                if (this.Dispatcher.Thread != Thread.CurrentThread)
+                {
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new EventHandler<EventArgs>(this.imActivityIndicator_RemoteStateChangedEvent), sender, new object[] { e });
+                    return;
+                }
+                this.imageIsComposing.Visibility = this.imActivityIndicator.IsRemoteActive ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
             }
         }
 

@@ -390,8 +390,8 @@
                             <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableMSRPSuccessReports}" Height="16" Margin="8,9,6,0" Name="checkBoxMsrpSuccessReport" VerticalAlignment="Top" />
                             <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableMSRPFailureReports}" Height="16" Margin="8,31,6,0" Name="checkBoxMsrpFailureReports" VerticalAlignment="Top" />
                             <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableOMAFinalDeliveryReports}" Height="16" Margin="8,53,6,0" Name="checkBoxOFDR" VerticalAlignment="Top" />
-                            <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableIsComposing}" Margin="8,75,6,0" Name="checkBoxIMDN" Height="16.52" VerticalAlignment="Top" />
-                            <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableIMDN}" Height="16" Margin="8,97.52,6,0" Name="checkBoxIsComposing" VerticalAlignment="Top" />
+                            <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableIsComposing}" Margin="8,75,6,0" Name="checkBoxIsComposing" Height="16.52" VerticalAlignment="Top" />
+                            <CheckBox Content="{x:Static res:Strings.TabMessaging_EnableIMDN}" Height="16" Margin="8,97.52,6,0" Name="checkBoxIMDN" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
                 </Grid>

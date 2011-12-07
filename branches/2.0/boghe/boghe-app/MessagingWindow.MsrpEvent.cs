@@ -77,7 +77,7 @@ namespace BogheApp
 
                             if (ContentType.IS_COMPOSING.Equals(contentType, StringComparison.InvariantCultureIgnoreCase))
                             {
-                                LOG.Warn("Ignore is-composing content");
+                                this.imActivityIndicator.OnIndicationReceived(Encoding.UTF8.GetString(data));
                                 return;
                             }
 
@@ -92,6 +92,12 @@ namespace BogheApp
                                 @event.Content = String.Format("{0} not supported as content type", contentType);
                                 LOG.Warn(@event.Content);
                             }
+
+                            if (this.IsComposingAlertEnabled)
+                            {
+                                this.imActivityIndicator.OnContentReceived();
+                            }
+
                             this.AddMessagingEvent(@event);
                         }
                         break;

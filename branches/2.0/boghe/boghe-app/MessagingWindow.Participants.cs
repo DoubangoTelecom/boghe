@@ -34,6 +34,7 @@ namespace BogheApp
             readonly String displayName;
             readonly String sipUri;
             confStatus status;
+            bool composing;
 
 
             internal enum confStatus
@@ -63,6 +64,27 @@ namespace BogheApp
             public String PresStatusImageSource
             {
                 get { return "/BogheApp;component/embedded/16/user_offline_16.png"; }
+            }
+
+            public bool IsComposing
+            {
+                get 
+                { 
+                    return this.composing; 
+                }
+                set
+                {
+                    if (this.composing != value)
+                    {
+                        this.composing = value;
+                        this.OnPropertyChanged("IsComposing");
+                    }
+                }
+            }
+
+            public String IsComposingVisibility
+            {
+                get { return this.IsComposing ? "Visible" : "Hidden"; }
             }
 
             public confStatus Status

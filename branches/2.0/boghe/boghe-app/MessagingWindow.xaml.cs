@@ -40,6 +40,8 @@ using BogheApp.Items;
 using log4net;
 using System.Collections.Specialized;
 using BogheApp.embedded;
+using BogheCore.Utils;
+using System.ComponentModel;
 
 namespace BogheApp
 {
@@ -63,9 +65,11 @@ namespace BogheApp
         private MyMsrpSession chatSession = null;
         private HistoryChatEvent chatHistoryEvent;
         private readonly List<MyMsrpSession> fileTransferSessions;
+        private readonly IMActivityIndicator imActivityIndicator;
 
         private readonly MyObservableCollection<HistoryEvent> historyDataSource;
         private readonly MyObservableCollection<Participant> participants;
+        private ICollectionView participantsView;
 
         public MessagingWindow(String remotePartyUri)
         {
@@ -75,6 +79,7 @@ namespace BogheApp
             this.Title = String.Empty;
             this.messagingType = MediaType.None;
             this.fileTransferSessions = new List<MyMsrpSession>();
+            this.imActivityIndicator = new IMActivityIndicator(this.remotePartyUri);
 
             // Services
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
@@ -92,9 +97,12 @@ namespace BogheApp
             this.participants = new MyObservableCollection<Participant>();
             this.participants.Add(new Participant(this.remotePartyUri));
             this.listBoxParticipants.ItemsSource = this.participants;
+            this.participantsView = CollectionViewSource.GetDefaultView(this.listBoxParticipants.ItemsSource);
 
             // Events
             this.sipService.onInviteEvent += this.sipService_onInviteEvent;
+            this.imActivityIndicator.RemoteStateChangedEvent += this.imActivityIndicator_RemoteStateChangedEvent;
+            this.imActivityIndicator.SendMessageEvent += this.imActivityIndicator_SendMessageEvent;
 
             lock (MessagingWindow.windows)
             {
@@ -230,6 +238,14 @@ namespace BogheApp
 
         public void ReceiveShortMessage(String remoteUri, byte[] payload, String contentType)
         {
+            if (ContentType.IS_COMPOSING.Equals(contentType, StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (this.IsComposingAlertEnabled)
+                {
+                    this.imActivityIndicator.OnIndicationReceived(Encoding.UTF8.GetString(payload));
+                }
+                return;
+            }
             System.Diagnostics.Debug.Assert(this.messagingType == MediaType.None
             || this.MessagingType == MediaType.SMS || this.MessagingType == MediaType.ShortMessage);
 
@@ -243,6 +259,12 @@ namespace BogheApp
             HistoryShortMessageEvent @event = new HistoryShortMessageEvent(remoteUri);
             @event.Status = HistoryEvent.StatusType.Incoming;
             @event.Content = Encoding.UTF8.GetString(payload);
+
+            if (this.IsComposingAlertEnabled)
+            {
+                this.imActivityIndicator.OnContentReceived();
+            }
+
             this.AddMessagingEvent(@event);
         }
 
@@ -329,6 +351,11 @@ namespace BogheApp
                         shortMessageSession.Dispose();
                         break;
                     }
+            }
+
+            if (this.IsComposingAlertEnabled)
+            {
+                this.imActivityIndicator.OnContentSent();
             }
 
             this.AddMessagingEvent(@event);
@@ -429,6 +456,14 @@ namespace BogheApp
                         break;
                 }
             };
+        }
+
+        private void textBoxInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (this.IsComposingAlertEnabled && !String.IsNullOrEmpty(this.textBoxInput.Text))
+            {
+                this.imActivityIndicator.OnComposing();
+            }
         }
     }
 }
