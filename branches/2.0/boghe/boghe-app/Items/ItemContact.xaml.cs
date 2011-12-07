@@ -82,6 +82,7 @@ namespace BogheApp.Items
                 return;
             }
             ScreenContactEdit screenContactEdit = new ScreenContactEdit(this.contactValue, null);
+            screenContactEdit.Tag = this.contactValue;
             Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenContactEdit);
         }
 
@@ -93,6 +94,12 @@ namespace BogheApp.Items
             }
 
             this.contactService.ContactDelete(this.contactValue);
+            List<HistoryEvent> events = Win32ServiceManager.SharedManager.HistoryService.Events.FindAll((x) => { return x.RemoteParty.Equals(this.contactValue.UriString); });
+            if (events.Count > 0)
+            {
+                events.ForEach((x) => x.DisplayName = null);
+                Win32ServiceManager.SharedManager.Win32ScreenService.ScreenHistory.Refresh();
+            }
         }
 
         private void ctxMenu_Authorizations_Click(object sender, RoutedEventArgs e)

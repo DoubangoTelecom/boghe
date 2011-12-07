@@ -38,6 +38,7 @@ using BogheCore.Utils;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
 using System.Globalization;
+using BogheApp.Screens;
 
 namespace BogheApp.Items
 {
@@ -64,6 +65,7 @@ namespace BogheApp.Items
 
             this.labelDisplayName.Content = this.@event.DisplayName;
             this.labelDate.Content = BaseItem<HistoryAVCallEvent>.GetFriendlyDateString(this.@event.Date);
+            this.ctxMenu_AddToContacts.IsEnabled = (this.@event.Contact == null);
 
             TimeSpan duration = this.@event.EndTime - this.@event.StartTime;
             this.labelDuration.Content = string.Format("Duration: {0:D2}:{1:D2}:{2:D2}", duration.Hours, duration.Minutes, duration.Seconds);
@@ -110,7 +112,13 @@ namespace BogheApp.Items
 
         private void ctxMenu_AddToContacts_Click(object sender, RoutedEventArgs e)
         {
-
+            Contact contact = new Contact();
+            contact.UriString = this.@event.RemoteParty;
+            contact.DisplayName = UriUtils.GetUserName(contact.UriString);
+            ScreenContactEdit screenEditContact = new ScreenContactEdit(contact, null);
+            screenEditContact.EditMode = false;
+            screenEditContact.Tag = this.@event;
+            Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenEditContact);
         }
 
         private void ctxMenu_DeleteHistoryEvent_Click(object sender, RoutedEventArgs e)

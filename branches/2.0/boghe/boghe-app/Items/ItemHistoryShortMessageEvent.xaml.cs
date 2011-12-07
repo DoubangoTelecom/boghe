@@ -36,6 +36,8 @@ using BogheCore.Model;
 using System.Globalization;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
+using BogheApp.Screens;
+using BogheCore.Utils;
 
 namespace BogheApp.Items
 {
@@ -45,6 +47,7 @@ namespace BogheApp.Items
     public partial class ItemHistoryShortMessageEvent : BaseItem<HistoryShortMessageEvent>
     {
         private readonly IHistoryService historyService;
+        HistoryShortMessageEvent @event;
 
         public ItemHistoryShortMessageEvent()
         {
@@ -57,15 +60,16 @@ namespace BogheApp.Items
 
         private void ItemHistoryShortMessageEvent_ValueLoaded(object sender, EventArgs e)
         {
-            HistoryShortMessageEvent @event = this.Value;
+            this.@event = this.Value;
 
-            this.labelDisplayName.Content = @event.DisplayName;
-            this.labelDate.Content = BaseItem<HistoryShortMessageEvent>.GetFriendlyDateString(@event.Date);            
+            this.labelDisplayName.Content = this.@event.DisplayName;
+            this.labelDate.Content = BaseItem<HistoryShortMessageEvent>.GetFriendlyDateString(this.@event.Date);
+            this.ctxMenu_AddToContacts.IsEnabled = (this.@event.Contact == null);
 
             this.textBockMessage.Text = String.Empty;
             if (!String.IsNullOrEmpty(@event.Content))
             {
-                this.textBockMessage.Text = @event.Content;
+                this.textBockMessage.Text = this.@event.Content;
             }
 
             this.Width = Double.NaN;
@@ -98,7 +102,13 @@ namespace BogheApp.Items
 
         private void ctxMenu_AddToContacts_Click(object sender, RoutedEventArgs e)
         {
-
+            Contact contact = new Contact();
+            contact.UriString = this.@event.RemoteParty;
+            contact.DisplayName = UriUtils.GetUserName(contact.UriString);
+            ScreenContactEdit screenEditContact = new ScreenContactEdit(contact, null);
+            screenEditContact.EditMode = false;
+            screenEditContact.Tag = this.@event;
+            Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenEditContact);
         }
 
         private void ctxMenu_DeleteHistoryEvent_Click(object sender, RoutedEventArgs e)

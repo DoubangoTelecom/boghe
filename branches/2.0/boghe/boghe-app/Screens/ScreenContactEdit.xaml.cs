@@ -36,6 +36,7 @@ using BogheCore.Model;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
 using BogheApp.Services;
+using BogheApp.embedded;
 
 namespace BogheApp.Screens
 {
@@ -48,6 +49,7 @@ namespace BogheApp.Screens
         private bool editMode;
 
         private readonly IContactService contactService;
+        private readonly IHistoryService historyService;
         private readonly IWin32ScreenService screenService;
 
         public ScreenContactEdit(Contact contact, Group group) : base()
@@ -60,7 +62,7 @@ namespace BogheApp.Screens
                 this.textBoxDisplayName.Text = this.contact.DisplayName ?? this.contact.DisplayName;
                 this.textBoxSipUri.IsEnabled = false;
                 this.editMode = true;
-                this.labelTitle.Content = "Edit Contact";
+                this.labelTitle.Content = Strings.Text_EditContact;
             }
             else
             {
@@ -75,11 +77,22 @@ namespace BogheApp.Screens
                 this.textBoxDisplayName.Text = this.contact.DisplayName = "John Doe";
                 this.textBoxSipUri.IsEnabled = true;
                 this.editMode = false;
-                this.labelTitle.Content = "Add Contact";
+                this.labelTitle.Content = Strings.Text_AddContact;
             }
 
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
+            this.historyService = Win32ServiceManager.SharedManager.HistoryService;
             this.screenService = Win32ServiceManager.SharedManager.Win32ScreenService;
+        }
+
+        public bool EditMode
+        {
+            get { return this.editMode; }
+            set
+            {
+                this.editMode = value;
+                this.labelTitle.Content = this.editMode ? Strings.Text_EditContact : Strings.Text_AddContact;
+            }
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -106,10 +119,33 @@ namespace BogheApp.Screens
             }
             else
             {
+                if (this.Tag == null)
+                {
+                    this.Tag = this.contact;
+                }
                 this.contactService.ContactAdd(this.contact);
             }
             this.screenService.Show(ScreenType.Contacts);
             this.screenService.Hide(this);
+            if (this.Tag != null)
+            {
+                List<HistoryEvent> events = null;
+                if (this.Tag is HistoryEvent)
+                {
+                    HistoryEvent @event = (this.Tag as HistoryEvent);
+                    events = this.historyService.Events.FindAll((x) => { return x.RemoteParty.Equals(@event.RemoteParty); });
+                }
+                else if (this.Tag is Contact)
+                {
+                    Contact contact = (this.Tag as Contact);
+                    events = this.historyService.Events.FindAll((x) => { return x.RemoteParty.Equals(contact.UriString); });
+                }
+                if (events != null && events.Count > 0)
+                {
+                    events.ForEach((x) => x.DisplayName = null);
+                    this.screenService.ScreenHistory.Refresh();
+                }
+            }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)

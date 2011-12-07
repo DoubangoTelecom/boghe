@@ -109,7 +109,11 @@ namespace BogheCore.Services.Impl
 
         public void UpdateEvent(HistoryEvent @event)
         {
+            HistoryEventArgs eargs = new HistoryEventArgs(HistoryEventTypes.UPDATED);
+            eargs.AddExtra(HistoryEventArgs.EXTRA_EVENT, @event);
+            EventHandlerTrigger.TriggerEvent<HistoryEventArgs>(this.onHistoryEvent, this, eargs);
 
+            this.DeferredSave();
         }
 
         public void DeleteEvent(HistoryEvent @event)

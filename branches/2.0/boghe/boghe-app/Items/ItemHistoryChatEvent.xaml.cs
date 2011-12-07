@@ -36,6 +36,8 @@ using BogheCore.Model;
 using BogheCore.Services;
 using BogheApp.Services.Impl;
 using System.Globalization;
+using BogheCore.Utils;
+using BogheApp.Screens;
 
 namespace BogheApp.Items
 {
@@ -45,6 +47,7 @@ namespace BogheApp.Items
     public partial class ItemHistoryChatEvent : BaseItem<HistoryChatEvent>
     {
         private readonly IHistoryService historyService;
+        private HistoryChatEvent @event;
 
         public ItemHistoryChatEvent()
         {
@@ -57,10 +60,11 @@ namespace BogheApp.Items
 
         private void ItemHistoryChatEvent_ValueLoaded(object sender, EventArgs e)
         {
-            HistoryChatEvent @event = this.Value;
+            this.@event = this.Value;
 
-            this.labelDisplayName.Content = @event.DisplayName;
-            this.labelDate.Content = BaseItem<HistoryChatEvent>.GetFriendlyDateString(@event.Date);
+            this.labelDisplayName.Content = this.@event.DisplayName;
+            this.labelDate.Content = BaseItem<HistoryChatEvent>.GetFriendlyDateString(this.@event.Date);
+            this.ctxMenu_AddToContacts.IsEnabled = (this.@event.Contact == null);
 
             this.textBockMessage.Text = String.Empty;
             if (@event.Messages.Count > 0)
@@ -99,7 +103,13 @@ namespace BogheApp.Items
 
         private void ctxMenu_AddToContacts_Click(object sender, RoutedEventArgs e)
         {
-
+            Contact contact = new Contact();
+            contact.UriString = this.@event.RemoteParty;
+            contact.DisplayName = UriUtils.GetUserName(contact.UriString);
+            ScreenContactEdit screenEditContact = new ScreenContactEdit(contact, null);
+            screenEditContact.EditMode = false;
+            screenEditContact.Tag = this.@event;
+            Win32ServiceManager.SharedManager.Win32ScreenService.Show(screenEditContact);
         }
 
         private void ctxMenu_DeleteHistoryEvent_Click(object sender, RoutedEventArgs e)
