@@ -36,7 +36,7 @@ namespace BogheCore.Sip
         private static int SMS_MR = 0;
 
         public MyMessagingSession(MySipStack sipStack, String toUri)
-        :base(sipStack)
+            : base(sipStack)
         {
             this.session = new MessagingSession(sipStack);
 
@@ -65,25 +65,26 @@ namespace BogheCore.Sip
                 base.ToUri = SMSC;
                 this.session.addHeader("Content-Type", ContentType.SMS_3GPP);
                 this.session.addHeader("Content-Transfer-Encoding", "binary");
-                this.session.addCaps("+g.3gpp.smsip");               
-    			
-			    RPMessage rpMessage;
-			    //if(ServiceManager.getConfigurationService().getBoolean(CONFIGURATION_SECTION.RCS, CONFIGURATION_ENTRY.HACK_SMS, false)){
-				//    rpMessage = SMSEncoder.encodeDeliver(++ScreenSMSCompose.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, new String(content));
-				//    session.addHeader("P-Asserted-Identity", SMSC);
-			    //}
-			    //else{
-				    rpMessage = SMSEncoder.encodeSubmit(++MyMessagingSession.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, text);
-			    //}
-    			
-			    long rpMessageLen = rpMessage.getPayloadLength();
+                this.session.addCaps("+g.3gpp.smsip");
+
+                RPMessage rpMessage;
+                //if(ServiceManager.getConfigurationService().getBoolean(CONFIGURATION_SECTION.RCS, CONFIGURATION_ENTRY.HACK_SMS, false)){
+                //    rpMessage = SMSEncoder.encodeDeliver(++ScreenSMSCompose.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, new String(content));
+                //    session.addHeader("P-Asserted-Identity", SMSC);
+                //}
+                //else{
+                rpMessage = SMSEncoder.encodeSubmit(++MyMessagingSession.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, text);
+                //}
+
+                long rpMessageLen = rpMessage.getPayloadLength();
                 byte[] payload = new byte[(int)rpMessageLen];
                 uint payloadLength = rpMessage.getPayload(payload, (uint)payload.Length);
                 bool ret = this.session.send(payload, payloadLength);
                 rpMessage.Dispose();
-                if(MyMessagingSession.SMS_MR >= 255){
-				    MyMessagingSession.SMS_MR = 0;
-			    }
+                if (MyMessagingSession.SMS_MR >= 255)
+                {
+                    MyMessagingSession.SMS_MR = 0;
+                }
 
                 return ret;
             }
@@ -94,12 +95,17 @@ namespace BogheCore.Sip
             }
         }
 
-        public bool SendTextMessage(String text)
+        public bool SendTextMessage(String text, String contentType)
         {
-            this.session.addHeader("Content-Type", ContentType.TEXT_PLAIN);
+            this.session.addHeader("Content-Type", String.IsNullOrEmpty(contentType) ? ContentType.TEXT_PLAIN : contentType);
             byte[] payload = Encoding.UTF8.GetBytes(text);
             bool ret = this.session.send(payload, (uint)payload.Length);
             return ret;
+        }
+
+        public bool SendTextMessage(String text)
+        {
+            return SendTextMessage(text, null);
         }
     }
 }

@@ -27,6 +27,7 @@ using BogheCore.Model;
 using BogheCore;
 using BogheCore.Sip;
 using BogheApp.embedded;
+using System.Threading;
 
 namespace BogheApp
 {
@@ -53,6 +54,14 @@ namespace BogheApp
             get
             {
                 return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.OMAFDR, Configuration.DEFAULT_RCS_OMAFDR);
+            }
+        }
+
+        private bool IsComposingAlertEnabled
+        {
+            get
+            {
+                return this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.ISCOMOPING, Configuration.DEFAULT_RCS_ISCOMOPING);
             }
         }
 
@@ -111,6 +120,64 @@ namespace BogheApp
             if (@event.Status == HistoryEvent.StatusType.Incoming)
             {
                 this.soundService.PlayNewEvent();
+            }
+        }
+
+        private void imActivityIndicator_SendMessageEvent(object sender, EventArgs e)
+        {
+            if (this.IsComposingAlertEnabled && this.participants.Count > 0)
+            {
+                if (this.Dispatcher.Thread != Thread.CurrentThread)
+                {
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new EventHandler<EventArgs>(this.imActivityIndicator_SendMessageEvent), sender, new object[] { e });
+                    return;
+                }
+
+                switch (this.messagingType)
+                {
+                    case MediaType.Chat:
+                        {
+                            if (this.ChatSession != null)
+                            {
+                                this.ChatSession.SendMessage(this.imActivityIndicator.GetMessageIndicator(), ContentType.IS_COMPOSING, null);
+                            }
+                            break;
+                        }
+
+                    case MediaType.ShortMessage:
+                    case MediaType.SMS:
+                    default:
+                        {
+                            if (!this.UseBinarySMS)
+                            {
+                                MyMessagingSession shortMessageSession = new MyMessagingSession(this.sipService.SipStack, this.remotePartyUri);
+                                shortMessageSession.SendTextMessage(this.imActivityIndicator.GetMessageIndicator(), ContentType.IS_COMPOSING);
+                                shortMessageSession.Dispose();
+                            }
+                            break;
+                        }
+                }
+            }
+        }
+
+        private void imActivityIndicator_RemoteStateChangedEvent(object sender, EventArgs e)
+        {
+            if (this.IsComposingAlertEnabled && this.participants.Count > 0)
+            {
+                if (this.Dispatcher.Thread != Thread.CurrentThread)
+                {
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new EventHandler<EventArgs>(this.imActivityIndicator_RemoteStateChangedEvent), sender, new object[] { e });
+                    return;
+                }
+                // For now we only support 1 participant
+                Participant part = this.participants.FirstOrDefault((x) => { return x != null; });
+                if (part != null)
+                {
+                    part.IsComposing = this.imActivityIndicator.IsRemoteActive;
+                }
+                this.participantsView.Refresh();// FIXME: OnPropNotif not working
             }
         }
     }

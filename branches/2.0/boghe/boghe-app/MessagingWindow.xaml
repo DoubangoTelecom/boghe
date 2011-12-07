@@ -54,7 +54,7 @@
                 <ItemsControl Name="historyCtrl" HorizontalContentAlignment="Stretch" />
             </ScrollViewer>
         </Border>
-        <TextBox AcceptsReturn="True" BorderBrush="SkyBlue" Margin="4,0,78,3" Name="textBoxInput" Height="53" VerticalAlignment="Bottom" />
+        <TextBox AcceptsReturn="True" BorderBrush="SkyBlue" Margin="4,0,78,3" Name="textBoxInput" Height="53" VerticalAlignment="Bottom" TextChanged="textBoxInput_TextChanged" />
         <Button Height="54" HorizontalAlignment="Right" Margin="0,0,3,2" Name="buttonSendText" VerticalAlignment="Bottom" Width="73" Padding="0" BorderBrush="SkyBlue" Background="Transparent" Click="buttonSendText_Click">
             <DockPanel Width="69">
                 <Image Name="buttonSendTextImage" Source="/BogheApp;component/embedded/24/message_24.png" DockPanel.Dock="Top" Stretch="None"></Image>
@@ -68,6 +68,7 @@
                         <Image Source="{Binding Path=PresStatusImageSource}" Stretch="None" Margin="2,0,2,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <TextBlock Text = "{Binding Path=DisplayName}" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         <Image Source="{Binding Path=ConfStatusImageSource}" Stretch="None" Margin="2,0,2,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        <Image Source="/BogheApp;component/embedded/16/pen_16.png" Stretch="None" Margin="2,0,2,0" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{Binding Path=IsComposingVisibility}" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

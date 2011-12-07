@@ -70,6 +70,7 @@
     <Compile Include="Generated\data-model.Extra.cs">
       <DependentUpon>data-model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generated\im-iscomposing.cs" />
     <Compile Include="Generated\pidf-caps.cs" />
     <Compile Include="Generated\pidf.cs" />
     <Compile Include="Generated\pidf.Extra.cs">
@@ -185,6 +186,7 @@
     <Compile Include="Sip\MySipSession.cs" />
     <Compile Include="Sip\MySipStack.cs" />
     <Compile Include="Sip\MySubscriptionSession.cs" />
+    <Compile Include="Utils\IMActivityIndicator.cs" />
     <Compile Include="Utils\MySoundPlayer.cs" />
     <Compile Include="Utils\MyXmlSerializer.cs" />
     <Compile Include="Utils\Rfc3339DateTime.cs" />
