@@ -408,6 +408,7 @@ namespace BogheCore.Services.Impl
                 String phrase = e.getPhrase();
                 short code = e.getCode();
                 SipSession session = e.getBaseSession();
+                SipMessage message = e.getSipMessage();
                 if (session == null)
                 {
                     return 0;
@@ -415,6 +416,8 @@ namespace BogheCore.Services.Impl
 
                 uint sessionId = session.getId();
                 MySipSession mySession = null;
+
+                short sipCode = message != null && message.isResponse() ? message.getResponseCode() : code;
 
                 SipService.LOG.Info(String.Format("OnDialogEvent ({0})", phrase));
 
@@ -431,6 +434,7 @@ namespace BogheCore.Services.Impl
                     {
                         (mySession as MyInviteSession).State = MyInviteSession.InviteState.INPROGRESS;
                         InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.INPROGRESS, phrase);
+                        eargs.AddExtra(InviteEventArgs.EXTRA_SIP_CODE, sipCode);
                         eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, mySession);
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
                     } 
@@ -532,7 +536,9 @@ namespace BogheCore.Services.Impl
                     {
                         mySession.IsConnected = false;
                         (mySession as MyInviteSession).State = MyInviteSession.InviteState.TERMINATED;
-                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, new InviteEventArgs(sessionId, InviteEventTypes.DISCONNECTED, phrase));
+                        InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.DISCONNECTED, phrase);
+                        eargs.AddExtra(InviteEventArgs.EXTRA_SIP_CODE, sipCode);
+                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
                     }
 
                     // Subscription
@@ -625,6 +631,7 @@ namespace BogheCore.Services.Impl
                 switch (type)
                 {
                     case tsip_invite_event_type_t.tsip_i_newcall:
+                    case tsip_invite_event_type_t.tsip_i_ect_newcall:
                         {
                             if (session != null) /* As we are not the owner, then the session MUST be null */
                             {
@@ -676,12 +683,22 @@ namespace BogheCore.Services.Impl
                                             LOG.Error("Failed to take audio/video session ownership");
                                             return -1;
                                         }
-                                        MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
-                                        avSession.State = MyInviteSession.InviteState.INCOMING;
+                                        if (type == tsip_invite_event_type_t.tsip_i_newcall)
+                                        {
+                                            MyAVSession avSession = MyAVSession.TakeIncomingSession(this.sipService.SipStack, session as CallSession, sessionType, message);
+                                            avSession.State = MyInviteSession.InviteState.INCOMING;
 
-                                        InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
-                                        eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
-                                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                            InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.INCOMING, phrase);
+                                            eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
+                                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                        }
+                                        else
+                                        {
+                                            MyAVSession avSession = MyAVSession.TakeOutgoingTranferSession(this.sipService.SipStack, (session as CallSession), sessionType, message);
+                                            InviteEventArgs eargs = new InviteEventArgs(avSession.Id, InviteEventTypes.REMOTE_TRANSFER_INPROGESS, phrase);
+                                            eargs.AddExtra(InviteEventArgs.EXTRA_SESSION, avSession);
+                                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                        }
                                         break;
                                     }
 
@@ -727,16 +744,79 @@ namespace BogheCore.Services.Impl
                             }
                             break;
                         }
-                    case tsip_invite_event_type_t.tsip_o_ect_ok:
-                    case tsip_invite_event_type_t.tsip_o_ect_nok:
-                    case tsip_invite_event_type_t.tsip_i_ect:
-                        {
-                            break;
-                        }
-                    case tsip_invite_event_type_t.tsip_m_early_media:
+                    case tsip_invite_event_type_t.tsip_o_ect_trying:
                         {
                             EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
-                                        new InviteEventArgs(session.getId(), InviteEventTypes.EARLY_MEDIA, phrase));
+                                        new InviteEventArgs(session.getId(), InviteEventTypes.LOCAL_TRANSFER_TRYING, phrase));
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_o_ect_accepted:
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                        new InviteEventArgs(session.getId(), InviteEventTypes.LOCAL_TRANSFER_ACCEPTED, phrase));
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_o_ect_completed:
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                        new InviteEventArgs(session.getId(), InviteEventTypes.LOCAL_TRANSFER_COMPLETED, phrase));
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_o_ect_failed:
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                        new InviteEventArgs(session.getId(), InviteEventTypes.LOCAL_TRANSFER_FAILED, phrase));
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_o_ect_notify:
+                    case tsip_invite_event_type_t.tsip_i_ect_notify:
+                        {
+                            InviteEventTypes eType = type == tsip_invite_event_type_t.tsip_o_ect_notify ? InviteEventTypes.LOCAL_TRANSFER_NOTIFY : InviteEventTypes.REMOTE_TRANSFER_NOTIFY;
+                            InviteEventArgs args = new InviteEventArgs(session.getId(), eType, phrase);
+                            args.AddExtra(InviteEventArgs.EXTRA_SIP_CODE, code);
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, args);
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_i_ect_requested:
+                        {
+                            SipMessage message = e.getSipMessage();
+                            if (message != null)
+                            {
+                                if (message.getRequestType() == tsip_request_type_t.tsip_REFER)
+                                {
+                                    String referToUri = message.getSipHeaderValue("refer-to");
+                                    if (!String.IsNullOrEmpty(referToUri))
+                                    {
+                                        InviteEventArgs args = new InviteEventArgs(session.getId(), InviteEventTypes.REMOTE_TRANSFER_REQUESTED, phrase);
+                                        args.AddExtra(InviteEventArgs.EXTRA_REFERTO_URI, referToUri);
+                                        EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, args);
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_i_ect_failed:
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, 
+                                new InviteEventArgs(session.getId(), InviteEventTypes.REMOTE_TRANSFER_FAILED, phrase));
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_i_ect_completed:
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                new InviteEventArgs(session.getId(), InviteEventTypes.REMOTE_TRANSFER_COMPLETED, phrase));
+                            break;
+                        }
+
+
+                    case tsip_invite_event_type_t.tsip_m_early_media:
+                        {
+                            if (session != null)
+                            {
+                                EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                            new InviteEventArgs(session.getId(), InviteEventTypes.EARLY_MEDIA, phrase));
+                            }
                             break;
                         }
                     case tsip_invite_event_type_t.tsip_m_local_hold_ok:

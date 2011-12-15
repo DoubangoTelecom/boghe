@@ -36,7 +36,7 @@
                 <Separator />
                 <MenuItem Header="{x:Static res:Strings.AV_MenuMakeTransfer}" Name="MenuItemCall_MakeTransfer">
                     <MenuItem.Icon>
-                        <Image Source="/BogheApp;component/embedded/16/call_transfer_16.png" Stretch="None" IsEnabled="False" />
+                        <Image Source="/BogheApp;component/embedded/16/call_transfer_16.png" Stretch="None" IsEnabled="True" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Name="MenuItemCall_HoldResume" Header="Hold Call">

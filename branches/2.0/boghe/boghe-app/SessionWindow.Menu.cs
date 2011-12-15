@@ -63,6 +63,32 @@ namespace BogheApp
             }
             if (menuItem == this.MenuItemCall_MakeTransfer)
             {
+                if (this.AVSession != null && this.AVSession.IsConnected)
+                {
+                    lock (this.AVSession)
+                    {
+                        CallTransferWindow window = new CallTransferWindow();
+                        window.ShowDialog();
+                        if (!String.IsNullOrEmpty(window.TransferUri))
+                        {
+                            this.transferUri = window.TransferUri;
+                            if (this.IsHeld)
+                            {
+                                this.AVSession.TransferCall(this.transferUri);
+                            }
+                            else
+                            {
+                                // FIXME: for now doubango will not send Hold prior to transfer
+                                this.isTransfering = true;
+                                this.AVSession.HoldCall();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    LOG.Error("Invalid State");
+                }
             }
             else if (menuItem == this.MenuItemCall_HoldResume)
             {

@@ -657,4 +657,19 @@
   <data name="Text_TalkingWith" xml:space="preserve">
     <value>En connexion avec</value>
   </data>
+  <data name="Text_Accepted" xml:space="preserve">
+    <value>Accepté</value>
+  </data>
+  <data name="Text_CallTransfer" xml:space="preserve">
+    <value>Transfert d'appel</value>
+  </data>
+  <data name="Text_Completed" xml:space="preserve">
+    <value>Completé</value>
+  </data>
+  <data name="Text_Failed" xml:space="preserve">
+    <value>Echec</value>
+  </data>
+  <data name="Text_Initiated" xml:space="preserve">
+    <value>Initialisé</value>
+  </data>
 </root>

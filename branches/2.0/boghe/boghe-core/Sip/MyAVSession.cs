@@ -31,27 +31,29 @@ namespace BogheCore.Sip
         private readonly CallSession mSession;
         private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
         private bool mMute;
+        protected long mSessionTransferId = -1;
         
         public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
         {
             MediaType media;
 
+            switch (mediaType)
+            {
+                case twrap_media_type_t.twrap_media_audio:
+                    media = MediaType.Audio;
+                    break;
+                case twrap_media_type_t.twrap_media_video:
+                    media = MediaType.Video;
+                    break;
+                case twrap_media_type_t.twrap_media_audiovideo:
+                    media = MediaType.AudioVideo;
+                    break;
+                default:
+                    return null;
+            }
+
             lock (MyAVSession.sessions)
             {
-                switch (mediaType)
-                {
-                    case twrap_media_type_t.twrap_media_audio:
-                        media = MediaType.Audio;
-                        break;
-                    case twrap_media_type_t.twrap_media_video:
-                        media = MediaType.Video;
-                        break;
-                    case twrap_media_type_t.twrap_media_audiovideo:
-                        media = MediaType.AudioVideo;
-                        break;
-                    default:
-                        return null;
-                }
                 MyAVSession avSession = new MyAVSession(sipStack, session, media, InviteState.INCOMING);
                 if (sipMessage != null)
                 {
@@ -62,15 +64,47 @@ namespace BogheCore.Sip
             }
         }
 
-        public static MyAVSession CreateOutgoingSession(MySipStack sipStack, MediaType mediaType)
+        private static MyAVSession CreateOutgoingSession(MySipStack sipStack, CallSession session, MediaType mediaType)
         {
             lock (MyAVSession.sessions)
             {
-                MyAVSession avSession = new MyAVSession(sipStack, null, mediaType, InviteState.INPROGRESS);
+                MyAVSession avSession = new MyAVSession(sipStack, session, mediaType, InviteState.INPROGRESS);
                 MyAVSession.sessions.Add(avSession.Id, avSession);
 
                 return avSession;
             }
+        }
+
+        public static MyAVSession CreateOutgoingSession(MySipStack sipStack, MediaType mediaType)
+        {
+            return MyAVSession.CreateOutgoingSession(sipStack, null, mediaType);
+        }
+
+        public static MyAVSession TakeOutgoingTranferSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
+        {
+            MediaType media;
+
+            switch (mediaType)
+            {
+                case twrap_media_type_t.twrap_media_audio:
+                    media = MediaType.Audio;
+                    break;
+                case twrap_media_type_t.twrap_media_video:
+                    media = MediaType.Video;
+                    break;
+                case twrap_media_type_t.twrap_media_audiovideo:
+                    media = MediaType.AudioVideo;
+                    break;
+                default:
+                    return null;
+            }
+
+            MyAVSession avSession = MyAVSession.CreateOutgoingSession(sipStack, session, media);
+            if (sipMessage != null)
+            {
+                avSession.RemotePartyUri = sipMessage.getSipHeaderValue("refer-to");
+            }
+            return avSession;
         }
 
         public static void ReleaseSession(MyAVSession session)
@@ -143,6 +177,18 @@ namespace BogheCore.Sip
             get { return mSession; }
         }
 
+        public long SessionTransferId
+        {
+            get
+            {
+                if (mSessionTransferId == -1)
+                {
+                    mSessionTransferId = mSession.getSessionTransferId();
+                }
+                return mSessionTransferId;
+            }
+        }
+
         public bool AcceptCall()
         {
             return mSession.accept();
@@ -203,6 +249,25 @@ namespace BogheCore.Sip
         public bool ResumeCall()
         {
             return mSession.resume();
+        }
+
+        public bool TransferCall(String transferUri)
+        {
+            if (String.IsNullOrEmpty(transferUri) || !SipUri.isValid(transferUri))
+            {
+                return false;
+            }
+            return mSession.transfer(transferUri);
+        }
+
+        public bool AcceptCallTransfer()
+        {
+            return mSession.acceptTransfer();
+        }
+
+        public bool RejectCallTransfer()
+        {
+            return mSession.rejectTransfer();
         }
 
         public bool MakeCall(String remoteUri)
