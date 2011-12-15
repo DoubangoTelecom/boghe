@@ -191,6 +191,13 @@ namespace BogheApp
                     {
                         short? code = e.GetExtra(InviteEventArgs.EXTRA_SIP_CODE) as short?;
                         this.labelInfo.Content = String.Format("{0}: {1} {2}", Strings.Text_CallTransfer, code.HasValue ? code.Value : -1, e.Phrase);
+                        if (code.HasValue)
+                        {
+                            if (code.Value >= 300 && this.IsHeld)
+                            {
+                                this.AVSession.ResumeCall();
+                            }
+                        }
                         break;
                     }
 
