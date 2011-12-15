@@ -232,7 +232,7 @@ namespace BogheApp
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
                             this.MenuItemCall_HoldResume.IsEnabled = true;
-                            this.MenuItemCall_MakeTransfer.IsEnabled = false;
+                            this.MenuItemCall_MakeTransfer.IsEnabled = true;
                             this.MenuItemCall_HangUp.IsEnabled = true;
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;

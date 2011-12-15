@@ -57,9 +57,12 @@ namespace BogheApp
         private static ILog LOG = LogManager.GetLogger(typeof(SessionWindow));
         private static List<SessionWindow> windows = new List<SessionWindow>();
 
+        private bool isTransfering = false;
         private bool isHeld = false;
         private MyMsrpSession chatSession = null;
         private MyAVSession avSession = null;
+        private String transferUri = null;
+        private MyAVSession avTransfSession = null;
         private int volume = 0;
         private readonly List<MyMsrpSession> fileTransferSessions;
         private readonly String remotePartyUri = null;
@@ -166,6 +169,14 @@ namespace BogheApp
             set { 
                 this.avSession = value;
                 this.IsHeld = false;
+            }
+        }
+
+        private MyAVSession AVTransfSession
+        {
+            get { return this.avTransfSession; }
+            set{
+                this.avTransfSession = value;
             }
         }
 

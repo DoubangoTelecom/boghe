@@ -33,6 +33,8 @@ namespace BogheCore.Sip.Events
         private readonly String phrase;
 
         public const String EXTRA_SESSION = "session";
+        public const String EXTRA_SIP_CODE = "sipcode";
+        public const String EXTRA_REFERTO_URI = "refer-to-uri";
 
         public InviteEventArgs(long sessionId, InviteEventTypes type, String phrase)
             :base()

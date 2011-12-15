@@ -1492,6 +1492,15 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accepted.
+        /// </summary>
+        public static string Text_Accepted {
+            get {
+                return ResourceManager.GetString("Text_Accepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Contact.
         /// </summary>
         public static string Text_AddContact {
@@ -1555,6 +1564,33 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Call Transfer.
+        /// </summary>
+        public static string Text_CallTransfer {
+            get {
+                return ResourceManager.GetString("Text_CallTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Text_Cancel {
+            get {
+                return ResourceManager.GetString("Text_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Text_Completed {
+            get {
+                return ResourceManager.GetString("Text_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Early Media Started.
         /// </summary>
         public static string Text_EarlyMediaStarted {
@@ -1569,6 +1605,15 @@ namespace BogheApp.embedded {
         public static string Text_EditContact {
             get {
                 return ResourceManager.GetString("Text_EditContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed.
+        /// </summary>
+        public static string Text_Failed {
+            get {
+                return ResourceManager.GetString("Text_Failed", resourceCulture);
             }
         }
         
@@ -1614,6 +1659,15 @@ namespace BogheApp.embedded {
         public static string Text_IncomingCall {
             get {
                 return ResourceManager.GetString("Text_IncomingCall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initiated.
+        /// </summary>
+        public static string Text_Initiated {
+            get {
+                return ResourceManager.GetString("Text_Initiated", resourceCulture);
             }
         }
         
@@ -1677,6 +1731,15 @@ namespace BogheApp.embedded {
         public static string Text_TalkingWith {
             get {
                 return ResourceManager.GetString("Text_TalkingWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer.
+        /// </summary>
+        public static string Text_Transfer {
+            get {
+                return ResourceManager.GetString("Text_Transfer", resourceCulture);
             }
         }
     }

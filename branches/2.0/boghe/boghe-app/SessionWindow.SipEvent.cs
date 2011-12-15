@@ -7,6 +7,9 @@ using BogheCore.Sip.Events;
 using BogheCore.Model;
 using BogheCore;
 using BogheApp.embedded;
+using System.Windows.Forms;
+using BogheCore.Utils;
+using BogheCore.Sip;
 
 namespace BogheApp
 {
@@ -14,7 +17,7 @@ namespace BogheApp
     {
         private void sipService_onInviteEvent(object sender, InviteEventArgs e)
         {
-            if (this.AVSession == null || this.AVSession.Id != e.SessionId)
+            if (this.AVSession == null || (this.AVSession.Id != e.SessionId && e.Type != InviteEventTypes.REMOTE_TRANSFER_INPROGESS))
             {
                 /* Messaging */
                 if (e.Type == InviteEventTypes.DISCONNECTED)
@@ -129,20 +132,28 @@ namespace BogheApp
                     break;
 
                 case InviteEventTypes.LOCAL_HOLD_OK:
+                    if (this.isTransfering)
+                    {
+                        this.isTransfering = false;
+                        this.AVSession.TransferCall(this.transferUri);
+                    }
                     this.labelInfo.Content = Strings.Text_CallPlacedOnHold;
                     this.IsHeld = true;
                     break;
 
                 case InviteEventTypes.LOCAL_HOLD_NOK:
+                    this.isTransfering = false;
                     this.labelInfo.Content = Strings.Text_FailedToPlaceRemotePartyOnHold;
                     break;
 
                 case InviteEventTypes.LOCAL_RESUME_OK:
+                    this.isTransfering = false;
                     this.labelInfo.Content = Strings.Text_CallTakenOffHold;
                     this.IsHeld = false;
                     break;
 
                 case InviteEventTypes.LOCAL_RESUME_NOK:
+                    this.isTransfering = false;
                     this.labelInfo.Content = Strings.Text_FailedToUnholdCall;
                     break;
 
@@ -152,7 +163,88 @@ namespace BogheApp
 
                 case InviteEventTypes.REMOTE_RESUME:
                     this.labelInfo.Content = Strings.Text_TakenOffHoldByRemoteParty;
-                    break;                    
+                    break;
+
+
+                case InviteEventTypes.LOCAL_TRANSFER_TRYING:
+                    {
+                        this.labelInfo.Content = String.Format("{0}: {1}", Strings.Text_CallTransfer, Strings.Text_Initiated);
+                        break;
+                    }
+                case InviteEventTypes.LOCAL_TRANSFER_FAILED:
+                    {
+                        this.labelInfo.Content = String.Format("{0}: {1}", Strings.Text_CallTransfer, Strings.Text_Failed);
+                        break;
+                    }
+                case InviteEventTypes.LOCAL_TRANSFER_ACCEPTED:
+                    {
+                        this.labelInfo.Content = String.Format("{0}: {1}", Strings.Text_CallTransfer, Strings.Text_Accepted);
+                        break;
+                    }
+                case InviteEventTypes.LOCAL_TRANSFER_COMPLETED:
+                    {
+                        this.labelInfo.Content = String.Format("{0}: {1}", Strings.Text_CallTransfer, Strings.Text_Completed);
+                        break;
+                    }
+                case InviteEventTypes.LOCAL_TRANSFER_NOTIFY:
+                case InviteEventTypes.REMOTE_TRANSFER_NOTIFY:
+                    {
+                        short? code = e.GetExtra(InviteEventArgs.EXTRA_SIP_CODE) as short?;
+                        this.labelInfo.Content = String.Format("{0}: {1} {2}", Strings.Text_CallTransfer, code.HasValue ? code.Value : -1, e.Phrase);
+                        break;
+                    }
+
+                case InviteEventTypes.REMOTE_TRANSFER_REQUESTED:
+                    {
+                        new Thread((System.Threading.ParameterizedThreadStart)delegate(object _e)
+                        {
+                            this.Dispatcher.Invoke((System.Threading.ThreadStart)delegate
+                            {
+                                InviteEventArgs args = _e as InviteEventArgs;
+                                if (args != null)
+                                {
+                                    String referToUri = args.GetExtra(InviteEventArgs.EXTRA_REFERTO_URI) as String;
+                                    String referToName = UriUtils.GetDisplayName(referToUri);
+                                    DialogResult ret = MessageBox.Show(String.Format("Call Transfer to {0} requested. Do you accept?", referToName), "Call Transfer Request", MessageBoxButtons.YesNo);
+                                    if (this.AVSession != null)
+                                    {
+                                        if (ret == System.Windows.Forms.DialogResult.Yes)
+                                        {
+                                            this.AVSession.AcceptCallTransfer();
+                                        }
+                                        else
+                                        {
+                                            this.AVSession.RejectCallTransfer();
+                                        }
+                                    }
+                                }
+                            });
+                        })
+                        .Start(e);
+                        break;
+                    }
+
+                case InviteEventTypes.REMOTE_TRANSFER_INPROGESS:
+                    {
+                        this.AVTransfSession = e.GetExtra(InviteEventArgs.EXTRA_SESSION) as MyAVSession;
+                        break;
+                    }
+                case InviteEventTypes.REMOTE_TRANSFER_FAILED:
+                    {
+                        this.AVTransfSession = null;
+                        break;
+                    }
+                case InviteEventTypes.REMOTE_TRANSFER_COMPLETED:
+                    {
+                        if (this.AVTransfSession != null)
+                        {
+                            this.AVSession = this.AVTransfSession;
+                            this.AVTransfSession = null;
+                            this.InitializeView();
+                            this.UpdateControls();
+                        }
+                        break;
+                    }
             }
         }
     }

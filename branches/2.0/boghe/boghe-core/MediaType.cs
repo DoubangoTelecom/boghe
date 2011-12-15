@@ -40,5 +40,5 @@ namespace BogheCore
         FileTransfer = 0x01 << 5,
 
         All = AudioVideo | Messaging | FileTransfer
-    }    
+    }
 }
