@@ -141,7 +141,9 @@ namespace BogheApp
                 this.AVSession.MediaSessionMgr.consumerSetInt64(twrap_media_type_t.twrap_media_video, "remote-hwnd", this.videoDisplayRemote.Handle.ToInt64());
                 this.AVSession.MediaSessionMgr.producerSetInt64(twrap_media_type_t.twrap_media_video, "local-hwnd", this.videoDisplayLocal.Handle.ToInt64());
 
+#if FALSE // Early Media => "IsConnected" must be "MediaStarted"
                 if (this.AVSession.IsConnected)
+#endif
                 {
                     this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
                     this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;

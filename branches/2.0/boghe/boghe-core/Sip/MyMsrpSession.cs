@@ -82,26 +82,32 @@ namespace BogheCore.Sip
             {
                 String name = null;
                 String type = null;
+                int nameIndexStart = fileSelector.IndexOf("name:\"");
+                if (nameIndexStart == -1)
+                {
+                    LOG.Error("No name attribute");
+                    return null;
+                }
+                int nameIndexEnd = fileSelector.IndexOf("\"", nameIndexStart + 6);
+                if (nameIndexEnd == -1)
+                {
+                    LOG.Error("Invalid name attribute");
+                    return null;
+                }
+                name = fileSelector.Substring(nameIndexStart + 6, (nameIndexEnd - nameIndexStart - 6)).Trim();
+                fileSelector = fileSelector.Substring(0, nameIndexStart) + fileSelector.Substring(nameIndexEnd + 1, (fileSelector.Length - nameIndexEnd) - 1);
+
                 String[] attributes = fileSelector.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 foreach (String attribute in attributes)
                 {
                     String[] avp = attribute.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (avp.Length >= 2)
                     {
-                        if (String.Equals(avp[0], "name", StringComparison.InvariantCultureIgnoreCase) && avp[1] != null)
-                        {
-                            name = avp[1].Replace("\"", String.Empty);
-                        }
                         if (String.Equals(avp[0], "type", StringComparison.InvariantCultureIgnoreCase) && avp[1] != null)
                         {
                             type = avp[1];
                         }
                     }
-                }
-                if (name == null)
-                {
-                    LOG.Error("Invalid file name");
-                    return null;
                 }
 
                 msrpSession = MyMsrpSession.CreateIncomingSession(sipStack, session, mediaType, fromUri);

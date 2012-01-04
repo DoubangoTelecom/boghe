@@ -85,7 +85,7 @@ namespace BogheApp
                 case InviteEventTypes.EARLY_MEDIA:
                     this.labelInfo.Content = Strings.Text_EarlyMediaStarted;
                     this.soundService.StopRingBackTone();
-                    this.soundService.StopRingTone();
+                    this.soundService.StopRingTone();                    
                     break;
 
                 case InviteEventTypes.CONNECTED:
