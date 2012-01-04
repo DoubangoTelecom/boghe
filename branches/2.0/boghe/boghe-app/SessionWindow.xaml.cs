@@ -91,7 +91,7 @@ namespace BogheApp
 
             this.remotePartyUri = remotePartyUri;
             this.Title = String.Empty;
-            this.buttonCallOrAnswer.Tag = "Call";
+            this.buttonCallOrAnswer.Tag = Strings.Text_Call;
 
             this.fileTransferSessions = new List<MyMsrpSession>();
             this.imActivityIndicator = new IMActivityIndicator(this.remotePartyUri);
@@ -416,7 +416,7 @@ namespace BogheApp
 
         private void buttonCallOrAnswer_Click(object sender, RoutedEventArgs e)
         {
-            if ("Call".Equals(this.buttonCallOrAnswer.Tag) && this.AVSession == null)
+            if (Strings.Text_Call.Equals(this.buttonCallOrAnswer.Tag) && this.AVSession == null)
             {
                 this.AVSession = MyAVSession.CreateOutgoingSession(this.sipService.SipStack, MediaType.AudioVideo);
                 this.AVSession.MakeCall(this.remotePartyUri);
