@@ -207,16 +207,22 @@ namespace BogheCore.Services.Impl
         {
             this.preferences.realm = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM,
-                    Configuration.DEFAULT_REALM);
+                    Configuration.DEFAULT_NETWORK_REALM);
             this.preferences.impi = this.configurationService.Get(
                     Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI,
-                    Configuration.DEFAULT_IMPI);
+                    Configuration.DEFAULT_IDENTITY_IMPI);
             this.preferences.impu = this.configurationService.Get(
                     Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU,
-                    Configuration.DEFAULT_IMPU);
+                    Configuration.DEFAULT_IDENTITY_IMPU);
+            this.preferences.local_ip = this.configurationService.Get(
+                    Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.LOCAL_IP,
+                    Configuration.DEFAULT_NETWORK_LOCAL_IP);
+            this.preferences.local_port = this.configurationService.Get(
+                    Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.LOCAL_PORT,
+                    Configuration.DEFAULT_NETWORK_LOCAL_PORT);
 
             LOG.Info(String.Format(
-                    "realm='{0}', impu='{1}', impi='{2}'", this.preferences.realm, this.preferences.impu, this.preferences.impi));
+                    "realm='{0}', impu='{1}', impi='{2}', local_ip='{3}', local_port='{4}'", this.preferences.realm, this.preferences.impu, this.preferences.impi, this.preferences.local_ip, this.preferences.local_port));
 
             if (this.sipStack == null)
             {
@@ -239,6 +245,26 @@ namespace BogheCore.Services.Impl
                 if (!this.sipStack.setIMPU(this.preferences.impu))
                 {
                     LOG.Error(String.Format("Failed to set IMPU: {0}", this.preferences.impu));
+                    return false;
+                }
+            }
+
+            // Set local IP
+            if (!String.IsNullOrEmpty(this.preferences.local_ip))
+            {
+                if (!this.sipStack.setLocalIP(this.preferences.local_ip))
+                {
+                    LOG.Error(String.Format("Failed to set Local IP: {0}", this.preferences.local_ip));
+                    return false;
+                }
+            }
+
+            // Set local Port
+            if (this.preferences.local_port > 1024 && this.preferences.local_port < 0xFFFF)
+            {
+                if (!this.sipStack.setLocalPort((ushort)this.preferences.local_port))
+                {
+                    LOG.Error(String.Format("Failed to set Local Port: {0}", this.preferences.local_port));
                     return false;
                 }
             }
@@ -301,13 +327,13 @@ namespace BogheCore.Services.Impl
                     null); // null will trigger DNS NAPTR+SRV
             this.preferences.pcscf_port = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT,
-                    Configuration.DEFAULT_PCSCF_PORT);
+                    Configuration.DEFAULT_NETWORK_PCSCF_PORT);
             this.preferences.transport = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT,
-                    Configuration.DEFAULT_TRANSPORT);
+                    Configuration.DEFAULT_NETWORK_TRANSPORT);
             this.preferences.ipversion = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION,
-                    Configuration.DEFAULT_IP_VERSION);
+                    Configuration.DEFAULT_NETWORK_IP_VERSION);
 
             LOG.Debug(String.Format(
                     "pcscf-host='{0}', pcscf-port='{1}', transport='{2}', ipversion='{3}'",
@@ -361,15 +387,15 @@ namespace BogheCore.Services.Impl
 
             // Whether to use DNS NAPTR+SRV for the Proxy-CSCF discovery (even if the DNS requests are sent only when the stack starts,
             // should be done after setProxyCSCF())
-            this.sipStack.setDnsDiscovery(this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_PCSCF_DISCOVERY_DNS));
+            this.sipStack.setDnsDiscovery(this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS));
 
             // enable/disable 3GPP early IMS
             this.sipStack.setEarlyIMS(this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS,
-                    Configuration.DEFAULT_EARLY_IMS));
+                    Configuration.DEFAULT_NETWORK_EARLY_IMS));
 
             // SigComp (only update compartment Id if changed)
-            if (this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_SIGCOMP))
+            if (this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_NETWORK_SIGCOMP))
             {
                 String compId = String.Format("urn:uuid:%s", Guid.NewGuid().ToString());
                 this.sipStack.SigCompId = compId;
@@ -381,7 +407,7 @@ namespace BogheCore.Services.Impl
             }
 
             // Set Privacy
-            this.sipStack.Privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_PRIVACY);
+            this.sipStack.Privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_IDENTITY_PRIVACY);
 
             // Start the Stack
             if (!this.sipStack.start())

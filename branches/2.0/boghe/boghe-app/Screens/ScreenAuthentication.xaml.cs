@@ -56,12 +56,12 @@ namespace BogheApp.Screens
             this.configurationService = Win32ServiceManager.SharedManager.ConfigurationService;
             this.sipService = Win32ServiceManager.SharedManager.SipService;
 
-            this.textBoxDisplayName.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
-            this.textBoxPublicIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU, Configuration.DEFAULT_IMPU);
-            this.textBoxPrivateIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI, Configuration.DEFAULT_IMPI);
+            this.textBoxDisplayName.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_IDENTITY_DISPLAY_NAME);
+            this.textBoxPublicIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU, Configuration.DEFAULT_IDENTITY_IMPU);
+            this.textBoxPrivateIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI, Configuration.DEFAULT_IDENTITY_IMPI);
             this.passwordBox.Password = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PASSWORD, String.Empty);
-            this.textBoxRealm.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
-            this.checkBoxEarlyIMS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, Configuration.DEFAULT_EARLY_IMS);
+            this.textBoxRealm.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_NETWORK_REALM);
+            this.checkBoxEarlyIMS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, Configuration.DEFAULT_NETWORK_EARLY_IMS);
 
             this.configurationService.onConfigurationEvent += this.configurationService_onConfigurationEvent;
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
@@ -95,7 +95,7 @@ namespace BogheApp.Screens
             this.configurationService.Set(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI, this.textBoxPrivateIdentity.Text);
             this.configurationService.Set(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PASSWORD, this.passwordBox.Password);
             this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, this.textBoxRealm.Text);
-            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, this.checkBoxEarlyIMS.IsChecked.HasValue ? this.checkBoxEarlyIMS.IsChecked.Value : Configuration.DEFAULT_EARLY_IMS);
+            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, this.checkBoxEarlyIMS.IsChecked.HasValue ? this.checkBoxEarlyIMS.IsChecked.Value : Configuration.DEFAULT_NETWORK_EARLY_IMS);
 
             this.configurationService.onConfigurationEvent += this.configurationService_onConfigurationEvent;
         }

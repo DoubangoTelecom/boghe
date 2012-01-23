@@ -51,17 +51,17 @@ namespace BogheApp.Screens
 
         private void LoadIdentity()
         {
-            this.textBoxDisplayName.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
-            this.textBoxPublicIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU, Configuration.DEFAULT_IMPU);
-            this.textBoxPrivateIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI, Configuration.DEFAULT_IMPI);
+            this.textBoxDisplayName.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_IDENTITY_DISPLAY_NAME);
+            this.textBoxPublicIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU, Configuration.DEFAULT_IDENTITY_IMPU);
+            this.textBoxPrivateIdentity.Text = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI, Configuration.DEFAULT_IDENTITY_IMPI);
             this.passwordBoxSipPassword.Password = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PASSWORD, String.Empty);
-            this.textBoxRealm.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
-            this.checkBoxEarlyIMS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, Configuration.DEFAULT_EARLY_IMS);
+            this.textBoxRealm.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_NETWORK_REALM);
+            this.checkBoxEarlyIMS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, Configuration.DEFAULT_NETWORK_EARLY_IMS);
 
             this.textBoxAMF.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_AMF, Configuration.DEFAULT_IMSAKA_AMF);
             this.textBoxOperatorId.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_OPID, Configuration.DEFAULT_IMSAKA_OPID);
             
-            String privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_PRIVACY);
+            String privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_IDENTITY_PRIVACY);
             String[] privaciesList = privacy.Split(";".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             this.privacies.ForEach(x => x.IsEnabled = privaciesList.Contains(x.Name));
         }
@@ -73,7 +73,7 @@ namespace BogheApp.Screens
             this.configurationService.Set(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI, this.textBoxPrivateIdentity.Text);
             this.configurationService.Set(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PASSWORD, this.passwordBoxSipPassword.Password);
             this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, this.textBoxRealm.Text);
-            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, this.checkBoxEarlyIMS.IsChecked.HasValue ? this.checkBoxEarlyIMS.IsChecked.Value : Configuration.DEFAULT_EARLY_IMS);
+            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS, this.checkBoxEarlyIMS.IsChecked.HasValue ? this.checkBoxEarlyIMS.IsChecked.Value : Configuration.DEFAULT_NETWORK_EARLY_IMS);
 
             this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_AMF, this.textBoxAMF.Text);
             this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_OPID, this.textBoxOperatorId.Text);
@@ -82,7 +82,7 @@ namespace BogheApp.Screens
             this.privacies.ForEach(x => privacy = x.IsEnabled ? (privacy == String.Empty ? x.Name : String.Format("{0};{1}", privacy, x.Name)) : privacy);
             if (String.IsNullOrEmpty(privacy))
             {
-                privacy = Configuration.DEFAULT_PRIVACY;
+                privacy = Configuration.DEFAULT_IDENTITY_PRIVACY;
             }
             this.configurationService.Set(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, privacy);
 

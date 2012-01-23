@@ -26,22 +26,24 @@ namespace BogheCore.Model
         public static String PCSCF_DISCOVERY_DNS = "DNS NAPTR+SRV";
 
         // Default values
-        public static String DEFAULT_DISPLAY_NAME = "John Doe";
-        public static String DEFAULT_IMPI = "johndoe@open-ims.test";
-        public static String DEFAULT_IMPU = "sip:johndoe@open-ims.test";
-        public static String DEFAULT_PRIVACY = "none";
+        public static String DEFAULT_IDENTITY_DISPLAY_NAME = "John Doe";
+        public static String DEFAULT_IDENTITY_IMPI = "johndoe@open-ims.test";
+        public static String DEFAULT_IDENTITY_IMPU = "sip:johndoe@open-ims.test";
+        public static String DEFAULT_IDENTITY_PRIVACY = "none";
 
-        public static bool DEFAULT_EARLY_IMS = false;
-        public static bool DEFAULT_PCSCF_DISCOVERY_DNS = false;
-        public static bool DEFAULT_PCSCF_DISCOVERY_DHCP = false;
-        public static String DEFAULT_PCSCF_HOST = "127.0.0.1";
-        public static int DEFAULT_PCSCF_PORT = 5060;
-        public static String DEFAULT_REALM = "sip:open-ims.test";
-        public static bool DEFAULT_SIGCOMP = false;
-        public static String DEFAULT_TRANSPORT = "UDP";
-        public static String DEFAULT_IP_VERSION = "ipv4";
-        public static bool DEFAULT_WIFI = true;
-        public static bool DEFAULT_3G = false;
+        public static bool DEFAULT_NETWORK_EARLY_IMS = false;
+        public static bool DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS = false;
+        public static bool DEFAULT_NETWORK_PCSCF_DISCOVERY_DHCP = false;
+        public static String DEFAULT_NETWORK_PCSCF_HOST = "127.0.0.1";
+        public static int DEFAULT_NETWORK_PCSCF_PORT = 5060;
+        public static String DEFAULT_NETWORK_REALM = "sip:open-ims.test";
+        public static bool DEFAULT_NETWORK_SIGCOMP = false;
+        public static String DEFAULT_NETWORK_TRANSPORT = "UDP";
+        public static String DEFAULT_NETWORK_IP_VERSION = "ipv4";
+        public static bool DEFAULT_NETWORK_WIFI = true;
+        public static bool DEFAULT_NETWORK_3G = false;
+        public static String DEFAULT_NETWORK_LOCAL_IP = String.Empty;
+        public static int DEFAULT_NETWORK_LOCAL_PORT = 0;
 
         public static bool DEFAULT_GENERAL_FULL_SCREEN_VIDEO = true;
         public static bool DEFAULT_GENERAL_FFC = true;
@@ -127,7 +129,7 @@ namespace BogheCore.Model
             /* === VoLTE === */
 
             /* === NETWORK === */
-            EARLY_IMS, IP_VERSION, PCSCF_DISCOVERY_DNS, PCSCF_DISCOVERY_DHCP, PCSCF_HOST, PCSCF_PORT, REALM, SIGCOMP, THREE_3G, TRANSPORT, WIFI,
+            EARLY_IMS, IP_VERSION, PCSCF_DISCOVERY_DNS, PCSCF_DISCOVERY_DHCP, PCSCF_HOST, PCSCF_PORT, REALM, SIGCOMP, THREE_3G, TRANSPORT, WIFI, LOCAL_IP, LOCAL_PORT,
 
             /* === QOS/QOE === */
             PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, REFRESHER, SIP_CALLS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,

@@ -67,7 +67,7 @@ namespace BogheApp.Screens
             else
             {
                 String realm = Win32ServiceManager.SharedManager.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, 
-                    Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
+                    Configuration.ConfEntry.REALM, Configuration.DEFAULT_NETWORK_REALM);
                 this.contact = new Contact();
                 if (group != null)
                 {

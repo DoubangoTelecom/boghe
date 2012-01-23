@@ -553,7 +553,7 @@ namespace BogheCore.Services.Impl
             }
 
             String impu = this.configurationService.Get(
-                Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU, Configuration.DEFAULT_IMPU);
+                Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU, Configuration.DEFAULT_IDENTITY_IMPU);
             String xcap_ui = this.configurationService.Get(
                     Configuration.ConfFolder.XCAP, Configuration.ConfEntry.USERNAME, impu);
             String xcap_root = this.configurationService.Get(

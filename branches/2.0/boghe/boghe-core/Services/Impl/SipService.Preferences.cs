@@ -41,6 +41,8 @@ namespace BogheCore.Services.Impl
             public int pcscf_port;
             public String transport;
             public String ipversion;
+            public String local_ip;
+            public int local_port;
             public bool ipsec_secagree;
         }
     }
