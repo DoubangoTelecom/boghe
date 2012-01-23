@@ -30,14 +30,14 @@ namespace BogheApp.Screens
     {
         private void LoadNetwork()
         {
-            this.textBoxProxyHost.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_HOST, Configuration.DEFAULT_PCSCF_HOST);
-            this.textBoxProxyPort.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT, Configuration.DEFAULT_PCSCF_PORT.ToString());
-            String transport = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT, Configuration.DEFAULT_TRANSPORT);
+            this.textBoxProxyHost.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_HOST, Configuration.DEFAULT_NETWORK_PCSCF_HOST);
+            this.textBoxProxyPort.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT, Configuration.DEFAULT_NETWORK_PCSCF_PORT.ToString());
+            String transport = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT, Configuration.DEFAULT_NETWORK_TRANSPORT);
             this.comboBoxTransport.SelectedIndex = transport.Equals("UDP") ? 0 : (transport.Equals("TCP") ? 1 : 2);
-            this.checkBoxDiscoDNS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_PCSCF_DISCOVERY_DNS);
-            this.checkBoxDiscoDHCP.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DHCP, Configuration.DEFAULT_PCSCF_DISCOVERY_DHCP);
-            this.checkBoxSigComp.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_SIGCOMP);
-            String IPversion = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION, Configuration.DEFAULT_IP_VERSION);
+            this.checkBoxDiscoDNS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS);
+            this.checkBoxDiscoDHCP.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DHCP, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DHCP);
+            this.checkBoxSigComp.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_NETWORK_SIGCOMP);
+            String IPversion = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION, Configuration.DEFAULT_NETWORK_IP_VERSION);
             this.radioButtonIPv4.IsChecked = IPversion.Equals("IPv4", StringComparison.InvariantCultureIgnoreCase);
         }
 
@@ -47,9 +47,9 @@ namespace BogheApp.Screens
             this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT, this.textBoxProxyPort.Text);
             this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT, this.comboBoxTransport.SelectionBoxItem.ToString());
 
-            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, this.checkBoxDiscoDNS.IsChecked.HasValue ? this.checkBoxDiscoDNS.IsChecked.Value : Configuration.DEFAULT_PCSCF_DISCOVERY_DNS);
-            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DHCP, this.checkBoxDiscoDHCP.IsChecked.HasValue ? this.checkBoxDiscoDHCP.IsChecked.Value : Configuration.DEFAULT_PCSCF_DISCOVERY_DHCP);
-            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, this.checkBoxSigComp.IsChecked.HasValue ? this.checkBoxSigComp.IsChecked.Value : Configuration.DEFAULT_SIGCOMP);
+            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, this.checkBoxDiscoDNS.IsChecked.HasValue ? this.checkBoxDiscoDNS.IsChecked.Value : Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS);
+            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DHCP, this.checkBoxDiscoDHCP.IsChecked.HasValue ? this.checkBoxDiscoDHCP.IsChecked.Value : Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DHCP);
+            this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, this.checkBoxSigComp.IsChecked.HasValue ? this.checkBoxSigComp.IsChecked.Value : Configuration.DEFAULT_NETWORK_SIGCOMP);
             this.configurationService.Set(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION, (this.radioButtonIPv6.IsChecked.HasValue && this.radioButtonIPv6.IsChecked.Value) ? "IPv6" : "IPv4");
             
 

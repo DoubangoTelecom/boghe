@@ -121,7 +121,7 @@ namespace BogheCore.Utils
                 }
                 else
                 {
-                    String realm = UriUtils.ServiceManager.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_REALM);
+                    String realm = UriUtils.ServiceManager.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_NETWORK_REALM);
                     if (realm.Contains(":"))
                     {
                         realm = realm.Substring(realm.IndexOf(":") + 1);

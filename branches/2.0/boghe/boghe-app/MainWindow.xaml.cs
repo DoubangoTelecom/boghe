@@ -138,7 +138,7 @@ namespace BogheApp
 
             this.imageAvatar.Source = MyImageConverter.FromBitmap(Properties.Resources.avatar_48);
             this.labelFreeText.Content = this.configurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.FREE_TEXT, Configuration.DEFAULT_RCS_FREE_TEXT);
-            this.labelDisplayName.Content = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_DISPLAY_NAME);
+            this.labelDisplayName.Content = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.DISPLAY_NAME, Configuration.DEFAULT_IDENTITY_DISPLAY_NAME);
 
             if (System.IO.File.Exists(MainWindow.AVATAR_PATH))
             {
