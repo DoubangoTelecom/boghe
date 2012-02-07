@@ -180,7 +180,7 @@ namespace BogheCore.Sip
         {
             // Sip Expires
             //this.Session.setExpires(this.configurationService.getInt(CONFIGURATION_SECTION.QOS, CONFIGURATION_ENTRY.SIP_SESSIONS_TIMEOUT, Configuration.DEFAULT_QOS_SIP_SESSIONS_TIMEOUT));
-
+            
             // Sip Headers (common to all sessions)
             this.Session.addCaps("+g.oma.sip-im");
             this.Session.addCaps("language", "\"en,fr\"");

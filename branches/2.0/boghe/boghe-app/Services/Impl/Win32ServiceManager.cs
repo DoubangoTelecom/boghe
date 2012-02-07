@@ -112,7 +112,17 @@ namespace BogheApp.Services.Impl
 
             // Set user preferences
             MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
-
+            if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
+            {
+                MediaSessionMgr.defaultsSetInviteSessionTimers(
+                    this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_TIMEOUT, Configuration.DEFAULT_QOS_SESSION_TIMERS_TIMEOUT),
+                    this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_REFRESHER, Configuration.DEFAULT_QOS_SESSION_TIMERS_REFRESHER));
+            }
+            else 
+            {
+                MediaSessionMgr.defaultsSetInviteSessionTimers(0, null);
+            }
+                
             return ret;
         }
 
