@@ -72,11 +72,10 @@ namespace BogheApp.Screens
             String strength = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_STRENGTH, Configuration.DEFAULT_QOS_PRECOND_STRENGTH);
             String type = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_TYPE, Configuration.DEFAULT_QOS_PRECOND_TYPE);
             String bandwidth = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_BANDWIDTH, Configuration.DEFAULT_QOS_PRECOND_BANDWIDTH);
-            String refresher = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.REFRESHER, Configuration.DEFAULT_QOS_REFRESHER);
-            int timeout = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SIP_CALLS_TIMEOUT, Configuration.DEFAULT_QOS_SIP_CALLS_TIMEOUT);
+            String refresher = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_REFRESHER, Configuration.DEFAULT_QOS_SESSION_TIMERS_REFRESHER);
+            int timeout = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_TIMEOUT, Configuration.DEFAULT_QOS_SESSION_TIMERS_TIMEOUT);
 
-            this.checkBoxSessionTimersEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS
-                , Configuration.DEFAULT_QOS_SESSION_TIMERS);
+            this.checkBoxSessionTimersEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS);
             this.comboBoxPreconditionStrength.SelectedValue = StrengthToString((tmedia_qos_strength_t)Enum.Parse(typeof(tmedia_qos_strength_t), strength));
             this.comboBoxPreconditionType.SelectedValue = TypeToString((tmedia_qos_stype_t)Enum.Parse(typeof(tmedia_qos_stype_t), type));
             this.comboBoxPreconditionBandwidth.SelectedValue = BandwidthToString((tmedia_bandwidth_level_t)Enum.Parse(typeof(tmedia_bandwidth_level_t), bandwidth));
@@ -86,14 +85,31 @@ namespace BogheApp.Screens
 
         bool UpdateQoS()
         {
+            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, 
+                this.checkBoxSessionTimersEnable.IsChecked.Value);            
+            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_REFRESHER, this.comboBoxSessionTimerRefreser.SelectedValue.ToString());
+            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_TIMEOUT, this.textBoxSessionTimersTimeout.Text);
+            
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_STRENGTH,
                 StrengthFromString(this.comboBoxPreconditionStrength.SelectedValue.ToString()).ToString());
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_TYPE,
                 TypeFromString(this.comboBoxPreconditionType.SelectedValue.ToString()).ToString());
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_BANDWIDTH,
                 BandwidthFromString(this.comboBoxPreconditionBandwidth.SelectedValue.ToString()).ToString());
-            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.REFRESHER, this.comboBoxSessionTimerRefreser.SelectedValue.ToString());
-            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SIP_CALLS_TIMEOUT, this.textBoxSessionTimersTimeout.Text);
+
+
+            // Transmit values to the native part
+            if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
+            {
+                MediaSessionMgr.defaultsSetInviteSessionTimers(
+                   this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_TIMEOUT, Configuration.DEFAULT_QOS_SESSION_TIMERS_TIMEOUT),
+                   this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_REFRESHER, Configuration.DEFAULT_QOS_SESSION_TIMERS_REFRESHER));
+            }
+            else
+            {
+                MediaSessionMgr.defaultsSetInviteSessionTimers(0, null);
+            }
+            
 
             return true;
         }

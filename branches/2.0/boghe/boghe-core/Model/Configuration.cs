@@ -74,9 +74,9 @@ namespace BogheCore.Model
         public static String DEFAULT_QOS_PRECOND_BANDWIDTH = org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_hight.ToString();
         public static String DEFAULT_QOS_PRECOND_STRENGTH = org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_none.ToString();
         public static String DEFAULT_QOS_PRECOND_TYPE = org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_none.ToString();
-        public static String DEFAULT_QOS_REFRESHER = "none";
+        public static String DEFAULT_QOS_SESSION_TIMERS_REFRESHER = "none";
         public static int DEFAULT_QOS_SIP_SESSIONS_TIMEOUT = 600000;
-        public static int DEFAULT_QOS_SIP_CALLS_TIMEOUT = 3600;
+        public static int DEFAULT_QOS_SESSION_TIMERS_TIMEOUT = 3600;
         public static bool DEFAULT_QOS_SESSION_TIMERS = false;
 
         public static String DEFAULT_TLS_CA_FILE = String.Empty;
@@ -132,7 +132,7 @@ namespace BogheCore.Model
             EARLY_IMS, IP_VERSION, PCSCF_DISCOVERY_DNS, PCSCF_DISCOVERY_DHCP, PCSCF_HOST, PCSCF_PORT, REALM, SIGCOMP, THREE_3G, TRANSPORT, WIFI, LOCAL_IP, LOCAL_PORT,
 
             /* === QOS/QOE === */
-            PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, REFRESHER, SIP_CALLS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
+            PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, SESSION_TIMERS_REFRESHER, SESSION_TIMERS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
 
             /* === RCS (GSMA Rich Communication Suite) === */
             AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, HYPERAVAILABILITY_TIMEOUT, IMDN, ISCOMOPING, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
