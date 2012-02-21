@@ -41,7 +41,7 @@ If you are owner license owner then, you can build a non-GPL version of Doubango
 {{{ HAVE_H264=0}}}
  3. Disable G.729 codec if you don't have license by setting *HAVE_G729* value to zero. {{{HAVE_G729=0}}}
  4. Disable AMR codec if you don't have license by setting *HAVE_OPENCORE_AMR* value to zero. {{{HAVE_OPENCORE_AMR=0}}}
- 3. From Visual Studio, right click on *tinyDAV* project and select *Properties* -> *Linker* -> *Input* -> *Additional Dependencies*.
- 4. Link to LGPL version of FFmpeg by replacing *libavcodec.a*, *libavutil.a*, *libswscale.a* and *libavcore.a* with *libavcodec-lgpl.a*, *libavutil-lgpl.a*, *libswscale-lgpl.a* and *libavcore-lgpl.a* respectively. Remove *libx264.a* from the list.
+ 5. From Visual Studio, right click on *tinyDAV* project and select *Properties* -> *Linker* -> *Input* -> *Additional Dependencies*.
+ 6. Link to LGPL version of FFmpeg by replacing *libavcodec.a*, *libavutil.a*, *libswscale.a* and *libavcore.a* with *libavcodec-lgpl.a*, *libavutil-lgpl.a*, *libswscale-lgpl.a* and *libavcore-lgpl.a* respectively. Remove *libx264.a* from the list.
 
 ===
