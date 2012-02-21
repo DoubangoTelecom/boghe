@@ -54,5 +54,3 @@ HAVE_OPENCORE_AMR=0
  * From Visual Studio, right click on *tinyDAV* project and select *Properties* -> *Linker* -> *Input* -> *Additional Dependencies*.
   # Link to LGPL version of FFmpeg by replacing *libavcodec.a*, *libavutil.a*, *libswscale.a* and *libavcore.a* with *libavcodec-lgpl.a*, *libavutil-lgpl.a*, *libswscale-lgpl.a* and *libavcore-lgpl.a* respectively.
   # Remove *libx264.a* from the list.
-
-===
