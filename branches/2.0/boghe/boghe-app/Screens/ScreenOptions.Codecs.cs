@@ -67,14 +67,24 @@ namespace BogheApp.Screens
                 codecs.Add(new Codec("G.729", "G729 Annex A/B (8 KHz)", tdav_codec_id_t.tdav_codec_id_g729ab));
             }
 
+
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp10))
+            {
+                codecs.Add(new Codec("H264-BP10", "H.264 Base Profile 1.0", tdav_codec_id_t.tdav_codec_id_h264_bp10));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp20))
+            {
+                codecs.Add(new Codec("H264-BP20", "H.264 Base Profile 2.0", tdav_codec_id_t.tdav_codec_id_h264_bp20));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp30))
+            {
+                codecs.Add(new Codec("H264-BP30", "H.264 Base Profile 3.0", tdav_codec_id_t.tdav_codec_id_h264_bp30));
+            }
             codecs.AddRange(new Codec[]
             {
                 new Codec("VP8", "Google's VP8", tdav_codec_id_t.tdav_codec_id_vp8),
                 new Codec("MP4V-ES", "MPEG-4 Part 2", tdav_codec_id_t.tdav_codec_id_mp4ves_es),
                 new Codec("Theora", "Theora", tdav_codec_id_t.tdav_codec_id_theora),
-                new Codec("H264-BP10", "H.264 Base Profile 1.0", tdav_codec_id_t.tdav_codec_id_h264_bp10),
-                new Codec("H264-BP20", "H.264 Base Profile 2.0", tdav_codec_id_t.tdav_codec_id_h264_bp20),
-                new Codec("H264-BP30", "H.264 Base Profile 3.0", tdav_codec_id_t.tdav_codec_id_h264_bp30),
                 new Codec("H.263", "H.263", tdav_codec_id_t.tdav_codec_id_h263),
                 new Codec("H.263+", "H.263-1998", tdav_codec_id_t.tdav_codec_id_h263p),
                 new Codec("H.263++", "H.263-2000", tdav_codec_id_t.tdav_codec_id_h263pp),
