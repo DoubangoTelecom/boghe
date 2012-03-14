@@ -678,4 +678,7 @@
   <data name="Text_Transfer" xml:space="preserve">
     <value>Transfer</value>
   </data>
+  <data name="TabSecurity_SRTPParams" xml:space="preserve">
+    <value>SRTP Parameters</value>
+  </data>
 </root>

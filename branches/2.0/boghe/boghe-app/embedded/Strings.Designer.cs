@@ -1483,6 +1483,15 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SRTP Parameters.
+        /// </summary>
+        public static string TabSecurity_SRTPParams {
+            get {
+                return ResourceManager.GetString("TabSecurity_SRTPParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TLS Parameters.
         /// </summary>
         public static string TabSecurity_TLSParams {

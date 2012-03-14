@@ -212,6 +212,7 @@ namespace BogheApp
                             this.MenuItemCall_HangUp.IsEnabled = true;
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;
+                            this.imageIndicatorSecurity.Visibility = System.Windows.Visibility.Hidden;
                             break;
 
                         case MyInviteSession.InviteState.INPROGRESS:
@@ -225,6 +226,7 @@ namespace BogheApp
                             this.MenuItemCall_HangUp.IsEnabled = true;
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;
+                            this.imageIndicatorSecurity.Visibility = System.Windows.Visibility.Hidden;
                             break;
 
                         case MyInviteSession.InviteState.INCALL:
@@ -238,6 +240,7 @@ namespace BogheApp
                             this.MenuItemCall_HangUp.IsEnabled = true;
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;
+                            this.imageIndicatorSecurity.Visibility = this.AVSession.IsSecure() ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                             break;
 
                         case MyInviteSession.InviteState.TERMINATED:
@@ -252,6 +255,7 @@ namespace BogheApp
                             this.MenuItemCall_HangUp.IsEnabled = false;
                             this.sliderVolume.IsEnabled = false;
                             this.buttonSound.IsEnabled = false;
+                            this.imageIndicatorSecurity.Visibility = System.Windows.Visibility.Hidden;
                             break;
                     }
                 }

@@ -162,6 +162,7 @@
             <TabItem Height="45" Margin="1" Name="tabItemSecurity" BorderThickness="1" BorderBrush="SkyBlue">
                 <TabItem.Header>
                     <Label Content="{x:Static res:Strings.TabSecurity}" FontSize="12" FontWeight="Bold" />
+                    
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
@@ -171,7 +172,7 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelSecurityTitle" VerticalAlignment="Top" FontWeight="Bold">Security</Label>
-                    <GroupBox Height="185" Margin="6,39,6,0" Name="groupBox2" VerticalAlignment="Top">
+                    <GroupBox Height="143" Margin="6,39,6,0" Name="groupBox2" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock Text="{x:Static res:Strings.TabSecurity_TLSParams}" FontSize="14" FontWeight="Bold" Foreground="Black" />
                         </GroupBox.Header>
@@ -193,7 +194,7 @@
                             </Button>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Margin="7,241.9,5,38.1" Name="groupBox3">
+                    <GroupBox Margin="7,0,5,10" Name="groupBox3" Height="185" VerticalAlignment="Bottom">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabSecurity_IPSecParams}" />
                         </GroupBox.Header>
@@ -243,6 +244,22 @@
                                 <ComboBoxItem Name="esp" Tag="esp">esp</ComboBoxItem>
                             </ComboBox>
                             <CheckBox Content="{x:Static res:Strings.TabSecurity_EnableIPSec}" Height="16" Margin="6,9,9,0" Name="checkBoxIPSecSecAgreeEnabled" VerticalAlignment="Top" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Margin="8,190,4,206" Name="groupBox6">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabSecurity_SRTPParams}" />
+                        </GroupBox.Header>
+                        <Grid>
+                            <Label Content="{x:Static res:Strings.TabSecurity_Mode}" HorizontalAlignment="Left" Margin="10,6,0,0" Width="54" Height="32.38" VerticalAlignment="Top" />
+                            <ComboBox Name="comboBoxSRTPModes" Margin="67,9,9,0" Height="23.38" VerticalAlignment="Top">
+                                <ComboBox.Background>
+                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                        <GradientStop Color="SkyBlue" Offset="0" />
+                                        <GradientStop Color="White" Offset="0.567" />
+                                    </LinearGradientBrush>
+                                </ComboBox.Background>
+                            </ComboBox>
                         </Grid>
                     </GroupBox>
                 </Grid>

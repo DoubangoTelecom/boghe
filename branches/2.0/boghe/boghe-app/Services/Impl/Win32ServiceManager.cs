@@ -75,15 +75,6 @@ namespace BogheApp.Services.Impl
             if (!initialized)
             {
                 SipStack.initialize();
-                
-                // Set default values: To be moved into the configuration service
-                MediaSessionMgr.defaultsSetAgcEnabled(true);
-                MediaSessionMgr.defaultsSetEchoSuppEnabled(true);
-                MediaSessionMgr.defaultsSetEchoTail(100);
-                MediaSessionMgr.defaultsSetEchoSkew(0);
-                MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
-                MediaSessionMgr.defaultsSetJbMaxLateRate(1);
-
                 initialized = true;
             }
         }
@@ -110,7 +101,15 @@ namespace BogheApp.Services.Impl
             ret &= this.SoundService.Start();
             ret &= this.StateMonitorService.Start();
 
-            // Set user preferences
+            // Set user preferences (global defaults)
+            // could be changed per session
+            MediaSessionMgr.defaultsSetAgcEnabled(true);
+            MediaSessionMgr.defaultsSetEchoSuppEnabled(true);
+            MediaSessionMgr.defaultsSetEchoTail(100);
+            MediaSessionMgr.defaultsSetEchoSkew(0);
+            MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
+            MediaSessionMgr.defaultsSetJbMaxLateRate(1);
+
             MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
             if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
             {
@@ -122,6 +121,9 @@ namespace BogheApp.Services.Impl
             {
                 MediaSessionMgr.defaultsSetInviteSessionTimers(0, null);
             }
+            MediaSessionMgr.defaultsSetSRtpMode(
+                (tmedia_srtp_mode_t)Enum.Parse(typeof(tmedia_srtp_mode_t), this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_MODE, Configuration.DEFAULT_SECURITY_SRTP_MODE), true)
+                );
                 
             return ret;
         }

@@ -73,7 +73,7 @@
             </MenuItem>
         </Menu>
                        
-        <Label Height="28" Name="labelInfo" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="Black" Margin="0,27,83,0">Call Terminated</Label>
+        <Label Height="28" Name="labelInfo" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="Black" Margin="21,27,83,0">Call Terminated</Label>
          
         <TextBox Height="50" Margin="2,0,80,3" Name="textBoxInput" VerticalAlignment="Bottom" BorderBrush="SkyBlue" AcceptsReturn="True" TextChanged="textBoxInput_TextChanged"></TextBox>
         <Button  HorizontalAlignment="Right" Margin="0,61,3,0" Name="buttonCallOrAnswer" VerticalAlignment="Top"  Click="buttonCallOrAnswer_Click" Height="38" Width="121" Background="Transparent" BorderBrush="SkyBlue" Padding="0">
@@ -107,5 +107,6 @@
             <Image Name="imageSound" Source="/BogheApp;component/embedded/16/sound_on_16.png" DockPanel.Dock="Left" Stretch="None" Height="16" Width="16" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
         </Button>
         <Image Height="16" Margin="152,0,210,47" Name="imageIsComposing" Source="/BogheApp;component/embedded/16/pen_16.png" Stretch="None" VerticalAlignment="Bottom" Visibility="Hidden" Width="16" />
+        <Image Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/16/secure_16.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,33,0,0" Height="16" Width="16" ToolTip="Call secured with SRTP" />
     </Grid>
 </Window>
