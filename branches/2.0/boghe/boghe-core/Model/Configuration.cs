@@ -85,6 +85,7 @@ namespace BogheCore.Model
         public static bool DEFAULT_TLS_SEC_AGREE = false;
         public static String DEFAULT_IMSAKA_AMF = "0x0000";
         public static String DEFAULT_IMSAKA_OPID = "0x00000000000000000000000000000000";
+        public static String DEFAULT_SECURITY_SRTP_MODE = org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_none.ToString();
         public static String DEFAULT_SECURITY_IPSEC_ALGO = "hmac-md5-96";
         public static String DEFAULT_SECURITY_IPSEC_EALGO = "null";
         public static String DEFAULT_SECURITY_IPSEC_MODE = "trans";
@@ -138,7 +139,7 @@ namespace BogheCore.Model
             AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, HYPERAVAILABILITY_TIMEOUT, IMDN, ISCOMOPING, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
 
             /* === SECURITY === */
-            TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, IMSAKA_AMF, IMSAKA_OPID, IPSEC_SEC_AGREE, IPSEC_ALGO, IPSEC_EALGO, IPSEC_MODE, IPSEC_PROTO,
+            TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, SRTP_MODE, IMSAKA_AMF, IMSAKA_OPID, IPSEC_SEC_AGREE, IPSEC_ALGO, IPSEC_EALGO, IPSEC_MODE, IPSEC_PROTO,
 
             /* === SESSIONS === */
 
@@ -150,6 +151,154 @@ namespace BogheCore.Model
 
             /* === XCAP === */
             /* PASSWORD, */ ENABLED, XCAP_ROOT, USERNAME/*, TIMEOUT*/
+        }
+
+        const String SECURITY_SRTP_MODE_NONE = "None";
+        const String SECURITY_SRTP_MODE_OPTIONAL = "Optional";
+        const String SECURITY_SRTP_MODE_MANDATORY = "Mandatory";
+
+        static public String SRtpModeToString(org.doubango.tinyWRAP.tmedia_srtp_mode_t mode)
+        {
+            switch (mode)
+            {
+                case org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_mandatory:
+                    return Configuration.SECURITY_SRTP_MODE_MANDATORY;
+                case org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_optional:
+                    return Configuration.SECURITY_SRTP_MODE_OPTIONAL;
+                case org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_none:
+                default:
+                    return Configuration.SECURITY_SRTP_MODE_NONE;
+            }
+        }
+
+        static public org.doubango.tinyWRAP.tmedia_srtp_mode_t SRtpModeFromString(String mode)
+        {
+            if (Configuration.SECURITY_SRTP_MODE_MANDATORY.Equals(mode))
+            {
+                return org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_mandatory;
+            }
+            else if (Configuration.SECURITY_SRTP_MODE_OPTIONAL.Equals(mode))
+            {
+                return org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_optional;
+            }
+            return org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_none;
+        }
+
+
+        const String QOS_STRENGTH_NONE = "None";
+        const String QOS_STRENGTH_MANDATORY = "Mandatory";
+        const String QOS_STRENGTH_OPTIONAL = "Optional";
+        const String QOS_STRENGTH_FAILURE = "Failure";
+        const String QOS_STRENGTH_UNKNOWN = "Unknown";
+
+        const String QOS_TYPE_NONE = "None";
+        const String QOS_TYPE_SEGMENTED = "Segmented";
+        const String QOS_TYPE_E2E = "End-to-End";
+
+        const String QOS_BANDWIDTH_LOW = "Low";
+        const String QOS_BANDWIDTH_MEDIUM = "Medium";
+        const String QOS_BANDWIDTH_HIGH = "High";
+
+        static public String QoSStrengthToString(org.doubango.tinyWRAP.tmedia_qos_strength_t strength)
+        {
+            switch (strength)
+            {
+                case org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_none:
+                    return Configuration.QOS_STRENGTH_NONE;
+                case org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_mandatory:
+                    return Configuration.QOS_STRENGTH_MANDATORY;
+                case org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_optional:
+                    return Configuration.QOS_STRENGTH_OPTIONAL;
+                case org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_failure:
+                    return Configuration.QOS_STRENGTH_FAILURE;
+                case org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_unknown:
+                default:
+                    return Configuration.QOS_STRENGTH_UNKNOWN;
+            }
+        }
+
+        static public org.doubango.tinyWRAP.tmedia_qos_strength_t QoSStrengthFromString(String strength)
+        {
+            if (Configuration.QOS_STRENGTH_NONE.Equals(strength))
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_none;
+            }
+            else if (Configuration.QOS_STRENGTH_MANDATORY.Equals(strength))
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_mandatory;
+            }
+            else if (Configuration.QOS_STRENGTH_OPTIONAL.Equals(strength))
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_optional;
+            }
+            else if (Configuration.QOS_STRENGTH_FAILURE.Equals(strength))
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_failure;
+            }
+            else
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_unknown;
+            }
+        }
+
+        static public String QoSTypeToString(org.doubango.tinyWRAP.tmedia_qos_stype_t type)
+        {
+            switch (type)
+            {
+                case org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_e2e:
+                    return Configuration.QOS_TYPE_E2E;
+                case org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_none:
+                default:
+                    return Configuration.QOS_TYPE_NONE;
+                case org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_segmented:
+                    return Configuration.QOS_TYPE_SEGMENTED;
+            }
+        }
+
+        static public org.doubango.tinyWRAP.tmedia_qos_stype_t QoSTypeFromString(String type)
+        {
+            if (Configuration.QOS_TYPE_E2E.Equals(type))
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_e2e;
+            }
+            else if (Configuration.QOS_TYPE_SEGMENTED.Equals(type))
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_segmented;
+            }
+            else
+            {
+                return org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_none;
+            }
+        }
+
+        static public String QoSBandwidthToString(org.doubango.tinyWRAP.tmedia_bandwidth_level_t bl)
+        {
+            switch (bl)
+            {
+                case org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_hight:
+                default:
+                    return Configuration.QOS_BANDWIDTH_HIGH;
+                case org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_low:
+                    return Configuration.QOS_BANDWIDTH_LOW;
+                case org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_medium:
+                    return QOS_BANDWIDTH_MEDIUM;
+            }
+        }
+
+        static public org.doubango.tinyWRAP.tmedia_bandwidth_level_t QoSBandwidthFromString(String bl)
+        {
+            if (Configuration.QOS_BANDWIDTH_LOW.Equals(bl))
+            {
+                return org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_low;
+            }
+            else if (Configuration.QOS_BANDWIDTH_MEDIUM.Equals(bl))
+            {
+                return org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_medium;
+            }
+            else
+            {
+                return org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_hight;
+            }
         }
     }
 }

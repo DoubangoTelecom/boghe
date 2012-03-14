@@ -246,6 +246,34 @@ namespace BogheCore.Sip
             return mSession.sendInfo(null, 0);
         }
 
+        public bool SetProducerFlipped(Boolean flipped)
+        {
+            if (this.MediaSessionMgr != null)
+            {
+                return this.MediaSessionMgr.producerSetInt32(twrap_media_type_t.twrap_media_video, "flip", flipped ? 1 : 0);
+            }
+            return false;
+        }
+
+        public bool SetEchoSupp(bool enabled)
+        {
+            return this.MediaSessionMgr.sessionSetInt32(twrap_media_type_t.twrap_media_audio, "echo-supp", enabled ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Check if SRTP is enabled for this session
+        /// Should be called after the session is connected
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSecure()
+        {
+            if (this.MediaSessionMgr != null)
+            {
+                return (this.MediaSessionMgr.sessionGetInt32(twrap_media_type_t.twrap_media_audiovideo, "srtp-enabled") != 0);
+            }
+            return false;
+        }
+
         public bool ResumeCall()
         {
             return mSession.resume();

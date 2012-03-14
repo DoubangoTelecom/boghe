@@ -493,6 +493,13 @@ namespace BogheApp.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap secure_16 {
+            get {
+                object obj = ResourceManager.GetObject("secure_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap signin_16 {
             get {
                 object obj = ResourceManager.GetObject("signin_16", resourceCulture);

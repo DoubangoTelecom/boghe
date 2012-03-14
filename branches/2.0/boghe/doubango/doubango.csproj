@@ -221,6 +221,9 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_qos_stype_t.cs">
       <Link>tmedia_qos_stype_t.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_srtp_mode_t.cs">
+      <Link>tmedia_srtp_mode_t.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmsrp_event_type_t.cs">
       <Link>tmsrp_event_type_t.cs</Link>
     </Compile>

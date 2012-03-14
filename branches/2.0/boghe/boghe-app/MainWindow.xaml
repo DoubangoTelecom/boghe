@@ -169,7 +169,7 @@
                 </LinearGradientBrush>
             </DockPanel.Background>
             <Label Name="labelProgressInfo" Margin="0,0,0,1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="12" FontWeight="Normal" Height="26" Width="352" Background="Transparent"></Label>
-            <Image MinHeight="24" MinWidth="24" Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />            
+            <Image Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />            
             <Image Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Visibility="Hidden"   MinWidth="24" MinHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <Image Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" MinWidth="24" MinHeight="24" ClipToBounds="False" HorizontalAlignment="Right" />
         </DockPanel>

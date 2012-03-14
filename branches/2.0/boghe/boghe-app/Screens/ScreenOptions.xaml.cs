@@ -173,6 +173,7 @@ namespace BogheApp.Screens
             this.Initializeidentity();
             this.InitializeCodecs();
             this.InitializeQoS();
+            this.InitializeSecurity();
 
             this.LoadConfiguration();
         }

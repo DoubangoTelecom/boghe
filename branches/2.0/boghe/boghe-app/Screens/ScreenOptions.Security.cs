@@ -25,13 +25,24 @@ using System.Text;
 using System.Windows.Input;
 using BogheCore.Model;
 using System.Windows;
+using org.doubango.tinyWRAP;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        void InitializeSecurity()
+        {
+            new String[] { 
+                    Configuration.SRtpModeToString(tmedia_srtp_mode_t.tmedia_srtp_mode_none), 
+                    Configuration.SRtpModeToString(tmedia_srtp_mode_t.tmedia_srtp_mode_optional),
+                    Configuration.SRtpModeToString(tmedia_srtp_mode_t.tmedia_srtp_mode_mandatory) 
+            }.ToList().ForEach(x => this.comboBoxSRTPModes.Items.Add(x));
+        }
+
         private void LoadSecurity()
         {
+            String srtpMode = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_MODE, Configuration.DEFAULT_SECURITY_SRTP_MODE);
             this.textBoxTLSPrivateKey.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PRIV_KEY_FILE, Configuration.DEFAULT_TLS_PRIV_KEY_FILE);
             this.textBoxTLSPublicKey.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, Configuration.DEFAULT_TLS_PUB_KEY_FILE);
             this.textBoxTLSCert.Text = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, Configuration.DEFAULT_TLS_CA_FILE);
@@ -47,6 +58,7 @@ namespace BogheApp.Screens
                 this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_MODE, Configuration.DEFAULT_SECURITY_IPSEC_MODE));
             this.comboBoxIPSecProtocol.SelectedValue = this.comboBoxIPSecProtocol.FindName(
                 this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, Configuration.DEFAULT_SECURITY_IPSEC_PROTO));
+            this.comboBoxSRTPModes.SelectedValue = Configuration.SRtpModeToString((tmedia_srtp_mode_t)Enum.Parse(typeof(tmedia_srtp_mode_t), srtpMode));
         }
 
         private bool UpdateSecurity()
@@ -60,6 +72,12 @@ namespace BogheApp.Screens
             this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_EALGO, (this.comboBoxIPSecEAlgorithm.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
             this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_MODE, (this.comboBoxIPSecMode.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
             this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, (this.comboBoxIPSecProtocol.SelectedValue as System.Windows.Controls.ComboBoxItem).Tag.ToString());
+
+            tmedia_srtp_mode_t srtpMode = Configuration.SRtpModeFromString(this.comboBoxSRTPModes.SelectedValue.ToString());
+            this.configurationService.Set(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_MODE, srtpMode.ToString());
+
+            // Transmit values to the native part (global)
+            MediaSessionMgr.defaultsSetSRtpMode(srtpMode);
 
             return true;
         }
@@ -86,6 +104,5 @@ namespace BogheApp.Screens
                 }
             }
         }
-
     }
 }
