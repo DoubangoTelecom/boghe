@@ -176,7 +176,7 @@ namespace BogheApp
         {
             if (e.Type != SubscriptionEventTypes.INCOMING_NOTIFY 
                 || e.Content == null
-                || (e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.REG && e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO)
+                || (e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.REG && e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO && e.Package != MySubscriptionSession.EVENT_PACKAGE_TYPE.MESSAGE_SUMMARY)
                 )
             {
                 return;
@@ -197,6 +197,20 @@ namespace BogheApp
                                     else if (e.Package == MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO)
                                     {
                                         this.ParseWatcherInfo(e.Content);
+                                    }
+                                    else if (e.Package == MySubscriptionSession.EVENT_PACKAGE_TYPE.MESSAGE_SUMMARY)
+                                    {
+                                        MessageSummary ms = MessageSummary.Parse(e.Content);
+                                        if (ms != null)
+                                        {
+                                            this.imageMailbox.Visibility = ms.HaveWaitingMessages ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                                            String tooltip = String.Format("Message-Account: {0}\n", ms.Account);
+                                            new String[] { "Voice-Message", "Fax-Message", "Pager-Message", "Multimedia-Message", "Text-Message" }.ToList().ForEach(x =>
+                                                {
+                                                    tooltip += String.Format("{0}: {1}/{2} ({3}/{4})\n", x, ms.GetNewMessages(x), ms.GetOldMessages(x), ms.GetNewUrgentMessages(x), ms.GetOldUrgentMessages(x));
+                                                });
+                                            this.imageMailbox.ToolTip = tooltip;
+                                        }
                                     }
                                 });
                         })

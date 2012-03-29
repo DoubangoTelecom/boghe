@@ -509,6 +509,8 @@ namespace BogheCore.Services.Impl
 
             // Subscribe to 'reg' event package
             this.SubscribeToRegInfo();
+            // Subscribe to MWI
+            this.SubscribeToMWI();
 
             // Subscribe to 'presence' event package
             if (this.IsSubscriptionToRLSEnabled)

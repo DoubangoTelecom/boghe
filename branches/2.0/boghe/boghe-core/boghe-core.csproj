@@ -87,6 +87,7 @@
     <Compile Include="Model\HistoryEvent.cs" />
     <Compile Include="Model\HistoryFileTransferEvent.cs" />
     <Compile Include="Model\HistoryShortMessageEvent.cs" />
+    <Compile Include="Model\MessageSummary.cs" />
     <Compile Include="Model\RCSService.cs" />
     <Compile Include="Model\RCSServiceDescription.cs" />
     <Compile Include="Model\RegistrationInfo.cs" />
