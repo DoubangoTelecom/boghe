@@ -72,6 +72,7 @@ namespace BogheCore.Services.Impl
             {
                 this.subReg.ToUri = this.DefaultIdentity;
                 this.subReg.FromUri = this.DefaultIdentity;
+                this.subReg.SigCompId = this.SipStack.SigCompId;
             }
 
             return this.subReg.Subscribe();
