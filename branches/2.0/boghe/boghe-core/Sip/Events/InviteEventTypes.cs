@@ -40,6 +40,8 @@ namespace BogheCore.Sip.Events
         LOCAL_RESUME_NOK,
         REMOTE_HOLD,
         REMOTE_RESUME,
+        MEDIA_UPDATING,
+        MEDIA_UPDATED,
         INFO,
         LOCAL_TRANSFER_TRYING,
         LOCAL_TRANSFER_ACCEPTED,

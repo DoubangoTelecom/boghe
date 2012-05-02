@@ -82,5 +82,14 @@ namespace BogheCore.Sip
                 return mMediaSessionMgr;
             }
         }
+
+        public override void PreDispose()
+        {
+            if (mMediaSessionMgr != null)
+            {
+                mMediaSessionMgr.Dispose();
+                mMediaSessionMgr = null;
+            }
+        }
     }
 }

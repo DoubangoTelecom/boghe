@@ -107,6 +107,23 @@ namespace BogheCore.Sip
             return avSession;
         }
 
+        public static bool HandleMediaUpdate(long id, twrap_media_type_t newMediaType)
+        {
+            MyAVSession avSession = MyAVSession.GetSession(id);
+            if (avSession != null)
+            {
+                switch (newMediaType)
+                {
+                    case twrap_media_type_t.twrap_media_audio: avSession.mMediaType = MediaType.Audio; return true;
+                    case twrap_media_type_t.twrap_media_video: avSession.mMediaType = MediaType.Video; return true;
+                    case twrap_media_type_t.twrap_media_audiovideo: avSession.mMediaType = MediaType.AudioVideo; return true;
+                    default: return false; // For now MSRP update is not suportted
+                }
+            }
+            
+            return false;
+        }
+
         public static void ReleaseSession(MyAVSession session)
         {
             lock (MyAVSession.sessions)
@@ -139,7 +156,7 @@ namespace BogheCore.Sip
             }
         }
 
-        public MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, InviteState callState)
+        protected MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, InviteState callState)
             : base(sipStack)
         {
             mSession = (session == null) ? new CallSession(sipStack) : session;
@@ -255,6 +272,15 @@ namespace BogheCore.Sip
             return false;
         }
 
+        public bool SetFullscreen(bool fullscreen)
+        {
+            if (this.MediaSessionMgr != null)
+            {
+                return this.MediaSessionMgr.consumerSetInt32(twrap_media_type_t.twrap_media_video, "fullscreen", fullscreen ? 1 : 0);
+            }
+            return false;
+        }
+
         public bool SetEchoSupp(bool enabled)
         {
             return this.MediaSessionMgr.sessionSetInt32(twrap_media_type_t.twrap_media_audio, "echo-supp", enabled ? 1 : 0);
@@ -339,6 +365,22 @@ namespace BogheCore.Sip
         public bool SendDTMF(int digit)
         {
             return mSession.sendDTMF(digit);
+        }
+
+        public bool Update(MediaType newMediaType)
+        {
+            if (mSession != null)
+            {
+                if ((newMediaType & MediaType.Video) == MediaType.Video)
+                {
+                    return mSession.callAudioVideo(base.ToUri);
+                }
+                else
+                {
+                    return mSession.callAudio(base.ToUri);
+                }
+            }
+            return false;
         }
 
         public bool IsMute

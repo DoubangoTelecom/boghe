@@ -37,7 +37,7 @@ namespace BogheApp.Screens
                     Configuration.SRtpModeToString(tmedia_srtp_mode_t.tmedia_srtp_mode_none), 
                     Configuration.SRtpModeToString(tmedia_srtp_mode_t.tmedia_srtp_mode_optional),
                     Configuration.SRtpModeToString(tmedia_srtp_mode_t.tmedia_srtp_mode_mandatory) 
-            }.ToList().ForEach(x => this.comboBoxSRTPModes.Items.Add(x));
+            }.ToList().ForEach(x => this.comboBoxSRTPModes.Items.Add(x)); 
         }
 
         private void LoadSecurity()

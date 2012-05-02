@@ -539,6 +539,14 @@ namespace BogheCore.Services.Impl
                         InviteEventArgs eargs = new InviteEventArgs(sessionId, InviteEventTypes.DISCONNECTED, phrase);
                         eargs.AddExtra(InviteEventArgs.EXTRA_SIP_CODE, sipCode);
                         EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                        if (mySession is MyAVSession)
+                        {
+                            MyAVSession.ReleaseSession((mySession as MyAVSession));
+                        }
+                        if (mySession is MyMsrpSession)
+                        {
+                            MyMsrpSession.ReleaseSession((mySession as MyMsrpSession));
+                        }
                     }
 
                     // Subscription
@@ -812,13 +820,27 @@ namespace BogheCore.Services.Impl
 
                     case tsip_invite_event_type_t.tsip_m_early_media:
                         {
-                            if (session != null)
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                        new InviteEventArgs(session.getId(), InviteEventTypes.EARLY_MEDIA, phrase));
+                            break;
+                        }
+
+                    case tsip_invite_event_type_t.tsip_m_updating:
+                        {
+                            EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
+                                         new InviteEventArgs(session.getId(), InviteEventTypes.MEDIA_UPDATING, phrase));
+                            break;
+                        }
+                    case tsip_invite_event_type_t.tsip_m_updated:
+                        {
+                            if (MyAVSession.HandleMediaUpdate(session.getId(), e.getMediaType()))
                             {
                                 EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,
-                                            new InviteEventArgs(session.getId(), InviteEventTypes.EARLY_MEDIA, phrase));
+                                         new InviteEventArgs(session.getId(), InviteEventTypes.MEDIA_UPDATED, phrase));
                             }
                             break;
                         }
+
                     case tsip_invite_event_type_t.tsip_m_local_hold_ok:
                         {
                             EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService,

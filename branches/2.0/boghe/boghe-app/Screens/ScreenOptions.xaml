@@ -8,7 +8,7 @@
         <TabControl Name="tabControl" Background="White" TabStripPlacement="Left" Margin="0,0,0,41" BorderBrush="SkyBlue">
             <TabItem Name="tabItemGeneral" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Height="45" Margin="1" BorderThickness="1" BorderBrush="SkyBlue" Foreground="Black">
                 <TabItem.Header>
-                    <Label Content="{x:Static res:Strings.TabGeneral}" FontSize="12" FontWeight="Bold" />
+                    <Label Content="{x:Static res:Strings.TabQoS_General}" FontSize="12" FontWeight="Bold" />
                 </TabItem.Header>
                 <TabItem.Background>
                     <LinearGradientBrush>
@@ -18,9 +18,25 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Content="{x:Static res:Strings.TabGeneral}" Height="33" Margin="0,0,0,0" Name="labelGeneralTitle" VerticalAlignment="Top" FontSize="16" Background="SkyBlue" FontWeight="Bold" />
-                    <CheckBox Content="{x:Static res:Strings.TabGeneral_LaunchWhenStart}" Height="24" Margin="3,43,4,0" Name="checkBoxLaunchWhenStart" VerticalAlignment="Top" />
-                    <Label Content="{x:Static res:Strings.TabGeneral_Enum}" Height="28" HorizontalAlignment="Left" Margin="0,73,0,0" Name="labelENUM" VerticalAlignment="Top" Width="129" />
-                    <TextBox Height="23" Margin="136,76,6,0" Name="textBoxENUM" VerticalAlignment="Top" BorderBrush="SkyBlue" />
+                    <CheckBox Content="{x:Static res:Strings.TabGeneral_LaunchWhenStart}" Height="24" Margin="3,75,4,0" Name="checkBoxLaunchWhenStart" VerticalAlignment="Top" />
+                    <Label Content="{x:Static res:Strings.TabGeneral_Enum}" Height="28" HorizontalAlignment="Left" Margin="0,105,0,0" Name="labelENUM" VerticalAlignment="Top" Width="129" />
+                    <TextBox Height="23" Margin="0,108,6,0" Name="textBoxENUM" VerticalAlignment="Top" BorderBrush="SkyBlue" HorizontalAlignment="Right" Width="127.477" />
+                    <Label Content="{x:Static res:Strings.TabGeneral_Profile}" Height="28" Margin="2,40,0,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" FontWeight="Bold" />
+                    <ComboBox Height="23" Margin="88,41,6,0" Name="comboBoxProfile" SelectedIndex="0" VerticalAlignment="Top" FontWeight="Bold">
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                <GradientStop Color="SkyBlue" Offset="0" />
+                                <GradientStop Color="White" Offset="0.567" />
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text = "{Binding Path=Text}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Height="45" Margin="1" Name="tabItemIdentity" BorderThickness="2" BorderBrush="SkyBlue">
@@ -243,7 +259,7 @@
                                 <ComboBoxItem Name="ah" Tag="ah">ah</ComboBoxItem>
                                 <ComboBoxItem Name="esp" Tag="esp">esp</ComboBoxItem>
                             </ComboBox>
-                            <CheckBox Content="{x:Static res:Strings.TabSecurity_EnableIPSec}" Height="16" Margin="6,9,9,0" Name="checkBoxIPSecSecAgreeEnabled" VerticalAlignment="Top" />
+                            <CheckBox Content="{x:Static res:Strings.TabSecurity_EnableIPSec}" Height="16" Margin="6,9,9,0" Name="checkBoxIPSecSecAgreeEnabled" VerticalAlignment="Top" IsEnabled="False" />
                         </Grid>
                     </GroupBox>
                     <GroupBox Margin="8,190,4,206" Name="groupBox6">
@@ -425,7 +441,7 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Content="{x:Static res:Strings.TabQoS}" Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelQoSTitle" VerticalAlignment="Top" FontWeight="Bold" />
-                    <GroupBox Height="139" Margin="6,39,6,0" Name="groupBoxTimeouts" VerticalAlignment="Top">
+                    <GroupBox Margin="6,109,6,0" Height="139" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock Text="{x:Static res:Strings.TabQoS_Preconditions}" FontSize="14" FontWeight="Bold" Foreground="Black" />
                         </GroupBox.Header>
@@ -459,13 +475,13 @@
                             </ComboBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Margin="5,196,7,130" Name="groupBox4">
+                    <GroupBox Margin="5,255,7,71" Name="groupBox4">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabQoS_SessionTimers}" />
                         </GroupBox.Header>
                         <Grid>
                             <Label Content="{x:Static res:Strings.TabQoS_Timeout}" HorizontalAlignment="Left" Margin="25,33,0,0" Name="labelSessionTimersTimeout" Width="61" Height="28.38" VerticalAlignment="Top" />
-                            <Label Content="{x:Static res:Strings.TabQoS_Refresher}" HorizontalAlignment="Left" Margin="17,0,0,23" Name="labelSessionTimerRefreser" Width="69" Height="25" VerticalAlignment="Bottom" />
+                            <Label Content="{x:Static res:Strings.TabQoS_Refresher}" HorizontalAlignment="Left" Margin="17,65.38,0,0" Name="labelSessionTimerRefreser" Width="69" Height="25" VerticalAlignment="Top" />
                             <ComboBox Height="22.86" Margin="92,66.52,6,0" Name="comboBoxSessionTimerRefreser" VerticalAlignment="Top" IsEnabled="False">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
@@ -476,6 +492,33 @@
                             </ComboBox>
                             <ctrl:NumericTextBox Margin="92,37,6,0" Name="textBoxSessionTimersTimeout" Height="23.38" VerticalAlignment="Top" IsEnabled="False" BorderBrush="SkyBlue" />
                             <CheckBox Content="{x:Static res:Strings.TabQoS_EnableSessionTimers}" Height="16" Margin="7,6,6,0" Name="checkBoxSessionTimersEnable" VerticalAlignment="Top" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Height="64" Margin="7,36,5,0" VerticalAlignment="Top">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabQoS_General}" />
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0*" />
+                                <ColumnDefinition Width="245.477*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{x:Static res:Strings.TabQoS_PrefVideoSize}" Margin="6,6,115,7" Name="label3" Grid.Column="1" />
+                            <ComboBox Margin="136.477,7,5,9" Name="comboBoxPrefVideoSize" Grid.Column="1">
+                                <ComboBox.Background>
+                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                        <GradientStop Color="SkyBlue" Offset="0" />
+                                        <GradientStop Color="White" Offset="0.567" />
+                                    </LinearGradientBrush>
+                                </ComboBox.Background>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text = "{Binding Path=Text}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -492,7 +535,7 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Content="{x:Static res:Strings.TabNATT_Title}" Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNatTraversalTitle" VerticalAlignment="Top" FontWeight="Bold" />
-                    <GroupBox Height="187" Margin="7,44,5,0" Name="groupBox5" VerticalAlignment="Top">
+                    <GroupBox Margin="7,114,5,164" Name="groupBox5">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabNATT_STUNTURN}" />
                         </GroupBox.Header>
@@ -504,6 +547,14 @@
                             <Label Content="{x:Static res:Strings.TabNATT_Port}" Height="28" HorizontalAlignment="Left" Margin="47.001,109,0,0" Name="labelStunPort" VerticalAlignment="Top" Width="45.693" />
                             <TextBox Height="23" Margin="108,84.38,6,0" Name="textBoxStunServerAddress" VerticalAlignment="Top" IsEnabled="False" BorderBrush="SkyBlue" />
                             <ctrl:NumericTextBox Height="23" Margin="108,113.38,0,0" Name="textBoxStunPort" VerticalAlignment="Top" HorizontalAlignment="Left" Width="51.477" IsEnabled="False" BorderBrush="SkyBlue" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Margin="6,42,6,0" Name="groupBoxICE" Height="55" VerticalAlignment="Top">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="ICE" />
+                        </GroupBox.Header>
+                        <Grid>
+                            <CheckBox Content="Enable ICE" Height="16" Margin="7,6,6,0" Name="checkBoxIceEnabled" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
                 </Grid>

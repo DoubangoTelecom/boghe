@@ -53,7 +53,7 @@ namespace BogheCore.Model
         public static int DEFAULT_GENERAL_AUDIO_VOLUME = 100;
 
         public static String DEFAULT_RCS_AVATAR_PATH = "";
-        public static bool DEFAULT_RCS_BINARY_SMS = true;
+        public static bool DEFAULT_RCS_BINARY_SMS = false;
         public static String DEFAULT_RCS_CONF_FACT = "sip:Conference-Factory@open-ims.test";
         public static String DEFAULT_RCS_FREE_TEXT = "Hello world";
         public static bool DEFAULT_RCS_MSRP_FAILURE = true;
@@ -71,7 +71,8 @@ namespace BogheCore.Model
         public static bool DEFAULT_RCS_ISCOMOPING = true;
         public static PresenceStatus DEFAULT_RCS_STATUS = PresenceStatus.Online;
 
-        public static String DEFAULT_QOS_PRECOND_BANDWIDTH = org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_hight.ToString();
+        public static String DEFAULT_QOS_BANDWIDTH = org.doubango.tinyWRAP.tmedia_bandwidth_level_t.tmedia_bl_hight.ToString(); //@deprecated
+        public static String DEFAULT_QOS_PREF_VIDEO_SIZE = org.doubango.tinyWRAP.tmedia_pref_video_size_t.tmedia_pref_video_size_vga.ToString();
         public static String DEFAULT_QOS_PRECOND_STRENGTH = org.doubango.tinyWRAP.tmedia_qos_strength_t.tmedia_qos_strength_none.ToString();
         public static String DEFAULT_QOS_PRECOND_TYPE = org.doubango.tinyWRAP.tmedia_qos_stype_t.tmedia_qos_stype_none.ToString();
         public static String DEFAULT_QOS_SESSION_TIMERS_REFRESHER = "none";
@@ -113,9 +114,11 @@ namespace BogheCore.Model
 			
 			org.doubango.tinyWRAP.tdav_codec_id_t.tdav_codec_id_mp4ves_es |
 			org.doubango.tinyWRAP.tdav_codec_id_t.tdav_codec_id_theora |
-            org.doubango.tinyWRAP.tdav_codec_id_t.tdav_codec_id_h264_bp10 |
+            org.doubango.tinyWRAP.tdav_codec_id_t.tdav_codec_id_h264_bp |
 			org.doubango.tinyWRAP.tdav_codec_id_t.tdav_codec_id_h263p |
 			org.doubango.tinyWRAP.tdav_codec_id_t.tdav_codec_id_h263);
+
+        public static String DEFAULT_MEDIA_PROFILE = org.doubango.tinyWRAP.tmedia_profile_t.tmedia_profile_default.ToString();
 
         public enum ConfEntry
         {
@@ -133,7 +136,7 @@ namespace BogheCore.Model
             EARLY_IMS, IP_VERSION, PCSCF_DISCOVERY_DNS, PCSCF_DISCOVERY_DHCP, PCSCF_HOST, PCSCF_PORT, REALM, SIGCOMP, THREE_3G, TRANSPORT, WIFI, LOCAL_IP, LOCAL_PORT,
 
             /* === QOS/QOE === */
-            PRECOND_BANDWIDTH, PRECOND_STRENGTH, PRECOND_TYPE, SESSION_TIMERS_REFRESHER, SESSION_TIMERS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
+            PRECOND_STRENGTH, PRECOND_TYPE, BANDWIDTH, PREF_VIDEO_SIZE, SESSION_TIMERS_REFRESHER, SESSION_TIMERS_TIMEOUT, SIP_SESSIONS_TIMEOUT, SESSION_TIMERS,
 
             /* === RCS (GSMA Rich Communication Suite) === */
             AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, HYPERAVAILABILITY_TIMEOUT, IMDN, ISCOMOPING, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
@@ -144,7 +147,7 @@ namespace BogheCore.Model
             /* === SESSIONS === */
 
             /* === MEDIA === */
-            CODECS,
+            CODECS, PROFILE,
 
             /* === NATT === */
             HACK_AOR, HACK_AOR_TIMEOUT, USE_STUN, USE_ICE, STUN_DISCO, STUN_SERVER, STUN_PORT,

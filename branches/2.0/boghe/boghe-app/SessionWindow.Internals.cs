@@ -204,6 +204,7 @@ namespace BogheApp
                             this.labelInfo.Content = String.Format("{0} {1}", Strings.Text_IncomingCall, this.AVSession.RemotePartyDisplayName);
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(true, Strings.Text_Answer, Properties.Resources.phone_pick_up_32);
+                            this.UpdateMenuItemAddRemoveVideo(false);
                             
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -213,11 +214,13 @@ namespace BogheApp
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;
                             this.imageIndicatorSecurity.Visibility = System.Windows.Visibility.Hidden;
+                            this.imageFullScreen.Visibility = System.Windows.Visibility.Hidden;
                             break;
 
                         case MyInviteSession.InviteState.INPROGRESS:
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(false, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
+                            this.UpdateMenuItemAddRemoveVideo(false);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -227,11 +230,13 @@ namespace BogheApp
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;
                             this.imageIndicatorSecurity.Visibility = System.Windows.Visibility.Hidden;
+                            this.imageFullScreen.Visibility = System.Windows.Visibility.Hidden;
                             break;
 
                         case MyInviteSession.InviteState.INCALL:
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(false, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
+                            this.UpdateMenuItemAddRemoveVideo(true);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -241,12 +246,14 @@ namespace BogheApp
                             this.sliderVolume.IsEnabled = true;
                             this.buttonSound.IsEnabled = true;
                             this.imageIndicatorSecurity.Visibility = this.AVSession.IsSecure() ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                            this.imageFullScreen.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                             break;
 
                         case MyInviteSession.InviteState.TERMINATED:
                         case MyInviteSession.InviteState.TERMINATING:
                             this.buttonHangUp.IsEnabled = false;
                             this.UpdateButtonCallOrAnswer(true, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
+                            this.UpdateMenuItemAddRemoveVideo(false);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = true;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = true;
@@ -256,6 +263,7 @@ namespace BogheApp
                             this.sliderVolume.IsEnabled = false;
                             this.buttonSound.IsEnabled = false;
                             this.imageIndicatorSecurity.Visibility = System.Windows.Visibility.Hidden;
+                            this.imageFullScreen.Visibility = System.Windows.Visibility.Hidden;
                             break;
                     }
                 }
@@ -268,6 +276,25 @@ namespace BogheApp
             this.buttonCallOrAnswer.IsEnabled = enabled;
             this.buttonCallOrAnswerLabel.Content = text;
             this.buttonCallOrAnswerImage.Source = MyImageConverter.FromBitmap(image);
+        }
+
+        private void UpdateMenuItemAddRemoveVideo(bool enabled)
+        {
+            this.MenuItemCall_AddRemoveVideo.IsEnabled = enabled;
+            if (this.AVSession != null)
+            {
+                if ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video)
+                {
+                    this.MenuItemCall_AddRemoveVideo.Header = Strings.AV_MenuRemoveVideo;
+                    this.MenuItemCall_AddRemoveVideoImage.Source = MyImageConverter.FromBitmap(Properties.Resources.video_pause_16);
+                }
+                else
+                {
+                    this.MenuItemCall_AddRemoveVideo.Header = Strings.AV_MenuAddVideo;
+
+                    this.MenuItemCall_AddRemoveVideoImage.Source = MyImageConverter.FromBitmap(Properties.Resources.video_play_16);
+                }
+            }
         }
     }
 }

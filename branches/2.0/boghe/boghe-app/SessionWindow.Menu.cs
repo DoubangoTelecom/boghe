@@ -49,7 +49,7 @@ namespace BogheApp
                     LOG.Error("Already in Call");
                 }
             }
-            if (menuItem == this.MenuItemCall_MakeVideoCall)
+            else if (menuItem == this.MenuItemCall_MakeVideoCall)
             {
                 if (this.AVSession == null)
                 {
@@ -61,7 +61,21 @@ namespace BogheApp
                     LOG.Error("Already in Call");
                 }
             }
-            if (menuItem == this.MenuItemCall_MakeTransfer)
+            else if (menuItem == this.MenuItemCall_AddRemoveVideo)
+            {
+                if (this.AVSession != null && this.AVSession.IsConnected)
+                {
+                    if ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video)
+                    {
+                        this.AVSession.Update(MediaType.Audio);
+                    }
+                    else
+                    {
+                        this.AVSession.Update(MediaType.AudioVideo);
+                    }
+                }
+            }
+            else if (menuItem == this.MenuItemCall_MakeTransfer)
             {
                 if (this.AVSession != null && this.AVSession.IsConnected)
                 {

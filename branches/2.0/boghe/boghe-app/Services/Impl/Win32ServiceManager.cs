@@ -121,8 +121,20 @@ namespace BogheApp.Services.Impl
             {
                 MediaSessionMgr.defaultsSetInviteSessionTimers(0, null);
             }
+            MediaSessionMgr.defaultsSetPrefVideoSize(
+                (tmedia_pref_video_size_t)Enum.Parse(typeof(tmedia_pref_video_size_t), this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PREF_VIDEO_SIZE, Configuration.DEFAULT_QOS_PREF_VIDEO_SIZE), true)
+                );
+
             MediaSessionMgr.defaultsSetSRtpMode(
                 (tmedia_srtp_mode_t)Enum.Parse(typeof(tmedia_srtp_mode_t), this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_MODE, Configuration.DEFAULT_SECURITY_SRTP_MODE), true)
+                );
+
+            MediaSessionMgr.defaultsSetProfile(
+                (tmedia_profile_t)Enum.Parse(typeof(tmedia_profile_t), this.configurationService.Get(Configuration.ConfFolder.MEDIA, Configuration.ConfEntry.PROFILE, Configuration.DEFAULT_MEDIA_PROFILE), true)
+                );
+
+            MediaSessionMgr.defaultsSetIceEnabled(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE)
                 );
                 
             return ret;

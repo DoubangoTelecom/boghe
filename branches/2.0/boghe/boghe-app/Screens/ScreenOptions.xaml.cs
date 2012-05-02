@@ -170,6 +170,7 @@ namespace BogheApp.Screens
                 this.textBoxSessionTimersTimeout.IsEnabled = false;
             };
 
+            this.InitializeGeneral();
             this.Initializeidentity();
             this.InitializeCodecs();
             this.InitializeQoS();

@@ -23,23 +23,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BogheCore.Model;
+using org.doubango.tinyWRAP;
 
 namespace BogheApp.Screens
 {
     partial class ScreenOptions
     {
+        Profile[] Profiles = new Profile[]
+            {
+                new Profile("Default (User Defined)", tmedia_profile_t.tmedia_profile_default),
+                new Profile("RTCWeb (Override)", tmedia_profile_t.tmedia_profile_rtcweb)
+            };
+
+        void InitializeGeneral()
+        {
+            this.comboBoxProfile.ItemsSource = Profiles;
+        }
+
         private void LoadGeneral()
         {
+            tmedia_profile_t profile = (tmedia_profile_t)Enum.Parse(typeof(tmedia_profile_t),
+                this.configurationService.Get(Configuration.ConfFolder.MEDIA, Configuration.ConfEntry.PROFILE, Configuration.DEFAULT_MEDIA_PROFILE));
+            int profileIndex = Profiles.ToList().FindIndex(x => x.Value == profile);
+
+            this.comboBoxProfile.SelectedIndex = Math.Max(0, profileIndex);
             this.checkBoxLaunchWhenStart.IsChecked = this.configurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUTO_START, Configuration.DEFAULT_GENERAL_AUTOSTART);
             this.textBoxENUM.Text = this.configurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.ENUM_DOMAIN, Configuration.DEFAULT_GENERAL_ENUM_DOMAIN);
         }
 
         private bool UpdateGeneral()
         {
+            tmedia_profile_t profile = (this.comboBoxProfile.SelectedValue as Profile).Value;
+            this.configurationService.Set(Configuration.ConfFolder.MEDIA, Configuration.ConfEntry.PROFILE, profile.ToString());
             this.configurationService.Set(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUTO_START, this.checkBoxLaunchWhenStart.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.ENUM_DOMAIN, this.textBoxENUM.Text);
 
+            // Transmit values to the native part (global)
+            MediaSessionMgr.defaultsSetProfile(profile);
+
             return true;
+        }
+
+        public class Profile
+        {
+            readonly String text;
+            readonly tmedia_profile_t value;
+
+            public Profile(String text, tmedia_profile_t value)
+            {
+                this.text = text;
+                this.value = value;
+            }
+
+            public String Text
+            {
+                get { return this.text; }
+            }
+
+            public tmedia_profile_t Value
+            {
+                get { return this.value; }
+            }
         }
     }
 }

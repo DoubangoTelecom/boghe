@@ -654,5 +654,19 @@ namespace BogheApp.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        public static System.Drawing.Bitmap video_pause_16 {
+            get {
+                object obj = ResourceManager.GetObject("video_pause_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap video_play_16 {
+            get {
+                object obj = ResourceManager.GetObject("video_play_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

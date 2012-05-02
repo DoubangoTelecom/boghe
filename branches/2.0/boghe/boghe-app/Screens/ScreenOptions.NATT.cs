@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BogheCore.Model;
+using org.doubango.tinyWRAP;
 
 namespace BogheApp.Screens
 {
@@ -30,6 +31,7 @@ namespace BogheApp.Screens
     {
         private void LoadNATT()
         {
+            this.checkBoxIceEnabled.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE);
             this.checkBoxStunTurnEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN);
             this.radioButtonStunDiscover.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, Configuration.DEFAULT_NATT_STUN_DISCO);
             this.radioButtonStunUseThis.IsChecked = !this.radioButtonStunDiscover.IsChecked;
@@ -39,10 +41,15 @@ namespace BogheApp.Screens
 
         private bool UpdateNATT()
         {
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, this.checkBoxIceEnabled.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, this.checkBoxStunTurnEnable.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, this.radioButtonStunDiscover.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_SERVER, this.textBoxStunServerAddress.Text);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PORT, this.textBoxStunPort.Text);
+
+            // STUN informaions are checked before each registration which means that we don't need to pass the config to the native part
+            // Pass ICE config to the native part
+            MediaSessionMgr.defaultsSetIceEnabled(this.checkBoxIceEnabled.IsChecked.Value);
 
             return true;
         }

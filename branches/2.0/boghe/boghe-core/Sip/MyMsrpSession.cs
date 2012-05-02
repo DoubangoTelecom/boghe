@@ -142,7 +142,7 @@ namespace BogheCore.Sip
             return null;
         }
 
-        public static void ReleaseSession(MyAVSession session)
+        public static void ReleaseSession(MyMsrpSession session)
         {
             if (session != null)
             {
