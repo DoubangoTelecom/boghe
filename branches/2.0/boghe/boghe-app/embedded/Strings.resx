@@ -451,7 +451,7 @@
     <value>Use this STUN/TURN server</value>
   </data>
   <data name="TabNetwork" xml:space="preserve">
-    <value>Network:</value>
+    <value>Network</value>
   </data>
   <data name="TabNetwork_AccessType" xml:space="preserve">
     <value>Access Type</value>
@@ -680,5 +680,20 @@
   </data>
   <data name="TabSecurity_SRTPParams" xml:space="preserve">
     <value>SRTP Parameters</value>
+  </data>
+  <data name="AV_MenuAddVideo" xml:space="preserve">
+    <value>Add video</value>
+  </data>
+  <data name="AV_MenuRemoveVideo" xml:space="preserve">
+    <value>Remove video</value>
+  </data>
+  <data name="TabQoS_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="TabQoS_PrefVideoSize" xml:space="preserve">
+    <value>Preferred video Size:</value>
+  </data>
+  <data name="TabGeneral_Profile" xml:space="preserve">
+    <value>Media Profile</value>
   </data>
 </root>

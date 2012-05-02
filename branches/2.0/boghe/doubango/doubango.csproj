@@ -215,6 +215,12 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_chroma_t.cs">
       <Link>tmedia_chroma_t.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_pref_video_size_t.cs">
+      <Link>tmedia_pref_video_size_t.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_profile_t.cs">
+      <Link>tmedia_profile_t.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_qos_strength_t.cs">
       <Link>tmedia_qos_strength_t.cs</Link>
     </Compile>

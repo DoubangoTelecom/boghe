@@ -457,7 +457,7 @@
     <value>Use this STUN/TURN server</value>
   </data>
   <data name="TabNetwork" xml:space="preserve">
-    <value>Réseau:</value>
+    <value>Réseau</value>
   </data>
   <data name="TabNetwork_AccessType" xml:space="preserve">
     <value>Access Type</value>

@@ -484,6 +484,14 @@ namespace BogheApp
             }
         }
 
+        private void imageFullScreen_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (this.AVSession != null)
+            {
+                this.AVSession.SetFullscreen(true);
+            }
+        }
+
         private void SessionWindowName_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (this.AVSession != null && this.AVSession.IsActive)
@@ -554,5 +562,7 @@ namespace BogheApp
                 }
             };
         }
+
+        
     }
 }

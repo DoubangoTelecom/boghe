@@ -171,6 +171,10 @@ namespace BogheCore.Sip
             this.Session.Dispose();
         }
 
+        public virtual void PreDispose()
+        {
+        }
+
         protected abstract SipSession Session
         {
             get;

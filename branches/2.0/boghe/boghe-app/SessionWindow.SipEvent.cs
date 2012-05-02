@@ -58,112 +58,154 @@ namespace BogheApp
             switch (e.Type)
             {
                 case InviteEventTypes.INCOMING:
-                    this.labelInfo.Content = String.Format("{0} {1}", Strings.Text_IncomingCall, this.AVSession.RemotePartyDisplayName);
-                    this.avHistoryEvent = new HistoryAVCallEvent(this.AVSession.MediaType != BogheCore.MediaType.Audio, this.AVSession.RemotePartyUri);
-                    this.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
-                    break;
+                    {
+                        this.labelInfo.Content = String.Format("{0} {1}", Strings.Text_IncomingCall, this.AVSession.RemotePartyDisplayName);
+                        this.avHistoryEvent = new HistoryAVCallEvent(this.AVSession.MediaType != BogheCore.MediaType.Audio, this.AVSession.RemotePartyUri);
+                        this.avHistoryEvent.Status = HistoryEvent.StatusType.Missed;
+                        break;
+                    }
 
                 case InviteEventTypes.INPROGRESS:
-                    // History Event
-                    this.labelInfo.Content = String.Format("{0}...", Strings.Text_CallInProgress);
-                    bool isVideo = (this.AVSession.MediaType == MediaType.AudioVideo || this.AVSession.MediaType == MediaType.Video);
-                    this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
-                    this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
-                    // Video Displays
-                    if (isVideo)
                     {
-                        this.AttachDisplays();
+                        // History Event
+                        this.labelInfo.Content = String.Format("{0}...", Strings.Text_CallInProgress);
+                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video);
+                        this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
+                        this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
+                        // Video Displays
+                        if (isVideo)
+                        {
+                            this.AttachDisplays();
+                        }
+
+                        break;
                     }
-                    
-                    break;
 
                 case InviteEventTypes.RINGING:
-                    this.labelInfo.Content = Strings.Text_Ringing;
-                    this.soundService.PlayRingBackTone();
-                    break;
-
-                case InviteEventTypes.EARLY_MEDIA:
-                    this.labelInfo.Content = Strings.Text_EarlyMediaStarted;
-                    this.soundService.StopRingBackTone();
-                    this.soundService.StopRingTone();                    
-                    break;
-
-                case InviteEventTypes.CONNECTED:
-                    this.labelInfo.Content = Strings.Text_InCall;
-                    this.soundService.StopRingBackTone();
-                    this.soundService.StopRingTone();
-
-                    this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
-                    this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
-                    
-                    this.timerCall.Start();
-                    if (this.avHistoryEvent != null)
                     {
-                        if (this.avHistoryEvent.Status == HistoryEvent.StatusType.Missed)
-                        {
-                            this.avHistoryEvent.Status = HistoryEvent.StatusType.Incoming;
-                        }
-                        this.avHistoryEvent.StartTime = DateTime.Now;
-                        this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
+                        this.labelInfo.Content = Strings.Text_Ringing;
+                        this.soundService.PlayRingBackTone();
+                        break;
                     }
 
-                    break;
+                case InviteEventTypes.EARLY_MEDIA:
+                    {
+                        this.labelInfo.Content = Strings.Text_EarlyMediaStarted;
+                        this.soundService.StopRingBackTone();
+                        this.soundService.StopRingTone();
+                        break;
+                    }
+
+                case InviteEventTypes.MEDIA_UPDATING:
+                    {
+                        this.labelInfo.Content = "Trying to update media...";
+                        break;
+                    }
+
+                case InviteEventTypes.MEDIA_UPDATED:
+                    {
+                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video);
+                        this.labelInfo.Content = String.Format("Media Updated - {0}", isVideo ? "Video" : "Audio");
+                        if (isVideo)
+                        {
+                            this.AttachDisplays();
+                        }
+                        break;
+                    }
+
+                case InviteEventTypes.CONNECTED:
+                    {
+                        this.labelInfo.Content = Strings.Text_InCall;
+                        this.soundService.StopRingBackTone();
+                        this.soundService.StopRingTone();
+
+                        this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
+                        this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
+
+                        this.timerCall.Start();
+                        if (this.avHistoryEvent != null)
+                        {
+                            if (this.avHistoryEvent.Status == HistoryEvent.StatusType.Missed)
+                            {
+                                this.avHistoryEvent.Status = HistoryEvent.StatusType.Incoming;
+                            }
+                            this.avHistoryEvent.StartTime = DateTime.Now;
+                            this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
+                        }
+
+                        break;
+                    }
 
                 case InviteEventTypes.DISCONNECTED:
                 case InviteEventTypes.TERMWAIT:
-                    this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? Strings.Text_CallTerminated : e.Phrase;
-                    this.timerCall.Stop();
-                    this.soundService.StopRingBackTone();
-                    this.soundService.StopRingTone();
-
-                    if (this.avHistoryEvent != null)
                     {
-                        lock (this.avHistoryEvent)
-                        {
-                            this.avHistoryEvent.EndTime = DateTime.Now;
-                            this.historyService.AddEvent(this.avHistoryEvent);
-                            this.avHistoryEvent = null;
-                        }
-                    }
+                        this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? Strings.Text_CallTerminated : e.Phrase;
+                        this.timerCall.Stop();
+                        this.soundService.StopRingBackTone();
+                        this.soundService.StopRingTone();
 
-                    //--this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
-                    //--this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
-                    this.AVSession = null;
-                    break;
+                        if (this.avHistoryEvent != null)
+                        {
+                            lock (this.avHistoryEvent)
+                            {
+                                this.avHistoryEvent.EndTime = DateTime.Now;
+                                this.historyService.AddEvent(this.avHistoryEvent);
+                                this.avHistoryEvent = null;
+                            }
+                        }
+
+                        //--this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
+                        //--this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
+                        this.AVSession.PreDispose();
+                        this.AVSession = null;
+                        break;
+                    }
 
                 case InviteEventTypes.LOCAL_HOLD_OK:
-                    if (this.isTransfering)
                     {
-                        this.isTransfering = false;
-                        this.AVSession.TransferCall(this.transferUri);
+                        if (this.isTransfering)
+                        {
+                            this.isTransfering = false;
+                            this.AVSession.TransferCall(this.transferUri);
+                        }
+                        this.labelInfo.Content = Strings.Text_CallPlacedOnHold;
+                        this.IsHeld = true;
+                        break;
                     }
-                    this.labelInfo.Content = Strings.Text_CallPlacedOnHold;
-                    this.IsHeld = true;
-                    break;
 
                 case InviteEventTypes.LOCAL_HOLD_NOK:
-                    this.isTransfering = false;
-                    this.labelInfo.Content = Strings.Text_FailedToPlaceRemotePartyOnHold;
-                    break;
+                    {
+                        this.isTransfering = false;
+                        this.labelInfo.Content = Strings.Text_FailedToPlaceRemotePartyOnHold;
+                        break;
+                    }
 
                 case InviteEventTypes.LOCAL_RESUME_OK:
-                    this.isTransfering = false;
-                    this.labelInfo.Content = Strings.Text_CallTakenOffHold;
-                    this.IsHeld = false;
-                    break;
+                    {
+                        this.isTransfering = false;
+                        this.labelInfo.Content = Strings.Text_CallTakenOffHold;
+                        this.IsHeld = false;
+                        break;
+                    }
 
                 case InviteEventTypes.LOCAL_RESUME_NOK:
-                    this.isTransfering = false;
-                    this.labelInfo.Content = Strings.Text_FailedToUnholdCall;
-                    break;
+                    {
+                        this.isTransfering = false;
+                        this.labelInfo.Content = Strings.Text_FailedToUnholdCall;
+                        break;
+                    }
 
                 case InviteEventTypes.REMOTE_HOLD:
-                    this.labelInfo.Content = Strings.Text_PlacedOnHoldByRemoteParty;
-                    break;
+                    {
+                        this.labelInfo.Content = Strings.Text_PlacedOnHoldByRemoteParty;
+                        break;
+                    }
 
                 case InviteEventTypes.REMOTE_RESUME:
-                    this.labelInfo.Content = Strings.Text_TakenOffHoldByRemoteParty;
-                    break;
+                    {
+                        this.labelInfo.Content = Strings.Text_TakenOffHoldByRemoteParty;
+                        break;
+                    }
 
 
                 case InviteEventTypes.LOCAL_TRANSFER_TRYING:

@@ -34,6 +34,11 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem Header="{x:Static res:Strings.AV_MenuAddVideo}" Name="MenuItemCall_AddRemoveVideo">
+                    <MenuItem.Icon>
+                        <Image Name="MenuItemCall_AddRemoveVideoImage" Source="/BogheApp;component/embedded/16/video_play_16.png" Stretch="None" IsEnabled="True" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="{x:Static res:Strings.AV_MenuMakeTransfer}" Name="MenuItemCall_MakeTransfer">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/call_transfer_16.png" Stretch="None" IsEnabled="True" />
@@ -108,5 +113,6 @@
         </Button>
         <Image Height="16" Margin="152,0,210,47" Name="imageIsComposing" Source="/BogheApp;component/embedded/16/pen_16.png" Stretch="None" VerticalAlignment="Bottom" Visibility="Hidden" Width="16" />
         <Image Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/16/secure_16.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,33,0,0" Height="16" Width="16" ToolTip="Call secured with SRTP" />
+        <Image Height="24" Margin="0,34,166,0" Name="imageFullScreen" Source="/BogheApp;component/embedded/24/fullscreen_24.png" Stretch="None" ToolTip="Full Screen" VerticalAlignment="Top" Visibility="Hidden" IsEnabled="True" HorizontalAlignment="Right" Width="24" MouseDown="imageFullScreen_MouseDown" />
     </Grid>
 </Window>

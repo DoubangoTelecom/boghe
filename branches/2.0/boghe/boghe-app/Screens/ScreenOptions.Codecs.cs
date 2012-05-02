@@ -68,17 +68,13 @@ namespace BogheApp.Screens
             }
 
 
-            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp10))
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp))
             {
-                codecs.Add(new Codec("H264-BP10", "H.264 Base Profile 1.0", tdav_codec_id_t.tdav_codec_id_h264_bp10));
+                codecs.Add(new Codec("H264-BP", "H.264 Base Profile", tdav_codec_id_t.tdav_codec_id_h264_bp));
             }
-            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp20))
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_mp))
             {
-                codecs.Add(new Codec("H264-BP20", "H.264 Base Profile 2.0", tdav_codec_id_t.tdav_codec_id_h264_bp20));
-            }
-            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp30))
-            {
-                codecs.Add(new Codec("H264-BP30", "H.264 Base Profile 3.0", tdav_codec_id_t.tdav_codec_id_h264_bp30));
+                codecs.Add(new Codec("H264-MP", "H.264 Main Profile", tdav_codec_id_t.tdav_codec_id_h264_mp));
             }
             codecs.AddRange(new Codec[]
             {

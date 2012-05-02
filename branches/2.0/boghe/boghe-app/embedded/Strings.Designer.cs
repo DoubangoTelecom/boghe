@@ -88,6 +88,15 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add video.
+        /// </summary>
+        public static string AV_MenuAddVideo {
+            get {
+                return ResourceManager.GetString("AV_MenuAddVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Call.
         /// </summary>
         public static string AV_MenuCall {
@@ -147,6 +156,15 @@ namespace BogheApp.embedded {
         public static string AV_MenuMakeVideoCall {
             get {
                 return ResourceManager.GetString("AV_MenuMakeVideoCall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove video.
+        /// </summary>
+        public static string AV_MenuRemoveVideo {
+            get {
+                return ResourceManager.GetString("AV_MenuRemoveVideo", resourceCulture);
             }
         }
         
@@ -790,6 +808,15 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Media Profile.
+        /// </summary>
+        public static string TabGeneral_Profile {
+            get {
+                return ResourceManager.GetString("TabGeneral_Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
         public static string TabHistory {
@@ -1078,7 +1105,7 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network:.
+        ///   Looks up a localized string similar to Network.
         /// </summary>
         public static string TabNetwork {
             get {
@@ -1330,11 +1357,29 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string TabQoS_General {
+            get {
+                return ResourceManager.GetString("TabQoS_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preconditions.
         /// </summary>
         public static string TabQoS_Preconditions {
             get {
                 return ResourceManager.GetString("TabQoS_Preconditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferred video Size:.
+        /// </summary>
+        public static string TabQoS_PrefVideoSize {
+            get {
+                return ResourceManager.GetString("TabQoS_PrefVideoSize", resourceCulture);
             }
         }
         
