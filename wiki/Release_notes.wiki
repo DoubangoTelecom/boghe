@@ -3,7 +3,7 @@
 
 <wiki:toc max_depth="2" />
 
-==2.0.100.699 (First beta release)==
+==2.0.100.699==
  * ICE (Interactive Connectivity Establishment): Full implementation of RFC 5245 for NAT Traversal
  * 1080p (Full HD): all platforms supports full HD video negotiation. Off course it depends on your CPU and network bandwidth. The preferred video size could be changed from the QoS/QoS screen.
  * Adaptive video jitter buffer: A video jitter buffer with advanced features like error correction, packet loss retransmission, delay recovery...
