@@ -105,7 +105,7 @@ namespace BogheApp.Services.Impl
             // could be changed per session
             MediaSessionMgr.defaultsSetAgcEnabled(true);
             MediaSessionMgr.defaultsSetEchoSuppEnabled(true);
-            MediaSessionMgr.defaultsSetEchoTail(100);
+            MediaSessionMgr.defaultsSetEchoTail(500);
             MediaSessionMgr.defaultsSetEchoSkew(0);
             MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
             MediaSessionMgr.defaultsSetJbMaxLateRate(1);
