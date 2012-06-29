@@ -109,6 +109,8 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetEchoSkew(0);
             MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
             MediaSessionMgr.defaultsSetJbMaxLateRate(1);
+            MediaSessionMgr.defaultsSetRtcpEnabled(true);
+            MediaSessionMgr.defaultsSetRtcpMuxEnabled(true);
 
             MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
             if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
