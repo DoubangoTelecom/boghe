@@ -3,6 +3,9 @@
 
 <wiki:toc max_depth="2" />
 
+==2.0.104.731==
+ * Fix on-way video when calling Chrome 21.0.1180.60-m
+
 ==2.0.104.715==
  * Fix issue 48
  * Fix installation issue (Remove previous version before new install)
