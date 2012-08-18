@@ -39,7 +39,7 @@ To open & build all projects, open *myboghe\boghe\branches\2.0\boghe\boghe-win32
 
 === Building commercial version ===
 To disable GPL code:
-If you are owner license owner then, you can build a non-GPL version of Doubango and Boghe by disabling GPL code.
+If you are license owner then, you can build a non-GPL version of Doubango and Boghe by disabling GPL code.
 
  * From Visual Studio, right click on *tinyDAV* project and select *Properties* -> *C/C++* -> *Preprocessor* -> *Preprocessor Definitions*.
   # Disable *x264* by adding (or changing) *HAVE_H264* value to zero.
@@ -55,6 +55,13 @@ HAVE_G729=0
 HAVE_OPENCORE_AMR=0
 }}}
 
+ # You can optionally disable LGPL code by removing FFmpeg dependency
+{{{
+HAVE_FFMPEG=0
+}}}
+
  * From Visual Studio, right click on *tinyDAV* project and select *Properties* -> *Linker* -> *Input* -> *Additional Dependencies*.
   # Link to LGPL version of FFmpeg by replacing *libavcodec.a*, *libavutil.a*, *libswscale.a* and *libavcore.a* with *libavcodec-lgpl.a*, *libavutil-lgpl.a*, *libswscale-lgpl.a* and *libavcore-lgpl.a* respectively.
   # Remove *libx264.a* from the list.
+
+For more information about third-parties libraries, please visit [http://code.google.com/p/doubango/wiki/Licensing this page].
