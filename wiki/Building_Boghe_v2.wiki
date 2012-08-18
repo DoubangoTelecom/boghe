@@ -54,7 +54,6 @@ HAVE_G729=0
 {{{
 HAVE_OPENCORE_AMR=0
 }}}
-
  # You can optionally disable LGPL code by removing FFmpeg dependency
 {{{
 HAVE_FFMPEG=0
