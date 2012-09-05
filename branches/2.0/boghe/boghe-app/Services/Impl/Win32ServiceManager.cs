@@ -101,6 +101,9 @@ namespace BogheApp.Services.Impl
             ret &= this.SoundService.Start();
             ret &= this.StateMonitorService.Start();
 
+            // Register plugins
+            // MediaSessionMgr.registerAudioPluginFromFile("audio_webrtc.dll");
+
             // Set user preferences (global defaults)
             // could be changed per session
             MediaSessionMgr.defaultsSetAgcEnabled(true);
@@ -108,6 +111,7 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetEchoTail(500);
             MediaSessionMgr.defaultsSetEchoSkew(0);
             MediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
+            MediaSessionMgr.defaultsSetVadEnabled(false);
             MediaSessionMgr.defaultsSetJbMaxLateRate(1);
             MediaSessionMgr.defaultsSetRtcpEnabled(true);
             MediaSessionMgr.defaultsSetRtcpMuxEnabled(true);
@@ -138,7 +142,6 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetIceEnabled(
                 this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE)
                 );
-                
             return ret;
         }
 

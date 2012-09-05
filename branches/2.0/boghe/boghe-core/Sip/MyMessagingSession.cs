@@ -69,8 +69,8 @@ namespace BogheCore.Sip
 
                 RPMessage rpMessage;
                 //if(ServiceManager.getConfigurationService().getBoolean(CONFIGURATION_SECTION.RCS, CONFIGURATION_ENTRY.HACK_SMS, false)){
-                //    rpMessage = SMSEncoder.encodeDeliver(++ScreenSMSCompose.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, new String(content));
-                //    session.addHeader("P-Asserted-Identity", SMSC);
+                    //rpMessage = SMSEncoder.encodeDeliver(++MyMessagingSession.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, text);
+                    //session.addHeader("P-Asserted-Identity", SMSC);
                 //}
                 //else{
                 rpMessage = SMSEncoder.encodeSubmit(++MyMessagingSession.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, text);

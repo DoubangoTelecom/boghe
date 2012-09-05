@@ -76,15 +76,30 @@ namespace BogheApp.Screens
             {
                 codecs.Add(new Codec("H264-MP", "H.264 Main Profile", tdav_codec_id_t.tdav_codec_id_h264_mp));
             }
-            codecs.AddRange(new Codec[]
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_vp8))
             {
-                new Codec("VP8", "Google's VP8", tdav_codec_id_t.tdav_codec_id_vp8),
-                new Codec("MP4V-ES", "MPEG-4 Part 2", tdav_codec_id_t.tdav_codec_id_mp4ves_es),
-                new Codec("Theora", "Theora", tdav_codec_id_t.tdav_codec_id_theora),
-                new Codec("H.263", "H.263", tdav_codec_id_t.tdav_codec_id_h263),
-                new Codec("H.263+", "H.263-1998", tdav_codec_id_t.tdav_codec_id_h263p),
-                new Codec("H.263++", "H.263-2000", tdav_codec_id_t.tdav_codec_id_h263pp),
-            });
+                codecs.Add( new Codec("VP8", "Google's VP8", tdav_codec_id_t.tdav_codec_id_vp8));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_mp4ves_es))
+            {
+                codecs.Add( new Codec("MP4V-ES", "MPEG-4 Part 2", tdav_codec_id_t.tdav_codec_id_mp4ves_es));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_theora))
+            {
+                codecs.Add( new Codec("Theora", "Theora", tdav_codec_id_t.tdav_codec_id_theora));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h263))
+            {
+                codecs.Add( new Codec("H.263", "H.263", tdav_codec_id_t.tdav_codec_id_h263));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h263p))
+            {
+                codecs.Add( new Codec("H.263-1998", "H.263-1998", tdav_codec_id_t.tdav_codec_id_h263p));
+            }
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h263pp))
+            {
+                codecs.Add( new Codec("H.263-2000", "H.263-2000", tdav_codec_id_t.tdav_codec_id_h263pp));
+            }
 
             this.listBoxCodecs.ItemsSource = codecs;
             ICollectionView view = CollectionViewSource.GetDefaultView(this.listBoxCodecs.ItemsSource);

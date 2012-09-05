@@ -56,6 +56,9 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\CallSession.cs">
       <Link>CallSession.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\Codec.cs">
+      <Link>Codec.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\DDebugCallback.cs">
       <Link>DDebugCallback.cs</Link>
     </Compile>
