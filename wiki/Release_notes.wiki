@@ -3,6 +3,12 @@
 
 <wiki:toc max_depth="2" />
 
+==2.0.112.744==
+ * Align with Doubango 744
+ * Improve noise suppression algorithm
+ * Use VP8 v1.1.0
+ * Fix issues
+
 ==2.0.104.731==
  * Fix on-way video when calling Chrome 21.0.1180.60-m
 
