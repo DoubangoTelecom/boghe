@@ -31,6 +31,7 @@ namespace BogheControls
         internal const int GWL_WNDPROC = -4;
 
         internal const int WM_PAINT = 0x000F;
+        internal const int WM_ERASEBKGND = 0x0014;
         internal const int WM_SIZE = 0x0005;
         internal const int WM_KEYDOWN = 0x0100;
         internal const int WM_KEYUP = 0x0101;
@@ -41,6 +42,7 @@ namespace BogheControls
         internal const int WS_VISIBLE = 0x10000000;
         internal const int WS_CLIPSIBLINGS = 0x04000000;
         internal const int WS_CLIPCHILDREN = 0x02000000;
+
 
 
         [DllImport("user32.dll", EntryPoint = "DestroyWindow", CharSet = CharSet.Auto)]

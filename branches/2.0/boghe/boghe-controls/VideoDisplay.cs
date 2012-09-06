@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace BogheControls
 {
@@ -62,6 +63,13 @@ namespace BogheControls
 
         protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if (msg == NativeMethods.WM_ERASEBKGND)
+            {
+                Graphics g = Graphics.FromHdc(wParam);
+                g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, (int)this.Width, (int)this.Height));
+                g.Dispose();
+                return IntPtr.Zero;
+            }
             return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
         }
     }
