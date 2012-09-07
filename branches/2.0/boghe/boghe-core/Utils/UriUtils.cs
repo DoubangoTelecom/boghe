@@ -122,7 +122,7 @@ namespace BogheCore.Utils
                 else
                 {
                     String realm = UriUtils.ServiceManager.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM, Configuration.DEFAULT_NETWORK_REALM);
-                    if (realm.Contains(":"))
+                    if (realm.StartsWith("sip:") || realm.StartsWith("sips:")) // do not forget that IPv6 address could contain ":"
                     {
                         realm = realm.Substring(realm.IndexOf(":") + 1);
                     }
