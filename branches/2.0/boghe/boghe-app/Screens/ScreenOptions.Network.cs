@@ -39,6 +39,7 @@ namespace BogheApp.Screens
             this.checkBoxSigComp.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_NETWORK_SIGCOMP);
             String IPversion = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION, Configuration.DEFAULT_NETWORK_IP_VERSION);
             this.radioButtonIPv4.IsChecked = IPversion.Equals("IPv4", StringComparison.InvariantCultureIgnoreCase);
+            this.radioButtonIPv6.IsChecked = !this.radioButtonIPv4.IsChecked;
         }
 
         private bool UpdateNetwork()
