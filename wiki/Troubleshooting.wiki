@@ -9,12 +9,12 @@ This wiki page help you troubleshooting issues related to the client.
 
 == Cheeking for .NET Framework 3.5 SP1 ==
 To check that .NET framework 3.5 SP1 is correctly installed on your machine yous should:
- # Download the .NET verifier from here: [http://boghe.googlecode.com/svn/branches/2.0/boghe-thirdparties/win32/netfx_setupverifier_new.zip http://boghe.googlecode.com/svn/branches/2.0/boghe-thirdparties/win32/netfx_setupverifier_new.zip]
+ # Download the .NET verifier from here: [http://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-thirdparties/win32/netfx_setupverifier_new.zip http://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-thirdparties/win32/netfx_setupverifier_new.zip]
  # Unzip the file and run *netfx_setupverifier.exe*. From the dialog box (see below), select *.NET Framework 3.5 SP1* and press on *Verify Now*.
 
 <table>
 <tr>
-<td>[http://boghe.googlecode.com/svn/branches/2.0/screenshots/netfx_setupverifier.png]</td>
+<td>[http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/netfx_setupverifier.png]</td>
 </tr>
 <tr>
 <td align=center>_.NET Framework Verifier_</td>
