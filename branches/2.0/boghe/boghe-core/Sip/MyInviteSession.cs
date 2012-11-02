@@ -56,7 +56,7 @@ namespace BogheCore.Sip
             get { return mMediaType; }
         }
 
-        public InviteState State
+        public virtual InviteState State
         {
             get { return mState; }
             set { mState = value; }

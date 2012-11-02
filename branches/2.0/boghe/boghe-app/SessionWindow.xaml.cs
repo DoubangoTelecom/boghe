@@ -278,26 +278,31 @@ namespace BogheApp
             return String.Equals(this.remotePartyUri, remoteUri);
         }
 
-        public void MakeAudioCall(String remoteUri)
+        public void MakeCall(String remoteUri, MediaType mediaType)
         {
             System.Diagnostics.Debug.Assert(this.AVSession == null);
 
-            this.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.Audio);
+            // Add T140 to the mediaType is the corresponding codec is enabled
+            if (((tdav_codec_id_t)this.sipService.Codecs & tdav_codec_id_t.tdav_codec_id_t140) == tdav_codec_id_t.tdav_codec_id_t140)
+            {
+                mediaType |= MediaType.T140;
+            }
+
+            this.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, mediaType);
             this.Show();
             this.AVSession.MakeCall(remoteUri);
 
             this.InitializeView();
         }
 
+        public void MakeAudioCall(String remoteUri)
+        {
+            MakeCall(remoteUri, MediaType.Audio);
+        }
+
         public void MakeVideoCall(String remoteUri)
         {
-            System.Diagnostics.Debug.Assert(this.AVSession == null);
-
-            this.AVSession = MyAVSession.CreateOutgoingSession(Win32ServiceManager.SharedManager.SipService.SipStack, MediaType.AudioVideo);
-            this.Show();
-            this.AVSession.MakeCall(remoteUri);
-
-            this.InitializeView();
+            MakeCall(remoteUri, MediaType.AudioVideo);
         }
 
         public void StartChat(String remoteUri)
@@ -457,6 +462,20 @@ namespace BogheApp
 
         private void textBoxInput_TextChanged(object sender, TextChangedEventArgs e)
         {
+            /*if (AVSession != null && (AVSession.MediaType & MediaType.T140) == MediaType.T140)
+            {
+                // Do not send on composing when T.140 is activated
+                if (AVSession.IsConnected)
+                {
+                    if (!String.IsNullOrEmpty(this.textBoxInput.Text))
+                    {
+                        AVSession.SendT140Data(Encoding.UTF8.GetBytes(this.textBoxInput.Text));
+                    }
+                    this.textBoxInput.Text = String.Empty;
+                }
+                return;
+            }*/
+
             if (this.IsComposingAlertEnabled && !String.IsNullOrEmpty(this.textBoxInput.Text))
             {
                 this.imActivityIndicator.OnComposing();

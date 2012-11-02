@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+using System.Runtime.InteropServices;
 
 namespace BogheCore.Xcap
 {
@@ -53,7 +54,10 @@ namespace BogheCore.Xcap
                 if (clen > 0)
                 {
                     this.content = new byte[clen];
-                    message.getXcapContent(this.content, clen);
+                    IntPtr ptr = Marshal.AllocHGlobal((int)clen);
+                    message.getXcapContent(ptr, clen);
+                    Marshal.Copy(ptr, this.content, 0, this.content.Length);
+                    Marshal.FreeHGlobal(ptr);
                 }
                 else
                 {

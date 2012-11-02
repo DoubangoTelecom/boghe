@@ -200,6 +200,12 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\SubscriptionSession.cs">
       <Link>SubscriptionSession.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\T140Callback.cs">
+      <Link>T140Callback.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\T140CallbackData.cs">
+      <Link>T140CallbackData.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tdav_codec_id_t.cs">
       <Link>tdav_codec_id_t.cs</Link>
     </Compile>
@@ -232,6 +238,9 @@
     </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_srtp_mode_t.cs">
       <Link>tmedia_srtp_mode_t.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_t140_data_type_t.cs">
+      <Link>tmedia_t140_data_type_t.cs</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmsrp_event_type_t.cs">
       <Link>tmsrp_event_type_t.cs</Link>

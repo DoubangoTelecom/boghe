@@ -75,11 +75,8 @@ namespace BogheCore.Sip
                 //else{
                 rpMessage = SMSEncoder.encodeSubmit(++MyMessagingSession.SMS_MR, SMSCPhoneNumber, dstPhoneNumber, text);
                 //}
-
-                long rpMessageLen = rpMessage.getPayloadLength();
-                byte[] payload = new byte[(int)rpMessageLen];
-                uint payloadLength = rpMessage.getPayload(payload, (uint)payload.Length);
-                bool ret = this.session.send(payload, payloadLength);
+                
+                bool ret = this.session.send(rpMessage.getPayload());
                 rpMessage.Dispose();
                 if (MyMessagingSession.SMS_MR >= 255)
                 {
@@ -99,7 +96,7 @@ namespace BogheCore.Sip
         {
             this.session.addHeader("Content-Type", String.IsNullOrEmpty(contentType) ? ContentType.TEXT_PLAIN : contentType);
             byte[] payload = Encoding.UTF8.GetBytes(text);
-            bool ret = this.session.send(payload, (uint)payload.Length);
+            bool ret = this.session.send(payload);
             return ret;
         }
 

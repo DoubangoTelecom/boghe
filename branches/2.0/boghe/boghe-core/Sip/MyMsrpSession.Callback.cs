@@ -26,6 +26,7 @@ using org.doubango.tinyWRAP;
 using System.IO;
 using BogheCore.Events;
 using BogheCore.Sip.Events;
+using System.Runtime.InteropServices;
 
 namespace BogheCore.Sip
 {
@@ -35,6 +36,7 @@ namespace BogheCore.Sip
         {
             private readonly MyMsrpSession session;
             private byte[] tempBuffer;
+            private IntPtr tempBufferPtr;
             private MemoryStream chatStream;
             private String contentType;
             private String wContentType;
@@ -50,6 +52,11 @@ namespace BogheCore.Sip
                 if (this.chatStream != null)
                 {
                     this.chatStream.Close();
+                }
+                if (this.tempBufferPtr != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(this.tempBufferPtr);
+                    this.tempBufferPtr = IntPtr.Zero;
                 }
             }
 
@@ -136,18 +143,25 @@ namespace BogheCore.Sip
                                 return;
                             }
 
-                            if (this.tempBuffer == null || this.tempBuffer.Length < clen)
+                            if (this.tempBuffer == null || this.tempBufferPtr == IntPtr.Zero || this.tempBuffer.Length < clen)
                             {
                                 this.tempBuffer = new byte[(int)clen];
+                                if (this.tempBufferPtr != IntPtr.Zero)
+                                {
+                                    Marshal.FreeHGlobal(this.tempBufferPtr);
+                                }
+                                this.tempBufferPtr = Marshal.AllocHGlobal((int)clen);
                             }
 
-                            read = message.getMsrpContent(this.tempBuffer, (uint)this.tempBuffer.Length);
+                            read = message.getMsrpContent(this.tempBufferPtr, (uint)this.tempBuffer.Length);
+                            Marshal.Copy(this.tempBufferPtr, this.tempBuffer, 0, this.tempBuffer.Length);
                             if (message.isFirstChunck())
                             {
                                 this.contentType = message.getMsrpHeaderValue("Content-Type");
                                 if (!String.IsNullOrEmpty(contentType) && contentType.StartsWith(ContentType.CPIM, StringComparison.InvariantCultureIgnoreCase))
                                 {
-                                    MediaContentCPIM mediaContent = MediaContent.parse(this.tempBuffer, read);
+                                    MediaContentCPIM mediaContent = MediaContent.parse(this.tempBufferPtr, read);
+                                    Marshal.Copy(this.tempBufferPtr, this.tempBuffer, 0, this.tempBuffer.Length);
                                     if (mediaContent != null)
                                     {
                                         this.wContentType = mediaContent.getHeaderValue("Content-Type");

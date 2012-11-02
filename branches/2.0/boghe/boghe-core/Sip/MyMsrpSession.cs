@@ -26,6 +26,7 @@ using org.doubango.tinyWRAP;
 using log4net;
 using BogheCore.Sip.Events;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace BogheCore.Sip
 {
@@ -362,7 +363,10 @@ namespace BogheCore.Sip
                 //    "content-type", "message/CPIM")
                 //    .setMediaString(twrap_media_type_t.twrap_media_msrp, "w-content-type", "text/plain");
                 byte[] payload = Encoding.UTF8.GetBytes(message);
-                bool ret = mSession.sendMessage(payload, (uint)payload.Length, config);
+                IntPtr ptr = Marshal.AllocHGlobal(payload.Length);
+                bool ret = mSession.sendMessage(ptr, (uint)payload.Length, config);
+                Marshal.Copy(ptr, payload, 0, payload.Length);
+                Marshal.FreeHGlobal(ptr);                
                 config.Dispose();
 
                 return ret;

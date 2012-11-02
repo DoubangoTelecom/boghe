@@ -52,6 +52,8 @@ namespace BogheCore.Services
         bool PresencePublish();
         bool PresencePublish(PresenceStatus status);
 
+        bool RaiseEvent(EventArgs eargs);
+
         event EventHandler<RegistrationEventArgs> onRegistrationEvent;
         event EventHandler<StackEventArgs> onStackEvent;
         event EventHandler<InviteEventArgs> onInviteEvent;

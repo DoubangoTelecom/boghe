@@ -23,33 +23,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+using System.Runtime.InteropServices;
 
 namespace BogheCore.Sip
 {
-    public class MyAVSession : MyInviteSession
+    public partial class MyAVSession : MyInviteSession
     {
         private readonly CallSession mSession;
+        private readonly MyT140Callback mT140Callback;
         private static IDictionary<long, MyAVSession> sessions = new Dictionary<long, MyAVSession>();
         private bool mMute;
         protected long mSessionTransferId = -1;
         
         public static MyAVSession TakeIncomingSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
         {
-            MediaType media;
-
-            switch (mediaType)
+            MediaType media = MediaTypeUtils.ConvertFromNative(mediaType);
+            if (media == MediaType.None)
             {
-                case twrap_media_type_t.twrap_media_audio:
-                    media = MediaType.Audio;
-                    break;
-                case twrap_media_type_t.twrap_media_video:
-                    media = MediaType.Video;
-                    break;
-                case twrap_media_type_t.twrap_media_audiovideo:
-                    media = MediaType.AudioVideo;
-                    break;
-                default:
-                    return null;
+                return null;
             }
 
             lock (MyAVSession.sessions)
@@ -82,21 +73,10 @@ namespace BogheCore.Sip
 
         public static MyAVSession TakeOutgoingTranferSession(MySipStack sipStack, CallSession session, twrap_media_type_t mediaType, SipMessage sipMessage)
         {
-            MediaType media;
-
-            switch (mediaType)
+            MediaType media = MediaTypeUtils.ConvertFromNative(mediaType);
+            if (media == MediaType.None)
             {
-                case twrap_media_type_t.twrap_media_audio:
-                    media = MediaType.Audio;
-                    break;
-                case twrap_media_type_t.twrap_media_video:
-                    media = MediaType.Video;
-                    break;
-                case twrap_media_type_t.twrap_media_audiovideo:
-                    media = MediaType.AudioVideo;
-                    break;
-                default:
-                    return null;
+                return null;
             }
 
             MyAVSession avSession = MyAVSession.CreateOutgoingSession(sipStack, session, media);
@@ -116,7 +96,10 @@ namespace BogheCore.Sip
                 {
                     case twrap_media_type_t.twrap_media_audio: avSession.mMediaType = MediaType.Audio; return true;
                     case twrap_media_type_t.twrap_media_video: avSession.mMediaType = MediaType.Video; return true;
-                    case twrap_media_type_t.twrap_media_audiovideo: avSession.mMediaType = MediaType.AudioVideo; return true;
+                    case twrap_media_type_t.twrap_media_audio_video: avSession.mMediaType = MediaType.AudioVideo; return true;
+                    case twrap_media_type_t.twrap_media_audio_video_t140: avSession.mMediaType = MediaType.AudioVideoT140; return true;
+                    case twrap_media_type_t.twrap_media_audio_t140: avSession.mMediaType = MediaType.AudioT140; return true;
+                    case twrap_media_type_t.twrap_media_t140: avSession.mMediaType = MediaType.T140; return true;
                     default: return false; // For now MSRP update is not suportted
                 }
             }
@@ -172,6 +155,13 @@ namespace BogheCore.Sip
 
             // 100rel
             // mSession.set100rel(true); // See defaults
+
+            // T.140 callback
+            if ((mediaType & MediaType.T140) == MediaType.T140)
+            {
+                mT140Callback = new MyT140Callback(this);
+                // do not set the callback as it requires a media session manager (only available when session is connected)
+            }
 
             /* 3GPP TS 24.173
 		    *
@@ -256,11 +246,15 @@ namespace BogheCore.Sip
         {
             if (payload != null && !String.IsNullOrEmpty(contentType))
             {
+                IntPtr payloadPtr = Marshal.AllocHGlobal(payload.Length);
                 ActionConfig config = new ActionConfig();
                 config.addHeader("Content-Type", contentType);
-                return mSession.sendInfo(payload, (uint)payload.Length, config);
+                Marshal.Copy(payload, 0, payloadPtr, payload.Length);
+                bool ret = mSession.sendInfo(payloadPtr, (uint)payload.Length, config);
+                Marshal.FreeHGlobal(payloadPtr);
+                return ret;
             }
-            return mSession.sendInfo(null, 0);
+            return mSession.sendInfo(IntPtr.Zero, 0);
         }
 
         public bool SetProducerFlipped(Boolean flipped)
@@ -332,14 +326,16 @@ namespace BogheCore.Sip
             base.ToUri = remoteUri;
 
             ActionConfig config = new ActionConfig();
-            switch (this.mMediaType)
+            switch (mMediaType)
             {
-                case MediaType.AudioVideo:
-                case MediaType.Video:
-                    ret = mSession.callAudioVideo(remoteUri, config);
-                    break;
                 case MediaType.Audio:
-                    ret = mSession.callAudio(remoteUri, config);
+                case MediaType.Video:
+                case MediaType.AudioVideo:
+                case MediaType.AudioT140:
+                case MediaType.VideoT140:
+                case MediaType.AudioVideoT140:
+                case MediaType.T140:
+                    ret = mSession.call(remoteUri, MediaTypeUtils.ConvertToNative(mMediaType), config);
                     break;
                 default:
                     throw new Exception("This session doesn't support this media type");
@@ -347,7 +343,7 @@ namespace BogheCore.Sip
             config.Dispose();
 
             return ret;
-        }
+        }      
 
         public bool MakeVideoSharingCall(String remoteUri)
         {
@@ -356,7 +352,7 @@ namespace BogheCore.Sip
             base.outgoing = true;
 
             ActionConfig config = new ActionConfig();
-            ret = mSession.callVideo(remoteUri, config);
+            ret = mSession.call(remoteUri, MediaTypeUtils.ConvertToNative(MediaType.Video), config);
             config.Dispose();
 
             return ret;
@@ -365,6 +361,32 @@ namespace BogheCore.Sip
         public bool SendDTMF(int digit)
         {
             return mSession.sendDTMF(digit);
+        }
+
+        protected bool SendT140Buffer(tmedia_t140_data_type_t dataType, byte[] bufferBytes)
+        {
+            if (bufferBytes != null && bufferBytes.Length > 0)
+            {
+                IntPtr dataPtr = Marshal.AllocHGlobal(bufferBytes.Length);
+                Marshal.Copy(bufferBytes, 0, dataPtr, bufferBytes.Length);
+                bool ret = mSession.sendT140Data(dataType, dataPtr, (uint)bufferBytes.Length);
+                Marshal.FreeHGlobal(dataPtr);
+                return ret;
+            }
+            else
+            {
+                return mSession.sendT140Data(dataType, IntPtr.Zero, 0);
+            }
+        }
+
+        public bool SendT140Data(byte[] bufferBytes)
+        {
+            return SendT140Buffer(tmedia_t140_data_type_t.tmedia_t140_data_type_utf8, bufferBytes);
+        }
+
+        public bool SendT140Data(tmedia_t140_data_type_t dataType)
+        {
+            return SendT140Buffer(dataType, null);
         }
 
         public bool Update(MediaType newMediaType)
@@ -386,6 +408,33 @@ namespace BogheCore.Sip
         public bool IsMute
         {
             get { return mMute; }
+        }
+
+        public override InviteState State
+        {
+            set
+            {
+                base.State = value;
+                if ((mMediaType & MediaType.AudioT140) == MediaType.AudioT140 && mSession != null)
+                {
+                    switch (base.State)
+                    {
+                        case InviteState.EARLY_MEDIA:
+                        case InviteState.INCALL:
+                            {
+                                mSession.setT140Callback(mT140Callback);
+                                break;
+                            }
+
+                        case InviteState.TERMINATING:
+                        case InviteState.TERMINATED:
+                            {
+                                mSession.setT140Callback(null);
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
 }

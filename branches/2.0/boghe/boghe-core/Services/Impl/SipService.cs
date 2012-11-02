@@ -227,6 +227,7 @@ namespace BogheCore.Services.Impl
             if (this.sipStack == null)
             {
                 this.sipStack = new MySipStack(this.sipCallback, this.preferences.realm, this.preferences.impi, this.preferences.impu);
+                this.sipStack.SipService = this;
                 this.sipStack.setDebugCallback(this.debugCallback);
                 // Set UserAgent
             }
@@ -491,6 +492,17 @@ namespace BogheCore.Services.Impl
             {
                 return this.PublishPresence(status);
             }
+            return false;
+        }
+
+        public bool RaiseEvent(EventArgs eargs)
+        {
+            if (eargs is MessagingEventArgs)
+            {
+                EventHandlerTrigger.TriggerEvent<MessagingEventArgs>(this.onMessagingEvent, this, (eargs as MessagingEventArgs));
+                return true;
+            }
+            LOG.Error("Cannot raise event with type = " + eargs);
             return false;
         }
 

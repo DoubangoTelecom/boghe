@@ -35,8 +35,8 @@ namespace BogheCore.Sip.Events
 
         public const String EXTRA_SESSION = "session";
         public const String EXTRA_CODE = "code";
-        public const String EXTRA_REMOTE_PARTY = "from";
-        public const String EXTRA_CONTENT_TYPE = "content-Type";
+        public const String EXTRA_REMOTE_PARTY_STRING = "from";
+        public const String EXTRA_CONTENT_TYPE_STRING = "content-Type";
 
         public InfoEventArgs(long sessionId, InfoEventTypes type, String phrase, byte[] payload)
             :base()

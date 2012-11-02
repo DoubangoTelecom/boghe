@@ -280,7 +280,7 @@ namespace BogheCore.Xcap
                 return null;
             }
 
-            if (!this.stack.putDocument(url, payload, len, contentType))
+            if (!this.stack.putDocument(url, payload, contentType))
             {
                 LOG.Error("Request failed");
                 return null;
@@ -297,7 +297,7 @@ namespace BogheCore.Xcap
                 return null;
             }
 
-            if (!this.stack.putElement(url, payload, len))
+            if (!this.stack.putElement(url, payload))
             {
                 LOG.Error("Request failed");
                 return null;
@@ -314,7 +314,7 @@ namespace BogheCore.Xcap
                 return null;
             }
 
-            if (!this.stack.putAttribute(url, payload, len))
+            if (!this.stack.putAttribute(url, payload))
             {
                 LOG.Error("Request failed");
                 return null;
