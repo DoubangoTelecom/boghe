@@ -101,6 +101,16 @@ namespace BogheApp.Screens
                 codecs.Add( new Codec("H.263-2000", "H.263-2000", tdav_codec_id_t.tdav_codec_id_h263pp));
             }
 
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_red))
+            {
+                codecs.Add(new Codec("RED", "Redundant data", tdav_codec_id_t.tdav_codec_id_red));
+            }
+
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_t140))
+            {
+                codecs.Add(new Codec("T.140", "Realtime text", tdav_codec_id_t.tdav_codec_id_t140));
+            }
+
             this.listBoxCodecs.ItemsSource = codecs;
             ICollectionView view = CollectionViewSource.GetDefaultView(this.listBoxCodecs.ItemsSource);
             view.GroupDescriptions.Add(new PropertyGroupDescription("CodecType"));
@@ -176,6 +186,9 @@ namespace BogheApp.Screens
                         case tdav_codec_id_t.tdav_codec_id_g729ab:
                         case tdav_codec_id_t.tdav_codec_id_g722:
                             return "Audio Codecs";
+                        case tdav_codec_id_t.tdav_codec_id_t140:
+                        case tdav_codec_id_t.tdav_codec_id_red:
+                            return "Other Codecs";
                         default:
                             return "Video Codecs";
                     }

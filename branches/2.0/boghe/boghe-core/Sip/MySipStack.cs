@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+using BogheCore.Services;
 
 namespace BogheCore.Sip
 {
@@ -37,6 +38,7 @@ namespace BogheCore.Sip
         private String privacy;
         private String userAgent;
         private String pAccessNetworkInfo;
+        private ISipService mSipService;
 
         public MySipStack(SipCallback callback, String realmUri, String impiUri, String impuUri)
             : base(callback, realmUri, impiUri, impuUri)
@@ -56,6 +58,12 @@ namespace BogheCore.Sip
             // To avoid usage from other external stacks (e.g. HTTP, ...)
             this.setDebugCallback(null);
             //base.Dispose();
+        }
+
+        public ISipService SipService
+        {
+            get { return mSipService; }
+            set { mSipService = value; }
         }
 
         public STACK_STATE State

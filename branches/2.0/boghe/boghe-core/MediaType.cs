@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using org.doubango.tinyWRAP;
 
 namespace BogheCore
 {
@@ -38,7 +39,65 @@ namespace BogheCore
         Chat = 0x01 << 4,
         Messaging = SMS | Chat | ShortMessage,
         FileTransfer = 0x01 << 5,
+        T140 = 0x01 << 6,
+        AudioT140 = Audio | T140,
+        AudioVideoT140 = AudioVideo | T140,
+        VideoT140 = Video | T140,
 
-        All = AudioVideo | Messaging | FileTransfer
+        All = 0xFF
+    }
+
+    public static class MediaTypeUtils
+    {
+        public static MediaType ConvertFromNative(twrap_media_type_t mediaType)
+        {
+            switch (mediaType)
+            {
+                case twrap_media_type_t.twrap_media_audio:
+                    return MediaType.Audio;
+                case twrap_media_type_t.twrap_media_video:
+                    return MediaType.Video;
+                case twrap_media_type_t.twrap_media_audio_video:
+                    return MediaType.AudioVideo;
+                case twrap_media_type_t.twrap_media_audio_t140:
+                    return MediaType.AudioT140;
+                case twrap_media_type_t.twrap_media_audio_video_t140:
+                    return MediaType.AudioVideoT140;
+                case twrap_media_type_t.twrap_media_t140:
+                    return MediaType.T140;
+                case twrap_media_type_t.twrap_media_video_t140:
+                    return MediaType.VideoT140;
+                case twrap_media_type_t.twrap_media_msrp:
+                    return MediaType.Chat | MediaType.FileTransfer;
+                default:
+                    return MediaType.None;
+            }
+        }
+
+        public static twrap_media_type_t ConvertToNative(MediaType mediaType)
+        {
+            switch (mediaType)
+            {
+                case MediaType.Audio:
+                    return twrap_media_type_t.twrap_media_audio;
+                case MediaType.Video:
+                    return twrap_media_type_t.twrap_media_video;
+                case MediaType.AudioVideo:
+                    return twrap_media_type_t.twrap_media_audio_video;
+                case MediaType.AudioT140:
+                    return twrap_media_type_t.twrap_media_audio_t140;
+                case MediaType.VideoT140:
+                    return twrap_media_type_t.twrap_media_video_t140;
+                case MediaType.AudioVideoT140:
+                    return twrap_media_type_t.twrap_media_audio_video_t140;
+                case MediaType.T140:
+                    return twrap_media_type_t.twrap_media_t140;
+                case MediaType.Chat: 
+                case MediaType.FileTransfer:
+                    return twrap_media_type_t.twrap_media_msrp;
+                default:
+                    return twrap_media_type_t.twrap_media_none;
+            }
+        }
     }
 }

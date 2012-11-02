@@ -58,9 +58,9 @@ namespace BogheCore.Sip
             {
                 ActionConfig config = new ActionConfig();
                 config.addHeader("Content-Type", contentType);
-                return m_Session.send(payload, (uint)payload.Length, config);
+                return m_Session.send(payload, config);
             }
-            return m_Session.send(null, 0);
+            return m_Session.send(IntPtr.Zero, 0);
         }
     }
 }

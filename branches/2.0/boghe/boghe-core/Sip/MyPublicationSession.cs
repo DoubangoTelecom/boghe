@@ -31,6 +31,7 @@ using BogheCore.Generated.rpid;
 using System.Xml.Serialization;
 using System.Xml;
 using BogheCore.Model;
+using System.Runtime.InteropServices;
 
 namespace BogheCore.Sip
 {
@@ -296,7 +297,11 @@ namespace BogheCore.Sip
         {
             if (content != null)
             {
-                return this.session.publish(content, (uint)content.Length);
+                IntPtr ptr = Marshal.AllocHGlobal(content.Length);
+                Marshal.Copy(content, 0, ptr, content.Length);
+                bool ret = this.session.publish(ptr, (uint)content.Length);
+                Marshal.FreeHGlobal(ptr);
+                return ret;
             }
             return false;
         }

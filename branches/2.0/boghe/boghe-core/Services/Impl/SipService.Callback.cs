@@ -29,6 +29,7 @@ using System.Threading;
 using BogheCore.Sip;
 using BogheCore.Utils;
 using BogheCore.Model;
+using System.Runtime.InteropServices;
 
 namespace BogheCore.Services.Impl
 {
@@ -129,8 +130,8 @@ namespace BogheCore.Services.Impl
                                     InfoEventArgs eargs = new InfoEventArgs(sessionId, InfoEventTypes.INCOMING, e.getPhrase(), bytes);
                                     eargs
                                         .AddExtra(InfoEventArgs.EXTRA_CODE, e.getCode())
-                                        .AddExtra(InfoEventArgs.EXTRA_REMOTE_PARTY, from)
-                                        .AddExtra(InfoEventArgs.EXTRA_CONTENT_TYPE, contentType == null ? ContentType.UNKNOWN : contentType);
+                                        .AddExtra(InfoEventArgs.EXTRA_REMOTE_PARTY_STRING, from)
+                                        .AddExtra(InfoEventArgs.EXTRA_CONTENT_TYPE_STRING, contentType == null ? ContentType.UNKNOWN : contentType);
                                     EventHandlerTrigger.TriggerEvent<InfoEventArgs>(this.sipService.onInfoEvent, this.sipService, eargs);
                                 }
                             }
@@ -204,7 +205,11 @@ namespace BogheCore.Services.Impl
                             {
                                 /* ==== 3GPP SMSIP  === */
 						        byte[] buffer = (bytes.Clone() as byte[]);
-						        SMSData smsData = SMSEncoder.decode(buffer, (uint)buffer.Length, false);
+                                IntPtr ptr = Marshal.AllocHGlobal(buffer.Length);
+                                SMSData smsData = SMSEncoder.decode(ptr, (uint)buffer.Length, false);
+                                Marshal.Copy(ptr, buffer, 0, buffer.Length);
+                                Marshal.FreeHGlobal(ptr);
+                                
                                 if (smsData != null){
                                     twrap_sms_type_t smsType = smsData.getType();
                                     if (smsType == twrap_sms_type_t.twrap_sms_type_rpdata){
@@ -242,23 +247,21 @@ namespace BogheCore.Services.Impl
                                             if (rpACK != null){
                                                 long ack_len = rpACK.getPayloadLength();
                                                 if (ack_len > 0){
-                                        	        buffer = new byte[(int)ack_len];
-                                                    long len = rpACK.getPayload(buffer, (uint)buffer.Length);
+                                                    buffer = rpACK.getPayload();
 
                                                     MessagingSession m = new MessagingSession(this.sipService.SipStack);
                                                     m.setToUri(SMSC);
                                                     m.addHeader("Content-Type", ContentType.SMS_3GPP);
                                                     m.addHeader("Content-Transfer-Encoding", "binary");
                                                     m.addCaps("+g.3gpp.smsip");
-                                                    m.send(buffer, (uint)len);
+                                                    m.send(buffer);
                                                     m.Dispose();
                                                 }
                                                 rpACK.Dispose();
                                             }
 
                                             /* Get ascii content */
-                                            content = new byte[(int)payLength];
-                                            smsData.getPayload(content, (uint)content.Length);
+                                            content = smsData.getPayload();
                                         }
                                         else{
                                             /* Send RP-ERROR */
@@ -266,15 +269,14 @@ namespace BogheCore.Services.Impl
                                             if (rpError != null){
                                                 long err_len = rpError.getPayloadLength();
                                                 if (err_len > 0){
-                                        	        buffer = new byte[(int)err_len];
-                                                    long len = rpError.getPayload(buffer, (uint)buffer.Length);
+                                                    buffer = rpError.getPayload();
 
                                                     MessagingSession m = new MessagingSession(this.sipService.SipStack);
                                                     m.setToUri(SMSC);
                                                     m.addHeader("Content-Type", ContentType.SMS_3GPP);
                                                     m.addHeader("Transfer-Encoding", "binary");
                                                     m.addCaps("+g.3gpp.smsip");
-                                                    m.send(buffer, (uint)len);
+                                                    m.send(buffer);
                                                     m.Dispose();
                                                 }
                                                 rpError.Dispose();
@@ -685,6 +687,9 @@ namespace BogheCore.Services.Impl
                                 case twrap_media_type_t.twrap_media_audio:
                                 case twrap_media_type_t.twrap_media_audiovideo:
                                 case twrap_media_type_t.twrap_media_video:
+                                case twrap_media_type_t.twrap_media_audio_t140:
+                                case twrap_media_type_t.twrap_media_audio_video_t140:
+                                case twrap_media_type_t.twrap_media_t140:
                                     {
                                         if ((session = e.takeCallSessionOwnership()) == null)
                                         {
