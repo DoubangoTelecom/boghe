@@ -3,6 +3,10 @@
 
 <wiki:toc max_depth="2" />
 
+==2.0.121.757==
+ - Align with Doubango 757 (check doubango release note for more information about bug fix)
+ - Update media engine to allow interop with 23.0.1271.64 m
+
 ==2.0.112.744==
  * Align with Doubango 744
  * Improve noise suppression algorithm
