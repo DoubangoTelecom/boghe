@@ -398,7 +398,7 @@ namespace BogheCore.Services.Impl
             // SigComp (only update compartment Id if changed)
             if (this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_NETWORK_SIGCOMP))
             {
-                String compId = String.Format("urn:uuid:%s", Guid.NewGuid().ToString());
+                String compId = String.Format("urn:uuid:{0}", Guid.NewGuid().ToString());
                 this.sipStack.SigCompId = compId;
                 LOG.Debug(String.Format("SigComp enable with uuid={0}", compId));
             }
