@@ -497,6 +497,7 @@ namespace BogheCore.Services.Impl
                     // Registration
                     if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
                     {
+                        SipService.LOG.Info("OnDialogEvent (Unregistering)");
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
                             new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_INPROGRESS, code, phrase));
                     }
@@ -519,6 +520,7 @@ namespace BogheCore.Services.Impl
                     // Registration
                     if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
                     {
+                        SipService.LOG.Info("OnDialogEvent (Unregistered)");
                         this.sipService.regSession.IsConnected = false;
                         // To PostRegistration() in new thread
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
@@ -585,7 +587,7 @@ namespace BogheCore.Services.Impl
             {
                 short code = e.getCode();
                 String phrase = e.getPhrase();
-
+                
                 if (code == tinyWRAP.tsip_event_code_stack_started)
                 {
                     this.sipService.SipStack.State = MySipStack.STACK_STATE.STARTED;
@@ -596,9 +598,15 @@ namespace BogheCore.Services.Impl
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.START_OK, phrase));
                 }
-
+                else if (code == tinyWRAP.tsip_event_code_stack_starting)
+                {
+                    this.sipService.SipStack.State = MySipStack.STACK_STATE.STARTING;
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.STARING, phrase));
+                }
                 else if (code == tinyWRAP.tsip_event_code_stack_failed_to_start)
                 {
+                    this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPED;
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.START_NOK, phrase));
                 }
@@ -608,7 +616,12 @@ namespace BogheCore.Services.Impl
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.STOP_NOK, phrase));
                 }
-
+                else if (code == tinyWRAP.tsip_event_code_stack_stopping)
+                {
+                    this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPING;
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.STOPPING, phrase));
+                }
                 else if (code == tinyWRAP.tsip_event_code_stack_stopped)
                 {
                     this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPED;

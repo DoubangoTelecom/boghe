@@ -34,6 +34,11 @@ namespace BogheApp
                 case StackEventTypes.STOP_NOK:
                 case StackEventTypes.STOP_OK:
                     this.screenService.SetProgressInfo(e.Phrase);
+                    if (this.sipService.SipStack.State == MySipStack.STACK_STATE.STOPPED)
+                    {
+                        this.screenService.HideAllExcept(ScreenType.Options | ScreenType.Authorizations);
+                        this.screenService.Show(ScreenType.Authentication, 0);
+                    }
                     break;
             }
         }
@@ -79,7 +84,7 @@ namespace BogheApp
                     this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_green_24);
 
                     // Sound alert
-                    this.soundService.PlayConnectionChanged(true);
+                    // this.soundService.PlayConnectionChanged(true);
 
                     break;
 
@@ -98,11 +103,11 @@ namespace BogheApp
                     this.screenService.SetProgressInfo("Signed Out");
 
                     // Screens
-                    //new Thread(delegate()
-                    //{
+                    if (this.sipService.SipStack.State == MySipStack.STACK_STATE.STOPPED)
+                    {
                         this.screenService.HideAllExcept(ScreenType.Options | ScreenType.Authorizations);
                         this.screenService.Show(ScreenType.Authentication, 0);
-                    //}).Start();
+                    }
 
                     // Menus
                     this.MenuItemFile_SignIn.IsEnabled = true;
@@ -119,7 +124,7 @@ namespace BogheApp
                     this.imageIndicatorConn.Source = MyImageConverter.FromBitmap(Properties.Resources.bullet_ball_glass_red_24);
 
                     // Sound alert
-                    this.soundService.PlayConnectionChanged(false);
+                    // this.soundService.PlayConnectionChanged(false);
                     break;
             }
         }
