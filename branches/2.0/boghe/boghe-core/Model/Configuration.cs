@@ -42,8 +42,8 @@ namespace BogheCore.Model
         public static String DEFAULT_NETWORK_IP_VERSION = "ipv4";
         public static bool DEFAULT_NETWORK_WIFI = true;
         public static bool DEFAULT_NETWORK_3G = false;
-        public static String DEFAULT_NETWORK_LOCAL_IP = String.Empty;
-        public static int DEFAULT_NETWORK_LOCAL_PORT = 0;
+        public static String DEFAULT_NETWORK_LOCAL_IP = "192.168.0.11";
+        public static int DEFAULT_NETWORK_LOCAL_PORT = 5060;
 
         public static bool DEFAULT_GENERAL_FULL_SCREEN_VIDEO = true;
         public static bool DEFAULT_GENERAL_FFC = true;
