@@ -242,6 +242,9 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_srtp_mode_t.cs">
       <Link>tmedia_srtp_mode_t.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_srtp_type_t.cs">
+      <Link>tmedia_srtp_type_t.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_t140_data_type_t.cs">
       <Link>tmedia_t140_data_type_t.cs</Link>
     </Compile>

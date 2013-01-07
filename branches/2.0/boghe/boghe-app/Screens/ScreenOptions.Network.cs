@@ -33,7 +33,7 @@ namespace BogheApp.Screens
             this.textBoxProxyHost.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_HOST, Configuration.DEFAULT_NETWORK_PCSCF_HOST);
             this.textBoxProxyPort.Text = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT, Configuration.DEFAULT_NETWORK_PCSCF_PORT.ToString());
             String transport = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT, Configuration.DEFAULT_NETWORK_TRANSPORT);
-            this.comboBoxTransport.SelectedIndex = transport.Equals("UDP") ? 0 : (transport.Equals("TCP") ? 1 : 2);
+            this.comboBoxTransport.SelectedIndex = transport.Equals("UDP") ? 0 : (transport.Equals("TCP") ? 1 : (transport.Equals("TLS") ? 2 : 3));
             this.checkBoxDiscoDNS.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS);
             this.checkBoxDiscoDHCP.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DHCP, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DHCP);
             this.checkBoxSigComp.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_NETWORK_SIGCOMP);

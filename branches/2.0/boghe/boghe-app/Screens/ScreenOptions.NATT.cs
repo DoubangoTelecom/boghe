@@ -31,6 +31,7 @@ namespace BogheApp.Screens
     {
         private void LoadNATT()
         {
+            this.checkBoxForceSymetricRtpEnabled.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_SYMETRIC_RTP, Configuration.DEFAULT_NATT_USE_SYMETRIC_RTP);
             this.checkBoxIceEnabled.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE);
             this.checkBoxStunTurnEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN);
             this.radioButtonStunDiscover.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, Configuration.DEFAULT_NATT_STUN_DISCO);
@@ -41,6 +42,7 @@ namespace BogheApp.Screens
 
         private bool UpdateNATT()
         {
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_SYMETRIC_RTP, this.checkBoxForceSymetricRtpEnabled.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, this.checkBoxIceEnabled.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, this.checkBoxStunTurnEnable.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, this.radioButtonStunDiscover.IsChecked.Value);
@@ -48,8 +50,9 @@ namespace BogheApp.Screens
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PORT, this.textBoxStunPort.Text);
 
             // STUN informaions are checked before each registration which means that we don't need to pass the config to the native part
-            // Pass ICE config to the native part
+            // Pass other configs to the native part
             MediaSessionMgr.defaultsSetIceEnabled(this.checkBoxIceEnabled.IsChecked.Value);
+            MediaSessionMgr.defaultsSetRtpSymetricEnabled(this.checkBoxForceSymetricRtpEnabled.IsChecked.Value);
 
             return true;
         }

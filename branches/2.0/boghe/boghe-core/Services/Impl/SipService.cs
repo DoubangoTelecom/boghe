@@ -220,6 +220,8 @@ namespace BogheCore.Services.Impl
             this.preferences.local_port = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.LOCAL_PORT,
                     Configuration.DEFAULT_NETWORK_LOCAL_PORT);
+            tmedia_srtp_type_t srtpType = (tmedia_srtp_type_t)Enum.Parse(typeof(tmedia_srtp_type_t), this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_TYPE, Configuration.DEFAULT_SECURITY_SRTP_TYPE), true);
+            this.preferences.dtls_srtp = ((srtpType & tmedia_srtp_type_t.tmedia_srtp_type_dtls) == tmedia_srtp_type_t.tmedia_srtp_type_dtls);
 
             LOG.Info(String.Format(
                     "realm='{0}', impu='{1}', impi='{2}', local_ip='{3}', local_port='{4}'", this.preferences.realm, this.preferences.impu, this.preferences.impi, this.preferences.local_ip, this.preferences.local_port));
@@ -347,20 +349,15 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
-            // Set TLS parameters
-            if ("tls".Equals(this.preferences.transport, StringComparison.InvariantCultureIgnoreCase))
+            // Set TLS parameters (used for both DTLS-SRTP and TLS)
+            String privKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PRIV_KEY_FILE, Configuration.DEFAULT_TLS_PRIV_KEY_FILE);
+            String pubKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, Configuration.DEFAULT_TLS_PUB_KEY_FILE);
+            String caKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, Configuration.DEFAULT_TLS_CA_FILE);
+
+            LOG.Debug(String.Format("TLS pubKey={0} privKey={1} caKey={2} dtls-strp={3}", privKey, pubKey, caKey, this.preferences.dtls_srtp));
+            if (!this.sipStack.setSSLCertificates(privKey, pubKey, caKey))
             {
-                String privKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PRIV_KEY_FILE, Configuration.DEFAULT_TLS_PRIV_KEY_FILE);
-                String pubKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, Configuration.DEFAULT_TLS_PUB_KEY_FILE);
-                String caKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, Configuration.DEFAULT_TLS_CA_FILE);
-                LOG.Debug(String.Format("TLS pubKey={0} privKey={1} caKey={2}", privKey, pubKey, caKey));
-                if (!String.IsNullOrEmpty(privKey) || !String.IsNullOrEmpty(pubKey) || !String.IsNullOrEmpty(caKey))
-                {
-                    if (!this.sipStack.setSSLCretificates(privKey, pubKey, caKey))
-                    {
-                        LOG.Error("Failed to set SSL certificates");
-                    }
-                }
+                LOG.Error("Failed to set SSL certificates");
             }
 
             // Set IPSec => only if TLS is disabled

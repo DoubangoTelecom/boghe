@@ -135,10 +135,17 @@ namespace BogheApp.Services.Impl
                 (tmedia_srtp_mode_t)Enum.Parse(typeof(tmedia_srtp_mode_t), this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_MODE, Configuration.DEFAULT_SECURITY_SRTP_MODE), true)
                 );
 
+            MediaSessionMgr.defaultsSetSRtpType(
+                (tmedia_srtp_type_t)Enum.Parse(typeof(tmedia_srtp_type_t), this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_TYPE, Configuration.DEFAULT_SECURITY_SRTP_TYPE), true)
+                );
+
             MediaSessionMgr.defaultsSetProfile(
                 (tmedia_profile_t)Enum.Parse(typeof(tmedia_profile_t), this.configurationService.Get(Configuration.ConfFolder.MEDIA, Configuration.ConfEntry.PROFILE, Configuration.DEFAULT_MEDIA_PROFILE), true)
                 );
 
+            MediaSessionMgr.defaultsSetRtpSymetricEnabled(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_SYMETRIC_RTP, Configuration.DEFAULT_NATT_USE_SYMETRIC_RTP)
+                );
             MediaSessionMgr.defaultsSetIceEnabled(
                 this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE)
                 );
