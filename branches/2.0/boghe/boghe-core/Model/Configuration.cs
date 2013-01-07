@@ -87,6 +87,7 @@ namespace BogheCore.Model
         public static String DEFAULT_IMSAKA_AMF = "0x0000";
         public static String DEFAULT_IMSAKA_OPID = "0x00000000000000000000000000000000";
         public static String DEFAULT_SECURITY_SRTP_MODE = org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_none.ToString();
+        public static String DEFAULT_SECURITY_SRTP_TYPE = org.doubango.tinyWRAP.tmedia_srtp_type_t.tmedia_srtp_type_sdes.ToString();
         public static String DEFAULT_SECURITY_IPSEC_ALGO = "hmac-md5-96";
         public static String DEFAULT_SECURITY_IPSEC_EALGO = "null";
         public static String DEFAULT_SECURITY_IPSEC_MODE = "trans";
@@ -97,6 +98,7 @@ namespace BogheCore.Model
         public static bool DEFAULT_NATT_HACK_AOR = false;
         public static bool DEFAULT_NATT_USE_STUN = false;
         public static bool DEFAULT_NATT_USE_ICE = false;
+        public static bool DEFAULT_NATT_USE_SYMETRIC_RTP = false;
         public static bool DEFAULT_NATT_STUN_DISCO = false;
         public static String DEFAULT_NATT_STUN_SERVER = "numb.viagenie.ca";
         public static int DEFAULT_NATT_STUN_PORT = 3478;
@@ -142,7 +144,7 @@ namespace BogheCore.Model
             AVATAR_PATH, BINARY_SMS, CONF_FACT, FREE_TEXT, HACK_SMS, HOME_PAGE, HYPERAVAILABILITY_TIMEOUT, IMDN, ISCOMOPING, MSRP_FAILURE, MSRP_SUCCESS, MWI, OMAFDR, PARTIAL_PUB, PRESENCE_PUB, PRESENCE_SUB, RLS, SMSC, STATUS,
 
             /* === SECURITY === */
-            TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, SRTP_MODE, IMSAKA_AMF, IMSAKA_OPID, IPSEC_SEC_AGREE, IPSEC_ALGO, IPSEC_EALGO, IPSEC_MODE, IPSEC_PROTO,
+            TLS_CA_FILE, TLS_PRIV_KEY_FILE, TLS_PUB_KEY_FILE, TLS_SEC_AGREE, SRTP_MODE, SRTP_TYPE, IMSAKA_AMF, IMSAKA_OPID, IPSEC_SEC_AGREE, IPSEC_ALGO, IPSEC_EALGO, IPSEC_MODE, IPSEC_PROTO,
 
             /* === SESSIONS === */
 
@@ -150,41 +152,10 @@ namespace BogheCore.Model
             CODECS, PROFILE,
 
             /* === NATT === */
-            HACK_AOR, HACK_AOR_TIMEOUT, USE_STUN, USE_ICE, STUN_DISCO, STUN_SERVER, STUN_PORT,
+            HACK_AOR, HACK_AOR_TIMEOUT, USE_STUN, USE_ICE, STUN_DISCO, STUN_SERVER, STUN_PORT, USE_SYMETRIC_RTP,
 
             /* === XCAP === */
             /* PASSWORD, */ ENABLED, XCAP_ROOT, USERNAME/*, TIMEOUT*/
-        }
-
-        const String SECURITY_SRTP_MODE_NONE = "None";
-        const String SECURITY_SRTP_MODE_OPTIONAL = "Optional";
-        const String SECURITY_SRTP_MODE_MANDATORY = "Mandatory";
-
-        static public String SRtpModeToString(org.doubango.tinyWRAP.tmedia_srtp_mode_t mode)
-        {
-            switch (mode)
-            {
-                case org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_mandatory:
-                    return Configuration.SECURITY_SRTP_MODE_MANDATORY;
-                case org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_optional:
-                    return Configuration.SECURITY_SRTP_MODE_OPTIONAL;
-                case org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_none:
-                default:
-                    return Configuration.SECURITY_SRTP_MODE_NONE;
-            }
-        }
-
-        static public org.doubango.tinyWRAP.tmedia_srtp_mode_t SRtpModeFromString(String mode)
-        {
-            if (Configuration.SECURITY_SRTP_MODE_MANDATORY.Equals(mode))
-            {
-                return org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_mandatory;
-            }
-            else if (Configuration.SECURITY_SRTP_MODE_OPTIONAL.Equals(mode))
-            {
-                return org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_optional;
-            }
-            return org.doubango.tinyWRAP.tmedia_srtp_mode_t.tmedia_srtp_mode_none;
         }
 
 

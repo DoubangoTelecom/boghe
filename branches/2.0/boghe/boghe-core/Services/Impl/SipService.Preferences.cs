@@ -44,6 +44,7 @@ namespace BogheCore.Services.Impl
             public String local_ip;
             public int local_port;
             public bool ipsec_secagree;
+            public bool dtls_srtp;
         }
     }
 }

@@ -188,38 +188,47 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelSecurityTitle" VerticalAlignment="Top" FontWeight="Bold">Security</Label>
-                    <GroupBox Height="143" Margin="6,39,6,0" Name="groupBox2" VerticalAlignment="Top">
+                    <GroupBox Height="129.48" Margin="6,39,6,0" Name="groupBox2" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock Text="{x:Static res:Strings.TabSecurity_TLSParams}" FontSize="14" FontWeight="Bold" Foreground="Black" />
                         </GroupBox.Header>
                         <Grid>
-                            <Label Content="{x:Static res:Strings.TabSecurity_PrivateFile}" Height="28" Margin="4,16,0,0" Name="labelTLSPrivateKey" VerticalAlignment="Top" HorizontalAlignment="Left" Width="87" />
-                            <TextBox Height="23" Margin="97,19,30,0" Name="textBoxTLSPrivateKey" VerticalAlignment="Top" IsReadOnly="True" BorderBrush="SkyBlue" />
-                            <Label Content="{x:Static res:Strings.TabSecurity_PublicFile}" Height="28" HorizontalAlignment="Left" Margin="4,47,0,0" Name="labelTLSPublicKey" VerticalAlignment="Top" Width="87" />
-                            <TextBox Height="23" Margin="97,50,30,0" Name="textBoxTLSPublicKey" VerticalAlignment="Top" IsReadOnly="True" BorderBrush="SkyBlue" />
-                            <Label Content="{x:Static res:Strings.TabSecurity_CertFile}" HorizontalAlignment="Left" Margin="4,78,0,0" Name="labelTLSCert" Width="87" Height="28.38" VerticalAlignment="Top" />
-                            <TextBox Margin="97,81,30,0" Name="textBoxTLSCert" Height="23.38" VerticalAlignment="Top" IsReadOnly="True" BorderBrush="SkyBlue" />
-                            <Button HorizontalAlignment="Right" Margin="0,19,5,0" Name="buttonTlsPrivateKey" VerticalAlignment="Top" BorderBrush="SkyBlue" Background="Transparent" Height="21.998" Width="21.998" Click="buttonTLS_Click">
+                            <Label Content="{x:Static res:Strings.TabSecurity_PrivateFile}" Height="28" Margin="4,8,0,0" Name="labelTLSPrivateKey" VerticalAlignment="Top" HorizontalAlignment="Left" Width="87" />
+                            <TextBox Height="23" Margin="97,11,52,0" Name="textBoxTLSPrivateKey" VerticalAlignment="Top" IsReadOnly="True" BorderBrush="SkyBlue" />
+                            <Label Content="{x:Static res:Strings.TabSecurity_PublicFile}" HorizontalAlignment="Left" Margin="4,39,0,0" Name="labelTLSPublicKey" Width="87" Height="28.38" VerticalAlignment="Top" />
+                            <TextBox Margin="97,42,52,0" Name="textBoxTLSPublicKey" IsReadOnly="True" BorderBrush="SkyBlue" Height="23.38" VerticalAlignment="Top" />
+                            <Label Content="{x:Static res:Strings.TabSecurity_CertFile}" HorizontalAlignment="Left" Margin="4,70,0,0" Name="labelTLSCert" Width="87" Height="28.38" VerticalAlignment="Top" />
+                            <TextBox Margin="97,73,52,0" Name="textBoxTLSCA" Height="23.38" VerticalAlignment="Top" IsReadOnly="True" BorderBrush="SkyBlue" />
+                            <Button HorizontalAlignment="Right" Margin="0,12,27,0" Name="buttonTlsPrivateKey" VerticalAlignment="Top" BorderBrush="SkyBlue" Background="Transparent" Height="21.998" Width="21.998" Click="buttonTLS_Click">
                                 <Image Source="/BogheApp;component/embedded/16/folder_view_16.png" Stretch="None" />
                             </Button>
-                            <Button Background="Transparent" BorderBrush="SkyBlue" Height="21.998" HorizontalAlignment="Right" Margin="0,51,4,0" Name="buttonTLSPublicKey" VerticalAlignment="Top" Width="21.998" Click="buttonTLS_Click">
+                            <Button Background="Transparent" BorderBrush="SkyBlue" HorizontalAlignment="Right" Margin="0,42,26,0" Name="buttonTLSPublicKey" Width="21.998" Click="buttonTLS_Click" Height="22.38" VerticalAlignment="Top">
                                 <Image Source="/BogheApp;component/embedded/16/folder_view_16.png" Stretch="None" />
                             </Button>
-                            <Button Background="Transparent" BorderBrush="SkyBlue" HorizontalAlignment="Right" Margin="0,81,4,0" Name="buttonTLSCert" Width="21.998" Height="22.38" VerticalAlignment="Top" Click="buttonTLS_Click">
+                            <Button Background="Transparent" BorderBrush="SkyBlue" HorizontalAlignment="Right" Margin="0,73,25,0" Name="buttonTLSCert" Width="21.998" Height="22.38" VerticalAlignment="Top" Click="buttonTLS_Click">
                                 <Image Source="/BogheApp;component/embedded/16/folder_view_16.png" Stretch="None" />
+                            </Button>
+                            <Button Background="Transparent" BorderBrush="SkyBlue" Height="21.998" HorizontalAlignment="Right" Margin="0,12.002,2,0" Name="buttonTlsPrivateKey_Clear" VerticalAlignment="Top" Width="21.998"  Click="buttonTLS_Click">
+                                <Image Source="/BogheApp;component/embedded/16/clear_16.png" Stretch="None" />
+                            </Button>
+                            <Button Background="Transparent" BorderBrush="SkyBlue" HorizontalAlignment="Right" Margin="0,42,1,0" Name="buttonTLSPublicKey_Clear" Width="21.998"  Click="buttonTLS_Click" Height="21.86" VerticalAlignment="Top">
+                                <Image Source="/BogheApp;component/embedded/16/clear_16.png" Stretch="None" />
+                            </Button>
+                            <Button Background="Transparent" BorderBrush="SkyBlue" Height="21.998" HorizontalAlignment="Right" Margin="0,73.862,0,0" Name="buttonTLSCert_Clear" VerticalAlignment="Top" Width="21.998"  Click="buttonTLS_Click">
+                                <Image Source="/BogheApp;component/embedded/16/clear_16.png" Stretch="None" />
                             </Button>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Margin="7,0,5,10" Name="groupBox3" Height="185" VerticalAlignment="Bottom">
+                    <GroupBox Margin="7,277,5,4" Name="groupBox3">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabSecurity_IPSecParams}" />
                         </GroupBox.Header>
                         <Grid>
-                            <Label Content="{x:Static res:Strings.TabSecurity_Algorithm}" Height="28" Margin="22,35,114,0" Name="labelIPSecAlgorithm" VerticalAlignment="Top" />
-                            <Label Content="{x:Static res:Strings.TabSecurity_Mode}" Margin="22,92,115,0" Name="labelIPSecMode" Height="28.38" VerticalAlignment="Top" />
-                            <Label Content="{x:Static res:Strings.TabSecurity_Protocol}" Height="28.38" Margin="22,119,114,0" Name="labelIPSecProtocol" VerticalAlignment="Top" />
-                            <Label Content="{x:Static res:Strings.TabSecurity_EAlgorithm}" Margin="22,65,114,0" Name="labelIPSecEAlgorithm" Height="28.38" VerticalAlignment="Top" />
-                            <ComboBox Height="23" Margin="137,36,7,0" Name="comboBoxIPSecAlgorithm" VerticalAlignment="Top" IsEnabled="False">
+                            <Label Content="{x:Static res:Strings.TabSecurity_Algorithm}" Height="28" Margin="22,29,114,0" Name="labelIPSecAlgorithm" VerticalAlignment="Top" />
+                            <Label Content="{x:Static res:Strings.TabSecurity_Mode}" Margin="22,86,115,0" Name="labelIPSecMode" Height="28.38" VerticalAlignment="Top" />
+                            <Label Content="{x:Static res:Strings.TabSecurity_Protocol}" Height="28.38" Margin="22,113,114,0" Name="labelIPSecProtocol" VerticalAlignment="Top" />
+                            <Label Content="{x:Static res:Strings.TabSecurity_EAlgorithm}" Margin="22,59,114,0" Name="labelIPSecEAlgorithm" Height="28.38" VerticalAlignment="Top" />
+                            <ComboBox Height="23" Margin="0,30,7,0" Name="comboBoxIPSecAlgorithm" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Right" Width="101.477">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0"/>
@@ -229,7 +238,7 @@
                                 <ComboBoxItem Name="hmac_sha_1_96" Tag="hmac-sha-1-96">hmac-sha-1-96</ComboBoxItem>
                                 <ComboBoxItem Name="hmac_md5_96" Tag="hmac-md5-96">hmac-md5-96</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Margin="137,65,7,0" Name="comboBoxIPSecEAlgorithm" Height="23.38" VerticalAlignment="Top" IsEnabled="False">
+                            <ComboBox Margin="0,59,7,0" Name="comboBoxIPSecEAlgorithm" IsEnabled="False" HorizontalAlignment="Right" Width="101.477" Height="23.38" VerticalAlignment="Top">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -240,7 +249,7 @@
                                 <ComboBoxItem Name="aes" Tag="aes">aes</ComboBoxItem>
                                 <ComboBoxItem Name="null" Tag="null">null</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Margin="137,94,7,0" Name="comboBoxIPSecMode" Height="22.38" VerticalAlignment="Top" IsEnabled="False">
+                            <ComboBox Margin="0,88,7,0" Name="comboBoxIPSecMode" Height="22.38" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Right" Width="101.477">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -249,7 +258,7 @@
                                 </ComboBox.Background>
                                 <ComboBoxItem Name="trans" Tag="trans">trans</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Height="22.38" Margin="137,123,7,0" Name="comboBoxIPSecProtocol" VerticalAlignment="Top" IsEnabled="False">
+                            <ComboBox Height="22.38" Margin="0,117,7,0" Name="comboBoxIPSecProtocol" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Right" Width="101.477">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -262,7 +271,7 @@
                             <CheckBox Content="{x:Static res:Strings.TabSecurity_EnableIPSec}" Height="16" Margin="6,9,9,0" Name="checkBoxIPSecSecAgreeEnabled" VerticalAlignment="Top" IsEnabled="False" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Margin="8,190,4,206" Name="groupBox6">
+                    <GroupBox Margin="8,174,4,0" Name="groupBox6" Height="97" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabSecurity_SRTPParams}" />
                         </GroupBox.Header>
@@ -276,6 +285,15 @@
                                     </LinearGradientBrush>
                                 </ComboBox.Background>
                             </ComboBox>
+                            <ComboBox Margin="67,43,9,0" Name="comboBoxSRTPTypes" Height="23.38" VerticalAlignment="Top">
+                                <ComboBox.Background>
+                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                        <GradientStop Color="SkyBlue" Offset="0" />
+                                        <GradientStop Color="White" Offset="0.567" />
+                                    </LinearGradientBrush>
+                                </ComboBox.Background>
+                            </ComboBox>
+                            <Label Content="{x:Static res:Strings.TabSecurity_Type}" HorizontalAlignment="Left" Margin="10,39,0,0" Width="54" Height="32.38" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -535,7 +553,7 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Content="{x:Static res:Strings.TabNATT_Title}" Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNatTraversalTitle" VerticalAlignment="Top" FontWeight="Bold" />
-                    <GroupBox Margin="7,114,5,164" Name="groupBox5">
+                    <GroupBox Margin="7,141,5,137" Name="groupBox5">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabNATT_STUNTURN}" />
                         </GroupBox.Header>
@@ -549,7 +567,7 @@
                             <ctrl:NumericTextBox Height="23" Margin="108,113.38,0,0" Name="textBoxStunPort" VerticalAlignment="Top" HorizontalAlignment="Left" Width="51.477" IsEnabled="False" BorderBrush="SkyBlue" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Margin="6,42,6,0" Name="groupBoxICE" Height="55" VerticalAlignment="Top">
+                    <GroupBox Margin="6,69,6,0" Name="groupBoxICE" Height="55" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="ICE" />
                         </GroupBox.Header>
@@ -557,6 +575,7 @@
                             <CheckBox Content="Enable ICE" Height="16" Margin="7,6,6,0" Name="checkBoxIceEnabled" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
+                    <CheckBox Height="16" Margin="6,41,11,0" Name="checkBoxForceSymetricRtpEnabled" VerticalAlignment="Top">Force Symetric RTP</CheckBox>
                 </Grid>
             </TabItem>
         </TabControl>

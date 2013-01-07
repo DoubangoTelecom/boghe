@@ -696,4 +696,7 @@
   <data name="TabGeneral_Profile" xml:space="preserve">
     <value>Media Profile</value>
   </data>
+  <data name="TabSecurity_Type" xml:space="preserve">
+    <value>Type:</value>
+  </data>
 </root>
