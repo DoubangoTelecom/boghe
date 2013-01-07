@@ -463,7 +463,7 @@ namespace BogheCore.Services.Impl
                         // Do PostRegistrationOp() in new thread to avoid blocking callbacks
                         new Thread(new ThreadStart(delegate
                         {
-                            // this.sipService.DoPostRegistrationOp();
+                            this.sipService.DoPostRegistrationOp();
                         }))
                         .Start();
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService, 
