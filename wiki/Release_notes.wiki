@@ -3,7 +3,7 @@
 
 <wiki:toc max_depth="2" />
 
-==2.0.132.807==
+==2.0.132.808==
  * Align with Doubango 807
  * First version implementing all required feature to talk directly to Firefox Nightly
 
