@@ -4,14 +4,14 @@
 <wiki:toc max_depth="2" />
 
 ==2.0.132.807==
- - Align with Doubango 807
- - First version implementing all required feature to talk directly to Firefox Nightly
+ * Align with Doubango 807
+ * First version implementing all required feature to talk directly to Firefox Nightly
 
 ==2.0.130.804==
- - Align with Doubango 804
- - Adds support for DTLS-SRTP (rfc5763 and rfc5764)
- - Complete support for rfc5939
- - and many other bug fix
+ * Align with Doubango 804
+ * Adds support for DTLS-SRTP (rfc5763 and rfc5764)
+ * Complete support for rfc5939
+ * and many other bug fix
 
 ==2.0.121.757==
  * Align with Doubango 757 (check doubango release note for more information about bug fix)
