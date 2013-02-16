@@ -25,6 +25,7 @@ Building *Boghe SIP Video Client* for Windows Phone 8 is as easy as installing t
 Please don't forget to change the CPU type (x86, WIN32, ARM) depending on your target type (Emulator or Device).
 
 ==Technical help==
-Please check our [http://code.google.com/p/webrtc2sip/issues/list issue tracker] or [https://groups.google.com/group/doubango developer group] if you have any problem.
+Please check our [http://code.google.com/p/webrtc2sip/issues/list issue tracker] or [https://groups.google.com/group/doubango developer group] if you have any problem. <br />
+Please also note that there are known issues on the emulator (network and video) which means we will only provide support for people developing on a real device.
 
 For more information about third-parties libraries, please visit [http://code.google.com/p/doubango/wiki/Licensing this page].
