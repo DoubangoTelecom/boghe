@@ -18,7 +18,8 @@ Please note that Boghe v2.x requires [http://code.google.com/p/doubango/ Doubang
 After the installation you should add both the *lib* and *include* folders to the visual studio search paths like this:
  * Open "Tools -> Options -> Projects and Solutions -> VC++ Directories -> Include Files" and add *$(WindowsSdkDir)\include* and *$(DXSDK_DIR)include*
  * Open "Tools -> Options -> Projects and Solutions -> VC++ Directories -> Library Files" and add *$(WindowsSdkDir)\lib* and *$(DXSDK_DIR)lib\x86*
-Please note that for old Platform SDK the varenv name is *PSDK_DIR* instead of *WindowsSdkDir* and it's highly recommended to restart your PC after DirectX SDK installation.
+Please note that for old Platform SDK the varenv name is *PSDK_DIR* instead of *WindowsSdkDir*.
+It's highly recommended to restart your PC after DirectX SDK installation.
 
 == Building the source code ==
  * Create new directory named *myboghe*
