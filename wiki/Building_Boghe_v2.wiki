@@ -1,10 +1,11 @@
-#summary Building Boghe v2.x
+#summary Building Boghe v2.x (Windows Desktop)
 #labels Featured,Phase-Implementation
 
 <wiki:toc max_depth="3" />
+This wiki page is for Windows Desktop (XP, Vista, 7 and 8).
 
 To build the source code you need Visual Studio 2008 or later with the .NET Framework 3.5 *SP1*.<br />
-Please note that Boghe v2.x requires Doubango v2.x <br />
+Please note that Boghe v2.x requires [http://code.google.com/p/doubango/ Doubango v2.x] <br />
 
 == Supported systems ==
  * Windows XP SP3 with .NET Framework 3.5 *SP1*
