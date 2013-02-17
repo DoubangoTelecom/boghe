@@ -167,7 +167,7 @@ namespace BogheApp.Screens
             MediaSessionMgr.defaultsSetSRtpType(srtpType);
             if (this.sipService.SipStack != null)
             {
-                this.sipService.SipStack.setSSLCertificates(this.textBoxTLSPrivateKey.Text, this.textBoxTLSPublicKey.Text, this.textBoxTLSCA.Text);
+                this.sipService.SipStack.WrappedStack.setSSLCertificates(this.textBoxTLSPrivateKey.Text, this.textBoxTLSPublicKey.Text, this.textBoxTLSCA.Text);
             }
 
             return true;

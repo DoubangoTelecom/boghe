@@ -26,6 +26,10 @@ using org.doubango.tinyWRAP;
 using log4net;
 using BogheCore.Utils;
 
+#if WINRT
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+#endif
+
 namespace BogheCore.Sip
 {
     public abstract class MySipSession : IComparable<MySipSession>, IEquatable<MySipSession>, IDisposable
@@ -42,6 +46,7 @@ namespace BogheCore.Sip
         protected String remotePartyDisplayName = null;
         protected String remotePartyUserName = null;
         protected long id = -1;
+        protected bool m_Disposed;
 
         public MySipSession(MySipStack sipStack)
         {
@@ -84,7 +89,11 @@ namespace BogheCore.Sip
             get { return this.fromUri; }
             set
             {
+#if WINDOWS_PHONE
+                if (!this.Session.setFromUri(org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtSipUriNew(value)))
+#else
                 if (!this.Session.setFromUri(value))
+#endif
                 {
                     LOG.Error(String.Format("{0} is invalid for as FromUri", value));
                     return;
@@ -98,7 +107,11 @@ namespace BogheCore.Sip
             get { return this.toUri; }
             set
             {
+#if WINDOWS_PHONE
+                if (!this.Session.setToUri(org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtSipUriNew(value)))
+#else
                 if (!this.Session.setToUri(value))
+#endif
                 {
                     LOG.Error(String.Format("{0} is invalid for as toUri", value));
                     return;
@@ -168,7 +181,26 @@ namespace BogheCore.Sip
 
         public void Dispose()
         {
-            this.Session.Dispose();
+            if (!m_Disposed)
+            {
+#if WINDOWS_PHONE
+                try
+                {
+#endif
+                    if (this.Session is IDisposable)
+                    {
+                        (this.Session as IDisposable).Dispose();
+                    }
+#if WINDOWS_PHONE
+                }
+                //  This operation failed because the QueryInterface call on the COM component for the interface with IID
+                catch (InvalidCastException e)
+                {
+                    LOG.Error(e);
+                }
+#endif
+                m_Disposed = true;
+            }
         }
 
         public virtual void PreDispose()
@@ -180,13 +212,18 @@ namespace BogheCore.Sip
             get;
         }
 
+        protected bool Disposed
+        {
+            get { return m_Disposed; }
+        }
+
         protected void init()
         {
             // Sip Expires
             //this.Session.setExpires(this.configurationService.getInt(CONFIGURATION_SECTION.QOS, CONFIGURATION_ENTRY.SIP_SESSIONS_TIMEOUT, Configuration.DEFAULT_QOS_SIP_SESSIONS_TIMEOUT));
             
             // Sip Headers (common to all sessions)
-            this.Session.addCaps("+g.oma.sip-im");
+            this.Session.addCaps("+g.oma.sip-im", BogheCore.Utils.StringUtils.nullptr);
             this.Session.addCaps("language", "\"en,fr\"");
         }
 

@@ -26,7 +26,10 @@ using org.doubango.tinyWRAP;
 using System.Runtime.InteropServices;
 using BogheCore.Sip.Events;
 using BogheCore.Events;
-
+#if WINRT
+using T140CallbackData = doubango_rt.BackEnd.rtT140CallbackData;
+using tmedia_t140_data_type_t = doubango_rt.BackEnd.rt_tmedia_t140_data_type_t;
+#endif
 namespace BogheCore.Sip
 {
     partial class MyAVSession
@@ -40,7 +43,7 @@ namespace BogheCore.Sip
             {
                 mSession = session;
             }
-
+#if !WINRT
             public override int  ondata(T140CallbackData pData)
             {
                 tmedia_t140_data_type_t pDataType = pData.getType();
@@ -78,6 +81,7 @@ namespace BogheCore.Sip
 
                 return 0;
             }
+#endif
         }
     }
 }

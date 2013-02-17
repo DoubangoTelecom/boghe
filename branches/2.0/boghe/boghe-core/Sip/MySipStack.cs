@@ -24,10 +24,13 @@ using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
 using BogheCore.Services;
+#if WINRT
+using SipStack = doubango_rt.BackEnd.rtSipStack;
+#endif
 
 namespace BogheCore.Sip
 {
-    public class MySipStack : SipStack
+    public class MySipStack : IDisposable
     {
         public enum STACK_STATE {
 		    NONE, STARTING, STARTED, STOPPING, STOPPED
@@ -39,25 +42,41 @@ namespace BogheCore.Sip
         private String userAgent;
         private String pAccessNetworkInfo;
         private ISipService mSipService;
+        private readonly SipStack mSipStack;  
 
         public MySipStack(SipCallback callback, String realmUri, String impiUri, String impuUri)
-            : base(callback, realmUri, impiUri, impuUri)
         {
-
+#if WINDOWS_PHONE
+            mSipStack = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtSipStackNew(callback, realmUri, impiUri, impuUri);
+#else
+            mSipStack = new SipStack(callback, realmUri, impiUri, impuUri);
+#endif
              // Sip headers
-		    this.addHeader("Allow", "INVITE, ACK, CANCEL, BYE, MESSAGE, OPTIONS, NOTIFY, PRACK, UPDATE, REFER");
-		    this.addHeader("Privacy", "none");
-		    this.addHeader("P-Access-Network-Info", "ADSL;utran-cell-id-3gpp=00000000");
-		    this.addHeader("User-Agent", String.Format("IM-client/OMA1.0 Boghe/v{0}",
-                    System.Reflection.Assembly.GetEntryAssembly().GetName().Version));
-
+            mSipStack.addHeader("Allow", "INVITE, ACK, CANCEL, BYE, MESSAGE, OPTIONS, NOTIFY, PRACK, UPDATE, REFER");
+            mSipStack.addHeader("Privacy", "none");
+            mSipStack.addHeader("P-Access-Network-Info", "ADSL;utran-cell-id-3gpp=00000000");
+            mSipStack.addHeader("User-Agent", String.Format("IM-client/OMA1.0 Boghe-{0}/v{1}",
+#if WINRT
+                "WinRT"
+#else
+                "Win32"
+#endif
+                    ,System.Reflection.Assembly.GetExecutingAssembly().GetName().Version));
         }
 
-        public override void Dispose()
+        public SipStack WrappedStack
+        {
+            get { return mSipStack; }
+        }
+
+        public void Dispose()
         {
             // To avoid usage from other external stacks (e.g. HTTP, ...)
-            this.setDebugCallback(null);
-            //base.Dispose();
+            mSipStack.setDebugCallback(null);
+            if (mSipStack != null)
+            {
+                mSipStack.Dispose();
+            }
         }
 
         public ISipService SipService
@@ -78,7 +97,7 @@ namespace BogheCore.Sip
             set
             {
                 this.privacy = value;
-                this.addHeader("Privacy", value);
+                mSipStack.addHeader("Privacy", value);
             }
         }
 
@@ -88,7 +107,7 @@ namespace BogheCore.Sip
             set
             {
                 this.userAgent = value;
-                this.addHeader("User-Agent", value);
+                mSipStack.addHeader("User-Agent", value);
             }
         }
 
@@ -98,7 +117,7 @@ namespace BogheCore.Sip
             set
             {
                 this.pAccessNetworkInfo = value;
-                this.addHeader("P-Access-Network-Info", value);
+                mSipStack.addHeader("P-Access-Network-Info", value);
             }
         }
 
@@ -109,11 +128,11 @@ namespace BogheCore.Sip
             {
                 if (this.compId != null && this.compId != value)
                 {
-                    this.removeSigCompCompartment(this.compId);
+                    mSipStack.removeSigCompCompartment(this.compId);
                 }
                 if ((this.compId = value) != null)
                 {
-                    this.addSigCompCompartment(this.compId);
+                    mSipStack.addSigCompCompartment(this.compId);
                 }
             }
         }

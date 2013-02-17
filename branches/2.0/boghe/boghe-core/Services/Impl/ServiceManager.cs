@@ -49,20 +49,28 @@ namespace BogheCore.Services.Impl
             get;
         }
         
+#if WINDOWS_PHONE
+        public abstract doubango_rt.BackEnd.SipService SipService
+        {
+            get;
+        }
+#else
         public abstract ISipService SipService
         {
             get;
         }
+#endif
 
         public abstract IContactService ContactService
         {
             get;
         }
-
+#if !WINRT
         public abstract IXcapService XcapService
         {
             get;
         }
+#endif
 
         public abstract IHistoryService HistoryService
         {

@@ -27,6 +27,14 @@ using System.IO;
 using BogheCore.Events;
 using BogheCore.Sip.Events;
 using System.Runtime.InteropServices;
+#if WINRT
+using MsrpEvent = doubango_rt.BackEnd.rtMsrpEvent;
+using MsrpMessage = doubango_rt.BackEnd.rtMsrpMessage;
+using tmsrp_request_type_t = doubango_rt.BackEnd.rt_tmsrp_request_type_t;
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+
+using tmsrp_event_type_t = doubango_rt.BackEnd.rt_tmsrp_event_type_t;
+#endif
 
 namespace BogheCore.Sip
 {
@@ -39,12 +47,20 @@ namespace BogheCore.Sip
             private IntPtr tempBufferPtr;
             private MemoryStream chatStream;
             private String contentType;
-            private String wContentType;
+            private String wContentType = null;
+#if WINRT
+            IntPtr mStart, mEnd, mTotal;
+#endif
 
             internal MyMsrpCallback(MyMsrpSession session)
                 : base()
             {
                 this.session = session;
+#if WINRT
+                mStart = Marshal.AllocHGlobal(sizeof(Int64));
+                mEnd = Marshal.AllocHGlobal(sizeof(Int64));
+                mTotal = Marshal.AllocHGlobal(sizeof(Int64));
+#endif
             }
 
             public override void Dispose()
@@ -58,6 +74,11 @@ namespace BogheCore.Sip
                     Marshal.FreeHGlobal(this.tempBufferPtr);
                     this.tempBufferPtr = IntPtr.Zero;
                 }
+#if WINRT
+                Marshal.FreeHGlobal(mStart);
+                Marshal.FreeHGlobal(mEnd);
+                Marshal.FreeHGlobal(mTotal);
+#endif
             }
 
             private bool AppenData(byte[] data, uint len)
@@ -108,7 +129,21 @@ namespace BogheCore.Sip
                     if (this.session.MediaType == MediaType.FileTransfer)
                     {
                         long start = -1, end = -1, total = -1;
+#if WINRT
+#if WINDOWS_PHONE
+                        doubango_rt.BackEnd.rtMsrpByteRange byteRange = message.getByteRange();
+                        start = byteRange.Start;
+                        end = byteRange.End;
+                        total = byteRange.Total;
+#else
+                        message.getByteRange(mStart, mEnd, mTotal);
+                        start = Marshal.ReadInt64(mStart);
+                        end = Marshal.ReadInt64(mEnd);
+                        total = Marshal.ReadInt64(mTotal);
+#endif
+#else
                         message.getByteRange(out start, out end, out total);
+#endif
                         MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.SUCCESS_2XX);
                         eargs.AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_START, start)
                             .AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_END, end)
@@ -145,7 +180,9 @@ namespace BogheCore.Sip
 
                             if (this.tempBuffer == null || this.tempBufferPtr == IntPtr.Zero || this.tempBuffer.Length < clen)
                             {
+#if !WINDOWS_PHONE
                                 this.tempBuffer = new byte[(int)clen];
+#endif
                                 if (this.tempBufferPtr != IntPtr.Zero)
                                 {
                                     Marshal.FreeHGlobal(this.tempBufferPtr);
@@ -153,13 +190,19 @@ namespace BogheCore.Sip
                                 this.tempBufferPtr = Marshal.AllocHGlobal((int)clen);
                             }
 
+#if WINDOWS_PHONE
+                            this.tempBuffer = Encoding.UTF8.GetBytes(message.getMsrpContent(clen));
+                            read = (uint)this.tempBuffer.Length;
+#else
                             read = message.getMsrpContent(this.tempBufferPtr, (uint)this.tempBuffer.Length);
                             Marshal.Copy(this.tempBufferPtr, this.tempBuffer, 0, this.tempBuffer.Length);
+#endif
                             if (message.isFirstChunck())
                             {
                                 this.contentType = message.getMsrpHeaderValue("Content-Type");
                                 if (!String.IsNullOrEmpty(contentType) && contentType.StartsWith(ContentType.CPIM, StringComparison.InvariantCultureIgnoreCase))
                                 {
+#if !WINRT
                                     MediaContentCPIM mediaContent = MediaContent.parse(this.tempBufferPtr, read);
                                     Marshal.Copy(this.tempBufferPtr, this.tempBuffer, 0, this.tempBuffer.Length);
                                     if (mediaContent != null)
@@ -169,6 +212,7 @@ namespace BogheCore.Sip
                                         read = (uint)this.tempBuffer.Length;
                                         mediaContent.Dispose(); // Hi GC, I want my memory right now
                                     }
+#endif
                                 }
                             }
                              
@@ -178,7 +222,21 @@ namespace BogheCore.Sip
                             if (this.session.MediaType == MediaType.FileTransfer)
                             {
                                 long start = -1, end = -1, total = -1;
+#if WINRT
+#if WINDOWS_PHONE
+                                doubango_rt.BackEnd.rtMsrpByteRange byteRange = message.getByteRange();
+                                start = byteRange.Start;
+                                end = byteRange.End;
+                                total = byteRange.Total;
+#else
+                                message.getByteRange(mStart, mEnd, mTotal);
+                                start = Marshal.ReadInt64(mStart);
+                                end = Marshal.ReadInt64(mEnd);
+                                total = Marshal.ReadInt64(mTotal);
+#endif
+#else
                                 message.getByteRange(out start, out end, out total);
+#endif
                                 MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, MsrpEventTypes.DATA);
                                 eargs.AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_START, start)
                                     .AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_END, end)
@@ -222,7 +280,21 @@ namespace BogheCore.Sip
                             if (this.session.MediaType == MediaType.FileTransfer)
                             {
                                 long start = -1, end = -1, total = -1;
+#if WINRT
+#if WINDOWS_PHONE
+                                doubango_rt.BackEnd.rtMsrpByteRange byteRange = message.getByteRange();
+                                start = byteRange.Start;
+                                end = byteRange.End;
+                                total = byteRange.Total;
+#else
+                                message.getByteRange(mStart, mEnd, mTotal);
+                                start = Marshal.ReadInt64(mStart);
+                                end = Marshal.ReadInt64(mEnd);
+                                total = Marshal.ReadInt64(mTotal);
+#endif
+#else
                                 message.getByteRange(out start, out end, out total);
+#endif
                                 bool isSuccessReport = message.isSuccessReport();
                                 MsrpEventArgs eargs = new MsrpEventArgs(this.session.Id, isSuccessReport ? MsrpEventTypes.SUCCESS_REPORT : MsrpEventTypes.FAILURE_REPORT);
                                 eargs.AddExtra(MsrpEventArgs.EXTRA_BYTE_RANGE_START, start)

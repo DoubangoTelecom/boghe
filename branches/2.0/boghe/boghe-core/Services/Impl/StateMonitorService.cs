@@ -42,7 +42,11 @@ namespace BogheCore.Services.Impl
             return true;
         }
 
+#if WINDOWS_PHONE
+        public bool Stop(bool bEnteringBackground)
+#else
         public bool Stop()
+#endif
         {
             this.ClearStates();
             return true;

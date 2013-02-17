@@ -18,21 +18,26 @@
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BogheCore.Xcap.Events;
 using BogheCore.Sip;
 using BogheCore.Model;
 using BogheCore.Events;
+#if !WINRT
+using BogheCore.Xcap.Events;
+#endif
 
 namespace BogheCore.Services.Impl
 {
     partial class SipService
     {
+
         private MySubscriptionSession FindSubscription(long id)
         {
+#if !WINRT
             if (this.subReg != null && this.subReg.Id == id)
             {
                 return this.subReg;
@@ -52,10 +57,12 @@ namespace BogheCore.Services.Impl
             {
                 return this.subRLS;
             }
+#endif
 
-            return this.subPresence.FirstOrDefault(x => x.Id == id);
+            return this.mSubPresence.FirstOrDefault(x => x.Id == id);
         }
 
+#if !WINRT
         private bool SubscribeToRegInfo()
         {
             LOG.Debug("Subscribe to 'reg' event package");
@@ -102,7 +109,7 @@ namespace BogheCore.Services.Impl
 
             if (this.subWinfo == null)
             {
-                this.subWinfo = new MySubscriptionSession(this.sipStack, this.DefaultIdentity, MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO);
+                this.subWinfo = new MySubscriptionSession(this.SipStack, this.DefaultIdentity, MySubscriptionSession.EVENT_PACKAGE_TYPE.WINFO);
             }
             else
             {
@@ -124,7 +131,7 @@ namespace BogheCore.Services.Impl
 
             if (this.subRLS == null)
             {
-                this.subRLS = new MySubscriptionSession(this.sipStack, this.xcapService.RLSPresUri, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE_LIST);
+                this.subRLS = new MySubscriptionSession(this.SipStack, this.xcapService.RLSPresUri, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE_LIST);
             }
             else
             {
@@ -139,7 +146,7 @@ namespace BogheCore.Services.Impl
         {
             if (this.pubPres == null)
             {
-                this.pubPres = new MyPublicationSession(this.sipStack, this.DefaultIdentity);
+                this.pubPres = new MyPublicationSession(this.SipStack, this.DefaultIdentity);
             }
             else
             {
@@ -210,7 +217,7 @@ namespace BogheCore.Services.Impl
                     break;
             }
         }
-
+#endif // !WINRT
         private void contactService_onContactEvent(object sender, ContactEventArgs e)
         {
             if (!this.IsSubscriptionEnabled || this.IsSubscriptionToRLSEnabled)
@@ -222,38 +229,38 @@ namespace BogheCore.Services.Impl
             {
                 case ContactEventTypes.CONTACT_ADDED:
                     {
-                        MySubscriptionSession session = new MySubscriptionSession(this.sipStack,  (e.GetExtra(ContactEventArgs.EXTRA_CONTACT) as Contact).UriString, 
+                        MySubscriptionSession session = new MySubscriptionSession(mSipStack,  (e.GetExtra(ContactEventArgs.EXTRA_CONTACT) as Contact).UriString, 
                             MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE);
-                        this.subPresence.Add(session);
+                        this.mSubPresence.Add(session);
                         session.Subscribe();
                         break;
                     }
 
                 case ContactEventTypes.CONTACT_REMOVED:
                     {
-                        MySubscriptionSession session = this.subPresence.FirstOrDefault(x => String.Equals(x.ToUri, (e.GetExtra(ContactEventArgs.EXTRA_CONTACT) as Contact).UriString));
+                        MySubscriptionSession session = this.mSubPresence.FirstOrDefault(x => String.Equals(x.ToUri, (e.GetExtra(ContactEventArgs.EXTRA_CONTACT) as Contact).UriString));
                         if (session != null)
                         {
                             if (session.IsConnected)
                             {
                                 session.UnSubscribe();
                             }
-                            this.subPresence.Remove(session);
+                            this.mSubPresence.Remove(session);
                         }
                         break;
                     }
 
                 case ContactEventTypes.RESET:
                     {
-                        this.subPresence.ForEach(x=>
+                        this.mSubPresence.ForEach(x=>
                         {
                             if (x.IsConnected) x.UnSubscribe();
                         });
 
                         foreach (Contact contact in this.contactService.Contacts)
                         {
-                            MySubscriptionSession session = new MySubscriptionSession(this.sipStack, contact.UriString, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE);
-                            this.subPresence.Add(session);
+                            MySubscriptionSession session = new MySubscriptionSession(mSipStack, contact.UriString, MySubscriptionSession.EVENT_PACKAGE_TYPE.PRESENCE);
+                            this.mSubPresence.Add(session);
                             session.Subscribe();
                         }
                         break;

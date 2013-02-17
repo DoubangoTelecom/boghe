@@ -23,6 +23,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+#if WINRT
+using twrap_media_type_t = doubango_rt.BackEnd.rt_twrap_media_type_t;
+#endif
 
 namespace BogheCore
 {

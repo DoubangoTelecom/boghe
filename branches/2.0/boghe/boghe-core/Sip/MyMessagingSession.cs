@@ -25,6 +25,10 @@ using System.Text;
 using org.doubango.tinyWRAP;
 using BogheCore.Utils;
 using log4net;
+#if WINRT
+using MessagingSession = doubango_rt.BackEnd.rtMessagingSession;
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+#endif
 
 namespace BogheCore.Sip
 {
@@ -33,12 +37,18 @@ namespace BogheCore.Sip
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MyMessagingSession));
 
         private readonly MessagingSession session;
+#if !WINRT
         private static int SMS_MR = 0;
+#endif
 
         public MyMessagingSession(MySipStack sipStack, String toUri)
             : base(sipStack)
         {
-            this.session = new MessagingSession(sipStack);
+#if WINDOWS_PHONE
+            this.session = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtMessagingSessionNew(sipStack.WrappedStack);
+#else
+            this.session = new MessagingSession(sipStack.WrappedStack);
+#endif
 
             // commons
             base.init();
@@ -53,7 +63,7 @@ namespace BogheCore.Sip
         {
             get { return this.session; }
         }
-
+#if !WINRT
         public bool SendBinaryMessage(String text, String SMSC)
         {
             String SMSCPhoneNumber;
@@ -91,12 +101,27 @@ namespace BogheCore.Sip
                 return this.SendTextMessage(text);
             }
         }
+#endif
 
         public bool SendTextMessage(String text, String contentType)
         {
             this.session.addHeader("Content-Type", String.IsNullOrEmpty(contentType) ? ContentType.TEXT_PLAIN : contentType);
+#if !WINDOWS_PHONE
             byte[] payload = Encoding.UTF8.GetBytes(text);
+#endif
+
+#if WINRT
+#if WINDOWS_PHONE
+            bool ret = this.session.send(text);
+#else
+            IntPtr payloadPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(payload.Length);
+            System.Runtime.InteropServices.Marshal.Copy(payload, 0, payloadPtr, payload.Length);
+            bool ret = this.session.send(payloadPtr, (uint)payload.Length);
+            System.Runtime.InteropServices.Marshal.FreeHGlobal(payloadPtr);
+#endif // WINDOWS_PHONE
+#else
             bool ret = this.session.send(payload);
+#endif // WINRT
             return ret;
         }
 

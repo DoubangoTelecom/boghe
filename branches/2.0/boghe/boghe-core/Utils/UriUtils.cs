@@ -27,6 +27,9 @@ using BogheCore.Model;
 using org.doubango.tinyWRAP;
 using BogheCore.Services.Impl;
 using log4net;
+#if WINRT
+using SipUri = doubango_rt.BackEnd.rtSipUri;
+#endif
 
 namespace BogheCore.Utils
 {
@@ -86,7 +89,11 @@ namespace BogheCore.Utils
             if (!String.IsNullOrEmpty(uri))
             {
                 SipUri sipUri = new SipUri(uri);
+#if WINDOWS_PHONE
+                if (sipUri.isValid_())
+#else
                 if (sipUri.isValid())
+#endif
                 {
                     userName = sipUri.getUserName();
                 }
@@ -138,7 +145,11 @@ namespace BogheCore.Utils
             if (uri != null && (uri.StartsWith("sip:") || uri.StartsWith("sip:") || uri.StartsWith("tel:")))
             {
                 SipUri sipUri = new SipUri(uri);
+#if WINDOWS_PHONE
+                if (sipUri.isValid_())
+#else
                 if (sipUri.isValid())
+#endif
                 {
                     String userName = sipUri.getUserName();
                     if (userName != null)

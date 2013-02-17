@@ -18,6 +18,7 @@
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 */
+#if !WINRT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace BogheCore.Sip
         public MyPublicationSession(MySipStack sipStack, String toUri)
             : base(sipStack)
         {
-            this.session = new PublicationSession(sipStack);
+            this.session = new PublicationSession(sipStack.WrappedStack);
 
             // commons
             base.init();
@@ -312,3 +313,4 @@ namespace BogheCore.Sip
         }
     }
 }
+#endif //!WINRT

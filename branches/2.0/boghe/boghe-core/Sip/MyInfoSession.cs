@@ -24,6 +24,11 @@ using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
 using log4net;
+#if WINRT
+using InfoSession = doubango_rt.BackEnd.rtInfoSession;
+using ActionConfig = doubango_rt.BackEnd.rtActionConfig;
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+#endif
 
 namespace BogheCore.Sip
 {
@@ -36,7 +41,11 @@ namespace BogheCore.Sip
         public MyInfoSession(MySipStack sipStack, String toUri)
         :base(sipStack)
         {
-            m_Session = new InfoSession(sipStack);
+#if WINDOWS_PHONE
+            m_Session = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtInfoSessionNew(sipStack.WrappedStack);
+#else
+            m_Session = new InfoSession(sipStack.WrappedStack);
+#endif
 
             // commons
             base.init();
@@ -56,11 +65,32 @@ namespace BogheCore.Sip
         {
             if (payload != null && !String.IsNullOrEmpty(contentType))
             {
-                ActionConfig config = new ActionConfig();
+                ActionConfig config =
+#if WINDOWS_PHONE
+ org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
                 config.addHeader("Content-Type", contentType);
+#if WINRT
+#if WINDOWS_PHONE
+                m_Session.send(Encoding.UTF8.GetString(payload, 0, payload.Length), config);
+#else
+                IntPtr payloadPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(payload.Length);
+                System.Runtime.InteropServices.Marshal.Copy(payload, 0, payloadPtr, payload.Length);
+                bool ret = m_Session.send(payloadPtr, (uint)payload.Length, config);
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(payloadPtr);
+                return ret;
+#endif
+#else
                 return m_Session.send(payload, config);
+#endif
             }
+#if WINDOWS_PHONE
+            return m_Session.send(String.Empty);
+#else
             return m_Session.send(IntPtr.Zero, 0);
+#endif
         }
     }
 }

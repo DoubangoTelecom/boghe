@@ -18,11 +18,16 @@
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+#if WINRT
+using SubscriptionSession = doubango_rt.BackEnd.rtSubscriptionSession;
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+#endif
 
 namespace BogheCore.Sip
 {
@@ -38,7 +43,11 @@ namespace BogheCore.Sip
         public MySubscriptionSession(MySipStack sipStack, String toUri, EVENT_PACKAGE_TYPE eventPackage)
             :base(sipStack)
         {
-            this.session = new SubscriptionSession(sipStack);
+#if WINDOWS_PHONE
+            this.session = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtSubscriptionSessionNew(sipStack.WrappedStack);
+#else
+            this.session = new SubscriptionSession(sipStack.WrappedStack);
+#endif
             this.eventPackage = eventPackage;
 
             // commons
