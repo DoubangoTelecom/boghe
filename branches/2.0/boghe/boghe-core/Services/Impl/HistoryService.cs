@@ -28,6 +28,7 @@ using System.Xml.Serialization;
 using System.IO;
 using BogheCore.Events;
 using System.Timers;
+using System.IO.IsolatedStorage;
 
 namespace BogheCore.Services.Impl
 {
@@ -71,7 +72,11 @@ namespace BogheCore.Services.Impl
             return true;
         }
 
+#if WINDOWS_PHONE
+        public bool Stop(bool bEnteringBackground)
+#else
         public bool Stop()
+#endif
         {
             if (this.deferredSaveTimer.Enabled)
             {
@@ -163,7 +168,11 @@ namespace BogheCore.Services.Impl
                 LOG.Debug("Saving history...");
                 try
                 {
+#if WINRT
+                    using (StreamWriter writer = new StreamWriter(new IsolatedStorageFileStream(this.fileFullPath, FileMode.OpenOrCreate, IsolatedStorageFile.GetUserStoreForApplication())))
+#else
                     using (StreamWriter writer = new StreamWriter(this.fileFullPath))
+#endif
                     {
                         this.xmlSerializer.Serialize(writer, this.events);
                         writer.Flush();
@@ -187,17 +196,30 @@ namespace BogheCore.Services.Impl
 
             try
             {
+#if WINRT
+                if (!IsolatedStorageFile.GetUserStoreForApplication().FileExists(this.fileFullPath))
+#else
                 if (!File.Exists(this.fileFullPath))
+#endif
                 {
                     LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", this.fileFullPath));
+
+#if WINRT
+                    IsolatedStorageFile.GetUserStoreForApplication().CreateFile(this.fileFullPath).Close();
+#else
                     File.Create(this.fileFullPath).Close();
+#endif
 
                     // create xml declaration
                     this.events = new MyObservableCollection<HistoryEvent>();
                     this.ImmediateSave();
                 }
 
+#if WINRT
+                using (StreamReader reader = new StreamReader(new IsolatedStorageFileStream(this.fileFullPath, FileMode.OpenOrCreate, IsolatedStorageFile.GetUserStoreForApplication())))
+#else
                 using (StreamReader reader = new StreamReader(this.fileFullPath))
+#endif
                 {
                     try
                     {

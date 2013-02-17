@@ -26,6 +26,7 @@ using System.IO;
 using BogheCore.Model;
 using BogheCore.Events;
 using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 
 namespace BogheCore.Services.Impl
 {
@@ -69,7 +70,11 @@ namespace BogheCore.Services.Impl
             LOG.Debug(String.Format("Saving to {0}...", fileName));
             try
             {
+#if WINRT
+                using (StreamWriter writer = new StreamWriter(new IsolatedStorageFileStream(fileName, FileMode.OpenOrCreate, IsolatedStorageFile.GetUserStoreForApplication())))
+#else
                 using (StreamWriter writer = new StreamWriter(fileName))
+#endif
                 {
                     if (isSavingContacts)
                     {
@@ -122,10 +127,18 @@ namespace BogheCore.Services.Impl
 
             try
             {
+#if WINRT
+                if (!IsolatedStorageFile.GetUserStoreForApplication().FileExists(fileName))
+#else
                 if (!File.Exists(fileName))
+#endif
                 {
                     LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", fileName));
+#if WINRT
+                    IsolatedStorageFile.GetUserStoreForApplication().CreateFile(fileName).Close();
+#else
                     File.Create(fileName).Close();
+#endif
 
                     // create xml declaration
                     if (isLoadingContacts)
@@ -139,7 +152,11 @@ namespace BogheCore.Services.Impl
                     this.ImmediateSave(isLoadingContacts);
                 }
 
+#if WINRT
+                using (StreamReader reader = new StreamReader(new IsolatedStorageFileStream(fileName, FileMode.OpenOrCreate, IsolatedStorageFile.GetUserStoreForApplication())))
+#else
                 using (StreamReader reader = new StreamReader(fileName))
+#endif
                 {
                     try
                     {

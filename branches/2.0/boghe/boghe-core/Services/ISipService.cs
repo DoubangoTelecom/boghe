@@ -34,23 +34,27 @@ namespace BogheCore.Services
         String DefaultIdentity { get; set; }
         MySipStack SipStack { get; }
         bool IsRegistered { get; }
+#if !WINRT
         bool IsXcapEnabled { get; }
         bool IsPublicationEnabled { get; }
         bool IsSubscriptionEnabled { get; }
         bool IsSubscriptionToRLSEnabled { get; }
+#endif
         int Codecs { get; set; }
-
+#if !WINRT
         byte[] SubRLSContent { get; }
         byte[] SubRegContent { get; }
         byte[] SubMwiContent { get; }
         byte[] SubWinfoContent { get; }
+#endif
 
         bool StopStack();
         bool Register();
         bool UnRegister();
-
+#if !WINRT
         bool PresencePublish();
         bool PresencePublish(PresenceStatus status);
+#endif
 
         bool RaiseEvent(EventArgs eargs);
 
@@ -59,6 +63,9 @@ namespace BogheCore.Services
         event EventHandler<InviteEventArgs> onInviteEvent;
         event EventHandler<MessagingEventArgs> onMessagingEvent;
         event EventHandler<SubscriptionEventArgs> onSubscriptionEvent;
+#if !WINRT
         event EventHandler onHyperAvailabilityTimedout;
+#endif
+
     }
 }

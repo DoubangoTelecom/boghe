@@ -18,6 +18,7 @@
 * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 */
+#if !WINRT8
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,11 @@ using BogheCore.Model;
 using System.ComponentModel;
 using System.IO;
 using BogheCore.Events;
+#if WINRT
+using System.Runtime.Serialization;
+using Serializable = System.Runtime.Serialization.DataContractAttribute;
+using System.IO.IsolatedStorage;
+#endif
 
 namespace BogheCore.Services.Impl
 {
@@ -65,17 +71,28 @@ namespace BogheCore.Services.Impl
 
             try
             {
+#if WINRT
+                if(!IsolatedStorageFile.GetUserStoreForApplication().FileExists(this.fileFullPath))
+#else
                 if (!File.Exists(this.fileFullPath))
+#endif
                 {
                     LOG.Debug(String.Format("{0} doesn't exist, trying to create new one", this.fileFullPath));
+#if WINRT
+                    IsolatedStorageFile.GetUserStoreForApplication().CreateFile(this.fileFullPath).Close();
+#else
                     File.Create(this.fileFullPath).Close();
-
+#endif
                     // create xml declaration
                     this.sections = new MyObservableCollection<XmlSection>();
                     this.ImmediateSave();
                 }
 
+#if WINRT
+                using (StreamReader reader = new StreamReader(new IsolatedStorageFileStream(this.fileFullPath, FileMode.OpenOrCreate, IsolatedStorageFile.GetUserStoreForApplication())))
+#else
                 using (StreamReader reader = new StreamReader(this.fileFullPath))
+#endif
                 {
                     try
                     {
@@ -86,7 +103,11 @@ namespace BogheCore.Services.Impl
                         LOG.Error("Failed to load configuration", ie);
 
                         reader.Close();
+#if WINRT
+                        IsolatedStorageFile.GetUserStoreForApplication().DeleteFile(this.fileFullPath);
+#else
                         File.Delete(this.fileFullPath);
+#endif
                     }
                 }
 
@@ -104,12 +125,23 @@ namespace BogheCore.Services.Impl
             return ret;
         }
 
+#if WINDOWS_PHONE
+        public bool Stop(bool bEnteringBackground)
+#else
         public bool Stop()
+#endif
         {
             if (this.deferredSaveTimer.Enabled)
             {
-                this.deferredSaveTimer.Stop();
-                this.ImmediateSave();
+                try
+                {
+                    this.deferredSaveTimer.Stop();
+                    this.ImmediateSave();
+                }
+                catch (System.UnauthorizedAccessException e)
+                {
+                    LOG.Error(e);
+                }
             }
             return true;
         }
@@ -232,7 +264,11 @@ namespace BogheCore.Services.Impl
                 LOG.Debug("Saving configuration...");
                 try
                 {
+#if WINRT
+                    using (StreamWriter writer = new StreamWriter(new IsolatedStorageFileStream(this.fileFullPath, FileMode.OpenOrCreate, IsolatedStorageFile.GetUserStoreForApplication())))
+#else
                     using (StreamWriter writer = new StreamWriter(this.fileFullPath))
+#endif
                     {
                         this.xmlSerializer.Serialize(writer, this.sections);
                         writer.Flush();
@@ -411,3 +447,4 @@ namespace BogheCore.Services.Impl
         }
     }
 }
+#endif //!WINRT

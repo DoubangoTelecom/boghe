@@ -30,6 +30,39 @@ using BogheCore.Sip;
 using BogheCore.Utils;
 using BogheCore.Model;
 using System.Runtime.InteropServices;
+#if WINRT
+using SipEvent = doubango_rt.BackEnd.rtISipEvent;
+using DialogEvent = doubango_rt.BackEnd.rtDialogEvent;
+using StackEvent = doubango_rt.BackEnd.rtStackEvent;
+using InviteEvent = doubango_rt.BackEnd.rtInviteEvent;
+using MessagingEvent = doubango_rt.BackEnd.rtMessagingEvent;
+using InfoEvent = doubango_rt.BackEnd.rtInfoEvent;
+using OptionsEvent = doubango_rt.BackEnd.rtOptionsEvent;
+using PublicationEvent = doubango_rt.BackEnd.rtPublicationEvent;
+using RegistrationEvent = doubango_rt.BackEnd.rtRegistrationEvent;
+using SubscriptionEvent = doubango_rt.BackEnd.rtSubscriptionEvent;
+
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+using MsrpSession = doubango_rt.BackEnd.rtMsrpSession;
+using OptionsSession = doubango_rt.BackEnd.rtOptionsSession;
+using InviteSession = doubango_rt.BackEnd.rtIInviteSession;
+using CallSession = doubango_rt.BackEnd.rtCallSession;
+using SubscriptionSession = doubango_rt.BackEnd.rtSubscriptionSession;
+using InfoSession = doubango_rt.BackEnd.rtInfoSession;
+using MessagingSession = doubango_rt.BackEnd.rtMessagingSession;
+
+using ActionConfig = doubango_rt.BackEnd.rtActionConfig;
+using SipMessage = doubango_rt.BackEnd.rtSipMessage;
+
+using tsip_options_event_type_t = doubango_rt.BackEnd.rt_tsip_options_event_type_t;
+using tsip_request_type_t = doubango_rt.BackEnd.rt_tsip_request_type_t;
+using tsip_invite_event_type_t = doubango_rt.BackEnd.rt_tsip_invite_event_type_t;
+using tsip_message_event_type_t = doubango_rt.BackEnd.rt_tsip_message_event_type_t;
+using tsip_subscribe_event_type_t = doubango_rt.BackEnd.rt_tsip_subscribe_event_type_t;
+using tsip_info_event_type_t = doubango_rt.BackEnd.rt_tsip_info_event_type_t;
+using twrap_media_type_t = doubango_rt.BackEnd.rt_twrap_media_type_t;
+
+#endif
 
 namespace BogheCore.Services.Impl
 {
@@ -109,7 +142,20 @@ namespace BogheCore.Services.Impl
                             sessionId = session.getId();
                             String from = message.getSipHeaderValue("f");
                             String contentType = message.getSipHeaderValue("c");
+#if WINRT
+#if WINDOWS_PHONE
+                            byte[] bytes = Encoding.UTF8.GetBytes(message.getSipContent());
+#else
+                            uint contentLength = message.getSipContentLength();
+                            IntPtr payloadPtr = Marshal.AllocHGlobal((int)contentLength);
+                            contentLength = message.getSipContent(payloadPtr, contentLength);
+                            byte[] bytes = new byte[contentLength];
+                            Marshal.Copy(payloadPtr, bytes, 0, bytes.Length);
+                            Marshal.FreeHGlobal(payloadPtr);
+#endif
+#else
                             byte[] bytes = message.getSipContent();
+#endif
 
                             if (bytes == null || bytes.Length == 0)
                             {
@@ -186,7 +232,20 @@ namespace BogheCore.Services.Impl
                             sessionId = session.getId();
                             String from = message.getSipHeaderValue("f");
 					        String contentType = message.getSipHeaderValue("c");
+#if WINRT
+#if WINDOWS_PHONE
+                            byte[] bytes = Encoding.UTF8.GetBytes(message.getSipContent());
+#else
+                            uint contentLength = message.getSipContentLength();
+                            IntPtr payloadPtr = Marshal.AllocHGlobal((int)contentLength);
+                            contentLength = message.getSipContent(payloadPtr, contentLength);
+                            byte[] bytes = new byte[contentLength];
+                            Marshal.Copy(payloadPtr, bytes, 0, bytes.Length);
+                            Marshal.FreeHGlobal(payloadPtr);
+#endif
+#else
                             byte[] bytes = message.getSipContent();
+#endif
                             byte[] content = null;
 
                             if (bytes == null || bytes.Length == 0)
@@ -200,7 +259,7 @@ namespace BogheCore.Services.Impl
                             // Send 200 OK
                             session.accept();
                             session.Dispose();
-
+#if !WINRT
                             if (String.Equals(contentType, ContentType.SMS_3GPP, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 /* ==== 3GPP SMSIP  === */
@@ -234,7 +293,7 @@ namespace BogheCore.Services.Impl
                                          * request including the delivered short message.
                                          * */
                                         if((SMSCPhoneNumber = UriUtils.GetValidPhoneNumber(SMSC)) == null){
-                                            SMSC = this.sipService.manager.ConfigurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.SMSC, Configuration.DEFAULT_RCS_SMSC);
+                                            SMSC = this.sipService.mManager.ConfigurationService.Get(Configuration.ConfFolder.RCS, Configuration.ConfEntry.SMSC, Configuration.DEFAULT_RCS_SMSC);
                                 	        if((SMSCPhoneNumber = UriUtils.GetValidPhoneNumber(SMSC)) == null){
                                 		        LOG.Error("Invalid IP-SM-GW address");
                                 		        return 0;
@@ -249,7 +308,7 @@ namespace BogheCore.Services.Impl
                                                 if (ack_len > 0){
                                                     buffer = rpACK.getPayload();
 
-                                                    MessagingSession m = new MessagingSession(this.sipService.SipStack);
+                                                    MessagingSession m = new MessagingSession(this.sipService.SipStack.WrappedStack);
                                                     m.setToUri(SMSC);
                                                     m.addHeader("Content-Type", ContentType.SMS_3GPP);
                                                     m.addHeader("Content-Transfer-Encoding", "binary");
@@ -271,7 +330,7 @@ namespace BogheCore.Services.Impl
                                                 if (err_len > 0){
                                                     buffer = rpError.getPayload();
 
-                                                    MessagingSession m = new MessagingSession(this.sipService.SipStack);
+                                                    MessagingSession m = new MessagingSession(this.sipService.SipStack.WrappedStack);
                                                     m.setToUri(SMSC);
                                                     m.addHeader("Content-Type", ContentType.SMS_3GPP);
                                                     m.addHeader("Transfer-Encoding", "binary");
@@ -297,6 +356,7 @@ namespace BogheCore.Services.Impl
                                 }
                             }
                             else
+#endif
                             {
                                 /* ==== text/plain or any other  === */
                                 content = bytes;
@@ -347,7 +407,20 @@ namespace BogheCore.Services.Impl
                                 return -1;
                             }
                             String contentType = message.getSipHeaderValue("c");
+#if WINRT
+#if WINDOWS_PHONE
+                            byte[] content = Encoding.UTF8.GetBytes(message.getSipContent());
+#else
+                            uint contentLength = message.getSipContentLength();
+                            IntPtr payloadPtr = Marshal.AllocHGlobal((int)contentLength);
+                            contentLength = message.getSipContent(payloadPtr, contentLength);
+                            byte[] content = new byte[contentLength];
+                            Marshal.Copy(payloadPtr, content, 0, content.Length);
+                            Marshal.FreeHGlobal(payloadPtr);
+#endif
+#else
                             byte[] content = message.getSipContent();
+#endif
                             if (String.IsNullOrEmpty(contentType) || content == null)
                             {
                                 LOG.Error("Invalid content");
@@ -355,6 +428,7 @@ namespace BogheCore.Services.Impl
                             }                            
 
                             // Save content: To allow the end user to request this content at any time
+#if !WINRT
                             if (String.Equals(contentType, ContentType.REG_INFO))
                             {
                                 this.sipService.subRegContent = content;
@@ -363,6 +437,7 @@ namespace BogheCore.Services.Impl
                             {
                                 this.sipService.subWinfoContent = content;
                             }
+#endif
 
                             short code = e.getCode();
                             String phrase = e.getPhrase();
@@ -413,6 +488,7 @@ namespace BogheCore.Services.Impl
                 SipMessage message = e.getSipMessage();
                 if (session == null)
                 {
+                    LOG.Info(String.Format("OnDialogEvent ({0}) with Null session", phrase));
                     return 0;
                 }
 
@@ -421,12 +497,12 @@ namespace BogheCore.Services.Impl
 
                 short sipCode = message != null && message.isResponse() ? message.getResponseCode() : code;
 
-                SipService.LOG.Info(String.Format("OnDialogEvent ({0})", phrase));
+                LOG.Info(String.Format("OnDialogEvent ({0})", phrase));
 
                 if (code == tinyWRAP.tsip_event_code_dialog_connecting)
                 {
                     // Registration
-                    if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
+                    if (this.sipService.mRegSession != null && this.sipService.mRegSession.Id == sessionId)
                     {
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService, 
                             new RegistrationEventArgs(RegistrationEventTypes.REGISTRATION_INPROGRESS, code, phrase));
@@ -451,11 +527,11 @@ namespace BogheCore.Services.Impl
                 else if (code == tinyWRAP.tsip_event_code_dialog_connected)
                 {
                     // Registration
-                    if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
+                    if (this.sipService.mRegSession != null && this.sipService.mRegSession.Id == sessionId)
                     {
-                        this.sipService.regSession.IsConnected = true;
+                        this.sipService.mRegSession.IsConnected = true;
                         // Update default identity (vs barred)
-                        String _defaultIdentity = this.sipService.SipStack.getPreferredIdentity();
+                        String _defaultIdentity = this.sipService.SipStack.WrappedStack.getPreferredIdentity();
                         if (!String.IsNullOrEmpty(_defaultIdentity))
                         {
                             this.sipService.defaultIdentity = _defaultIdentity;
@@ -479,23 +555,25 @@ namespace BogheCore.Services.Impl
                     }
 
                     // Subscription
-                    else if ((mySession = this.sipService.subPresence.FirstOrDefault(x => x.Id == sessionId)) != null)
+                    else if ((mySession = this.sipService.mSubPresence.FirstOrDefault(x => x.Id == sessionId)) != null)
                     {
                         mySession.IsConnected = true;
                     }
 
                     // Publication
+#if !WINRT
                     else if (this.sipService.pubPres != null && this.sipService.pubPres.Id == sessionId)
                     {
                         this.sipService.pubPres.IsConnected = true;
                     }
+#endif
                 }
 
 
                 else if (code == tinyWRAP.tsip_event_code_dialog_terminating)
                 {
                     // Registration
-                    if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
+                    if (this.sipService.mRegSession != null && this.sipService.mRegSession.Id == sessionId)
                     {
                         SipService.LOG.Info("OnDialogEvent (Unregistering)");
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
@@ -518,19 +596,19 @@ namespace BogheCore.Services.Impl
                 else if (code == tinyWRAP.tsip_event_code_dialog_terminated)
                 {
                     // Registration
-                    if (this.sipService.regSession != null && this.sipService.regSession.Id == sessionId)
+                    if (this.sipService.mRegSession != null && this.sipService.mRegSession.Id == sessionId)
                     {
                         SipService.LOG.Info("OnDialogEvent (Unregistered)");
-                        this.sipService.regSession.IsConnected = false;
+                        this.sipService.mRegSession.IsConnected = false;
                         // To PostRegistration() in new thread
                         EventHandlerTrigger.TriggerEvent<RegistrationEventArgs>(this.sipService.onRegistrationEvent, this.sipService,
                             new RegistrationEventArgs(RegistrationEventTypes.UNREGISTRATION_OK, code, phrase));
                         /* Stop the stack (as we are already in the stack-thread, then do it in a new thread) */
                         new Thread(new ThreadStart(delegate
                         {
-                            if (this.sipService.sipStack.State == MySipStack.STACK_STATE.STARTED)
+                            if (this.sipService.mSipStack.State == MySipStack.STACK_STATE.STARTED)
                             {
-                                this.sipService.sipStack.stop();
+                                this.sipService.mSipStack.WrappedStack.stop();
                             }
                         })).Start();
                     }
@@ -554,13 +632,16 @@ namespace BogheCore.Services.Impl
                     }
 
                     // Subscription
-                    else if ((mySession = this.sipService.subPresence.FirstOrDefault(x => x.Id == sessionId)) != null)
+#if !WINRT
+                    else if ((mySession = this.sipService.mSubPresence.FirstOrDefault(x => x.Id == sessionId)) != null)
                     {
                         mySession.IsConnected = false;
-                        this.sipService.subPresence.Remove(mySession as MySubscriptionSession);
+                        this.sipService.mSubPresence.Remove(mySession as MySubscriptionSession);
                     }
-
+#endif
+                     
                     // Publication
+#if !WINRT
                     else if (this.sipService.pubPres != null && this.sipService.pubPres.Id == sessionId)
                     {
                         this.sipService.pubPres.IsConnected = false;
@@ -573,6 +654,7 @@ namespace BogheCore.Services.Impl
                             this.sipService.hyperAvailabilityTimer = null;
                         }
                     }
+#endif
                 }
 
                 return 0;
@@ -587,13 +669,19 @@ namespace BogheCore.Services.Impl
             {
                 short code = e.getCode();
                 String phrase = e.getPhrase();
+
+                LOG.Info(String.Format("OnStackEvent ({0})", phrase));
                 
                 if (code == tinyWRAP.tsip_event_code_stack_started)
                 {
                     this.sipService.SipStack.State = MySipStack.STACK_STATE.STARTED;
 
                     // Now that the stack is up we can set the codecs
-                    org.doubango.tinyWRAP.SipStack.setCodecs_2(this.sipService.Codecs);
+#if WINRT
+                    doubango_rt.BackEnd.rtSipStack.setCodecs((doubango_rt.BackEnd.rt_tdav_codec_id_t)this.sipService.Codecs);
+#else
+                    org.doubango.tinyWRAP.SipStack.setCodecs((tdav_codec_id_t)this.sipService.Codecs);
+#endif
 
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.START_OK, phrase));
@@ -624,13 +712,18 @@ namespace BogheCore.Services.Impl
                 }
                 else if (code == tinyWRAP.tsip_event_code_stack_stopped)
                 {
-                    this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPED;
+                    if (this.sipService.SipStack != null)
+                    {
+                        this.sipService.SipStack.State = MySipStack.STACK_STATE.STOPPED;
+                    }
 
                     // Reset contents
+#if !WINRT
                     this.sipService.subWinfoContent = null;
                     this.sipService.subRegContent = null;
                     this.sipService.subRLSContent = null;
                     this.sipService.subMwiContent = null;
+#endif
 
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.STOP_OK, phrase));
@@ -659,7 +752,7 @@ namespace BogheCore.Services.Impl
                             if (session != null) /* As we are not the owner, then the session MUST be null */
                             {
                                 LOG.Error("Invalid incoming session");
-                                session.hangup(); // To avoid another callback event
+                                session.hangup(null); // To avoid another callback event
                                 return -1;
                             }
 
@@ -685,8 +778,8 @@ namespace BogheCore.Services.Impl
                                         if (msrpSession == null)
                                         {
                                             LOG.Error("Failed to create new session");
-                                            session.hangup();
-                                            session.Dispose();
+                                            session.hangup(null);
+                                            (session as IDisposable).Dispose();
                                             return 0;
                                         }
                                         msrpSession.State = MyInviteSession.InviteState.INCOMING;
@@ -753,19 +846,19 @@ namespace BogheCore.Services.Impl
                                 {
                                     String from = message.getSipHeaderValue("f");
                                     String contentType = message.getSipHeaderValue("c");
-                                    byte[] bytes = message.getSipContent();
-                                    if (!String.IsNullOrEmpty(contentType) && String.Equals(contentType, ContentType.DOUBANGO_DEVICE_INFO, StringComparison.InvariantCultureIgnoreCase))
-                                    {
-                                        if (bytes != null)
-                                        {
-                                            //InviteEventArgs eargs = new InviteEventArgs(session.getId(), InviteEventTypes.INFO, e.getPhrase());
-                                           // eargs
-                                           //     .AddExtra(InviteEventArgs.EXTRA_CONTENT, from)
-                                           //     .AddExtra(InviteEventArgs.EXTRA_REMOTE_PARTY, from)
-                                           //     .AddExtra(InviteEventArgs.EXTRA_CONTENT_TYPE, contentType == null ? ContentType.UNKNOWN : contentType);
-                                           // EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
-                                        }
-                                    }
+                                    //byte[] bytes = message.getSipContent();
+                                    //if (!String.IsNullOrEmpty(contentType) && String.Equals(contentType, ContentType.DOUBANGO_DEVICE_INFO, StringComparison.InvariantCultureIgnoreCase))
+                                    //{
+                                    //    if (bytes != null)
+                                    //    {
+                                   //         //InviteEventArgs eargs = new InviteEventArgs(session.getId(), InviteEventTypes.INFO, e.getPhrase());
+                                    //       // eargs
+                                   //        //     .AddExtra(InviteEventArgs.EXTRA_CONTENT, from)
+                                    //       //     .AddExtra(InviteEventArgs.EXTRA_REMOTE_PARTY, from)
+                                    //       //     .AddExtra(InviteEventArgs.EXTRA_CONTENT_TYPE, contentType == null ? ContentType.UNKNOWN : contentType);
+                                   //        // EventHandlerTrigger.TriggerEvent<InviteEventArgs>(this.sipService.onInviteEvent, this.sipService, eargs);
+                                   //     }
+                                   // }
                                 }
                             }
                             break;
@@ -918,7 +1011,12 @@ namespace BogheCore.Services.Impl
                         {
                             if ((ptSession = e.takeSessionOwnership()) != null)
                             {
-                                ActionConfig config = new ActionConfig();
+                                ActionConfig config =
+#if WINDOWS_PHONE
+ org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
                                 config.addHeader("Allow", "PRACK, INVITE, ACK, BYE, CANCEL, UPDATE, SUBSCRIBE, NOTIFY, REFER, MESSAGE, OPTIONS");
                                 ptSession.accept(config);
                                 ptSession.Dispose();

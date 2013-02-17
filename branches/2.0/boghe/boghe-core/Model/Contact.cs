@@ -25,6 +25,10 @@ using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using BogheXdm;
+#if WINRT
+using System.Runtime.Serialization;
+using Serializable = System.Runtime.Serialization.DataContractAttribute;
+#endif
 
 namespace BogheCore.Model
 {

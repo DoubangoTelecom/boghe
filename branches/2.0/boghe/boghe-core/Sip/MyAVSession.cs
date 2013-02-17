@@ -24,6 +24,15 @@ using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
 using System.Runtime.InteropServices;
+#if WINRT
+using SipUri = doubango_rt.BackEnd.rtSipUri;
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+using CallSession = doubango_rt.BackEnd.rtCallSession;
+using ActionConfig = doubango_rt.BackEnd.rtActionConfig;
+using SipMessage = doubango_rt.BackEnd.rtSipMessage;
+using twrap_media_type_t = doubango_rt.BackEnd.rt_twrap_media_type_t;
+using tmedia_t140_data_type_t = doubango_rt.BackEnd.rt_tmedia_t140_data_type_t;
+#endif
 
 namespace BogheCore.Sip
 {
@@ -114,7 +123,7 @@ namespace BogheCore.Sip
                 if (session != null && MyAVSession.sessions.ContainsKey(session.Id))
                 {
                     long id = session.Id;
-                    session.Dispose();
+                    // session.Dispose();
                     MyAVSession.sessions.Remove(id);
                 }
             }
@@ -142,7 +151,13 @@ namespace BogheCore.Sip
         protected MyAVSession(MySipStack sipStack, CallSession session, MediaType mediaType, InviteState callState)
             : base(sipStack)
         {
-            mSession = (session == null) ? new CallSession(sipStack) : session;
+            mSession = (session == null) ? 
+#if WINDOWS_PHONE
+            org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtCallSessionNew(sipStack.WrappedStack)
+#else
+            new CallSession(sipStack.WrappedStack) 
+#endif
+                : session;
             base.mMediaType = mediaType;
             this.mState = callState;
             mMute = false;
@@ -198,18 +213,18 @@ namespace BogheCore.Sip
 
         public bool AcceptCall()
         {
-            return mSession.accept();
+            return mSession.accept(null);
         }
 
         public bool HangUpCall()
         {
             if (base.connected)
             {
-                return mSession.hangup();
+                return mSession.hangup(null);
             }
             else
             {
-                return mSession.reject();
+                return mSession.reject(null);
             }
         }
 
@@ -244,6 +259,16 @@ namespace BogheCore.Sip
 
         public bool SendInfo(byte[] payload, String contentType)
         {
+#if WINDOWS_PHONE
+            if (payload != null && !String.IsNullOrEmpty(contentType))
+            {
+                String payloadStr = Encoding.UTF8.GetString(payload, 0, payload.Length);
+                ActionConfig config = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+                config.addHeader("Content-Type", contentType);
+                return mSession.sendInfo(payloadStr, (uint)payloadStr.Length, config);
+            }
+            return mSession.sendInfo(BogheCore.Utils.StringUtils.nullptr, 0, null);
+#else
             if (payload != null && !String.IsNullOrEmpty(contentType))
             {
                 IntPtr payloadPtr = Marshal.AllocHGlobal(payload.Length);
@@ -255,6 +280,7 @@ namespace BogheCore.Sip
                 return ret;
             }
             return mSession.sendInfo(IntPtr.Zero, 0);
+#endif
         }
 
         public bool SetProducerFlipped(Boolean flipped)
@@ -325,7 +351,12 @@ namespace BogheCore.Sip
             base.outgoing = true;
             base.ToUri = remoteUri;
 
-            ActionConfig config = new ActionConfig();
+            ActionConfig config = 
+#if WINDOWS_PHONE
+            org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
             switch (mMediaType)
             {
                 case MediaType.Audio:
@@ -351,7 +382,12 @@ namespace BogheCore.Sip
 
             base.outgoing = true;
 
-            ActionConfig config = new ActionConfig();
+            ActionConfig config =
+#if WINDOWS_PHONE
+ org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
             ret = mSession.call(remoteUri, MediaTypeUtils.ConvertToNative(MediaType.Video), config);
             config.Dispose();
 
@@ -367,15 +403,23 @@ namespace BogheCore.Sip
         {
             if (bufferBytes != null && bufferBytes.Length > 0)
             {
+#if WINDOWS_PHONE
+                return mSession.sendT140Data(dataType, Encoding.UTF8.GetString(bufferBytes, 0, bufferBytes.Length));
+#else
                 IntPtr dataPtr = Marshal.AllocHGlobal(bufferBytes.Length);
                 Marshal.Copy(bufferBytes, 0, dataPtr, bufferBytes.Length);
                 bool ret = mSession.sendT140Data(dataType, dataPtr, (uint)bufferBytes.Length);
                 Marshal.FreeHGlobal(dataPtr);
                 return ret;
+#endif
             }
             else
             {
+#if WINDOWS_PHONE
+                return mSession.sendT140Data(dataType);
+#else
                 return mSession.sendT140Data(dataType, IntPtr.Zero, 0);
+#endif
             }
         }
 
@@ -395,11 +439,11 @@ namespace BogheCore.Sip
             {
                 if ((newMediaType & MediaType.Video) == MediaType.Video)
                 {
-                    return mSession.callAudioVideo(base.ToUri);
+                    return mSession.call(base.ToUri, twrap_media_type_t.twrap_media_audio_video);
                 }
                 else
                 {
-                    return mSession.callAudio(base.ToUri);
+                    return mSession.call(base.ToUri, twrap_media_type_t.twrap_media_audio);
                 }
             }
             return false;
@@ -415,6 +459,7 @@ namespace BogheCore.Sip
             set
             {
                 base.State = value;
+#if !WINRT
                 if ((mMediaType & MediaType.AudioT140) == MediaType.AudioT140 && mSession != null)
                 {
                     switch (base.State)
@@ -434,6 +479,7 @@ namespace BogheCore.Sip
                             }
                     }
                 }
+#endif
             }
         }
     }

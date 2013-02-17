@@ -23,6 +23,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using org.doubango.tinyWRAP;
+#if WINRT
+using MediaSessionMgr = doubango_rt.BackEnd.rtMediaSessionMgr;
+using InviteSession = doubango_rt.BackEnd.rtIInviteSession;
+#endif
 
 namespace BogheCore.Sip
 {

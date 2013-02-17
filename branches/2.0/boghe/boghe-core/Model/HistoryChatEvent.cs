@@ -23,6 +23,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+#if WINRT
+using System.Runtime.Serialization;
+using Serializable = System.Runtime.Serialization.DataContractAttribute;
+#endif
 
 namespace BogheCore.Model
 {

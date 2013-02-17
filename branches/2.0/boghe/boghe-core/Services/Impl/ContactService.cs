@@ -50,8 +50,10 @@ namespace BogheCore.Services.Impl
         private MyObservableCollection<Group> groups;
 
         private IScreenService screenService;
+#if !WINRT
         private IXcapService xcapService;
         private ISipService sipService;
+#endif
         private IConfigurationService configurationService;
         private IStateMonitorService stateMonitorService;
         private readonly ServiceManager manager;
@@ -82,19 +84,28 @@ namespace BogheCore.Services.Impl
         public bool Start()
         {
             this.screenService = this.manager.ScreenService;
+#if !WINRT
             this.xcapService = this.manager.XcapService;
             this.sipService = this.manager.SipService;
+#endif
             this.configurationService = this.manager.ConfigurationService;
             this.stateMonitorService = this.manager.StateMonitorService;
-
+#if !WINRT
             this.sipService.onRegistrationEvent += this.sipService_onRegistrationEvent;
+#endif
 
             return true;
         }
 
+#if WINDOWS_PHONE
+        public bool Stop(bool bEnteringBackground)
+#else
         public bool Stop()
+#endif
         {
+#if !WINRT
             this.sipService.onRegistrationEvent -= this.sipService_onRegistrationEvent;
+#endif
             if (this.deferredSaveTimer.Enabled)
             {
                 this.deferredSaveTimer.Stop();
@@ -113,7 +124,7 @@ namespace BogheCore.Services.Impl
             ThreadStart asynTask = new ThreadStart(delegate()
             {
                 this.stateMonitorService.AddState("ContactService::Download()", "Loading Contacts...");
-
+#if !WINRT
                 if (this.sipService.IsXcapEnabled)
                 {
                     if (this.xcapService.Prepare())
@@ -122,6 +133,7 @@ namespace BogheCore.Services.Impl
                     }
                 }
                 else
+#endif
                 {
                     this.ImmediateLoad();
                 }
@@ -143,7 +155,7 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Contact");
                 return false;
             }
-
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -172,6 +184,7 @@ namespace BogheCore.Services.Impl
                 .Start();
             }
             else
+#endif
             {
                 this.stateMonitorService.AddState("ContactService::ContactAdd()", "Adding new Contact...");
 
@@ -198,7 +211,7 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Contact");
                 return false;
             }
-
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -231,6 +244,7 @@ namespace BogheCore.Services.Impl
                 .Start();
             }
             else
+#endif
             {
                 this.stateMonitorService.AddState("ContactService::ContactUpdate()", "Updating Contact...");
 
@@ -259,7 +273,7 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Contact");
                 return false;
             }
-
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -288,6 +302,7 @@ namespace BogheCore.Services.Impl
                 .Start();
             }
             else
+#endif
             {
                 this.stateMonitorService.AddState("ContactService::ContactDelete()", "Deleting Contact...");
 
@@ -309,6 +324,7 @@ namespace BogheCore.Services.Impl
 
         public bool ContactAuthorize(Contact contact, BogheXdm.Authorization authorization)
         {
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 lock (this.groups)
@@ -350,6 +366,7 @@ namespace BogheCore.Services.Impl
                 return true;
             }
             else
+#endif
             {
                 LOG.Error("Must enable XCAP storage to change authorizations");
                 return false;
@@ -379,6 +396,7 @@ namespace BogheCore.Services.Impl
                 return false;
             }
 
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -407,6 +425,7 @@ namespace BogheCore.Services.Impl
                 .Start();
             }
             else
+#endif
             {
                 this.stateMonitorService.AddState("ContactService::GroupAdd()", "Adding new Group...");
 
@@ -434,7 +453,7 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Group");
                 return false;
             }
-
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -455,6 +474,7 @@ namespace BogheCore.Services.Impl
                 .Start();
             }
             else
+#endif
             {
                 this.stateMonitorService.AddState("ContactService::GroupUpdate()", "Updating Group...");
 
@@ -477,7 +497,7 @@ namespace BogheCore.Services.Impl
                 LOG.Error("Null Group");
                 return false;
             }
-
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -510,6 +530,7 @@ namespace BogheCore.Services.Impl
                 .Start();
             }
             else
+#endif
             {
                 this.stateMonitorService.AddState("ContactService::GroupDelete()", "Deleting group...");
 
@@ -536,6 +557,7 @@ namespace BogheCore.Services.Impl
 
         public bool GroupAuthorize(Group group, BogheXdm.Authorization authorization)
         {
+#if !WINRT
             if (this.sipService.IsXcapEnabled)
             {
                 new Thread(delegate()
@@ -546,6 +568,7 @@ namespace BogheCore.Services.Impl
                 return true;
             }
             else
+#endif
             {
                 LOG.Error("Must enable XCAP storage to change authorizations");
                 return false;
@@ -616,11 +639,13 @@ namespace BogheCore.Services.Impl
 
                 case RegistrationEventTypes.UNREGISTRATION_OK:
                     {
+#if !WINRT
                         if (this.sipService.IsXcapEnabled)
                         {
                             this.xcapService.UnPrepare();
                         }
                         else
+#endif
                         {
                         }
                         break;

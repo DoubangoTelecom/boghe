@@ -29,6 +29,9 @@ using BogheCore.Model;
 using System.Threading;
 using BogheCore.Events;
 using org.doubango.tinyWRAP;
+#if WINRT
+using tmedia_srtp_type_t = doubango_rt.BackEnd.rt_tmedia_srtp_type_t;
+#endif
 
 namespace BogheCore.Services.Impl
 {
@@ -37,20 +40,22 @@ namespace BogheCore.Services.Impl
         private static readonly ILog LOG = LogManager.GetLogger(typeof(SipService));
 
         private IConfigurationService configurationService;
+#if !WINRT
         private IXcapService xcapService;
+#endif
         private IContactService contactService;
-        private readonly ServiceManager manager;
+        private readonly ServiceManager mManager;
 
-        private readonly Preferences preferences;
-        private MySipStack sipStack;
-        private readonly MySipCallback sipCallback;
-        private readonly MySipDebugCallback debugCallback;
+        private readonly Preferences mPreferences;
+        private MySipStack mSipStack;
+        private MySipCallback mSipCallback;
+        private MySipDebugCallback mDebugCallback;
 
-        private MyRegistrationSession regSession;
-
+        private MyRegistrationSession mRegSession;
+#if !WINRT
         private byte[] subRLSContent;
+
         private MySubscriptionSession subRLS;
-        private readonly List<MySubscriptionSession> subPresence;
 
         private byte[] subRegContent;
         private MySubscriptionSession subReg;
@@ -60,33 +65,41 @@ namespace BogheCore.Services.Impl
 
         private byte[] subMwiContent;
         private MySubscriptionSession subMwi;
-        
+
         private MyPublicationSession pubPres;
+
+        private System.Timers.Timer hyperAvailabilityTimer;
+#endif
+
+        private readonly List<MySubscriptionSession> mSubPresence;
 
         private String defaultIdentity;
         private int codecs;
 
-        private System.Timers.Timer hyperAvailabilityTimer;
-
         public SipService(ServiceManager serviceManager)
         {
-            this.preferences = new Preferences();
-            this.sipCallback = new MySipCallback(this);
-            this.debugCallback = new MySipDebugCallback();
-            this.subPresence = new List<MySubscriptionSession>();
+            mPreferences = new Preferences();
+            mSubPresence = new List<MySubscriptionSession>();
+            mManager = serviceManager;
+        }
 
-            this.manager = serviceManager;
+        ~SipService()
+        {
+            LOG.Debug("~SipService");
         }
 
         #region IService
 
         public bool Start()
         {
-            this.configurationService = this.manager.ConfigurationService;
-            this.xcapService = this.manager.XcapService;
-            this.contactService = this.manager.ContactService;
-
+            this.configurationService = mManager.ConfigurationService;
+#if !WINRT
+            this.xcapService = mManager.XcapService;
+#endif
+            this.contactService = mManager.ContactService;
+#if !WINRT
             this.xcapService.onXcapEvent += this.xcapService_onXcapEvent;
+#endif
             this.contactService.onContactEvent += this.contactService_onContactEvent;
 
             this.Codecs = this.configurationService.Get(Configuration.ConfFolder.MEDIA,
@@ -95,18 +108,42 @@ namespace BogheCore.Services.Impl
             return true;
         }
 
+#if WINDOWS_PHONE
+        public bool Stop(bool bEnteringBackground)
+#else
         public bool Stop()
+#endif
         {
             bool ret = true;
 
-            if (this.sipStack != null && this.sipStack.State == MySipStack.STACK_STATE.STARTED)
+#if WINDOWS_PHONE
+            if (bEnteringBackground)
             {
-                ret = this.sipStack.stop();
+                if (mSipStack != null && mSipStack.WrappedStack != null)
+                {
+                    mSipStack.WrappedStack.setDebugCallback(null);
+                }
             }
+#endif
 
+            if (mSipStack != null && (mSipStack.State == MySipStack.STACK_STATE.STARTED || mSipStack.State == MySipStack.STACK_STATE.STARTING))
+            {
+                ret = mSipStack.WrappedStack.stop();
+            }
+#if !WINRT
             this.xcapService.onXcapEvent -= this.xcapService_onXcapEvent;
+#endif
             this.contactService.onContactEvent -= this.contactService_onContactEvent;
 
+#if WINDOWS_PHONE
+            if (bEnteringBackground)
+            {
+                mSipStack = null;
+                mSipCallback = null;
+                mDebugCallback = null;
+                mRegSession = null;
+            }
+#endif
             return ret;
         }
 
@@ -120,7 +157,9 @@ namespace BogheCore.Services.Impl
         public event EventHandler<MessagingEventArgs> onMessagingEvent;
         public event EventHandler<InfoEventArgs> onInfoEvent;
         public event EventHandler<SubscriptionEventArgs> onSubscriptionEvent;
+#if !WINRT
         public event EventHandler onHyperAvailabilityTimedout;
+#endif
 
         public String DefaultIdentity 
         {
@@ -130,16 +169,16 @@ namespace BogheCore.Services.Impl
 
         public MySipStack SipStack
         {
-            get { return this.sipStack; }
+            get { return this.mSipStack; }
         }
 
         public bool IsRegistered
         {
             get
             {
-                if (this.regSession != null)
+                if (mRegSession != null)
                 {
-                    return this.regSession.IsConnected;
+                    return mRegSession.IsConnected;
                 }
                 return false;
             }
@@ -149,7 +188,7 @@ namespace BogheCore.Services.Impl
         {
             get
             {
-                return this.preferences.xcap_enabled;
+                return mPreferences.xcap_enabled;
             }
         }
 
@@ -157,8 +196,12 @@ namespace BogheCore.Services.Impl
         {
             get
             {
+#if !WINRT
                 return
-                    this.preferences.presence_pub && this.IsRegistered && this.pubPres != null && this.pubPres.IsConnected;
+                    mPreferences.presence_pub && this.IsRegistered && this.pubPres != null && this.pubPres.IsConnected;
+#else
+                return false;
+#endif
             }
         }
 
@@ -167,7 +210,7 @@ namespace BogheCore.Services.Impl
             get
             {
                 return 
-                    this.preferences.presence_sub && this.IsRegistered;
+                    mPreferences.presence_sub && this.IsRegistered;
             }
         }
         public bool IsSubscriptionToRLSEnabled 
@@ -175,14 +218,16 @@ namespace BogheCore.Services.Impl
             get
             {
                 return
-                    this.preferences.presence_rls && this.IsSubscriptionEnabled && this.IsXcapEnabled;
+                    mPreferences.presence_rls && this.IsSubscriptionEnabled && this.IsXcapEnabled;
             }
         }
 
+#if !WINRT
         public byte[] SubRLSContent { get { return this.subRLSContent; } }
         public byte[] SubRegContent { get { return this.subRegContent; } }
         public byte[] SubMwiContent { get { return this.subMwiContent; } }
         public byte[] SubWinfoContent { get { return this.subWinfoContent; } }
+#endif
 
         public int Codecs 
         {
@@ -190,105 +235,117 @@ namespace BogheCore.Services.Impl
             set 
             {
                 this.codecs = value;
-                org.doubango.tinyWRAP.SipStack.setCodecs_2(value);
+#if WINRT
+                doubango_rt.BackEnd.rtSipStack.setCodecs((doubango_rt.BackEnd.rt_tdav_codec_id_t)value);
+#else
+                org.doubango.tinyWRAP.SipStack.setCodecs((tdav_codec_id_t)value);
+#endif
             }
         }
 
         public bool StopStack()
         {
-            if (this.sipStack != null)
+            if (this.mSipStack != null)
             {
-                return this.sipStack.stop();
+                return mSipStack.WrappedStack.stop();
             }
             return true;
         }
 
         public bool Register()
         {
-            this.preferences.realm = this.configurationService.Get(
+            mPreferences.realm = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.REALM,
                     Configuration.DEFAULT_NETWORK_REALM);
-            this.preferences.impi = this.configurationService.Get(
+            mPreferences.impi = this.configurationService.Get(
                     Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPI,
                     Configuration.DEFAULT_IDENTITY_IMPI);
-            this.preferences.impu = this.configurationService.Get(
+            mPreferences.impu = this.configurationService.Get(
                     Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.IMPU,
                     Configuration.DEFAULT_IDENTITY_IMPU);
-            this.preferences.local_ip = this.configurationService.Get(
+            mPreferences.local_ip = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.LOCAL_IP,
                     Configuration.DEFAULT_NETWORK_LOCAL_IP);
-            this.preferences.local_port = this.configurationService.Get(
+            mPreferences.local_port = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.LOCAL_PORT,
                     Configuration.DEFAULT_NETWORK_LOCAL_PORT);
             tmedia_srtp_type_t srtpType = (tmedia_srtp_type_t)Enum.Parse(typeof(tmedia_srtp_type_t), this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.SRTP_TYPE, Configuration.DEFAULT_SECURITY_SRTP_TYPE), true);
-            this.preferences.dtls_srtp = ((srtpType & tmedia_srtp_type_t.tmedia_srtp_type_dtls) == tmedia_srtp_type_t.tmedia_srtp_type_dtls);
+            mPreferences.dtls_srtp = ((srtpType & tmedia_srtp_type_t.tmedia_srtp_type_dtls) == tmedia_srtp_type_t.tmedia_srtp_type_dtls);
 
             LOG.Info(String.Format(
-                    "realm='{0}', impu='{1}', impi='{2}', local_ip='{3}', local_port='{4}'", this.preferences.realm, this.preferences.impu, this.preferences.impi, this.preferences.local_ip, this.preferences.local_port));
+                    "realm='{0}', impu='{1}', impi='{2}', local_ip='{3}', local_port='{4}'", mPreferences.realm, mPreferences.impu, mPreferences.impi, mPreferences.local_ip, mPreferences.local_port));
 
-            if (this.sipStack == null)
+            if (mSipCallback == null)
             {
-                this.sipStack = new MySipStack(this.sipCallback, this.preferences.realm, this.preferences.impi, this.preferences.impu);
-                this.sipStack.SipService = this;
-                this.sipStack.setDebugCallback(this.debugCallback);
-                // Set UserAgent
+                mSipCallback = new MySipCallback(this);
+            }
+            if (mDebugCallback == null)
+            {
+                mDebugCallback = new MySipDebugCallback();
+            }
+
+            if (mSipStack == null)
+            {
+                mSipStack = new MySipStack(this.mSipCallback, mPreferences.realm, mPreferences.impi, mPreferences.impu);
+                mSipStack.SipService = this;
+                mSipStack.WrappedStack.setDebugCallback(mDebugCallback);
             }
             else
             {
-                if (!this.sipStack.setRealm(this.preferences.realm))
+                if (!mSipStack.WrappedStack.setRealm(mPreferences.realm))
                 {
-                    LOG.Error(String.Format("Failed to set realm: {0}", this.preferences.realm));
+                    LOG.Error(String.Format("Failed to set realm: {0}", mPreferences.realm));
                     return false;
                 }
-                if (!this.sipStack.setIMPI(this.preferences.impi))
+                if (!mSipStack.WrappedStack.setIMPI(mPreferences.impi))
                 {
-                    LOG.Error(String.Format("Failed to set IMPI: {0}", this.preferences.impi));
+                    LOG.Error(String.Format("Failed to set IMPI: {0}", mPreferences.impi));
                     return false;
                 }
-                if (!this.sipStack.setIMPU(this.preferences.impu))
+                if (!mSipStack.WrappedStack.setIMPU(mPreferences.impu))
                 {
-                    LOG.Error(String.Format("Failed to set IMPU: {0}", this.preferences.impu));
+                    LOG.Error(String.Format("Failed to set IMPU: {0}", mPreferences.impu));
                     return false;
                 }
             }
 
             // Set local IP
-            if (!String.IsNullOrEmpty(this.preferences.local_ip))
+            if (!String.IsNullOrEmpty(mPreferences.local_ip))
             {
-                if (!this.sipStack.setLocalIP(this.preferences.local_ip))
+                if (!mSipStack.WrappedStack.setLocalIP(mPreferences.local_ip))
                 {
-                    LOG.Error(String.Format("Failed to set Local IP: {0}", this.preferences.local_ip));
+                    LOG.Error(String.Format("Failed to set Local IP: {0}", mPreferences.local_ip));
                     return false;
                 }
             }
 
             // Set local Port
-            if (this.preferences.local_port > 1024 && this.preferences.local_port < 0xFFFF)
+            if (mPreferences.local_port > 1024 && mPreferences.local_port < 0xFFFF)
             {
-                if (!this.sipStack.setLocalPort((ushort)this.preferences.local_port))
+                if (!mSipStack.WrappedStack.setLocalPort((ushort)mPreferences.local_port))
                 {
-                    LOG.Error(String.Format("Failed to set Local Port: {0}", this.preferences.local_port));
+                    LOG.Error(String.Format("Failed to set Local Port: {0}", mPreferences.local_port));
                     return false;
                 }
             }
 
             // Set the password
-            this.sipStack.setPassword(this.configurationService.Get(
+            mSipStack.WrappedStack.setPassword(this.configurationService.Get(
                     Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PASSWORD,
-                    null));
+                    BogheCore.Utils.StringUtils.nullptr));
 
             // Set AMF
-            this.sipStack.setAMF(this.configurationService.Get(
+            mSipStack.WrappedStack.setAMF(this.configurationService.Get(
                     Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_AMF,
                     Configuration.DEFAULT_IMSAKA_AMF));
 
             // Set Operator Id
-            this.sipStack.setOperatorId(this.configurationService.Get(
+            mSipStack.WrappedStack.setOperatorId(this.configurationService.Get(
                     Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IMSAKA_OPID,
                     Configuration.DEFAULT_IMSAKA_OPID));
 
             // Check stack validity
-            if (!this.sipStack.isValid())
+            if (!mSipStack.WrappedStack.isValid())
             {
                 LOG.Error("Trying to use invalid stack");
                 return false;
@@ -300,50 +357,64 @@ namespace BogheCore.Services.Impl
                 LOG.Debug("STUN=yes");
                 if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, Configuration.DEFAULT_NATT_STUN_DISCO))
                 {
-                    String domain = this.preferences.realm.Substring(this.preferences.realm.IndexOf(':') + 1);
+                    String domain = mPreferences.realm.Substring(mPreferences.realm.IndexOf(':') + 1);
                     ushort port = 0;
-                    String server = this.sipStack.dnsSrv(String.Format("_stun._udp.{0}", domain), out port);
+                    String server;
+#if WINRT
+#if WINDOWS_PHONE
+                    doubango_rt.BackEnd.rtDnsResult dnsResult = mSipStack.WrappedStack.dnsSrv(String.Format("_stun._udp.{0}", domain));
+                    server = dnsResult.Address;
+                    port = dnsResult.Port;
+#else
+                    IntPtr _port = System.Runtime.InteropServices.Marshal.AllocHGlobal(sizeof(ushort));
+                    server = mSipStack.WrappedStack.dnsSrv(String.Format("_stun._udp.{0}", domain), _port);
+                    port = (ushort)System.Runtime.InteropServices.Marshal.ReadInt16(_port);
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(_port);
+#endif
+#else
+                    server = mSipStack.WrappedStack.dnsSrv(String.Format("_stun._udp.{0}", domain), out port);
+#endif
                     if (server == null)
                     {
                         LOG.Error("STUN discovery has failed");
                     }
                     LOG.Debug(String.Format("STUN1 - server={0} and port={1}", server, port));
-                    this.sipStack.setSTUNServer(server, port);// Needed event if null
+                    mSipStack.WrappedStack.setSTUNServer(server, port);// Needed event if null
                 }
                 else
                 {
                     String server = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_SERVER, Configuration.DEFAULT_NATT_STUN_SERVER);
                     int port = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PORT, Configuration.DEFAULT_NATT_STUN_PORT);
                     LOG.Info(String.Format("STUN2 - server={0} and port={1}", server, port));
-                    this.sipStack.setSTUNServer(server, (ushort)port);
+                    mSipStack.WrappedStack.setSTUNServer(server, (ushort)port);
                 }
             }
             else
             {
                 LOG.Debug("STUN=no");
-                this.sipStack.setSTUNServer(null, 0);
+                mSipStack.WrappedStack.setSTUNServer(BogheCore.Utils.StringUtils.nullptr, 0);
             }
 
             // Set Proxy-CSCF
-            this.preferences.pcscf_host = this.configurationService.Get(
+            mPreferences.pcscf_host = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_HOST,
-                    null); // null will trigger DNS NAPTR+SRV
-            this.preferences.pcscf_port = this.configurationService.Get(
+                    BogheCore.Utils.StringUtils.nullptr); // null will trigger DNS NAPTR+SRV
+            mPreferences.pcscf_port = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT,
                     Configuration.DEFAULT_NETWORK_PCSCF_PORT);
-            this.preferences.transport = this.configurationService.Get(
+            mPreferences.transport = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT,
                     Configuration.DEFAULT_NETWORK_TRANSPORT);
-            this.preferences.ipversion = this.configurationService.Get(
+            mPreferences.ipversion = this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.IP_VERSION,
                     Configuration.DEFAULT_NETWORK_IP_VERSION);
 
             LOG.Debug(String.Format(
                     "pcscf-host='{0}', pcscf-port='{1}', transport='{2}', ipversion='{3}'",
-                    this.preferences.pcscf_host, this.preferences.pcscf_port, this.preferences.transport, this.preferences.ipversion));
+                    mPreferences.pcscf_host, mPreferences.pcscf_port, mPreferences.transport, mPreferences.ipversion));
 
-            if (!this.sipStack.setProxyCSCF(this.preferences.pcscf_host, (ushort)this.preferences.pcscf_port, this.preferences.transport,
-                    this.preferences.ipversion))
+            if (!mSipStack.WrappedStack.setProxyCSCF(mPreferences.pcscf_host, (ushort)mPreferences.pcscf_port, mPreferences.transport,
+                    mPreferences.ipversion))
             {
                 LOG.Error("Failed to set Proxy-CSCF parameters");
                 return false;
@@ -354,8 +425,8 @@ namespace BogheCore.Services.Impl
             String pubKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_PUB_KEY_FILE, Configuration.DEFAULT_TLS_PUB_KEY_FILE);
             String caKey = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.TLS_CA_FILE, Configuration.DEFAULT_TLS_CA_FILE);
 
-            LOG.Debug(String.Format("TLS pubKey={0} privKey={1} caKey={2} dtls-strp={3}", privKey, pubKey, caKey, this.preferences.dtls_srtp));
-            if (!this.sipStack.setSSLCertificates(privKey, pubKey, caKey))
+            LOG.Debug(String.Format("TLS pubKey={0} privKey={1} caKey={2} dtls-strp={3}", privKey, pubKey, caKey, mPreferences.dtls_srtp));
+            if (!mSipStack.WrappedStack.setSSLCertificates(privKey, pubKey, caKey))
             {
                 LOG.Error("Failed to set SSL certificates");
             }
@@ -363,32 +434,32 @@ namespace BogheCore.Services.Impl
             // Set IPSec => only if TLS is disabled
             if (this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_SEC_AGREE, Configuration.DEFAULT_SECURITY_IPSEC_SEC_AGREE))
             {
-                this.preferences.ipsec_secagree = true;
+                mPreferences.ipsec_secagree = true;
                 String algo = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_ALGO, Configuration.DEFAULT_SECURITY_IPSEC_ALGO);
                 String ealgo = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_EALGO, Configuration.DEFAULT_SECURITY_IPSEC_EALGO);
                 String mode = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_MODE, Configuration.DEFAULT_SECURITY_IPSEC_MODE);
                 String proto = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, Configuration.DEFAULT_SECURITY_IPSEC_PROTO);
 
                 LOG.Debug(String.Format("IPSec secagree enable with algo={0} ealgo={1} mode={2} proto={3}", algo, ealgo, mode, proto));
-                if (!this.sipStack.setIPSecParameters(algo, ealgo, mode, mode) || !this.sipStack.setIPSecSecAgree(true))
+                if (!mSipStack.WrappedStack.setIPSecParameters(algo, ealgo, mode, mode) || !mSipStack.WrappedStack.setIPSecSecAgree(true))
                 {
                     LOG.Error("Failed to set IPSec parameters");
                 }
             }
-            else if (this.preferences.ipsec_secagree)
+            else if (mPreferences.ipsec_secagree)
             {
-                this.preferences.ipsec_secagree = false;
+                mPreferences.ipsec_secagree = false;
                 // Disable IPSec secagree
-                this.sipStack.setIPSecSecAgree(false);
+                mSipStack.WrappedStack.setIPSecSecAgree(false);
             }
            
 
             // Whether to use DNS NAPTR+SRV for the Proxy-CSCF discovery (even if the DNS requests are sent only when the stack starts,
             // should be done after setProxyCSCF())
-            this.sipStack.setDnsDiscovery(this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS));
+            mSipStack.WrappedStack.setDnsDiscovery(this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_DISCOVERY_DNS, Configuration.DEFAULT_NETWORK_PCSCF_DISCOVERY_DNS));
 
             // enable/disable 3GPP early IMS
-            this.sipStack.setEarlyIMS(this.configurationService.Get(
+            mSipStack.WrappedStack.setEarlyIMS(this.configurationService.Get(
                     Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.EARLY_IMS,
                     Configuration.DEFAULT_NETWORK_EARLY_IMS));
 
@@ -396,60 +467,60 @@ namespace BogheCore.Services.Impl
             if (this.configurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.SIGCOMP, Configuration.DEFAULT_NETWORK_SIGCOMP))
             {
                 String compId = String.Format("urn:uuid:{0}", Guid.NewGuid().ToString());
-                this.sipStack.SigCompId = compId;
+                this.mSipStack.SigCompId = compId;
                 LOG.Debug(String.Format("SigComp enable with uuid={0}", compId));
             }
             else
             {
-                this.sipStack.SigCompId = null;
+                this.mSipStack.SigCompId = null;
             }
 
             // Set Privacy
-            this.sipStack.Privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_IDENTITY_PRIVACY);
+            this.mSipStack.Privacy = this.configurationService.Get(Configuration.ConfFolder.IDENTITY, Configuration.ConfEntry.PRIVACY, Configuration.DEFAULT_IDENTITY_PRIVACY);
 
             // Start the Stack
-            if (!this.sipStack.start())
+            if (!mSipStack.WrappedStack.start())
             {
                 LOG.Error("Failed to start the SIP stack");
                 return false;
             }
 
             // Other Preference values
-            this.preferences.xcap_enabled = this.configurationService.Get(
+            mPreferences.xcap_enabled = this.configurationService.Get(
                     Configuration.ConfFolder.XCAP, Configuration.ConfEntry.ENABLED,
                     Configuration.DEFAULT_XCAP_ENABLED);
-            this.preferences.presence_sub = this.configurationService.Get(
+            mPreferences.presence_sub = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_SUB,
                     Configuration.DEFAULT_RCS_PRESENCE_SUB);
-            this.preferences.presence_rls = this.configurationService.Get(
+            mPreferences.presence_rls = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.RLS,
                     Configuration.DEFAULT_RCS_RLS);
-            this.preferences.presence_pub = this.configurationService.Get(
+            mPreferences.presence_pub = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.PRESENCE_PUB,
                     Configuration.DEFAULT_RCS_PRESENCE_PUB);
-            this.preferences.mwi = this.configurationService.Get(
+            mPreferences.mwi = this.configurationService.Get(
                     Configuration.ConfFolder.RCS, Configuration.ConfEntry.MWI,
                     Configuration.DEFAULT_RCS_MWI);
 
             // Create registration session
-            if (this.regSession == null)
+            if (mRegSession == null)
             {
-                this.regSession = new MyRegistrationSession(this.sipStack);
+                mRegSession = new MyRegistrationSession(this.mSipStack);
             }
             else
             {
-                this.regSession.SigCompId = this.sipStack.SigCompId;
+                mRegSession.SigCompId = this.mSipStack.SigCompId;
             }
 
             // Set/update From URI. For Registration ToUri should be equals to realm
             // (done by the stack)
-            this.regSession.FromUri = this.preferences.impu;
-            /* this.regSession.setToUri(this.preferences.impu); */
+            mRegSession.FromUri = mPreferences.impu;
+            /* this.regSession.setToUri(mPreferences.impu); */
 
             // Update default identity to the current IMPU before registering
-            this.DefaultIdentity = this.preferences.impu;
+            this.DefaultIdentity = mPreferences.impu;
 
-            if (!this.regSession.register())
+            if (!mRegSession.register())
             {
                 LOG.Error("Failed to send REGISTER request");
                 return false;
@@ -464,7 +535,7 @@ namespace BogheCore.Services.Impl
             {
                 new Thread(new ThreadStart(delegate
                 {
-                    this.sipStack.stop();
+                    mSipStack.WrappedStack.stop();
                 })).Start();
             }
             else
@@ -474,6 +545,7 @@ namespace BogheCore.Services.Impl
             return true;
         }
 
+#if !WINRT
         public bool PresencePublish()
         {
             if (this.IsPublicationEnabled)
@@ -491,6 +563,7 @@ namespace BogheCore.Services.Impl
             }
             return false;
         }
+#endif
 
         public bool RaiseEvent(EventArgs eargs)
         {
@@ -516,6 +589,7 @@ namespace BogheCore.Services.Impl
                 return;
             }
 
+#if !WINRT
             // Subscribe to 'reg' event package
             this.SubscribeToRegInfo();
             // Subscribe to MWI
@@ -533,22 +607,23 @@ namespace BogheCore.Services.Impl
             }
 
             // Subscribe to message waiting indication
-            if (this.preferences.mwi)
+            if (mPreferences.mwi)
             {
                 this.SubscribeToWinfo();
             }
 
             // Subscribe to watcherInfo
-            if (this.preferences.xcap_enabled)
+            if (mPreferences.xcap_enabled)
             {
                 this.SubscribeToWinfo();
             }
 
             // Publish presence
-            if (this.preferences.presence_pub)
+            if (mPreferences.presence_pub)
             {
                 this.PublishPresence();
             }
+#endif
         }
     }
 }

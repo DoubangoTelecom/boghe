@@ -27,7 +27,11 @@ namespace BogheCore.Services
 {
     public interface IService
     {
-        bool Start();
+        bool Start();        
+#if WINDOWS_PHONE
+        bool Stop(bool bEnteringBackground);
+#else
         bool Stop();
+#endif
     }
 }

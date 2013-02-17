@@ -27,6 +27,14 @@ using log4net;
 using BogheCore.Sip.Events;
 using System.IO;
 using System.Runtime.InteropServices;
+#if WINRT
+using MsrpSession = doubango_rt.BackEnd.rtMsrpSession;
+using SipMessage = doubango_rt.BackEnd.rtSipMessage;
+using SdpMessage = doubango_rt.BackEnd.rtSdpMessage;
+using SipSession = doubango_rt.BackEnd.rtISipSession;
+using ActionConfig = doubango_rt.BackEnd.rtActionConfig;
+using twrap_media_type_t = doubango_rt.BackEnd.rt_twrap_media_type_t;
+#endif
 
 namespace BogheCore.Sip
 {
@@ -184,13 +192,17 @@ namespace BogheCore.Sip
             if (session == null)
             {
                 base.outgoing = true;
-                mSession = new MsrpSession(sipStack, this.mCallback);
+ #if WINDOWS_PHONE
+                mSession = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtMsrpSessionNew(sipStack.WrappedStack, mCallback);
+#else
+                mSession = new MsrpSession(sipStack.WrappedStack, mCallback);
+#endif
             }
             else 
             {
                 base.outgoing = false;
                 mSession = session;
-                mSession.setCallback(this.mCallback);
+                mSession.setCallback(mCallback);
             }
 
             // commons
@@ -265,7 +277,7 @@ namespace BogheCore.Sip
                     return this.HangUp();
                 }
             }
-            return mSession.accept();
+            return mSession.accept(null);
         }
 
         public bool HangUp()
@@ -280,11 +292,11 @@ namespace BogheCore.Sip
                         this.mOutFileStream = null;
                     }
                 }
-                return mSession.hangup();
+                return mSession.hangup(null);
             }
             else
             {
-                return mSession.reject();
+                return mSession.reject(null);
             }
         }
 
@@ -308,7 +320,12 @@ namespace BogheCore.Sip
             String fileSelector = String.Format("name:\"{0}\" type:{1} size:{2}",
                 finfo.Name, this.mFileType, finfo.Length);
 
-            ActionConfig config = new ActionConfig();
+            ActionConfig config =
+#if WINDOWS_PHONE
+ org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
             config
                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-path", this.mFilePath)
                  .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-selector", fileSelector)
@@ -348,7 +365,12 @@ namespace BogheCore.Sip
 
             if (base.IsConnected)
             {
-                ActionConfig config = new ActionConfig();
+                ActionConfig config =
+#if WINDOWS_PHONE
+ org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
                 if (!String.IsNullOrEmpty(contentType))
                 {
                     config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", contentType);
@@ -362,14 +384,17 @@ namespace BogheCore.Sip
                 //config.setMediaString(twrap_media_type_t.twrap_media_msrp,
                 //    "content-type", "message/CPIM")
                 //    .setMediaString(twrap_media_type_t.twrap_media_msrp, "w-content-type", "text/plain");
+#if WINDOWS_PHONE
+                return mSession.sendMessage(message, config);
+#else
                 byte[] payload = Encoding.UTF8.GetBytes(message);
                 IntPtr ptr = Marshal.AllocHGlobal(payload.Length);
                 bool ret = mSession.sendMessage(ptr, (uint)payload.Length, config);
                 Marshal.Copy(ptr, payload, 0, payload.Length);
                 Marshal.FreeHGlobal(ptr);                
                 config.Dispose();
-
                 return ret;
+#endif
             }
             else
             {
@@ -379,7 +404,12 @@ namespace BogheCore.Sip
                 }
                 this.mPendingMessages.Add(new PendingMessage(message, contentType, wContentType));
 
-                ActionConfig config = new ActionConfig();
+                ActionConfig config =
+#if WINDOWS_PHONE
+ org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
+#else
+            new ActionConfig();
+#endif
                 config.setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.CHAT_ACCEPT_TYPES)
                     .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-wrapped-types", MyMsrpSession.CHAT_ACCEPT_WRAPPED_TYPES)
                     .setMediaString(twrap_media_type_t.twrap_media_msrp, "Failure-Report", this.FailureReport ? "yes" : "no")

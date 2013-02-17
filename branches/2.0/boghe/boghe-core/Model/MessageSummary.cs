@@ -103,7 +103,7 @@ namespace BogheCore.Model
                 }
 
                 MessageSummary ret = null;
-                String body = Encoding.UTF8.GetString(content);
+                String body = Encoding.UTF8.GetString(content, 0, content.Length);
 
                 Match messageMatch = MESSAGE_SUMMARY_EXPR.Match(body);
                 if (messageMatch != null && messageMatch.Success)

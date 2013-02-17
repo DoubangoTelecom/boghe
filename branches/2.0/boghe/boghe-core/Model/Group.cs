@@ -25,9 +25,20 @@ using System.Text;
 using System.Xml.Serialization;
 using System.ComponentModel;
 using BogheXdm;
+#if WINRT
+using System.Runtime.Serialization;
+using Serializable = System.Runtime.Serialization.DataContractAttribute;
+#endif
 
 namespace BogheCore.Model
 {
+#if WINRT
+    public interface ICloneable
+    {
+        object Clone();
+    }
+#endif
+
     [Serializable]
     [XmlRoot("Group")]
     public class Group : BaseObject, IComparable<Group>, INotifyPropertyChanged, ICloneable
