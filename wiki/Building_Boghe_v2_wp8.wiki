@@ -21,10 +21,8 @@ svn checkout http://boghe.googlecode.com/svn boghe
 }}}
 
 == Building the source code ==
-Building *Boghe SIP Video Client* for Windows Phone 8 is as easy as installing the [http://www.microsoft.com/en-us/download/details.aspx?id=35471 Windows Phone SDK 8.0], opening _myboghe\boghe\branches\2.0\boghe\boghe-wp8.sln_ and running *Boghe-wp8* target project. <br />
+Building *Boghe* for Windows Phone 8 is as easy as installing the [http://www.microsoft.com/en-us/download/details.aspx?id=35471 Windows Phone SDK 8.0], opening _myboghe\boghe\branches\2.0\boghe\boghe-wp8.sln_ and running *Boghe-wp8* target project. <br />
 Please don't forget to change the CPU type (x86, WIN32, ARM) depending on your target type (Emulator or Device).
 
 ==Technical help==
 Please check our [http://code.google.com/p/webrtc2sip/issues/list issue tracker] or [https://groups.google.com/group/doubango developer group] if you have any problem.
-
-For more information about third-parties libraries, please visit [http://code.google.com/p/doubango/wiki/Licensing this page].
