@@ -11,7 +11,7 @@ The desktop (XP, Vista, 7, 8) and Mobile (WP8, RT, Surface) share the same base 
 mkdir myboghe
 cd myboghe
 }}}
- * Checkout doubango source code into *myboghe*. Important: The destination directory MUST be called *doubango*
+ * Checkout doubango source code into *myboghe*. Important: The destination directory MUST be named *doubango*
 {{{
 svn checkout http://doubango.googlecode.com/svn doubango
 }}}
