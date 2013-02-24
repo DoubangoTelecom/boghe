@@ -66,21 +66,23 @@ namespace BogheCore.Sip
         public static MyMsrpSession TakeIncomingSession(MySipStack sipStack, MsrpSession session, SipMessage message)
         {
             MyMsrpSession msrpSession = null;
-		    MediaType mediaType;
-		    SdpMessage sdp = message.getSdpMessage();
-		    String fromUri = message.getSipHeaderValue("f");
-    		
-            if(String.IsNullOrEmpty(fromUri)){
-			    LOG.Error("Invalid fromUri");
-			    return null;
-		    }
+            MediaType mediaType;
+            SdpMessage sdp = message.getSdpMessage();
+            String fromUri = message.getSipHeaderValue("f");
 
-		    if(sdp == null){
-			    LOG.Error("Invalid Sdp content");
-			    return null;
-		    }
-    		
-		    String fileSelector = sdp.getSdpHeaderAValue("message", "file-selector");
+            if (String.IsNullOrEmpty(fromUri))
+            {
+                LOG.Error("Invalid fromUri");
+                return null;
+            }
+
+            if (sdp == null)
+            {
+                LOG.Error("Invalid Sdp content");
+                return null;
+            }
+
+            String fileSelector = sdp.getSdpHeaderAValue("message", "file-selector");
             mediaType = String.IsNullOrEmpty(fileSelector) ? MediaType.Chat : MediaType.FileTransfer;
 
             if (mediaType == MediaType.Chat)
@@ -183,7 +185,8 @@ namespace BogheCore.Sip
             }
         }
 
-        public MyMsrpSession(MySipStack sipStack, MsrpSession session, MediaType mediaType, String remoteUri) : base(sipStack)
+        public MyMsrpSession(MySipStack sipStack, MsrpSession session, MediaType mediaType, String remoteUri)
+            : base(sipStack)
         {
             this.mCallback = new MyMsrpCallback(this);
             base.mMediaType = mediaType;
@@ -192,13 +195,13 @@ namespace BogheCore.Sip
             if (session == null)
             {
                 base.outgoing = true;
- #if WINDOWS_PHONE
+#if WINDOWS_PHONE
                 mSession = org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtMsrpSessionNew(sipStack.WrappedStack, mCallback);
 #else
                 mSession = new MsrpSession(sipStack.WrappedStack, mCallback);
 #endif
             }
-            else 
+            else
             {
                 base.outgoing = false;
                 mSession = session;
@@ -324,7 +327,7 @@ namespace BogheCore.Sip
 #if WINDOWS_PHONE
  org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
 #else
-            new ActionConfig();
+ new ActionConfig();
 #endif
             config
                 .setMediaString(twrap_media_type_t.twrap_media_msrp, "file-path", this.mFilePath)
@@ -351,7 +354,7 @@ namespace BogheCore.Sip
 
         public bool SendMessage(String message, String contentType, String wContentType)
         {
-            if(String.IsNullOrEmpty(message))
+            if (String.IsNullOrEmpty(message))
             {
                 LOG.Error("Null or empty message");
                 return false;
@@ -369,11 +372,11 @@ namespace BogheCore.Sip
 #if WINDOWS_PHONE
  org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
 #else
-            new ActionConfig();
+ new ActionConfig();
 #endif
                 if (!String.IsNullOrEmpty(contentType))
                 {
-                    config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", contentType);
+                    config.setMediaString(twrap_media_type_t.twrap_media_msrp, "content-type", "text/plain");
                 }
                 if (!String.IsNullOrEmpty(wContentType))
                 {
@@ -389,9 +392,9 @@ namespace BogheCore.Sip
 #else
                 byte[] payload = Encoding.UTF8.GetBytes(message);
                 IntPtr ptr = Marshal.AllocHGlobal(payload.Length);
+                Marshal.Copy(payload, 0, ptr, payload.Length);
                 bool ret = mSession.sendMessage(ptr, (uint)payload.Length, config);
-                Marshal.Copy(ptr, payload, 0, payload.Length);
-                Marshal.FreeHGlobal(ptr);                
+                Marshal.FreeHGlobal(ptr);
                 config.Dispose();
                 return ret;
 #endif
@@ -408,7 +411,7 @@ namespace BogheCore.Sip
 #if WINDOWS_PHONE
  org.doubango.WindowsPhone.BackgroundProcessController.Instance.rtActionConfigNew();
 #else
-            new ActionConfig();
+ new ActionConfig();
 #endif
                 config.setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-types", MyMsrpSession.CHAT_ACCEPT_TYPES)
                     .setMediaString(twrap_media_type_t.twrap_media_msrp, "accept-wrapped-types", MyMsrpSession.CHAT_ACCEPT_WRAPPED_TYPES)
