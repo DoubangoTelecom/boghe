@@ -118,7 +118,11 @@ namespace BogheApp
 
             mStarted &= this.ScreenService.Start();
 
+            // Update SIP configuration
             UpdateSipConfig();
+            // Set codecs. Not part of the configuration because apply to all SIP service instances (global)
+            SipService.SetCodecs(rt_tdav_codec_id_t.tdav_codec_id_all);
+            // Start SIP service
             mStarted &= this.SipService.Start();
             
             mStarted &= this.ContactService.Start();

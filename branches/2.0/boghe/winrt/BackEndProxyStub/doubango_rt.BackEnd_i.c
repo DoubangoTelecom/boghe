@@ -6,10 +6,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Sun Feb 17 19:44:29 2013
+/* at Tue Apr 02 23:40:10 2013
  */
-/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-f1f9326a:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=ARM 8.00.0595 
+/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-254472eb:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -266,6 +266,9 @@ MIDL_DEFINE_GUID(IID, IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNo
 
 
 MIDL_DEFINE_GUID(IID, IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipServicePublicNonVirtuals,0xCC5B3C10,0x588D,0x37C4,0x81,0x8A,0x97,0xDD,0xA8,0xC1,0xD5,0xDC);
+
+
+MIDL_DEFINE_GUID(IID, IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics,0x228FB9E6,0xED53,0x3289,0xAC,0xE3,0x99,0x5F,0x36,0xF1,0x72,0xB2);
 
 
 MIDL_DEFINE_GUID(IID, IID___x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals,0x2F22CC8A,0x1FA9,0x3EF8,0xBD,0x69,0xA1,0xB6,0x1A,0x69,0x6F,0x3C);

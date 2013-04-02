@@ -29,6 +29,7 @@
 
 #include "rt_SipCallback.h"
 #include "rt_DDebug.h"
+#include "rt_Enums.h"
 
 namespace doubango_rt
 {
@@ -277,6 +278,7 @@ namespace doubango_rt
 			bool HangUp(rtActionConfig^ config);
 			bool Hold(rtActionConfig^ config);
 			bool Resume(rtActionConfig^ config);
+			bool SendDTMF(int32 dtmfCode);
 
 		private:
 			bool m_bWithVideo;
@@ -348,6 +350,8 @@ namespace doubango_rt
 
 			SipAVCall^ MakeCallAudio(rtSipUri^ pTo, rtActionConfig^ pConfig);
 			SipAVCall^ MakeCallAudioVideo(rtSipUri^ pTo, rtActionConfig^ pConfig);
+
+			static bool SetCodecs(enum class rt_tdav_codec_id_t codecs);
 
 		private:
 			SipAVCall^ MakeCall(rtSipUri^ pTo, bool bWithVideo, rtActionConfig^ pConfig);
