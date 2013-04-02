@@ -118,6 +118,15 @@ bool SipAVCall::Resume(rtActionConfig^ config)
 	return false;
 }
 
+bool SipAVCall::SendDTMF(int32 dtmfCode)
+{
+	if(m_pCallSession != nullptr)
+	{
+		return m_pCallSession->sendDTMF(dtmfCode);
+	}
+	return false;
+}
+
 //
 //	SipService
 //
@@ -623,6 +632,12 @@ SipAVCall^ SipService::MakeCall(rtSipUri^ pTo, bool bWithVideo, rtActionConfig^ 
 	}
 
 	return m_pSipActiveAVCall;
+}
+
+bool SipService::SetCodecs(enum class rt_tdav_codec_id_t codecs)
+{
+	rtSipStack::setCodecs(codecs);
+	return true;
 }
 
 //

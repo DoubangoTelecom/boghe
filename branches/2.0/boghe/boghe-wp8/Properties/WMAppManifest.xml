@@ -157,6 +157,7 @@
         <Interface Name="doubango_rt.BackEnd.__ISipConfigPublicNonVirtuals" InterfaceId="{4868DDC4-3353-3344-842D-EB96AC8371B9}" />
         <Interface Name="doubango_rt.BackEnd.__ISipAVCallPublicNonVirtuals" InterfaceId="{05FC37D6-FF7F-3D9F-A6FD-775DD14372AD}" />
         <Interface Name="doubango_rt.BackEnd.__ISipServicePublicNonVirtuals" InterfaceId="{CC5B3C10-588D-37C4-818A-97DDA8C1D5DC}" />
+        <Interface Name="doubango_rt.BackEnd.__ISipServiceStatics" InterfaceId="{228FB9E6-ED53-3289-ACE3-995F36F172B2}" />
         <Interface Name="doubango_rt.BackEnd.__IGlobalsPublicNonVirtuals" InterfaceId="{2F22CC8A-1FA9-3EF8-BD69-A1B61A696F3C}" />
         <Interface Name="doubango_rt.BackEnd.__IGlobalsProtectedNonVirtuals" InterfaceId="{FD21E8E5-0146-348B-979D-9237197A9A9B}" />
         <Interface Name="doubango_rt.BackEnd.__IGlobalsStatics" InterfaceId="{D397D79C-41C8-3E86-B794-A20EA8D545F5}" />

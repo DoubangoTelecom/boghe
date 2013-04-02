@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Sun Feb 17 19:44:29 2013
+/* at Tue Apr 02 23:40:10 2013
  */
-/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-f1f9326a:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=ARM 8.00.0595 
+/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-254472eb:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -1251,6 +1251,24 @@ namespace ABI {
 #endif 	/* ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServicePublicNonVirtuals_FWD_DEFINED__ */
 
 
+#ifndef ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_FWD_DEFINED__
+#define ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_FWD_DEFINED__
+typedef interface __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics;
+
+#ifdef __cplusplus
+namespace ABI {
+    namespace doubango_rt {
+        namespace BackEnd {
+            interface __ISipServiceStatics;
+        } /* end namespace */
+    } /* end namespace */
+} /* end namespace */
+
+#endif /* __cplusplus */
+
+#endif 	/* ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_FWD_DEFINED__ */
+
+
 #ifndef ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_FWD_DEFINED__
 #define ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_FWD_DEFINED__
 typedef interface __x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals __x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals;
@@ -1640,6 +1658,7 @@ typedef enum __x_ABI_Cdoubango__rt_CBackEnd_CIPVersion __x_ABI_Cdoubango__rt_CBa
 
 
 #endif
+
 
 
 
@@ -3093,6 +3112,7 @@ namespace ABI {
 
 extern "C" { 
 #endif
+
 
 
 
@@ -15870,6 +15890,10 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVi
                         /* [in] */ ABI::doubango_rt::BackEnd::__IrtActionConfigPublicNonVirtuals *config,
                         /* [out][retval] */ boolean *__returnValue) = 0;
                     
+                    virtual HRESULT STDMETHODCALLTYPE SendDTMF( 
+                        /* [in] */ INT32 dtmfCode,
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
                 };
 
                 extern const __declspec(selectany) IID & IID___ISipAVCallPublicNonVirtuals = __uuidof(__ISipAVCallPublicNonVirtuals);
@@ -15947,6 +15971,11 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVi
             /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_C____IrtActionConfigPublicNonVirtuals *config,
             /* [out][retval] */ boolean *__returnValue);
         
+        HRESULT ( STDMETHODCALLTYPE *SendDTMF )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVirtuals * This,
+            /* [in] */ INT32 dtmfCode,
+            /* [out][retval] */ boolean *__returnValue);
+        
         END_INTERFACE
     } __x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVirtualsVtbl;
 
@@ -16003,6 +16032,9 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVi
 
 #define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVirtuals_Resume(This,config,__returnValue)	\
     ( (This)->lpVtbl -> Resume(This,config,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipAVCallPublicNonVirtuals_SendDTMF(This,dtmfCode,__returnValue)	\
+    ( (This)->lpVtbl -> SendDTMF(This,dtmfCode,__returnValue) ) 
 
 #endif /* COBJMACROS */
 
@@ -16343,9 +16375,9 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipServicePublicNonV
 /* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0067 */
 /* [local] */ 
 
-#if !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__)
-extern const __declspec(selectany) WCHAR InterfaceName_doubango_rt_BackEnd___IGlobalsPublicNonVirtuals[] = L"doubango_rt.BackEnd.__IGlobalsPublicNonVirtuals";
-#endif /* !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__) */
+#if !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_INTERFACE_DEFINED__)
+extern const __declspec(selectany) WCHAR InterfaceName_doubango_rt_BackEnd___ISipServiceStatics[] = L"doubango_rt.BackEnd.__ISipServiceStatics";
+#endif /* !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_INTERFACE_DEFINED__) */
 
 
 /* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0067 */
@@ -16355,6 +16387,143 @@ extern const __declspec(selectany) WCHAR InterfaceName_doubango_rt_BackEnd___IGl
 
 extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0067_v0_0_c_ifspec;
 extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0067_v0_0_s_ifspec;
+
+#ifndef ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_INTERFACE_DEFINED__
+#define ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_INTERFACE_DEFINED__
+
+/* interface __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics */
+/* [uuid][object] */ 
+
+
+
+/* interface ABI::doubango_rt::BackEnd::__ISipServiceStatics */
+/* [uuid][object] */ 
+
+
+EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    } /* end extern "C" */
+    namespace ABI {
+        namespace doubango_rt {
+            namespace BackEnd {
+                
+                MIDL_INTERFACE("228FB9E6-ED53-3289-ACE3-995F36F172B2")
+                __ISipServiceStatics : public IInspectable
+                {
+                public:
+                    virtual HRESULT STDMETHODCALLTYPE SetCodecs( 
+                        /* [in] */ ABI::doubango_rt::BackEnd::rt_tdav_codec_id_t codecs,
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                };
+
+                extern const __declspec(selectany) IID & IID___ISipServiceStatics = __uuidof(__ISipServiceStatics);
+
+                
+            }  /* end namespace */
+        }  /* end namespace */
+    }  /* end namespace */
+    extern "C" { 
+    
+#else 	/* C style interface */
+
+    typedef struct __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStaticsVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetIids )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This,
+            /* [out] */ ULONG *iidCount,
+            /* [size_is][size_is][out] */ IID **iids);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetRuntimeClassName )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This,
+            /* [out] */ HSTRING *className);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetTrustLevel )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This,
+            /* [out] */ TrustLevel *trustLevel);
+        
+        HRESULT ( STDMETHODCALLTYPE *SetCodecs )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics * This,
+            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tdav__codec__id__t codecs,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        END_INTERFACE
+    } __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStaticsVtbl;
+
+    interface __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics
+    {
+        CONST_VTBL struct __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStaticsVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_GetIids(This,iidCount,iids)	\
+    ( (This)->lpVtbl -> GetIids(This,iidCount,iids) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_GetRuntimeClassName(This,className)	\
+    ( (This)->lpVtbl -> GetRuntimeClassName(This,className) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_GetTrustLevel(This,trustLevel)	\
+    ( (This)->lpVtbl -> GetTrustLevel(This,trustLevel) ) 
+
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_SetCodecs(This,codecs,__returnValue)	\
+    ( (This)->lpVtbl -> SetCodecs(This,codecs,__returnValue) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* ____x_ABI_Cdoubango__rt_CBackEnd_C____ISipServiceStatics_INTERFACE_DEFINED__ */
+
+
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0068 */
+/* [local] */ 
+
+#if !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__)
+extern const __declspec(selectany) WCHAR InterfaceName_doubango_rt_BackEnd___IGlobalsPublicNonVirtuals[] = L"doubango_rt.BackEnd.__IGlobalsPublicNonVirtuals";
+#endif /* !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__) */
+
+
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0068 */
+/* [local] */ 
+
+
+
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0068_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0068_v0_0_s_ifspec;
 
 #ifndef ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__
 #define ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__
@@ -16537,7 +16706,7 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirt
 #endif 	/* ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsPublicNonVirtuals_INTERFACE_DEFINED__ */
 
 
-/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0068 */
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0069 */
 /* [local] */ 
 
 #if !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsProtectedNonVirtuals_INTERFACE_DEFINED__)
@@ -16545,13 +16714,13 @@ extern const __declspec(selectany) WCHAR InterfaceName_doubango_rt_BackEnd___IGl
 #endif /* !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsProtectedNonVirtuals_INTERFACE_DEFINED__) */
 
 
-/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0068 */
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0069 */
 /* [local] */ 
 
 
 
-extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0068_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0068_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0069_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0069_v0_0_s_ifspec;
 
 #ifndef ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsProtectedNonVirtuals_INTERFACE_DEFINED__
 #define ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsProtectedNonVirtuals_INTERFACE_DEFINED__
@@ -16662,7 +16831,7 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsProtectedNonV
 #endif 	/* ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsProtectedNonVirtuals_INTERFACE_DEFINED__ */
 
 
-/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0069 */
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0070 */
 /* [local] */ 
 
 #if !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsStatics_INTERFACE_DEFINED__)
@@ -16670,13 +16839,13 @@ extern const __declspec(selectany) WCHAR InterfaceName_doubango_rt_BackEnd___IGl
 #endif /* !defined(____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsStatics_INTERFACE_DEFINED__) */
 
 
-/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0069 */
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0070 */
 /* [local] */ 
 
 
 
-extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0069_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0069_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0070_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0070_v0_0_s_ifspec;
 
 #ifndef ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsStatics_INTERFACE_DEFINED__
 #define ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsStatics_INTERFACE_DEFINED__
@@ -16831,7 +17000,7 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsStatics;
 #endif 	/* ____x_ABI_Cdoubango__rt_CBackEnd_C____IGlobalsStatics_INTERFACE_DEFINED__ */
 
 
-/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0070 */
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0071 */
 /* [local] */ 
 
 #ifndef RUNTIMECLASS_doubango_rt_BackEnd_rtActionConfig_DEFINED
@@ -16992,13 +17161,13 @@ extern const __declspec(selectany) WCHAR RuntimeClass_doubango_rt_BackEnd_Global
 #endif
 
 
-/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0070 */
+/* interface __MIDL_itf_doubango_rt2EBackEnd_0000_0071 */
 /* [local] */ 
 
 
 
-extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0070_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0070_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0071_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_doubango_rt2EBackEnd_0000_0071_v0_0_s_ifspec;
 
 /* Additional Prototypes for ALL interfaces */
 
