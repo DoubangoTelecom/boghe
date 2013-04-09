@@ -1438,6 +1438,15 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zero Video Artifacts (Perfect Quality).
+        /// </summary>
+        public static string TabQoS_ZeroVideoArtifacts {
+            get {
+                return ResourceManager.GetString("TabQoS_ZeroVideoArtifacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Security.
         /// </summary>
         public static string TabSecurity {

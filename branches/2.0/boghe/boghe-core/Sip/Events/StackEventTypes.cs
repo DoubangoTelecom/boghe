@@ -31,6 +31,7 @@ namespace BogheCore.Sip.Events
         START_NOK,
         STOP_OK,
         STOPPING,
-        STOP_NOK
+        STOP_NOK,
+        DISCONNECTED
     }
 }

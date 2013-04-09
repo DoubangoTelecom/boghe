@@ -699,4 +699,7 @@
   <data name="TabSecurity_Type" xml:space="preserve">
     <value>Type:</value>
   </data>
+  <data name="TabQoS_ZeroVideoArtifacts" xml:space="preserve">
+    <value>Zero Video Artifacts (Perfect Quality)</value>
+  </data>
 </root>
