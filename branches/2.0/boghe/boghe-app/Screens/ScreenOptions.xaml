@@ -459,7 +459,7 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Content="{x:Static res:Strings.TabQoS}" Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelQoSTitle" VerticalAlignment="Top" FontWeight="Bold" />
-                    <GroupBox Margin="6,109,6,0" Height="139" VerticalAlignment="Top">
+                    <GroupBox Margin="6,142,6,0" Height="139" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock Text="{x:Static res:Strings.TabQoS_Preconditions}" FontSize="14" FontWeight="Bold" Foreground="Black" />
                         </GroupBox.Header>
@@ -493,7 +493,7 @@
                             </ComboBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Margin="5,255,7,71" Name="groupBox4">
+                    <GroupBox Margin="5,288,7,38" Name="groupBox4">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabQoS_SessionTimers}" />
                         </GroupBox.Header>
@@ -512,7 +512,7 @@
                             <CheckBox Content="{x:Static res:Strings.TabQoS_EnableSessionTimers}" Height="16" Margin="7,6,6,0" Name="checkBoxSessionTimersEnable" VerticalAlignment="Top" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Height="64" Margin="7,36,5,0" VerticalAlignment="Top">
+                    <GroupBox Height="100" Margin="7,36,5,0" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabQoS_General}" />
                         </GroupBox.Header>
@@ -521,8 +521,8 @@
                                 <ColumnDefinition Width="0*" />
                                 <ColumnDefinition Width="245.477*" />
                             </Grid.ColumnDefinitions>
-                            <Label Content="{x:Static res:Strings.TabQoS_PrefVideoSize}" Margin="6,6,115,7" Name="label3" Grid.Column="1" />
-                            <ComboBox Margin="136.477,7,5,9" Name="comboBoxPrefVideoSize" Grid.Column="1">
+                            <Label Content="{x:Static res:Strings.TabQoS_PrefVideoSize}" Margin="6,6,115,0" Name="label3" Grid.Column="1" Height="23.38" VerticalAlignment="Top" />
+                            <ComboBox Margin="136.477,7,5,0" Name="comboBoxPrefVideoSize" Grid.Column="1" Height="22.38" VerticalAlignment="Top">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -537,6 +537,7 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
+                            <CheckBox Content="{x:Static res:Strings.TabQoS_ZeroVideoArtifacts}" Grid.Column="1" Margin="6,46.38,4,0" Name="checkBoxZeroVideoArtifactsEnable" Height="22" VerticalAlignment="Top" FontWeight="Bold" />
                         </Grid>
                     </GroupBox>
                 </Grid>

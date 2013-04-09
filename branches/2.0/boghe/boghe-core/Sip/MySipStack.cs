@@ -33,7 +33,7 @@ namespace BogheCore.Sip
     public class MySipStack : IDisposable
     {
         public enum STACK_STATE {
-		    NONE, STARTING, STARTED, STOPPING, STOPPED
+		    NONE, STARTING, STARTED, STOPPING, STOPPED, DISCONNECTED
 	    }
 
 	    private STACK_STATE state = STACK_STATE.NONE;

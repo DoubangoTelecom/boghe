@@ -728,6 +728,11 @@ namespace BogheCore.Services.Impl
                     EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
                         new StackEventArgs(StackEventTypes.STOP_OK, phrase));
                 }
+                else if (code == tinyWRAP.tsip_event_code_stack_disconnected)
+                {
+                    EventHandlerTrigger.TriggerEvent<StackEventArgs>(this.sipService.onStackEvent, this.sipService,
+                        new StackEventArgs(StackEventTypes.DISCONNECTED, phrase));
+                }
 
                 return 0;
             }
