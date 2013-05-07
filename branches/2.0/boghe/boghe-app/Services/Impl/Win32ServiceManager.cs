@@ -115,6 +115,8 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetJbMaxLateRate(1);
             MediaSessionMgr.defaultsSetRtcpEnabled(true);
             MediaSessionMgr.defaultsSetRtcpMuxEnabled(true);
+            MediaSessionMgr.defaultsSetOpusMaxCaptureRate(16000); /* Because of WebRTC AEC only 8000 and 16000 are supported */
+            MediaSessionMgr.defaultsSetOpusMaxPlaybackRate(48000);
 
             MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
             if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))

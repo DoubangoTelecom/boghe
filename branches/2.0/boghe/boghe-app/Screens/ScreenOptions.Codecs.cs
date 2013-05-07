@@ -66,7 +66,10 @@ namespace BogheApp.Screens
             {
                 codecs.Add(new Codec("G.729", "G729 Annex A/B (8 KHz)", tdav_codec_id_t.tdav_codec_id_g729ab));
             }
-
+            if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_opus))
+            {
+                codecs.Add(new Codec("OPUS", "Opus (8 - 48 KHz)", tdav_codec_id_t.tdav_codec_id_opus));
+            }
 
             if (SipStack.isCodecSupported(tdav_codec_id_t.tdav_codec_id_h264_bp))
             {
@@ -183,6 +186,7 @@ namespace BogheApp.Screens
                         case tdav_codec_id_t.tdav_codec_id_speex_nb:
                         case tdav_codec_id_t.tdav_codec_id_speex_wb:
                         case tdav_codec_id_t.tdav_codec_id_speex_uwb:
+                        case tdav_codec_id_t.tdav_codec_id_opus:
                         case tdav_codec_id_t.tdav_codec_id_g729ab:
                         case tdav_codec_id_t.tdav_codec_id_g722:
                             return "Audio Codecs";
