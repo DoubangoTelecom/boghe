@@ -51,6 +51,7 @@ namespace BogheApp.Screens
 
             // STUN informaions are checked before each registration which means that we don't need to pass the config to the native part
             // Pass other configs to the native part
+            MediaSessionMgr.defaultsSetStunEnabled(this.checkBoxStunTurnEnable.IsChecked.Value);
             MediaSessionMgr.defaultsSetIceEnabled(this.checkBoxIceEnabled.IsChecked.Value);
             MediaSessionMgr.defaultsSetRtpSymetricEnabled(this.checkBoxForceSymetricRtpEnabled.IsChecked.Value);
 

@@ -355,6 +355,7 @@ namespace BogheCore.Services.Impl
             if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN))
             {
                 LOG.Debug("STUN=yes");
+                mSipStack.WrappedStack.setSTUNEnabled(true);
                 if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, Configuration.DEFAULT_NATT_STUN_DISCO))
                 {
                     String domain = mPreferences.realm.Substring(mPreferences.realm.IndexOf(':') + 1);
@@ -392,7 +393,7 @@ namespace BogheCore.Services.Impl
             else
             {
                 LOG.Debug("STUN=no");
-                mSipStack.WrappedStack.setSTUNServer(BogheCore.Utils.StringUtils.nullptr, 0);
+                mSipStack.WrappedStack.setSTUNEnabled(false);
             }
 
             // Set Proxy-CSCF
