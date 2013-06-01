@@ -554,29 +554,15 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Label Content="{x:Static res:Strings.TabNATT_Title}" Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNatTraversalTitle" VerticalAlignment="Top" FontWeight="Bold" />
-                    <GroupBox Margin="7,141,5,137" Name="groupBox5">
-                        <GroupBox.Header>
-                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="{x:Static res:Strings.TabNATT_STUNTURN}" />
-                        </GroupBox.Header>
-                        <Grid>
-                            <CheckBox Content="{x:Static res:Strings.TabNATT_EnableSTUN}" Height="16" Margin="7,6,6,0" Name="checkBoxStunTurnEnable" VerticalAlignment="Top" />
-                            <RadioButton Content="{x:Static res:Strings.TabNATT_Discover_STUNSrv}" Height="16" Margin="21,36,6,0" Name="radioButtonStunDiscover" VerticalAlignment="Top" IsEnabled="False" />
-                            <RadioButton Content="{x:Static res:Strings.TabNATT_UseSTUNSrv}" Height="16" Margin="21,58.38,6,0" Name="radioButtonStunUseThis" VerticalAlignment="Top" IsEnabled="False" />
-                            <Label Content="{x:Static res:Strings.TabNATT_Server}" Height="28" Margin="47,81,0,0" Name="labelStunServer" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45.693" />
-                            <Label Content="{x:Static res:Strings.TabNATT_Port}" Height="28" HorizontalAlignment="Left" Margin="47.001,109,0,0" Name="labelStunPort" VerticalAlignment="Top" Width="45.693" />
-                            <TextBox Height="23" Margin="108,84.38,6,0" Name="textBoxStunServerAddress" VerticalAlignment="Top" IsEnabled="False" BorderBrush="SkyBlue" />
-                            <ctrl:NumericTextBox Height="23" Margin="108,113.38,0,0" Name="textBoxStunPort" VerticalAlignment="Top" HorizontalAlignment="Left" Width="51.477" IsEnabled="False" BorderBrush="SkyBlue" />
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Margin="6,69,6,0" Name="groupBoxICE" Height="55" VerticalAlignment="Top">
-                        <GroupBox.Header>
-                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black" Text="ICE" />
-                        </GroupBox.Header>
-                        <Grid>
-                            <CheckBox Content="Enable ICE" Height="16" Margin="7,6,6,0" Name="checkBoxIceEnabled" VerticalAlignment="Top" />
-                        </Grid>
-                    </GroupBox>
                     <CheckBox Height="16" Margin="6,41,11,0" Name="checkBoxForceSymetricRtpEnabled" VerticalAlignment="Top">Force Symetric RTP</CheckBox>
+                    <CheckBox Content="Enable ICE" Height="16" Margin="6,71,9,0" Name="checkBoxIceEnabled" VerticalAlignment="Top" />
+                    <CheckBox Content="{x:Static res:Strings.TabNATT_EnableSTUN}" Height="16" Margin="6,100,9,0" Name="checkBoxStunTurnEnable" VerticalAlignment="Top" />
+                    <RadioButton Content="{x:Static res:Strings.TabNATT_Discover_STUNSrv}" Height="16" Margin="6,127,28,0" Name="radioButtonStunDiscover" VerticalAlignment="Top" />
+                    <RadioButton Content="{x:Static res:Strings.TabNATT_UseSTUNSrv}" Height="16" Margin="6,153,28,0" Name="radioButtonStunUseThis" VerticalAlignment="Top" />
+                    <Label Content="{x:Static res:Strings.TabNATT_Server}" Height="28" Margin="26,171,0,0" Name="labelStunServer" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45.693" />
+                    <Label Content="{x:Static res:Strings.TabNATT_Port}" Height="28" HorizontalAlignment="Left" Margin="26,203,0,0" Name="labelStunPort" VerticalAlignment="Top" Width="45.693" />
+                    <TextBox Height="23" Margin="89,175,11,0" Name="textBoxStunServerAddress" VerticalAlignment="Top" BorderBrush="SkyBlue" />
+                    <ctrl:NumericTextBox Height="23" Margin="89,204,11,0" Name="textBoxStunPort" VerticalAlignment="Top" BorderBrush="SkyBlue" />
                 </Grid>
             </TabItem>
         </TabControl>

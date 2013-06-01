@@ -152,6 +152,10 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetIceEnabled(
                 this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE)
                 );
+            MediaSessionMgr.defaultsSetStunEnabled(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN)
+                );
+
             return ret;
         }
 
