@@ -404,6 +404,12 @@ void SipService::OnRejectCallRequested(VoipPhoneCall^ sender, CallRejectEventArg
 		m_pSipActiveAVCall->VoipCall = nullptr; // to avoid calling NotifyCallEnded() on it as it was never activated
 		m_pSipActiveAVCall->HangUp(nullptr);
 	}
+	else
+	{
+		// https://groups.google.com/group/doubango/browse_thread/thread/3ce21cfd6ed043ad
+		// If the call doesn't match this means it's already ended or unknown (looks to be a bug in WP8)
+		incomingCall->NotifyCallEnded();
+	}
 }
 
 void SipService::OnHoldCallRequested(VoipPhoneCall^ sender, CallStateChangeEventArgs^ args)
