@@ -42,7 +42,8 @@ namespace BogheApp.Screens
                 new PrefVideoSize("480P (852 x 480)", tmedia_pref_video_size_t.tmedia_pref_video_size_480p),
                 new PrefVideoSize("720P (1280 x 720)", tmedia_pref_video_size_t.tmedia_pref_video_size_720p),
                 new PrefVideoSize("16CIF (1408 x 1152)", tmedia_pref_video_size_t.tmedia_pref_video_size_16cif),
-                new PrefVideoSize("1080P (1920 x 1080)", tmedia_pref_video_size_t.tmedia_pref_video_size_1080p)
+                new PrefVideoSize("1080P (1920 x 1080)", tmedia_pref_video_size_t.tmedia_pref_video_size_1080p),
+                new PrefVideoSize("2160P (3840 x 2160)", tmedia_pref_video_size_t.tmedia_pref_video_size_2160p)
             };
 
         void InitializeQoS()
