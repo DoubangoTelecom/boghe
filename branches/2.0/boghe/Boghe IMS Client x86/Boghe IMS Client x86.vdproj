@@ -63,6 +63,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_75A3A89260074F2C8CDBD2AED54DD807"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7804E541BC41438C8121CE4DC8076411"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -70,12 +76,6 @@
         "Entry"
         {
         "MsmKey" = "8:_896C7141D3D4476A8D22AB00E68B4E85"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8CA50EE516124DD7BAD183EB000491BE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -433,7 +433,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=2.0.137.814, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:BogheXdm, Version=2.0.153.884, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_6FD3B997BA073095EA537D71885A834B"
@@ -460,10 +460,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7804E541BC41438C8121CE4DC8076411"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75A3A89260074F2C8CDBD2AED54DD807"
             {
-            "SourcePath" = "8:..\\Release\\tinySDP.dll"
-            "TargetName" = "8:tinySDP.dll"
+            "SourcePath" = "8:..\\Release\\pluginDirectShow.dll"
+            "TargetName" = "8:pluginDirectShow.dll"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
             "Condition" = "8:"
@@ -480,10 +480,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8CA50EE516124DD7BAD183EB000491BE"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7804E541BC41438C8121CE4DC8076411"
             {
-            "SourcePath" = "8:..\\Release\\tinyDSHOW.dll"
-            "TargetName" = "8:tinyDSHOW.dll"
+            "SourcePath" = "8:..\\Release\\tinySDP.dll"
+            "TargetName" = "8:tinySDP.dll"
             "Tag" = "8:"
             "Folder" = "8:_B08EBB813B8346AB9BA0FF8B3139BDF4"
             "Condition" = "8:"
@@ -564,7 +564,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheControls, Version=2.0.137.814, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:BogheControls, Version=2.0.153.884, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_C45B30FC266DAE31ADAFD8E3BD1D2BD4"
@@ -595,7 +595,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BogheCore, Version=2.0.137.814, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:BogheCore, Version=2.0.153.884, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_D766339A2963D6ED22CB95A8E57D0073"
@@ -757,7 +757,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:doubango, Version=2.0.137.814, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:doubango, Version=2.0.153.884, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_FE9A018435C4D0120CA3C1DB5091E944"
