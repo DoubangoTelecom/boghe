@@ -13,8 +13,8 @@ Please note that Boghe v2.x requires [http://code.google.com/p/doubango/ Doubang
  * Windows 7
 
 == Thirdparties ==
- * Microsoft DirectX SDK: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=c72d9f1e-53f3-4747-8490-6801d8e8b4ef
- * Windows Platform SDK: Depends on your system.
+ * Windows [https://www.google.fr/search?q=windows+sdk&rlz=1C1CHFX_frFR519FR519&oq=windows+sdk&aqs=chrome.0.57j0l3j62l2.2531j0&sourceid=chrome&ie=UTF-8 Platform/Windows SDK]: Depends on your system.
+ * Microsoft DirectX SDK (Not need if you're using [http://msdn.microsoft.com/en-us/library/windows/desktop/hh852363.aspx Windows SDK 8]): http://www.microsoft.com/downloads/en/details.aspx?FamilyID=c72d9f1e-53f3-4747-8490-6801d8e8b4ef
 After the installation you should add both the *lib* and *include* folders to the visual studio search paths like this:
  * Open "Tools -> Options -> Projects and Solutions -> VC++ Directories -> Include Files" and add *$(WindowsSdkDir)\include* and *$(DXSDK_DIR)include*
  * Open "Tools -> Options -> Projects and Solutions -> VC++ Directories -> Library Files" and add *$(WindowsSdkDir)\lib* and *$(DXSDK_DIR)lib\x86*
