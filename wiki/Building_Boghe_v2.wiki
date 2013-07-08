@@ -1,7 +1,7 @@
 #summary Building Boghe v2.x (Windows Desktop)
 #labels Featured,Phase-Implementation
 
-<wiki:toc max_depth="3" />
+<wiki:toc max_depth="4" />
 This wiki page is for Windows Desktop (XP, Vista, 7 and 8).
 
 To build the source code you need Visual Studio 2008 or later with the .NET Framework 3.5 *SP1*.<br />
@@ -60,6 +60,12 @@ HAVE_OPENCORE_AMR=0
  * From Visual Studio, right click on *tinyDAV* project and select *Properties* -> *Linker* -> *Input* -> *Additional Dependencies*.
   # Link to LGPL version of FFmpeg by replacing *libavcodec.a*, *libavutil.a*, *libswscale.a* and *libavcore.a* with *libavcodec-lgpl.a*, *libavutil-lgpl.a*, *libswscale-lgpl.a* and *libavcore-lgpl.a* respectively.
   # Remove *libx264.a* from the list.
+
+===Known issues===
+====Video standalone plugins (DLLs)====
+The project contains two standalone video plugins for the backends (*pluginDirectShow*.DLL and *pluginWinMF*.DLL). *Both should be build* and redistributed with your app regardless the target OS (from XP to 8). The plugin loader will choose the best one at runtime depending on the target system. At *least one must* be enabled to have support for video.
+ * *pluginWinMF* requires Windows SDK 7 or later and will only work on Win7 and Win8. On XP and Vista, the plugin loader will safely skip this DLL. If you have any issue on building this plugin then, just unload the project and use *pluginDirectShow*.DLL instead.
+ * *pluginDirectShow* works on any Windows version.
 
 ==Technical help==
 Please check our [http://code.google.com/p/webrtc2sip/issues/list issue tracker] or [https://groups.google.com/group/doubango developer group] if you have any problem.
