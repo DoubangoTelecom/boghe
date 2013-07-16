@@ -119,6 +119,7 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetOpusMaxPlaybackRate(48000);
             MediaSessionMgr.defaultsSetAudioChannels(1, 1); // mono for both
             MediaSessionMgr.defaultsSetAudioPtime(20);
+            MediaSessionMgr.defaultsSetVideoFps(15); // default video FPS. Will be updated using the SDP.
 
             MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
             if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
