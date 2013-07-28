@@ -97,11 +97,11 @@ namespace BogheApp
             this.imActivityIndicator = new IMActivityIndicator(this.remotePartyUri);
 
             this.videoDisplayLocal = new VideoDisplay();
-            this.videoDisplayLocal.Visibility = Visibility.Hidden;
+            //this.videoDisplayLocal.Visibility = Visibility.Hidden;
             this.videoDisplayLocal.VerticalAlignment = VerticalAlignment.Stretch;
             this.videoDisplayLocal.HorizontalAlignment = HorizontalAlignment.Stretch;
             this.videoDisplayRemote = new VideoDisplay();
-            this.videoDisplayRemote.Visibility = Visibility.Hidden;
+            //this.videoDisplayRemote.Visibility = Visibility.Hidden;
             this.videoDisplayRemote.ToolTip = this.borderVideoDispalyRemote.ToolTip;
 
             this.borderVideoDispalyRemote.Child = this.videoDisplayRemote;

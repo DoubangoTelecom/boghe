@@ -168,6 +168,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pluginWASAPI", "..\..\..\..
 		{99B7D02F-8C70-4B45-AF3C-92313C3CEE15} = {99B7D02F-8C70-4B45-AF3C-92313C3CEE15}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pluginWinAudioDSP", "..\..\..\..\doubango\branches\2.0\doubango\plugins\pluginWinAudioDSP\pluginWinAudioDSP.vcproj", "{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -718,6 +720,26 @@ Global
 		{8D72C459-8B9D-4280-8331-8BAB02D735E5}.Static_Release|Mixed Platforms.Build.0 = Release|Win32
 		{8D72C459-8B9D-4280-8331-8BAB02D735E5}.Static_Release|Win32.ActiveCfg = Release|Win32
 		{8D72C459-8B9D-4280-8331-8BAB02D735E5}.Static_Release|Win32.Build.0 = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Debug|Win32.Build.0 = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Release|Win32.ActiveCfg = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Release|Win32.Build.0 = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Debug|Win32.ActiveCfg = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Debug|Win32.Build.0 = Debug|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Release|Any CPU.ActiveCfg = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Release|Mixed Platforms.Build.0 = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Release|Win32.ActiveCfg = Release|Win32
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520}.Static_Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -749,5 +771,6 @@ Global
 		{6A69773C-0C70-4BD4-8362-C274CAFD58F2} = {65D3B3D2-BC15-4F46-A926-DC4F4481BC65}
 		{97008E5F-C6FC-4748-BE0D-50400E6764CB} = {65D3B3D2-BC15-4F46-A926-DC4F4481BC65}
 		{8D72C459-8B9D-4280-8331-8BAB02D735E5} = {65D3B3D2-BC15-4F46-A926-DC4F4481BC65}
+		{3C720D1E-E3DC-408E-99EF-A5AA2B81C520} = {65D3B3D2-BC15-4F46-A926-DC4F4481BC65}
 	EndGlobalSection
 EndGlobal
