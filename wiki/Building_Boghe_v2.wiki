@@ -121,7 +121,7 @@ pluginCUDA
 <tr>
 <td>pluginAudioDSP</td>
 <td>
- * Microsoft Audio Resampler
+ * Microsoft Audio Resampler DSP
  * Microsoft Voice capture DSP (AEC, AGC, VAD, Noise suppression...)
 </td>
 <td>
