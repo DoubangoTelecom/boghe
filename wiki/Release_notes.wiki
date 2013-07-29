@@ -10,7 +10,7 @@
  * Adds support for Microsoft H.264 codec (pluginWinMF)
  * Adds support for DXVA2 (pluginWinMF)
  * Adds support for Media Foundation video capture and rendering (pluginWinMF)
- * Adds Microsoft resampler (pluginWinAudioDSP)
+ * Adds Microsoft audio resampler DSP (pluginWinAudioDSP)
  * Adds support for Microsoft voice capture DSP (pluginWinAudioDSP)
  * Adds support for WASAPI back-end (pluginWASAPI)
  * Adds support for Microsoft Color Converter, Frame Rate Converter and Video Resizer DSP (pluginWinMF)
