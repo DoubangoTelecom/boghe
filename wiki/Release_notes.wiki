@@ -15,7 +15,7 @@
  * Adds support for WASAPI back-end (pluginWASAPI)
  * Adds support for Microsoft Color Converter, Frame Rate Converter and Video Resizer DSPs (pluginWinMF)
  * Adds support Microsoft Video Processor MFT (pluginWinMF)
- * Fix video latency issues on DirectShow (now using Direct3D for immediate rendering and RGB32 instead of RGB24 for better quality). tinyDSHOW is not replaced with pluginDirectShow.
+ * Fix video latency issues on DirectShow (now using Direct3D for immediate rendering and RGB32 instead of RGB24 for better quality). tinyDSHOW is now replaced with pluginDirectShow.
  * Fix sound latency issue on DirectSound playback module
  * ...and many bug fixes
 
