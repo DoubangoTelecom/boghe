@@ -3,7 +3,7 @@
 
 <wiki:toc max_depth="2" />
 
-==2.0.173.972, codename: "RockStar"==
+==2.0.173.972 RockStar==
  * Align with Doubango 972
  * Adds support for NVIDIA CUDA H.264 codec (pluginCUDA)
  * Adds support for Intel Quick Sync H.264 codec (pluginWinMF)
