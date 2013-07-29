@@ -1,7 +1,22 @@
 #summary Release notes
-#labels Featured
+#labels Featured,Phase-Support
 
 <wiki:toc max_depth="2" />
+
+==2.0.173.972 (RockStar)==
+ * Align with Doubango 972
+ * Adds support for NVIDIA CUDA H.264 codec (pluginCUDA)
+ * Adds support for Intel Quick Sync H.264 codec (pluginWinMF)
+ * Adds support for Microsoft H.264 codec (pluginWinMF)
+ * Adds support for DXVA2 (pluginWinMF)
+ * Adds support for Media Foundation video capture and renderer (pluginWinMF)
+ * Adds Microsoft resampler (pluginWinAudioDSP)
+ * Adds support for Microsoft voice capture DSP (pluginWinAudioDSP)
+ * Adds support for WASAPI back-end (pluginWASAPI)
+ * Adds support for Microsoft Color Converter, Frame Rate Converter and Video Resizer DSP (pluginWinMF)
+ * Adds support Microsoft Video Processor MFT (pluginWinMF)
+ * Fix video latency issues on DirectShow (now using Direct3D for immediate rendering and RGB32 instead of RGB24 for better quality). tinyDSHOW is not replaced with pluginDirectShow.
+ * Fix sound latency issue on DirectSound playback module
 
 ==2.0.132.808==
  * Align with Doubango 807
