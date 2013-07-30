@@ -40,7 +40,7 @@ svn checkout http://boghe.googlecode.com/svn boghe
 To open & build all projects, open *myboghe\boghe\branches\2.0\boghe\boghe-win32.sln*
 
 ===Building standalone plugins (DLLs)===
-All standalone plugins are optional and provide different features. You should deploy them all regardless the target OS and let the loader choose the best ones. For example, both *pluginWinMF* and *pluginDirectShow* will be included in the installer and the loaded will choose the first one for Win7/Win8 and the second for XP/Vista.
+All standalone plugins are optional and provide different features. You should deploy them all regardless the target OS and let the loader choose the best ones. For example, both *pluginWinMF* and *pluginDirectShow* will be included in the installer and the loader will choose the first one for Win7/Win8 and the second for XP/Vista.
 <table border="1" width=100%>
 <tr>
 <td>*Name*</td>
