@@ -9,8 +9,7 @@ Please note that Boghe v2.x requires [http://code.google.com/p/doubango/ Doubang
 
 == Supported systems ==
  * Windows XP SP3 with .NET Framework 3.5 *SP1*
- * Windows Vista
- * Windows 7
+ * Windows Vista, 7 and 8
 
 == Thirdparties ==
  * [https://www.google.fr/search?q=windows+sdk&rlz=1C1CHFX_frFR519FR519&oq=windows+sdk&aqs=chrome.0.57j0l3j62l2.2531j0&sourceid=chrome&ie=UTF-8 Platform/Windows SDK]: Depends on your system.
