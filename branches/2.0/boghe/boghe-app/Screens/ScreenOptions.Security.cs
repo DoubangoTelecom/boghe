@@ -117,7 +117,9 @@ namespace BogheApp.Screens
                     new SRtpType(tmedia_srtp_type_t.tmedia_srtp_type_sdes), 
                     new SRtpType(tmedia_srtp_type_t.tmedia_srtp_type_dtls),
                     new SRtpType(tmedia_srtp_type_t.tmedia_srtp_type_sdes_dtls) 
-            }.ToList().ForEach(x => this.comboBoxSRTPTypes.Items.Add(x)); 
+            }.ToList().ForEach(x => this.comboBoxSRTPTypes.Items.Add(x));
+
+            checkBoxIPSecSecAgreeEnabled.IsEnabled = SipStack.isIPSecSupported();
         }
 
         private void LoadSecurity()
