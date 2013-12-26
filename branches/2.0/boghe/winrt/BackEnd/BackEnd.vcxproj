@@ -332,10 +332,6 @@ popd</Command>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp_config.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tinyipsec_config.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec.h" />
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_common.h" />
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_racoon.h" />
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_vista.h" />
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_xp.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyMEDIA\include\tinymedia.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyMEDIA\include\tinymedia\content\tmedia_content_cpim.h" />
@@ -1268,30 +1264,6 @@ popd</Command>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec.c">
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_common.c">
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_racoon.c">
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_vista.c">
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_xp.c">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>

@@ -155,18 +155,6 @@
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec.c">
       <Filter>Doubango\tinyIPSec</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_common.c">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_racoon.c">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_vista.c">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_xp.c">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyMEDIA\src\tmedia.c">
       <Filter>Doubango\tinyMEDIA</Filter>
     </ClCompile>
@@ -1427,9 +1415,6 @@
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\audio\tdav_speex_resampler.c">
       <Filter>Doubango\tinyDAV\audio\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\audio\tdav_speex_jitterbuffer.c">
-      <Filter>Doubango\tinyDAV\audio\include</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\audio\tdav_jitterbuffer.c">
       <Filter>Doubango\tinyDAV\audio\src</Filter>
     </ClCompile>
@@ -1462,6 +1447,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\video\winm\tdav_producer_winm.cxx">
       <Filter>Doubango\tinyDAV\video\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\audio\tdav_speex_jitterbuffer.c">
+      <Filter>Doubango\tinyDAV\audio\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1693,18 +1681,6 @@
       <Filter>Doubango\tinyXCAP</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec.h">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_common.h">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_racoon.h">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_vista.h">
-      <Filter>Doubango\tinyIPSec</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyIPSec\src\tipsec_xp.h">
       <Filter>Doubango\tinyIPSec</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyMEDIA\include\tinymedia\tmedia.h">
