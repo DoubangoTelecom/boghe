@@ -228,7 +228,7 @@
                             <Label Content="{x:Static res:Strings.TabSecurity_Mode}" Margin="22,86,115,0" Name="labelIPSecMode" Height="28.38" VerticalAlignment="Top" />
                             <Label Content="{x:Static res:Strings.TabSecurity_Protocol}" Height="28.38" Margin="22,113,114,0" Name="labelIPSecProtocol" VerticalAlignment="Top" />
                             <Label Content="{x:Static res:Strings.TabSecurity_EAlgorithm}" Margin="22,59,114,0" Name="labelIPSecEAlgorithm" Height="28.38" VerticalAlignment="Top" />
-                            <ComboBox Height="23" Margin="0,30,7,0" Name="comboBoxIPSecAlgorithm" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Right" Width="101.477">
+                            <ComboBox Height="23" Margin="0,30,7,0" Name="comboBoxIPSecAlgorithm" VerticalAlignment="Top" IsEnabled="True" HorizontalAlignment="Right" Width="101.477">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0"/>
@@ -238,7 +238,7 @@
                                 <ComboBoxItem Name="hmac_sha_1_96" Tag="hmac-sha-1-96">hmac-sha-1-96</ComboBoxItem>
                                 <ComboBoxItem Name="hmac_md5_96" Tag="hmac-md5-96">hmac-md5-96</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Margin="0,59,7,0" Name="comboBoxIPSecEAlgorithm" IsEnabled="False" HorizontalAlignment="Right" Width="101.477" Height="23.38" VerticalAlignment="Top">
+                            <ComboBox Margin="0,59,7,0" Name="comboBoxIPSecEAlgorithm" IsEnabled="True" HorizontalAlignment="Right" Width="101.477" Height="23.38" VerticalAlignment="Top">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -246,10 +246,10 @@
                                     </LinearGradientBrush>
                                 </ComboBox.Background>
                                 <ComboBoxItem Name="des_ede3_cbc" Tag="des-ede3-cbc">des-ede3-cbc</ComboBoxItem>
-                                <ComboBoxItem Name="aes" Tag="aes">aes</ComboBoxItem>
+                                <ComboBoxItem Name="aes_cbc" Tag="aes-cbc">aes-cbc</ComboBoxItem>
                                 <ComboBoxItem Name="null" Tag="null">null</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Margin="0,88,7,0" Name="comboBoxIPSecMode" Height="22.38" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Right" Width="101.477">
+                            <ComboBox Margin="0,88,7,0" Name="comboBoxIPSecMode" Height="22.38" VerticalAlignment="Top" IsEnabled="True" HorizontalAlignment="Right" Width="101.477">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -258,7 +258,7 @@
                                 </ComboBox.Background>
                                 <ComboBoxItem Name="trans" Tag="trans">trans</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Height="22.38" Margin="0,117,7,0" Name="comboBoxIPSecProtocol" VerticalAlignment="Top" IsEnabled="False" HorizontalAlignment="Right" Width="101.477">
+                            <ComboBox Height="22.38" Margin="0,117,7,0" Name="comboBoxIPSecProtocol" VerticalAlignment="Top" IsEnabled="True" HorizontalAlignment="Right" Width="101.477">
                                 <ComboBox.Background>
                                     <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                                         <GradientStop Color="SkyBlue" Offset="0" />
@@ -268,7 +268,7 @@
                                 <ComboBoxItem Name="ah" Tag="ah">ah</ComboBoxItem>
                                 <ComboBoxItem Name="esp" Tag="esp">esp</ComboBoxItem>
                             </ComboBox>
-                            <CheckBox Content="{x:Static res:Strings.TabSecurity_EnableIPSec}" Height="16" Margin="6,9,9,0" Name="checkBoxIPSecSecAgreeEnabled" VerticalAlignment="Top" IsEnabled="False" />
+                            <CheckBox Content="{x:Static res:Strings.TabSecurity_EnableIPSec}" Height="16" Margin="6,9,9,0" Name="checkBoxIPSecSecAgreeEnabled" VerticalAlignment="Top" IsEnabled="True" />
                         </Grid>
                     </GroupBox>
                     <GroupBox Margin="8,174,4,0" Name="groupBox6" Height="97" VerticalAlignment="Top">

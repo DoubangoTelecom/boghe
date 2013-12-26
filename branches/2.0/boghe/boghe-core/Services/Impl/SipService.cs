@@ -442,7 +442,7 @@ namespace BogheCore.Services.Impl
                 String proto = this.configurationService.Get(Configuration.ConfFolder.SECURITY, Configuration.ConfEntry.IPSEC_PROTO, Configuration.DEFAULT_SECURITY_IPSEC_PROTO);
 
                 LOG.Debug(String.Format("IPSec secagree enable with algo={0} ealgo={1} mode={2} proto={3}", algo, ealgo, mode, proto));
-                if (!mSipStack.WrappedStack.setIPSecParameters(algo, ealgo, mode, mode) || !mSipStack.WrappedStack.setIPSecSecAgree(true))
+                if (!mSipStack.WrappedStack.setIPSecParameters(algo, ealgo, mode, proto) || !mSipStack.WrappedStack.setIPSecSecAgree(true))
                 {
                     LOG.Error("Failed to set IPSec parameters");
                 }
