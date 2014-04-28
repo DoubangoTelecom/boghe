@@ -1,7 +1,5 @@
 ﻿/*
-* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou Diop.
-*
-* Contact: Mamadou Diop <diopmamadou(at)doubango.org>
+* Boghe IMS/RCS Client - Copyright (C) 2010 Mamadou DIOP.
 *	
 * This file is part of Boghe Project (http://code.google.com/p/boghe)
 *

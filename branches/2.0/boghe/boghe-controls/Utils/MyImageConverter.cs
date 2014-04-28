@@ -43,6 +43,10 @@ namespace BogheControls.Utils
 
         public static ImageSource FromImage(Image image)
         {
+            if (image == null)
+            {
+                return null;
+            }
             return MyImageConverter.FromBitmap(new Bitmap(image));
         }
 

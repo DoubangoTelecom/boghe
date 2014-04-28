@@ -196,6 +196,24 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start sharing app.
+        /// </summary>
+        public static string AV_MenuStartSharingApp {
+            get {
+                return ResourceManager.GetString("AV_MenuStartSharingApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop sharing app.
+        /// </summary>
+        public static string AV_MenuStopSharingApp {
+            get {
+                return ResourceManager.GetString("AV_MenuStopSharingApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Button_Cancel {
