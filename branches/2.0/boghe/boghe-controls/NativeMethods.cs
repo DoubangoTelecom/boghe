@@ -43,6 +43,14 @@ namespace BogheControls
         internal const int WS_CLIPSIBLINGS = 0x04000000;
         internal const int WS_CLIPCHILDREN = 0x02000000;
 
+        internal const uint WM_GETICON = 0x007f;
+        internal static IntPtr ICON_SMALL2 = new IntPtr(2);
+        internal static IntPtr ICON_BIG = new IntPtr(1);
+        internal static IntPtr ICON_SMALL = new IntPtr(0);
+        internal static IntPtr IDI_APPLICATION = new IntPtr(0x7F00);
+        internal const int GCL_HICON = -14;
+
+        internal delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
 
         [DllImport("user32.dll", EntryPoint = "DestroyWindow", CharSet = CharSet.Auto)]
@@ -85,6 +93,30 @@ namespace BogheControls
         internal static extern int AnimateWindow(IntPtr hwand, int dwTime, int dwFlags);
 
         [DllImport("user32.dll")]
-        internal extern static IntPtr SetWindowLong(IntPtr hwnd, int nIndex, IntPtr dwNewLong);
+        internal extern static IntPtr SetWindowLong(IntPtr hwnd, int nIndex, IntPtr dwNewLong);        
+
+        [DllImport("USER32.DLL")]
+        internal static extern bool EnumWindows(EnumWindowsProc enumFunc, int lParam);
+
+        [DllImport("USER32.DLL")]
+        internal static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("USER32.DLL")]
+        internal static extern int GetWindowTextLength(IntPtr hWnd);
+
+        [DllImport("USER32.DLL")]
+        internal static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("USER32.DLL")]
+        internal static extern IntPtr GetShellWindow();
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr LoadIcon(IntPtr hInstance, IntPtr lpIconName);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLong")]
+        internal static extern uint GetClassLong32(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
+        internal static extern IntPtr GetClassLong64(IntPtr hWnd, int nIndex);
     }
 }

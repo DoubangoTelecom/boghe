@@ -27,6 +27,7 @@ using System.Windows.Controls;
 using BogheCore.Sip;
 using BogheCore;
 using org.doubango.tinyWRAP;
+using BogheCore.Model;
 
 namespace BogheApp
 {
@@ -169,6 +170,28 @@ namespace BogheApp
             }
             else if (menuItem == this.MenuItemCS_ShareVideo)
             {
+            }
+            else if (menuItem == this.MenuItemCS_ShareApp)
+            {
+                if (this.AVSession != null && this.AVSession.IsConnected)
+                {
+                    if ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo)
+                    {
+                        this.StopSharingApp();
+                    }
+                    else
+                    {
+                        runningAppsWindow = new RunningAppsWindow();
+                        runningAppsWindow.Owner = this;
+                        runningAppsWindow.onAppSelectedEvent += (_sender, _e) =>
+                        {
+                            runningAppToShare = (_sender as RunningApp);
+                            this.StartSharingApp();
+                        };
+                        runningAppsWindow.ShowDialog();
+                        runningAppsWindow = null;
+                    }
+                }
             }
         }
     }

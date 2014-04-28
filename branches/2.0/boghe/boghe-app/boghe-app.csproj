@@ -203,6 +203,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Items\ItemRunningApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Items\ItemShortMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessagingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RunningAppsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -267,6 +275,9 @@
     <Compile Include="Items\ItemRegistration.xaml.cs">
       <DependentUpon>ItemRegistration.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Items\ItemRunningApp.xaml.cs">
+      <DependentUpon>ItemRunningApp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Items\ItemShortMessage.xaml.cs">
       <DependentUpon>ItemShortMessage.xaml</DependentUpon>
     </Compile>
@@ -294,6 +305,9 @@
     </Compile>
     <Compile Include="MessagingWindow.xaml.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RunningAppsWindow.xaml.cs">
+      <DependentUpon>RunningAppsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\ScreenContactEdit.Screen.cs">
       <DependentUpon>ScreenContactEdit.xaml</DependentUpon>

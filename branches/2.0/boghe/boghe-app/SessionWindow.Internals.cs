@@ -126,7 +126,27 @@ namespace BogheApp
             this.AddMessagingEvent(@event);
 
             msrpSession.SendFile(filePath);
-        }        
+        }
+
+        private bool StartSharingApp()
+        {
+            if (this.AVSession == null || this.AVSession.MediaSessionMgr == null)
+            {
+                return false;
+            }
+
+            return this.AVSession.Update(this.AVSession.MediaType | MediaType.Bfcpvideo);
+        }
+
+        private bool StopSharingApp()
+        {
+            if (this.AVSession == null || this.AVSession.MediaSessionMgr == null)
+            {
+                return false;
+            }
+
+            return this.AVSession.Update(this.AVSession.MediaType & ~MediaType.Bfcpvideo);
+        }
 
         private void AttachDisplays()
         {
@@ -137,16 +157,27 @@ namespace BogheApp
 
             lock (this.AVSession)
             {
-                // Remote
-                this.AVSession.MediaSessionMgr.consumerSetInt64(twrap_media_type_t.twrap_media_video, "remote-hwnd", this.videoDisplayRemote.Handle.ToInt64());
-                this.AVSession.MediaSessionMgr.producerSetInt64(twrap_media_type_t.twrap_media_video, "local-hwnd", this.videoDisplayLocal.Handle.ToInt64());
-
 #if FALSE // Early Media => "IsConnected" must be "MediaStarted"
                 if (this.AVSession.IsConnected)
 #endif
                 {
-                    this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
+                    this.videoDisplayLocal.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                    this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                     this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
+                }
+
+                if (this.videoDisplayRemote.Visibility == System.Windows.Visibility.Visible)
+                {
+                    this.AVSession.MediaSessionMgr.consumerSetInt64(twrap_media_type_t.twrap_media_video, "remote-hwnd", this.videoDisplayRemote.Handle.ToInt64());
+                }
+                if (this.videoDisplayLocal.Visibility == System.Windows.Visibility.Visible)
+                {
+                    this.AVSession.MediaSessionMgr.producerSetInt64(twrap_media_type_t.twrap_media_video, "local-hwnd", this.videoDisplayLocal.Handle.ToInt64());
+                }
+                if (this.videoDisplayScrenCastLocal.Visibility == System.Windows.Visibility.Visible)
+                {
+                    this.AVSession.MediaSessionMgr.producerSetInt64(twrap_media_type_t.twrap_media_bfcp_video, "local-hwnd", this.videoDisplayScrenCastLocal.Handle.ToInt64());
+                    this.AVSession.MediaSessionMgr.producerSetInt64(twrap_media_type_t.twrap_media_bfcp_video, "src-hwnd", (runningAppToShare == null ? IntPtr.Zero : runningAppToShare.hWnd).ToInt64());
                 }
             }
         }
@@ -205,6 +236,7 @@ namespace BogheApp
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(true, Strings.Text_Answer, Properties.Resources.phone_pick_up_32);
                             this.UpdateMenuItemAddRemoveVideo(false);
+                            this.UpdateMenuItemShareApp(false);
                             
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -221,6 +253,7 @@ namespace BogheApp
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(false, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
                             this.UpdateMenuItemAddRemoveVideo(false);
+                            this.UpdateMenuItemShareApp(false);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -237,6 +270,7 @@ namespace BogheApp
                             this.buttonHangUp.IsEnabled = true;
                             this.UpdateButtonCallOrAnswer(false, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
                             this.UpdateMenuItemAddRemoveVideo(true);
+                            this.UpdateMenuItemShareApp(true);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = false;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = false;
@@ -254,6 +288,7 @@ namespace BogheApp
                             this.buttonHangUp.IsEnabled = false;
                             this.UpdateButtonCallOrAnswer(true, Strings.Text_Call, Properties.Resources.phone_pick_up_32);
                             this.UpdateMenuItemAddRemoveVideo(false);
+                            this.UpdateMenuItemShareApp(false);
 
                             this.MenuItemCall_MakeAudioCall.IsEnabled = true;
                             this.MenuItemCall_MakeVideoCall.IsEnabled = true;
@@ -293,6 +328,22 @@ namespace BogheApp
                     this.MenuItemCall_AddRemoveVideo.Header = Strings.AV_MenuAddVideo;
 
                     this.MenuItemCall_AddRemoveVideoImage.Source = MyImageConverter.FromBitmap(Properties.Resources.video_play_16);
+                }
+            }
+        }
+
+        private void UpdateMenuItemShareApp(bool enabled)
+        {
+            this.MenuItemCS_ShareApp.IsEnabled = enabled;
+            if (this.AVSession != null)
+            {
+                if ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo)
+                {
+                    this.MenuItemCS_ShareApp.Header = Strings.AV_MenuStopSharingApp;
+                }
+                else
+                {
+                    this.MenuItemCS_ShareApp.Header = Strings.AV_MenuStartSharingApp;
                 }
             }
         }

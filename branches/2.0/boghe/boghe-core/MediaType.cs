@@ -46,6 +46,12 @@ namespace BogheCore
         AudioT140 = Audio | T140,
         AudioVideoT140 = AudioVideo | T140,
         VideoT140 = Video | T140,
+        BFCP = 0x01 << 7,
+        Bfcpvideo = 0x01 << 8 | BFCP,
+        Audiobfcp = 0x01 << 9 | BFCP,
+        AudioBfcpvideo = Audio | Bfcpvideo,
+        VideoBfcpvideo = Video | Bfcpvideo,
+        AudioVideoBfcpvideo = Audio | Video | Bfcpvideo,
 
         All = 0xFF
     }
@@ -68,6 +74,18 @@ namespace BogheCore
                     return MediaType.AudioVideoT140;
                 case twrap_media_type_t.twrap_media_t140:
                     return MediaType.T140;
+                case twrap_media_type_t.twrap_media_bfcp:
+                    return MediaType.BFCP;
+                case twrap_media_type_t.twrap_media_bfcp_audio:
+                    return MediaType.Audiobfcp;
+                case twrap_media_type_t.twrap_media_bfcp_video:
+                    return MediaType.Bfcpvideo;
+                case twrap_media_type_t.twrap_media_audio_bfcpvideo:
+                    return MediaType.AudioBfcpvideo;
+                case twrap_media_type_t.twrap_media_video_bfcpvideo:
+                    return MediaType.VideoBfcpvideo;
+                case twrap_media_type_t.twrap_media_audio_video_bfcpvideo:
+                    return MediaType.AudioVideoBfcpvideo;
                 case twrap_media_type_t.twrap_media_video_t140:
                     return MediaType.VideoT140;
                 case twrap_media_type_t.twrap_media_msrp:
@@ -95,6 +113,18 @@ namespace BogheCore
                     return twrap_media_type_t.twrap_media_audio_video_t140;
                 case MediaType.T140:
                     return twrap_media_type_t.twrap_media_t140;
+                case MediaType.BFCP:
+                    return twrap_media_type_t.twrap_media_bfcp;
+                case MediaType.Audiobfcp:
+                    return twrap_media_type_t.twrap_media_bfcp_audio;
+                case MediaType.Bfcpvideo:
+                    return twrap_media_type_t.twrap_media_bfcp_video;
+                case MediaType.AudioBfcpvideo:
+                    return twrap_media_type_t.twrap_media_audio_bfcpvideo;
+                case MediaType.VideoBfcpvideo:
+                    return twrap_media_type_t.twrap_media_video_bfcpvideo;
+                case MediaType.AudioVideoBfcpvideo:
+                    return twrap_media_type_t.twrap_media_audio_video_bfcpvideo;
                 case MediaType.Chat: 
                 case MediaType.FileTransfer:
                     return twrap_media_type_t.twrap_media_msrp;

@@ -69,7 +69,7 @@ namespace BogheApp
                     {
                         // History Event
                         this.labelInfo.Content = String.Format("{0}...", Strings.Text_CallInProgress);
-                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video);
+                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo);
                         this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
                         this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
                         // Video Displays
@@ -104,7 +104,7 @@ namespace BogheApp
 
                 case InviteEventTypes.MEDIA_UPDATED:
                     {
-                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video);
+                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo);
                         this.labelInfo.Content = String.Format("Media Updated - {0}", isVideo ? "Video" : "Audio");
                         if (isVideo)
                         {
@@ -119,8 +119,9 @@ namespace BogheApp
                         this.soundService.StopRingBackTone();
                         this.soundService.StopRingTone();
 
-                        this.videoDisplayLocal.Visibility = System.Windows.Visibility.Visible;
-                        this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
+                        this.videoDisplayLocal.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                        this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                        this.videoDisplayRemote.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
 
                         this.timerCall.Start();
                         if (this.avHistoryEvent != null)
@@ -139,6 +140,11 @@ namespace BogheApp
                 case InviteEventTypes.DISCONNECTED:
                 case InviteEventTypes.TERMWAIT:
                     {
+                        if (runningAppsWindow != null)
+                        {
+                            runningAppsWindow.Close();
+                            runningAppsWindow = null;
+                        }
                         this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? Strings.Text_CallTerminated : e.Phrase;
                         this.timerCall.Stop();
                         this.soundService.StopRingBackTone();
@@ -154,8 +160,9 @@ namespace BogheApp
                             }
                         }
 
-                        //--this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
-                        //--this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
+                        this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
+                        this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
+                        this.videoDisplayScrenCastLocal.Visibility = System.Windows.Visibility.Hidden;
                         this.AVSession.PreDispose();
                         this.AVSession = null;
                         break;

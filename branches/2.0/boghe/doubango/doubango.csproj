@@ -227,6 +227,9 @@
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_codec_id_t.cs">
       <Link>tmedia_codec_id_t.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_mode_t.cs">
+      <Link>tmedia_mode_t.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\doubango\branches\2.0\doubango\bindings\csharp\tmedia_pref_video_size_t.cs">
       <Link>tmedia_pref_video_size_t.cs</Link>
     </Compile>

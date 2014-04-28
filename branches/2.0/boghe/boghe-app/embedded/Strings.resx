@@ -702,4 +702,10 @@
   <data name="TabQoS_ZeroVideoArtifacts" xml:space="preserve">
     <value>Zero Video Artifacts (Perfect Quality)</value>
   </data>
+  <data name="AV_MenuStartSharingApp" xml:space="preserve">
+    <value>Start sharing app</value>
+  </data>
+  <data name="AV_MenuStopSharingApp" xml:space="preserve">
+    <value>Stop sharing app</value>
+  </data>
 </root>

@@ -80,9 +80,13 @@ namespace BogheApp
         private HistoryAVCallEvent avHistoryEvent;
 
         private readonly VideoDisplay videoDisplayLocal;
+        private readonly VideoDisplay videoDisplayScrenCastLocal;
         private readonly VideoDisplay videoDisplayRemote;
 
         private readonly MyObservableCollection<HistoryEvent> historyDataSource;
+
+        private RunningAppsWindow runningAppsWindow;
+        private RunningApp runningAppToShare;
 
         public SessionWindow(String remotePartyUri)
             : base()
@@ -97,15 +101,17 @@ namespace BogheApp
             this.imActivityIndicator = new IMActivityIndicator(this.remotePartyUri);
 
             this.videoDisplayLocal = new VideoDisplay();
-            //this.videoDisplayLocal.Visibility = Visibility.Hidden;
             this.videoDisplayLocal.VerticalAlignment = VerticalAlignment.Stretch;
             this.videoDisplayLocal.HorizontalAlignment = HorizontalAlignment.Stretch;
+            this.videoDisplayScrenCastLocal = new VideoDisplay();
+            this.videoDisplayScrenCastLocal.VerticalAlignment = this.videoDisplayLocal.VerticalAlignment;
+            this.videoDisplayScrenCastLocal.HorizontalAlignment = this.videoDisplayLocal.HorizontalAlignment;
             this.videoDisplayRemote = new VideoDisplay();
-            //this.videoDisplayRemote.Visibility = Visibility.Hidden;
             this.videoDisplayRemote.ToolTip = this.borderVideoDispalyRemote.ToolTip;
 
             this.borderVideoDispalyRemote.Child = this.videoDisplayRemote;
             this.borderVideoDispalyLocal.Child = this.videoDisplayLocal;
+            this.borderVideoDispalyScrenCastLocal.Child = this.videoDisplayScrenCastLocal;
 
             this.labelInfo.Content = String.Empty;
             this.timerCall = new Timer(1000);
@@ -364,7 +370,7 @@ namespace BogheApp
 
             if (isAV)
             {
-                if (((session.MediaType & MediaType.Video) == MediaType.Video))
+                if ((session.MediaType & MediaType.Video) == MediaType.Video || (session.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo)
                 {
                     this.AttachDisplays();
                 }

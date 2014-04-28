@@ -101,16 +101,12 @@ namespace BogheCore.Sip
             MyAVSession avSession = MyAVSession.GetSession(id);
             if (avSession != null)
             {
-                switch (newMediaType)
+                if ((newMediaType & twrap_media_type_t.twrap_media_msrp) == twrap_media_type_t.twrap_media_msrp)
                 {
-                    case twrap_media_type_t.twrap_media_audio: avSession.mMediaType = MediaType.Audio; return true;
-                    case twrap_media_type_t.twrap_media_video: avSession.mMediaType = MediaType.Video; return true;
-                    case twrap_media_type_t.twrap_media_audio_video: avSession.mMediaType = MediaType.AudioVideo; return true;
-                    case twrap_media_type_t.twrap_media_audio_video_t140: avSession.mMediaType = MediaType.AudioVideoT140; return true;
-                    case twrap_media_type_t.twrap_media_audio_t140: avSession.mMediaType = MediaType.AudioT140; return true;
-                    case twrap_media_type_t.twrap_media_t140: avSession.mMediaType = MediaType.T140; return true;
-                    default: return false; // For now MSRP update is not suportted
+                    return false; // For now MSRP update is not suportted
                 }
+                avSession.mMediaType = MediaTypeUtils.ConvertFromNative(newMediaType);
+                return true;
             }
             
             return false;
@@ -366,6 +362,11 @@ namespace BogheCore.Sip
                 case MediaType.VideoT140:
                 case MediaType.AudioVideoT140:
                 case MediaType.T140:
+                case MediaType.Bfcpvideo:
+                case MediaType.Audiobfcp:
+                case MediaType.AudioBfcpvideo:
+                case MediaType.VideoBfcpvideo:
+                case MediaType.AudioVideoBfcpvideo:
                     ret = mSession.call(remoteUri, MediaTypeUtils.ConvertToNative(mMediaType), config);
                     break;
                 default:
@@ -437,14 +438,7 @@ namespace BogheCore.Sip
         {
             if (mSession != null)
             {
-                if ((newMediaType & MediaType.Video) == MediaType.Video)
-                {
-                    return mSession.call(base.ToUri, twrap_media_type_t.twrap_media_audio_video);
-                }
-                else
-                {
-                    return mSession.call(base.ToUri, twrap_media_type_t.twrap_media_audio);
-                }
+                return mSession.call(base.ToUri, MediaTypeUtils.ConvertToNative(newMediaType));
             }
             return false;
         }
