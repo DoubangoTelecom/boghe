@@ -1451,6 +1451,24 @@
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\audio\tdav_speex_jitterbuffer.c">
       <Filter>Doubango\tinyDAV\audio\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyBFCP\src\tbfcp_attr.c">
+      <Filter>Doubango\tinyBFCP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyBFCP\src\tbfcp_pkt.c">
+      <Filter>Doubango\tinyBFCP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyBFCP\src\tbfcp_session.c">
+      <Filter>Doubango\tinyBFCP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyBFCP\src\tbfcp_utils.c">
+      <Filter>Doubango\tinyBFCP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\codecs\bfcp\tdav_codec_bfcp.c">
+      <Filter>Doubango\tinyDAV\codecs\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\bfcp\tdav_session_bfcp.c">
+      <Filter>Doubango\tinyDAV\bfcp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackEndNativeBuffer.h" />
@@ -3083,6 +3101,12 @@
     </Filter>
     <Filter Include="Doubango\tinyDAV\msrp\include">
       <UniqueIdentifier>{82f7c03e-d82b-41b0-bd92-04c678818561}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doubango\tinyBFCP">
+      <UniqueIdentifier>{5f63f896-1a06-4835-84f2-9a1096b0d746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doubango\tinyDAV\bfcp">
+      <UniqueIdentifier>{a2975798-ef19-445b-aea5-e3cdaffbaddc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

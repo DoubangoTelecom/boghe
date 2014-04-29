@@ -6,9 +6,9 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Tue Jul 02 10:55:47 2013
+/* at Tue Apr 29 10:38:18 2014
  */
-/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.OutOfProcess.idl-d88c7030:
+/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.OutOfProcess.idl-7b83ed30:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=ARM 8.00.0595 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 

@@ -4,9 +4,9 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Tue Jul 02 10:55:45 2013
+/* at Tue Apr 29 10:38:15 2014
  */
-/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-cff55f4b:
+/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-5bd32068:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=ARM 8.00.0595 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -2118,11 +2118,11 @@ enum __x_ABI_Cdoubango__rt_CBackEnd_Crt__twrap__media__type__t
         rt_twrap_media_type_t_twrap_media_video	= 2,
         rt_twrap_media_type_t_twrap_media_msrp	= 4,
         rt_twrap_media_type_t_twrap_media_t140	= 8,
-        rt_twrap_media_type_t_twrap_media_audio_t140	= 9,
-        rt_twrap_media_type_t_twrap_media_video_t140	= 10,
+        rt_twrap_media_type_t_twrap_media_bfcp	= 16,
+        rt_twrap_media_type_t_twrap_media_bfcp_audio	= 48,
+        rt_twrap_media_type_t_twrap_media_bfcp_video	= 80,
         rt_twrap_media_type_t_twrap_media_audiovideo	= 3,
-        rt_twrap_media_type_t_twrap_media_audio_video	= 3,
-        rt_twrap_media_type_t_twrap_media_audio_video_t140	= 11
+        rt_twrap_media_type_t_twrap_media_audio_video	= 3
     } ;
 #endif /* end if !defined(__cplusplus) */
 
@@ -3232,11 +3232,11 @@ namespace ABI {
                     rt_twrap_media_type_t_twrap_media_video	= 2,
                     rt_twrap_media_type_t_twrap_media_msrp	= 4,
                     rt_twrap_media_type_t_twrap_media_t140	= 8,
-                    rt_twrap_media_type_t_twrap_media_audio_t140	= 9,
-                    rt_twrap_media_type_t_twrap_media_video_t140	= 10,
+                    rt_twrap_media_type_t_twrap_media_bfcp	= 16,
+                    rt_twrap_media_type_t_twrap_media_bfcp_audio	= 48,
+                    rt_twrap_media_type_t_twrap_media_bfcp_video	= 80,
                     rt_twrap_media_type_t_twrap_media_audiovideo	= 3,
-                    rt_twrap_media_type_t_twrap_media_audio_video	= 3,
-                    rt_twrap_media_type_t_twrap_media_audio_video_t140	= 11
+                    rt_twrap_media_type_t_twrap_media_audio_video	= 3
                 } ;
         } /* end namespace */
     } /* end namespace */
