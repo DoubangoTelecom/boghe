@@ -69,7 +69,7 @@ namespace BogheApp
                     {
                         // History Event
                         this.labelInfo.Content = String.Format("{0}...", Strings.Text_CallInProgress);
-                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo);
+                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp);
                         this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
                         this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
                         // Video Displays
@@ -104,7 +104,7 @@ namespace BogheApp
 
                 case InviteEventTypes.MEDIA_UPDATED:
                     {
-                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo);
+                        bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp);
                         this.labelInfo.Content = String.Format("Media Updated - {0}", isVideo ? "Video" : "Audio");
                         if (isVideo)
                         {
@@ -120,7 +120,7 @@ namespace BogheApp
                         this.soundService.StopRingTone();
 
                         this.videoDisplayLocal.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-                        this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                        this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                         this.videoDisplayRemote.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
 
                         this.timerCall.Start();

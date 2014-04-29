@@ -34,103 +34,73 @@ namespace BogheCore
     {
         None = 0,
 
-        Audio = 0x01 << 0,
-        Video = 0x01 << 1,
-        AudioVideo = Audio | Video,
-        SMS = 0x01 << 2,
-        ShortMessage = 0x01 << 3,
-        Chat = 0x01 << 4,
-        Messaging = SMS | Chat | ShortMessage,
-        FileTransfer = 0x01 << 5,
-        T140 = 0x01 << 6,
-        AudioT140 = Audio | T140,
-        AudioVideoT140 = AudioVideo | T140,
-        VideoT140 = Video | T140,
-        BFCP = 0x01 << 7,
-        Bfcpvideo = 0x01 << 8 | BFCP,
-        Audiobfcp = 0x01 << 9 | BFCP,
-        AudioBfcpvideo = Audio | Bfcpvideo,
-        VideoBfcpvideo = Video | Bfcpvideo,
-        AudioVideoBfcpvideo = Audio | Video | Bfcpvideo,
+        Audio = (0x00000001 << 0),
+        Video = (0x00000001 << 1),
+        Msrp = (0x00000001 << 2),
+        T140 = (0x00000001 << 3),
+        BFCP = (0x00000001 << 4),
+        Audiobfcp = (0x00000001 << 5) | BFCP,
+        Videobfcp = (0x00000001 << 6) | BFCP,
 
-        All = 0xFF
+        // == Types without native mappings  == //
+        SMS = 0x00000001 << 16,
+        ShortMessage = 0x00000001 << 17,
+        Chat = 0x00000001 << 18,
+        FileTransfer = 0x00000001 << 19,
+        Messaging = SMS | Chat | ShortMessage,
+        AudioT140 = (Audio | T140),
+        AudioVideo = (Audio | Video),
+
+        All = ~0
     }
 
     public static class MediaTypeUtils
     {
+        struct media_type_bind_s
+        {
+	        public MediaType twrap;
+	        public twrap_media_type_t tnative;
+            public media_type_bind_s(MediaType _twrap, twrap_media_type_t _tnative)
+            {
+                this.twrap = _twrap;
+                this.tnative = _tnative;
+            }
+        };
+        static media_type_bind_s[] __media_type_binds = 
+        {
+	        new media_type_bind_s(MediaType.Msrp, twrap_media_type_t.twrap_media_msrp),
+	        new media_type_bind_s(MediaType.Audio, twrap_media_type_t.twrap_media_audio),
+	        new media_type_bind_s(MediaType.Video, twrap_media_type_t.twrap_media_video),
+	        new media_type_bind_s(MediaType.T140, twrap_media_type_t.twrap_media_t140),
+	        new media_type_bind_s(MediaType.BFCP, twrap_media_type_t.twrap_media_bfcp),
+	        new media_type_bind_s(MediaType.Audiobfcp, twrap_media_type_t.twrap_media_bfcp_audio),
+	        new media_type_bind_s(MediaType.Videobfcp, twrap_media_type_t.twrap_media_bfcp_video),
+        };
+
         public static MediaType ConvertFromNative(twrap_media_type_t mediaType)
         {
-            switch (mediaType)
+            MediaType t = MediaType.None;
+            for (int i = 0; i < __media_type_binds.Length; ++i)
             {
-                case twrap_media_type_t.twrap_media_audio:
-                    return MediaType.Audio;
-                case twrap_media_type_t.twrap_media_video:
-                    return MediaType.Video;
-                case twrap_media_type_t.twrap_media_audio_video:
-                    return MediaType.AudioVideo;
-                case twrap_media_type_t.twrap_media_audio_t140:
-                    return MediaType.AudioT140;
-                case twrap_media_type_t.twrap_media_audio_video_t140:
-                    return MediaType.AudioVideoT140;
-                case twrap_media_type_t.twrap_media_t140:
-                    return MediaType.T140;
-                case twrap_media_type_t.twrap_media_bfcp:
-                    return MediaType.BFCP;
-                case twrap_media_type_t.twrap_media_bfcp_audio:
-                    return MediaType.Audiobfcp;
-                case twrap_media_type_t.twrap_media_bfcp_video:
-                    return MediaType.Bfcpvideo;
-                case twrap_media_type_t.twrap_media_audio_bfcpvideo:
-                    return MediaType.AudioBfcpvideo;
-                case twrap_media_type_t.twrap_media_video_bfcpvideo:
-                    return MediaType.VideoBfcpvideo;
-                case twrap_media_type_t.twrap_media_audio_video_bfcpvideo:
-                    return MediaType.AudioVideoBfcpvideo;
-                case twrap_media_type_t.twrap_media_video_t140:
-                    return MediaType.VideoT140;
-                case twrap_media_type_t.twrap_media_msrp:
-                    return MediaType.Chat | MediaType.FileTransfer;
-                default:
-                    return MediaType.None;
+                if ((__media_type_binds[i].tnative & mediaType) == __media_type_binds[i].tnative)
+                {
+                    t |= __media_type_binds[i].twrap;
+                }
             }
+            return t;
         }
 
         public static twrap_media_type_t ConvertToNative(MediaType mediaType)
         {
-            switch (mediaType)
+            twrap_media_type_t t = twrap_media_type_t.twrap_media_none;
+            for (int i = 0; i < __media_type_binds.Length; ++i)
             {
-                case MediaType.Audio:
-                    return twrap_media_type_t.twrap_media_audio;
-                case MediaType.Video:
-                    return twrap_media_type_t.twrap_media_video;
-                case MediaType.AudioVideo:
-                    return twrap_media_type_t.twrap_media_audio_video;
-                case MediaType.AudioT140:
-                    return twrap_media_type_t.twrap_media_audio_t140;
-                case MediaType.VideoT140:
-                    return twrap_media_type_t.twrap_media_video_t140;
-                case MediaType.AudioVideoT140:
-                    return twrap_media_type_t.twrap_media_audio_video_t140;
-                case MediaType.T140:
-                    return twrap_media_type_t.twrap_media_t140;
-                case MediaType.BFCP:
-                    return twrap_media_type_t.twrap_media_bfcp;
-                case MediaType.Audiobfcp:
-                    return twrap_media_type_t.twrap_media_bfcp_audio;
-                case MediaType.Bfcpvideo:
-                    return twrap_media_type_t.twrap_media_bfcp_video;
-                case MediaType.AudioBfcpvideo:
-                    return twrap_media_type_t.twrap_media_audio_bfcpvideo;
-                case MediaType.VideoBfcpvideo:
-                    return twrap_media_type_t.twrap_media_video_bfcpvideo;
-                case MediaType.AudioVideoBfcpvideo:
-                    return twrap_media_type_t.twrap_media_audio_video_bfcpvideo;
-                case MediaType.Chat: 
-                case MediaType.FileTransfer:
-                    return twrap_media_type_t.twrap_media_msrp;
-                default:
-                    return twrap_media_type_t.twrap_media_none;
+                if ((__media_type_binds[i].twrap & mediaType) == __media_type_binds[i].twrap)
+                {
+                    t |= __media_type_binds[i].tnative;
+                }
             }
+            return t;
         }
     }
 }

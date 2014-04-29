@@ -175,7 +175,7 @@ namespace BogheApp
             {
                 if (this.AVSession != null && this.AVSession.IsConnected)
                 {
-                    if ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo)
+                    if ((this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp)
                     {
                         this.StopSharingApp();
                     }
