@@ -135,7 +135,7 @@ namespace BogheApp
                 return false;
             }
 
-            return this.AVSession.Update(this.AVSession.MediaType | MediaType.Bfcpvideo);
+            return this.AVSession.Update(this.AVSession.MediaType | MediaType.Videobfcp);
         }
 
         private bool StopSharingApp()
@@ -145,7 +145,7 @@ namespace BogheApp
                 return false;
             }
 
-            return this.AVSession.Update(this.AVSession.MediaType & ~MediaType.Bfcpvideo);
+            return this.AVSession.Update(this.AVSession.MediaType & ~MediaType.Videobfcp);
         }
 
         private void AttachDisplays()
@@ -162,7 +162,7 @@ namespace BogheApp
 #endif
                 {
                     this.videoDisplayLocal.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-                    this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                    this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                     this.videoDisplayRemote.Visibility = System.Windows.Visibility.Visible;
                 }
 
@@ -337,7 +337,7 @@ namespace BogheApp
             this.MenuItemCS_ShareApp.IsEnabled = enabled;
             if (this.AVSession != null)
             {
-                if ((this.AVSession.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo)
+                if ((this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp)
                 {
                     this.MenuItemCS_ShareApp.Header = Strings.AV_MenuStopSharingApp;
                 }

@@ -353,25 +353,8 @@ namespace BogheCore.Sip
 #else
             new ActionConfig();
 #endif
-            switch (mMediaType)
-            {
-                case MediaType.Audio:
-                case MediaType.Video:
-                case MediaType.AudioVideo:
-                case MediaType.AudioT140:
-                case MediaType.VideoT140:
-                case MediaType.AudioVideoT140:
-                case MediaType.T140:
-                case MediaType.Bfcpvideo:
-                case MediaType.Audiobfcp:
-                case MediaType.AudioBfcpvideo:
-                case MediaType.VideoBfcpvideo:
-                case MediaType.AudioVideoBfcpvideo:
-                    ret = mSession.call(remoteUri, MediaTypeUtils.ConvertToNative(mMediaType), config);
-                    break;
-                default:
-                    throw new Exception("This session doesn't support this media type");
-            }
+            ret = mSession.call(remoteUri, MediaTypeUtils.ConvertToNative(mMediaType), config);
+   
             config.Dispose();
 
             return ret;

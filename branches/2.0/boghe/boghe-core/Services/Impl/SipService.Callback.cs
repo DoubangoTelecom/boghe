@@ -798,8 +798,8 @@ namespace BogheCore.Services.Impl
                                 case twrap_media_type_t.twrap_media_audio:
                                 case twrap_media_type_t.twrap_media_audiovideo:
                                 case twrap_media_type_t.twrap_media_video:
-                                case twrap_media_type_t.twrap_media_audio_t140:
-                                case twrap_media_type_t.twrap_media_audio_video_t140:
+                                case (twrap_media_type_t.twrap_media_audio | twrap_media_type_t.twrap_media_t140):
+                                case (twrap_media_type_t.twrap_media_audio | twrap_media_type_t.twrap_media_video | twrap_media_type_t.twrap_media_t140):
                                 case twrap_media_type_t.twrap_media_t140:
                                     {
                                         if ((session = e.takeCallSessionOwnership()) == null)

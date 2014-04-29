@@ -370,7 +370,7 @@ namespace BogheApp
 
             if (isAV)
             {
-                if ((session.MediaType & MediaType.Video) == MediaType.Video || (session.MediaType & MediaType.Bfcpvideo) == MediaType.Bfcpvideo)
+                if ((session.MediaType & MediaType.Video) == MediaType.Video || (session.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp)
                 {
                     this.AttachDisplays();
                 }
