@@ -109,12 +109,16 @@ namespace BogheCore.Model
 
         public static int DEFAULT_NATT_HACK_AOR_TIMEOUT = 2000;
         public static bool DEFAULT_NATT_HACK_AOR = false;
-        public static bool DEFAULT_NATT_USE_STUN = false;
+        public static bool DEFAULT_NATT_USE_STUN_FOR_SIP = false;
+        public static bool DEFAULT_NATT_USE_STUN_FOR_ICE = true;
+        public static bool DEFAULT_NATT_USE_TURN_FOR_ICE = false;
         public static bool DEFAULT_NATT_USE_ICE = false;
         public static bool DEFAULT_NATT_USE_SYMETRIC_RTP = false;
         public static bool DEFAULT_NATT_STUN_DISCO = false;
         public static String DEFAULT_NATT_STUN_SERVER = "numb.viagenie.ca";
         public static int DEFAULT_NATT_STUN_PORT = 3478;
+        public static String DEFAULT_NATT_STUN_USERNAME = String.Empty;
+        public static String DEFAULT_NATT_STUN_PASSWORD = String.Empty;
 
         public static bool DEFAULT_XCAP_ENABLED = false;
         public static String DEFAULT_XCAP_ROOT = "http://doubango.org:8080/services";
@@ -165,7 +169,7 @@ namespace BogheCore.Model
             CODECS, PROFILE,
 
             /* === NATT === */
-            HACK_AOR, HACK_AOR_TIMEOUT, USE_STUN, USE_ICE, STUN_DISCO, STUN_SERVER, STUN_PORT, USE_SYMETRIC_RTP,
+            HACK_AOR, HACK_AOR_TIMEOUT, USE_STUN_FOR_SIP, USE_STUN_FOR_ICE, USE_TURN_FOR_ICE, USE_ICE, STUN_DISCO, STUN_SERVER, STUN_PORT, STUN_USERNAME, STUN_PASSWORD, USE_SYMETRIC_RTP,
 
             /* === XCAP === */
             /* PASSWORD, */ ENABLED, XCAP_ROOT, USERNAME/*, TIMEOUT*/

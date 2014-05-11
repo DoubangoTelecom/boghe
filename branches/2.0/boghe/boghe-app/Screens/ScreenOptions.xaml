@@ -556,13 +556,21 @@
                     <Label Content="{x:Static res:Strings.TabNATT_Title}" Background="SkyBlue" FontSize="16" Height="33" Margin="0,0,0,0" Name="labelNatTraversalTitle" VerticalAlignment="Top" FontWeight="Bold" />
                     <CheckBox Height="16" Margin="6,41,11,0" Name="checkBoxForceSymetricRtpEnabled" VerticalAlignment="Top">Force Symetric RTP</CheckBox>
                     <CheckBox Content="Enable ICE" Height="16" Margin="6,71,9,0" Name="checkBoxIceEnabled" VerticalAlignment="Top" />
-                    <CheckBox Content="{x:Static res:Strings.TabNATT_EnableSTUN}" Height="16" Margin="6,100,9,0" Name="checkBoxStunTurnEnable" VerticalAlignment="Top" />
-                    <RadioButton Content="{x:Static res:Strings.TabNATT_Discover_STUNSrv}" Height="16" Margin="6,127,28,0" Name="radioButtonStunDiscover" VerticalAlignment="Top" />
-                    <RadioButton Content="{x:Static res:Strings.TabNATT_UseSTUNSrv}" Height="16" Margin="6,153,28,0" Name="radioButtonStunUseThis" VerticalAlignment="Top" />
-                    <Label Content="{x:Static res:Strings.TabNATT_Server}" Height="28" Margin="26,171,0,0" Name="labelStunServer" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45.693" />
-                    <Label Content="{x:Static res:Strings.TabNATT_Port}" Height="28" HorizontalAlignment="Left" Margin="26,203,0,0" Name="labelStunPort" VerticalAlignment="Top" Width="45.693" />
-                    <TextBox Height="23" Margin="89,175,11,0" Name="textBoxStunServerAddress" VerticalAlignment="Top" BorderBrush="SkyBlue" />
-                    <ctrl:NumericTextBox Height="23" Margin="89,204,11,0" Name="textBoxStunPort" VerticalAlignment="Top" BorderBrush="SkyBlue" />
+                    
+                    <CheckBox Content="{x:Static res:Strings.TabNATT_EnableSTUNForSIP}" Height="16" Margin="6,144,9,0" Name="checkBoxStunForSIP" VerticalAlignment="Top" />
+                    <RadioButton Content="{x:Static res:Strings.TabNATT_Discover_STUNSrv}" Margin="6,257,28,0" Name="radioButtonStunDiscover" Height="16" VerticalAlignment="Top" />
+                    <RadioButton Content="{x:Static res:Strings.TabNATT_UseSTUNSrv}" Margin="6,283,28,0" Name="radioButtonStunUseThis" Height="16" VerticalAlignment="Top" />
+                    <Label Content="{x:Static res:Strings.TabNATT_Server}" Margin="26,303,0,0" Name="labelStunServer" HorizontalAlignment="Left" Width="45.693" Height="28" VerticalAlignment="Top" />
+                    <Label Content="{x:Static res:Strings.TabNATT_Port}" HorizontalAlignment="Left" Margin="26,335,0,0" Name="labelStunPort" Width="45.693" Height="28" VerticalAlignment="Top" />
+                    <TextBox Margin="89,307,11,0" Name="textBoxStunServerAddress" BorderBrush="SkyBlue" Height="23" VerticalAlignment="Top" />
+                    <ctrl:NumericTextBox Margin="89,336,11,0" Name="textBoxStunPort" BorderBrush="SkyBlue" Height="23" VerticalAlignment="Top" MaxLength="5" />
+                    <CheckBox Content="{x:Static res:Strings.TabNATT_EnableSTUNForICE}" Height="16" Margin="26,94,-5,0" Name="checkBoxStunForICE" VerticalAlignment="Top" />
+                    <CheckBox Content="{x:Static res:Strings.TabNATT_EnableTURNForICE}" Height="16" Margin="26,117,-5,0" Name="checkBoxTurnForICE" VerticalAlignment="Top" />
+                    <Label Content="STUN/TURN credentials:" Height="28" Margin="4,166,6,0" Name="label2" VerticalAlignment="Top" FontWeight="Bold" />
+                    <Label Content="Username:" Height="28" HorizontalAlignment="Left" Margin="26,190,0,0" Name="label4" VerticalAlignment="Top" Width="67" />
+                    <TextBox BorderBrush="SkyBlue" Height="23" Margin="89,192,11,0" Name="textBoxStunUsername" VerticalAlignment="Top" />
+                    <Label HorizontalAlignment="Left" Margin="26,222,0,0" Name="label5" Width="67" Height="28" VerticalAlignment="Top">Password:</Label>
+                    <PasswordBox BorderBrush="SkyBlue" Margin="89,224,11,0" Name="passwordBoxStunPassword" Height="23" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
         </TabControl>

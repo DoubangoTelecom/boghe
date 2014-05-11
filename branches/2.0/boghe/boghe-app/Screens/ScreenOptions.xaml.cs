@@ -112,20 +112,16 @@ namespace BogheApp.Screens
             //
             //  NATT
             //
-            /*this.checkBoxStunTurnEnable.Checked += (sender, e) =>
+            this.checkBoxIceEnabled.Checked += (sender, e) =>
             {
-                this.radioButtonStunDiscover.IsEnabled = true;
-                this.radioButtonStunUseThis.IsEnabled = true;
-                this.textBoxStunServerAddress.IsEnabled = true & this.radioButtonStunUseThis.IsChecked.Value;
-                this.textBoxStunPort.IsEnabled = true & this.radioButtonStunUseThis.IsChecked.Value;
+                this.checkBoxStunForICE.IsEnabled = true;
+                this.checkBoxTurnForICE.IsEnabled = true;
             };
-            this.checkBoxStunTurnEnable.Unchecked += (sender, e) =>
+            this.checkBoxIceEnabled.Unchecked += (sender, e) =>
             {
-                this.radioButtonStunDiscover.IsEnabled = false;
-                this.radioButtonStunUseThis.IsEnabled = false;
-                this.textBoxStunServerAddress.IsEnabled = false;
-                this.textBoxStunPort.IsEnabled = false;
-            };*/
+                this.checkBoxStunForICE.IsEnabled = false;
+                this.checkBoxTurnForICE.IsEnabled = false;
+            };
             this.radioButtonStunUseThis.Checked += (sender, e) =>
             {
                 this.textBoxStunServerAddress.IsEnabled = true;

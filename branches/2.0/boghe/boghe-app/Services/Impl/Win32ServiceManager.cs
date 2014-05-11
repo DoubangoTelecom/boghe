@@ -159,7 +159,21 @@ namespace BogheApp.Services.Impl
                 this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE)
                 );
             MediaSessionMgr.defaultsSetStunEnabled(
-                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN)
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_SIP, Configuration.DEFAULT_NATT_USE_STUN_FOR_SIP)
+                );
+            MediaSessionMgr.defaultsSetIceStunEnabled(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_ICE, Configuration.DEFAULT_NATT_USE_STUN_FOR_ICE)
+                );
+            MediaSessionMgr.defaultsSetIceTurnEnabled(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_TURN_FOR_ICE, Configuration.DEFAULT_NATT_USE_TURN_FOR_ICE)
+                );
+            MediaSessionMgr.defaultsSetStunServer(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_SERVER, Configuration.DEFAULT_NATT_STUN_SERVER),
+                (ushort)this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PORT, Configuration.DEFAULT_NATT_STUN_PORT)
+                );
+            MediaSessionMgr.defaultsSetStunCred(
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_USERNAME, Configuration.DEFAULT_NATT_STUN_USERNAME),
+                this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PASSWORD, Configuration.DEFAULT_NATT_STUN_PASSWORD)
                 );
 
             return ret;

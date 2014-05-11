@@ -432,8 +432,8 @@
   <data name="TabNATT_Discover_STUNSrv" xml:space="preserve">
     <value>Discover STUN/TURN server</value>
   </data>
-  <data name="TabNATT_EnableSTUN" xml:space="preserve">
-    <value>Enable STUN or TURN</value>
+  <data name="TabNATT_EnableSTUNForSIP" xml:space="preserve">
+    <value>Enable STUN for SIP</value>
   </data>
   <data name="TabNATT_Port" xml:space="preserve">
     <value>Port:</value>
@@ -707,5 +707,11 @@
   </data>
   <data name="AV_MenuStopSharingApp" xml:space="preserve">
     <value>Stop sharing app</value>
+  </data>
+  <data name="TabNATT_EnableSTUNForICE" xml:space="preserve">
+    <value>Enable STUN for ICE</value>
+  </data>
+  <data name="TabNATT_EnableTURNForICE" xml:space="preserve">
+    <value>Enable TURN for ICE</value>
   </data>
 </root>
