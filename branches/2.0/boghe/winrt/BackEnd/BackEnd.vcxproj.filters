@@ -1469,6 +1469,24 @@
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\src\bfcp\tdav_session_bfcp.c">
       <Filter>Doubango\tinyDAV\bfcp</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_attr.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_binding.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_pkt.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_utils.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\turn\tnet_turn_attr.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\turn\tnet_turn_session.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackEndNativeBuffer.h" />
@@ -3000,6 +3018,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyDAV\include\tinydav\video\winm\tdav_producer_winm.h">
       <Filter>Doubango\tinyDAV\video\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_attr.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_binding.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_pkt.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_types.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\stun\tnet_stun_utils.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\turn\tnet_turn_attr.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\turn\tnet_turn_session.h">
+      <Filter>Doubango\tinyNET</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
