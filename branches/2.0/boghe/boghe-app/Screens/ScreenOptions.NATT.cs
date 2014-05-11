@@ -33,27 +33,41 @@ namespace BogheApp.Screens
         {
             this.checkBoxForceSymetricRtpEnabled.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_SYMETRIC_RTP, Configuration.DEFAULT_NATT_USE_SYMETRIC_RTP);
             this.checkBoxIceEnabled.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE);
-            this.checkBoxStunTurnEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN);
+            this.checkBoxStunForSIP.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_SIP, Configuration.DEFAULT_NATT_USE_STUN_FOR_SIP);
+            this.checkBoxStunForICE.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_ICE, Configuration.DEFAULT_NATT_USE_STUN_FOR_ICE);
+            this.checkBoxTurnForICE.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_TURN_FOR_ICE, Configuration.DEFAULT_NATT_USE_TURN_FOR_ICE);
+            this.checkBoxStunForICE.IsEnabled = this.checkBoxIceEnabled.IsEnabled;
+            this.checkBoxTurnForICE.IsEnabled = this.checkBoxIceEnabled.IsEnabled;           
             this.radioButtonStunDiscover.IsChecked = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, Configuration.DEFAULT_NATT_STUN_DISCO);
             this.radioButtonStunUseThis.IsChecked = !this.radioButtonStunDiscover.IsChecked;
             this.textBoxStunServerAddress.Text = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_SERVER, Configuration.DEFAULT_NATT_STUN_SERVER);
             this.textBoxStunPort.Text = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PORT, Configuration.DEFAULT_NATT_STUN_PORT).ToString();
+            this.textBoxStunUsername.Text = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_USERNAME, Configuration.DEFAULT_NATT_STUN_USERNAME).ToString();
+            this.passwordBoxStunPassword.Password = this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PASSWORD, Configuration.DEFAULT_NATT_STUN_PASSWORD).ToString();
         }
 
         private bool UpdateNATT()
         {
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_SYMETRIC_RTP, this.checkBoxForceSymetricRtpEnabled.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, this.checkBoxIceEnabled.IsChecked.Value);
-            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, this.checkBoxStunTurnEnable.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_SIP, this.checkBoxStunForSIP.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_ICE, this.checkBoxStunForICE.IsChecked.Value);
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_TURN_FOR_ICE, this.checkBoxTurnForICE.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_DISCO, this.radioButtonStunDiscover.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_SERVER, this.textBoxStunServerAddress.Text);
             this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PORT, this.textBoxStunPort.Text);
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_USERNAME, this.textBoxStunUsername.Text);
+            this.configurationService.Set(Configuration.ConfFolder.NATT, Configuration.ConfEntry.STUN_PASSWORD, this.passwordBoxStunPassword.Password);
 
             // STUN informaions are checked before each registration which means that we don't need to pass the config to the native part
             // Pass other configs to the native part
-            MediaSessionMgr.defaultsSetStunEnabled(this.checkBoxStunTurnEnable.IsChecked.Value);
+            MediaSessionMgr.defaultsSetStunEnabled(this.checkBoxStunForSIP.IsChecked.Value);
+            MediaSessionMgr.defaultsSetIceStunEnabled(this.checkBoxStunForICE.IsChecked.Value);
+            MediaSessionMgr.defaultsSetIceTurnEnabled(this.checkBoxTurnForICE.IsChecked.Value);
             MediaSessionMgr.defaultsSetIceEnabled(this.checkBoxIceEnabled.IsChecked.Value);
             MediaSessionMgr.defaultsSetRtpSymetricEnabled(this.checkBoxForceSymetricRtpEnabled.IsChecked.Value);
+            MediaSessionMgr.defaultsSetStunServer(this.textBoxStunServerAddress.Text, (ushort)Int32.Parse(this.textBoxStunPort.Text));
+            MediaSessionMgr.defaultsSetStunCred(this.textBoxStunUsername.Text, this.passwordBoxStunPassword.Password);
 
             return true;
         }

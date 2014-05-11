@@ -352,7 +352,7 @@ namespace BogheCore.Services.Impl
             }
 
             // Set STUN information
-            if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN, Configuration.DEFAULT_NATT_USE_STUN))
+            if (this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_STUN_FOR_SIP, Configuration.DEFAULT_NATT_USE_STUN_FOR_SIP))
             {
                 LOG.Debug("STUN=yes");
                 mSipStack.WrappedStack.setSTUNEnabled(true);

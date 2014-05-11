@@ -1069,11 +1069,29 @@ namespace BogheApp.embedded {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable STUN or TURN.
+        ///   Looks up a localized string similar to Enable STUN for ICE.
         /// </summary>
-        public static string TabNATT_EnableSTUN {
+        public static string TabNATT_EnableSTUNForICE {
             get {
-                return ResourceManager.GetString("TabNATT_EnableSTUN", resourceCulture);
+                return ResourceManager.GetString("TabNATT_EnableSTUNForICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable STUN for SIP.
+        /// </summary>
+        public static string TabNATT_EnableSTUNForSIP {
+            get {
+                return ResourceManager.GetString("TabNATT_EnableSTUNForSIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable TURN for ICE.
+        /// </summary>
+        public static string TabNATT_EnableTURNForICE {
+            get {
+                return ResourceManager.GetString("TabNATT_EnableTURNForICE", resourceCulture);
             }
         }
         
