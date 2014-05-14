@@ -96,9 +96,10 @@ namespace BogheApp.Screens
         bool UpdateQoS()
         {
             tmedia_pref_video_size_t prefVideoSize = (this.comboBoxPrefVideoSize.SelectedValue as PrefVideoSize).Value;
+            tmedia_bandwidth_level_t bandwidthLevel = Configuration.QoSBandwidthFromString(this.comboBoxPreconditionBandwidth.SelectedValue.ToString());
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PREF_VIDEO_SIZE, prefVideoSize.ToString());
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.ZERO_VIDEO_ARTIFACTS,
-                this.checkBoxZeroVideoArtifactsEnable.IsChecked.Value);   
+                this.checkBoxZeroVideoArtifactsEnable.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, 
                 this.checkBoxSessionTimersEnable.IsChecked.Value);            
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_REFRESHER, this.comboBoxSessionTimerRefreser.SelectedValue.ToString());
@@ -108,8 +109,7 @@ namespace BogheApp.Screens
                 Configuration.QoSStrengthFromString(this.comboBoxPreconditionStrength.SelectedValue.ToString()).ToString());
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PRECOND_TYPE,
                 Configuration.QoSTypeFromString(this.comboBoxPreconditionType.SelectedValue.ToString()).ToString());
-            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.BANDWIDTH,
-                Configuration.QoSBandwidthFromString(this.comboBoxPreconditionBandwidth.SelectedValue.ToString()).ToString());
+            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.BANDWIDTH, bandwidthLevel.ToString());
 
 
             // Transmit values to the native part (global)
@@ -125,6 +125,7 @@ namespace BogheApp.Screens
             }
             MediaSessionMgr.defaultsSetPrefVideoSize(prefVideoSize);
             MediaSessionMgr.defaultsSetVideoZeroArtifactsEnabled(this.checkBoxZeroVideoArtifactsEnable.IsChecked.Value);
+            MediaSessionMgr.defaultsSetVideoMotionRank(Configuration.QoSMotionRankFromBandwidth(bandwidthLevel));
 
             return true;
         }

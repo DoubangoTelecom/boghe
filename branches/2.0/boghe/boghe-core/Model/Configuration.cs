@@ -83,7 +83,7 @@ namespace BogheCore.Model
         public static bool DEFAULT_RCS_ISCOMOPING = true;
         public static PresenceStatus DEFAULT_RCS_STATUS = PresenceStatus.Online;
 
-        public static String DEFAULT_QOS_BANDWIDTH = tmedia_bandwidth_level_t.tmedia_bl_hight.ToString(); //@deprecated
+        public static String DEFAULT_QOS_BANDWIDTH = tmedia_bandwidth_level_t.tmedia_bl_medium.ToString(); //@deprecated
         public static String DEFAULT_QOS_PREF_VIDEO_SIZE = tmedia_pref_video_size_t.tmedia_pref_video_size_vga.ToString();
         public static String DEFAULT_QOS_PRECOND_STRENGTH = tmedia_qos_strength_t.tmedia_qos_strength_none.ToString();
         public static String DEFAULT_QOS_PRECOND_TYPE = tmedia_qos_stype_t.tmedia_qos_stype_none.ToString();
@@ -289,6 +289,27 @@ namespace BogheCore.Model
             else
             {
                 return tmedia_bandwidth_level_t.tmedia_bl_hight;
+            }
+        }
+
+        static public int QoSMotionRankFromBandwidth(tmedia_bandwidth_level_t bw)
+        {
+            switch (bw)
+            {
+                case tmedia_bandwidth_level_t.tmedia_bl_low:
+                    {
+                        return 1;
+                    }
+                case tmedia_bandwidth_level_t.tmedia_bl_medium:
+                default:
+                    {
+                        return 2;
+                    }
+                case tmedia_bandwidth_level_t.tmedia_bl_hight:
+                case tmedia_bandwidth_level_t.tmedia_bl_unrestricted:
+                    {
+                        return 4;
+                    }
             }
         }
     }

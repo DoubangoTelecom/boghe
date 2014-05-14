@@ -124,6 +124,9 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetBandwidthVideoDownloadMax(-1);
             MediaSessionMgr.defaultsSetBandwidthVideoUploadMax(-1);
 
+            tmedia_bandwidth_level_t bandwidthLevel = (tmedia_bandwidth_level_t)Enum.Parse(typeof(tmedia_bandwidth_level_t), this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.BANDWIDTH, Configuration.DEFAULT_QOS_BANDWIDTH));
+            MediaSessionMgr.defaultsSetVideoMotionRank(Configuration.QoSMotionRankFromBandwidth(bandwidthLevel));
+
             MediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
             if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
             {
