@@ -265,8 +265,8 @@ namespace BogheCore.Services.Impl
                                 /* ==== 3GPP SMSIP  === */
 						        byte[] buffer = (bytes.Clone() as byte[]);
                                 IntPtr ptr = Marshal.AllocHGlobal(buffer.Length);
+                                Marshal.Copy(buffer, 0, ptr, buffer.Length);
                                 SMSData smsData = SMSEncoder.decode(ptr, (uint)buffer.Length, false);
-                                Marshal.Copy(ptr, buffer, 0, buffer.Length);
                                 Marshal.FreeHGlobal(ptr);
                                 
                                 if (smsData != null){
