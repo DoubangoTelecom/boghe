@@ -169,6 +169,8 @@ namespace BogheApp
                 if (this.videoDisplayRemote.Visibility == System.Windows.Visibility.Visible)
                 {
                     this.AVSession.MediaSessionMgr.consumerSetInt64(twrap_media_type_t.twrap_media_video, "remote-hwnd", this.videoDisplayRemote.Handle.ToInt64());
+                    // The BFCP session is not expected to receive any media but Radvision use it as receiver for the mixed stream.
+                    this.AVSession.MediaSessionMgr.consumerSetInt64(twrap_media_type_t.twrap_media_bfcp_video, "remote-hwnd", this.videoDisplayRemote.Handle.ToInt64());
                 }
                 if (this.videoDisplayLocal.Visibility == System.Windows.Visibility.Visible)
                 {

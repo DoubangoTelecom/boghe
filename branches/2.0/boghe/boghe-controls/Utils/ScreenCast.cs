@@ -41,8 +41,8 @@ namespace BogheControls.Utils
                 int lLength = NativeMethods.GetWindowTextLength(hWnd);
                 if (lLength == 0) return true;
 
-                StringBuilder lBuilder = new StringBuilder(lLength);
-                NativeMethods.GetWindowText(hWnd, lBuilder, lLength + 1);
+                StringBuilder lBuilder = new StringBuilder(lLength + 1);
+                NativeMethods.GetWindowText(hWnd, lBuilder, lBuilder.Capacity);
 
                 lWindows[hWnd] = lBuilder.ToString();
                 return true;
