@@ -73,7 +73,7 @@ namespace BogheApp
         {
             if (!sInitialized)
             {
-                rtSipStack.initialize();
+                // rtSipStack.initialize();
                 sInitialized = true;
             }
         }
@@ -98,6 +98,16 @@ namespace BogheApp
                 this.SipService.SipConfig.ProxyPort = (ushort)rtServiceManager.Instance.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.PCSCF_PORT, Configuration.DEFAULT_NETWORK_PCSCF_PORT);
                 this.SipService.SipConfig.Transport = rtServiceManager.Instance.ConfigurationService.Get(Configuration.ConfFolder.NETWORK, Configuration.ConfEntry.TRANSPORT, Configuration.DEFAULT_NETWORK_TRANSPORT)
                     .Equals("UDP", StringComparison.InvariantCultureIgnoreCase) ? SipNetworkTransport.UDP : SipNetworkTransport.TCP;
+
+                this.SipService.SipConfig.EchoSupp = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_ECHO_SUPP, Configuration.DEFAULT_QOS_USE_ECHO_SUPP);
+                this.SipService.SipConfig.EchoTail = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.ECHO_TAIL, Configuration.DEFAULT_QOS_ECHO_TAIL);
+                this.SipService.SipConfig.EchoSkew = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.ECHO_SKEW, Configuration.DEFAULT_QOS_ECHO_SKEW);
+                this.SipService.SipConfig.NoiseSupp = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_NOISE_SUPP, Configuration.DEFAULT_QOS_USE_NOISE_SUPP);
+                this.SipService.SipConfig.Vad = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_VAD, Configuration.DEFAULT_QOS_USE_VAD);
+                this.SipService.SipConfig.Agc = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_AGC, Configuration.DEFAULT_QOS_USE_AGC);
+                this.SipService.SipConfig.JbMaxLateRate = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.JB_MAX_LATERATE, Configuration.DEFAULT_QOS_JB_MAX_LATERATE);
+                this.SipService.SipConfig.Rtcp = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_RTCP, Configuration.DEFAULT_QOS_USE_RTCP);
+                this.SipService.SipConfig.RtcpMux = this.ConfigurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_RTCPMUX, Configuration.DEFAULT_QOS_USE_RTCPMUX);
 
                 this.SipService.SipConfig.PushNotificationUri = (App.Current as BogheApp.App).PushChannelUri != null ? (App.Current as BogheApp.App).PushChannelUri.ToString() : "nullptr";
                 this.SipService.SipConfig.UserAgent = String.Format("IM-client/OMA1.0 Boghe-{0}/v{1}", TARGET_OS, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
@@ -135,18 +145,9 @@ namespace BogheApp
             // Register plugins
             // MediaSessionMgr.registerAudioPluginFromFile("audio_webrtc.dll");
 
+            /*
             // Set user preferences (global defaults)
             // could be changed per session
-            rtMediaSessionMgr.defaultsSetAgcEnabled(true);
-            rtMediaSessionMgr.defaultsSetEchoSuppEnabled(true);
-            rtMediaSessionMgr.defaultsSetEchoTail(500);
-            rtMediaSessionMgr.defaultsSetEchoSkew(0);
-            rtMediaSessionMgr.defaultsSetNoiseSuppEnabled(true);
-            rtMediaSessionMgr.defaultsSetVadEnabled(false);
-            rtMediaSessionMgr.defaultsSetJbMaxLateRate(1);
-            rtMediaSessionMgr.defaultsSetRtcpEnabled(true);
-            rtMediaSessionMgr.defaultsSetRtcpMuxEnabled(true);
-
             rtMediaSessionMgr.defaultsSetVolume(this.ConfigurationService.Get(Configuration.ConfFolder.GENERAL, Configuration.ConfEntry.AUDIO_VOLUME, Configuration.DEFAULT_GENERAL_AUDIO_VOLUME));
             if (this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS))
             {
@@ -180,6 +181,7 @@ namespace BogheApp
             rtMediaSessionMgr.defaultsSetIceEnabled(
                 this.configurationService.Get(Configuration.ConfFolder.NATT, Configuration.ConfEntry.USE_ICE, Configuration.DEFAULT_NATT_USE_ICE)
                 );
+             * */
             return ret;
         }
 

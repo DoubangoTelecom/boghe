@@ -53,6 +53,15 @@ SipConfig::SipConfig(Platform::String^ realmUri, Platform::String^ impiString, P
 	, m_eIPVersion(doubango_rt::BackEnd::IPVersion::IPv4)
 	, m_pPushNotificationUri(nullptr)
 	, m_pUserAgent(nullptr)
+	, m_bEchoSupp(true)
+	, m_nEchoTail(100)
+	, m_nEchoSkew(0)
+	, m_bNoiseSupp(true)
+	, m_bVad(false)
+	, m_bAgc(false)
+	, m_nJbMaxLateRate(1)
+	, m_bRtcp(true)
+	, m_bRtcpMux(true)
 {
 }
 
@@ -472,7 +481,20 @@ bool SipService::Start()
 
 	{
 		std::lock_guard<std::recursive_mutex> selflock(mLock);
+
+		// Global values (called here to share same global memory)
+		rtMediaSessionMgr::defaultsSetAgcEnabled(m_pSipConfig->Agc);
+		rtMediaSessionMgr::defaultsSetEchoSuppEnabled(m_pSipConfig->EchoSupp);
+		rtMediaSessionMgr::defaultsSetEchoTail(m_pSipConfig->EchoTail);
+		rtMediaSessionMgr::defaultsSetEchoSkew(m_pSipConfig->EchoSkew);
+		rtMediaSessionMgr::defaultsSetNoiseSuppEnabled(m_pSipConfig->NoiseSupp);
+		rtMediaSessionMgr::defaultsSetVadEnabled(m_pSipConfig->Vad);
+		rtMediaSessionMgr::defaultsSetJbMaxLateRate(m_pSipConfig->JbMaxLateRate);
+		rtMediaSessionMgr::defaultsSetRtcpEnabled(m_pSipConfig->Rtcp);
+		rtMediaSessionMgr::defaultsSetRtcpMuxEnabled(m_pSipConfig->RtcpMux);
+
 		
+		// Stack-level values
 		ret &= m_pSipStack->setDisplayName(m_pSipConfig->DisplayName);
 		ret &= m_pSipStack->setRealm(m_pSipConfig->RealmUri);
 		ret &= m_pSipStack->setIMPI(m_pSipConfig->ImpiString);

@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Mon May 12 01:43:32 2014
+/* at Wed Nov 12 08:39:08 2014
  */
-/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-31255408:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
+/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-90e5197f:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=ARM 8.00.0595 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -2154,11 +2154,11 @@ enum __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__pref__video__size__t
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_hvga	= 4,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_vga	= 5,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_4cif	= 6,
-        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_svga	= 7,
-        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_480p	= 8,
-        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_720p	= 9,
-        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_16cif	= 10,
-        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_1080p	= 11
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_svga	= 8,
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_480p	= 9,
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_720p	= 10,
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_16cif	= 11,
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_1080p	= 12
     } ;
 #endif /* end if !defined(__cplusplus) */
 
@@ -3282,11 +3282,11 @@ namespace ABI {
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_hvga	= 4,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_vga	= 5,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_4cif	= 6,
-                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_svga	= 7,
-                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_480p	= 8,
-                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_720p	= 9,
-                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_16cif	= 10,
-                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_1080p	= 11
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_svga	= 8,
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_480p	= 9,
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_720p	= 10,
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_16cif	= 11,
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_1080p	= 12
                 } ;
         } /* end namespace */
     } /* end namespace */
@@ -5027,185 +5027,6 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrSta
                         /* [in] */ HSTRING path,
                         /* [out][retval] */ UINT32 *__returnValue) = 0;
                     
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetProfile( 
-                        /* [in] */ ABI::doubango_rt::BackEnd::rt_tmedia_profile_t profile,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetProfile( 
-                        /* [out][retval] */ ABI::doubango_rt::BackEnd::rt_tmedia_profile_t *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetPrefVideoSize( 
-                        /* [in] */ ABI::doubango_rt::BackEnd::rt_tmedia_pref_video_size_t pref_video_size,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetJbMargin( 
-                        /* [in] */ UINT32 jb_margin_ms,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetJbMaxLateRate( 
-                        /* [in] */ UINT32 jb_late_rate_percent,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetEchoTail( 
-                        /* [in] */ UINT32 echo_tail,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetEchoTail( 
-                        /* [out][retval] */ UINT32 *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetEchoSkew( 
-                        /* [in] */ UINT32 echo_skew,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetEchoSuppEnabled( 
-                        /* [in] */ boolean echo_supp_enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetEchoSuppEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetAgcEnabled( 
-                        /* [in] */ boolean agc_enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetAgcEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetAgcLevel( 
-                        /* [in] */ FLOAT agc_level,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetAgcLevel( 
-                        /* [out][retval] */ FLOAT *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetVadEnabled( 
-                        /* [in] */ boolean vad_enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetGetVadEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetNoiseSuppEnabled( 
-                        /* [in] */ boolean noise_supp_enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetNoiseSuppEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetNoiseSuppLevel( 
-                        /* [in] */ INT32 noise_supp_level,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetNoiseSuppLevel( 
-                        /* [out][retval] */ INT32 *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSet100relEnabled( 
-                        /* [in] */ boolean _100rel_enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGet100relEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetScreenSize( 
-                        /* [in] */ INT32 sx,
-                        /* [in] */ INT32 sy,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetAudioGain( 
-                        /* [in] */ INT32 producer_gain,
-                        /* [in] */ INT32 consumer_gain,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetRtpPortRange( 
-                        /* [in] */ UINT16 range_start,
-                        /* [in] */ UINT16 range_stop,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetRtpSymetricEnabled( 
-                        /* [in] */ boolean enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetMediaType( 
-                        /* [in] */ ABI::doubango_rt::BackEnd::rt_twrap_media_type_t media_type,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetVolume( 
-                        /* [in] */ INT32 volume,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetVolume( 
-                        /* [out][retval] */ INT32 *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetInviteSessionTimers( 
-                        /* [in] */ INT32 timeout,
-                        /* [in] */ HSTRING refresher,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetSRtpMode( 
-                        /* [in] */ ABI::doubango_rt::BackEnd::rt_tmedia_srtp_mode_t mode,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetSRtpMode( 
-                        /* [out][retval] */ ABI::doubango_rt::BackEnd::rt_tmedia_srtp_mode_t *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetSRtpType( 
-                        /* [in] */ ABI::doubango_rt::BackEnd::rt_tmedia_srtp_type_t srtp_type,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetSRtpType( 
-                        /* [out][retval] */ ABI::doubango_rt::BackEnd::rt_tmedia_srtp_type_t *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetRtcpEnabled( 
-                        /* [in] */ boolean enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetRtcpEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetRtcpMuxEnabled( 
-                        /* [in] */ boolean enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetRtcpMuxEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetIceEnabled( 
-                        /* [in] */ boolean ice_enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetByPassEncoding( 
-                        /* [in] */ boolean enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetByPassEncoding( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetByPassDecoding( 
-                        /* [in] */ boolean enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetByPassDecoding( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetVideoJbEnabled( 
-                        /* [in] */ boolean enabled,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetVideoJbEnabled( 
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetRtpBuffSize( 
-                        /* [in] */ UINT32 buffSize,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsGetRtpBuffSize( 
-                        /* [out][retval] */ UINT32 *__returnValue) = 0;
-                    
-                    virtual HRESULT STDMETHODCALLTYPE defaultsSetAvpfTail( 
-                        /* [in] */ UINT32 tail_min,
-                        /* [in] */ UINT32 tail_max,
-                        /* [out][retval] */ boolean *__returnValue) = 0;
-                    
                 };
 
                 extern const __declspec(selectany) IID & IID___IrtMediaSessionMgrStatics = __uuidof(__IrtMediaSessionMgrStatics);
@@ -5252,233 +5073,6 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrSta
             /* [in] */ HSTRING path,
             /* [out][retval] */ UINT32 *__returnValue);
         
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetProfile )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__profile__t profile,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetProfile )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__profile__t *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetPrefVideoSize )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__pref__video__size__t pref_video_size,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetJbMargin )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT32 jb_margin_ms,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetJbMaxLateRate )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT32 jb_late_rate_percent,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetEchoTail )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT32 echo_tail,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetEchoTail )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ UINT32 *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetEchoSkew )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT32 echo_skew,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetEchoSuppEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean echo_supp_enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetEchoSuppEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetAgcEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean agc_enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetAgcEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetAgcLevel )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ FLOAT agc_level,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetAgcLevel )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ FLOAT *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetVadEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean vad_enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetGetVadEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetNoiseSuppEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean noise_supp_enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetNoiseSuppEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetNoiseSuppLevel )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ INT32 noise_supp_level,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetNoiseSuppLevel )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ INT32 *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSet100relEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean _100rel_enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGet100relEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetScreenSize )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ INT32 sx,
-            /* [in] */ INT32 sy,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetAudioGain )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ INT32 producer_gain,
-            /* [in] */ INT32 consumer_gain,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetRtpPortRange )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT16 range_start,
-            /* [in] */ UINT16 range_stop,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetRtpSymetricEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetMediaType )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__twrap__media__type__t media_type,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetVolume )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ INT32 volume,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetVolume )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ INT32 *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetInviteSessionTimers )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ INT32 timeout,
-            /* [in] */ HSTRING refresher,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetSRtpMode )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__srtp__mode__t mode,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetSRtpMode )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__srtp__mode__t *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetSRtpType )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__srtp__type__t srtp_type,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetSRtpType )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__srtp__type__t *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetRtcpEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetRtcpEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetRtcpMuxEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetRtcpMuxEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetIceEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean ice_enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetByPassEncoding )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetByPassEncoding )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetByPassDecoding )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetByPassDecoding )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetVideoJbEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ boolean enabled,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetVideoJbEnabled )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetRtpBuffSize )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT32 buffSize,
-            /* [out][retval] */ boolean *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsGetRtpBuffSize )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [out][retval] */ UINT32 *__returnValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *defaultsSetAvpfTail )( 
-            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics * This,
-            /* [in] */ UINT32 tail_min,
-            /* [in] */ UINT32 tail_max,
-            /* [out][retval] */ boolean *__returnValue);
-        
         END_INTERFACE
     } __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStaticsVtbl;
 
@@ -5514,150 +5108,6 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrSta
 
 #define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_registerAudioPluginFromFile(This,path,__returnValue)	\
     ( (This)->lpVtbl -> registerAudioPluginFromFile(This,path,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetProfile(This,profile,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetProfile(This,profile,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetProfile(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetProfile(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetPrefVideoSize(This,pref_video_size,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetPrefVideoSize(This,pref_video_size,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetJbMargin(This,jb_margin_ms,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetJbMargin(This,jb_margin_ms,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetJbMaxLateRate(This,jb_late_rate_percent,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetJbMaxLateRate(This,jb_late_rate_percent,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetEchoTail(This,echo_tail,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetEchoTail(This,echo_tail,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetEchoTail(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetEchoTail(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetEchoSkew(This,echo_skew,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetEchoSkew(This,echo_skew,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetEchoSuppEnabled(This,echo_supp_enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetEchoSuppEnabled(This,echo_supp_enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetEchoSuppEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetEchoSuppEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetAgcEnabled(This,agc_enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetAgcEnabled(This,agc_enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetAgcEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetAgcEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetAgcLevel(This,agc_level,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetAgcLevel(This,agc_level,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetAgcLevel(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetAgcLevel(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetVadEnabled(This,vad_enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetVadEnabled(This,vad_enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetGetVadEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetGetVadEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetNoiseSuppEnabled(This,noise_supp_enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetNoiseSuppEnabled(This,noise_supp_enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetNoiseSuppEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetNoiseSuppEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetNoiseSuppLevel(This,noise_supp_level,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetNoiseSuppLevel(This,noise_supp_level,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetNoiseSuppLevel(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetNoiseSuppLevel(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSet100relEnabled(This,_100rel_enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSet100relEnabled(This,_100rel_enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGet100relEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGet100relEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetScreenSize(This,sx,sy,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetScreenSize(This,sx,sy,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetAudioGain(This,producer_gain,consumer_gain,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetAudioGain(This,producer_gain,consumer_gain,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetRtpPortRange(This,range_start,range_stop,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetRtpPortRange(This,range_start,range_stop,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetRtpSymetricEnabled(This,enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetRtpSymetricEnabled(This,enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetMediaType(This,media_type,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetMediaType(This,media_type,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetVolume(This,volume,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetVolume(This,volume,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetVolume(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetVolume(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetInviteSessionTimers(This,timeout,refresher,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetInviteSessionTimers(This,timeout,refresher,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetSRtpMode(This,mode,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetSRtpMode(This,mode,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetSRtpMode(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetSRtpMode(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetSRtpType(This,srtp_type,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetSRtpType(This,srtp_type,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetSRtpType(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetSRtpType(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetRtcpEnabled(This,enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetRtcpEnabled(This,enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetRtcpEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetRtcpEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetRtcpMuxEnabled(This,enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetRtcpMuxEnabled(This,enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetRtcpMuxEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetRtcpMuxEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetIceEnabled(This,ice_enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetIceEnabled(This,ice_enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetByPassEncoding(This,enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetByPassEncoding(This,enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetByPassEncoding(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetByPassEncoding(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetByPassDecoding(This,enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetByPassDecoding(This,enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetByPassDecoding(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetByPassDecoding(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetVideoJbEnabled(This,enabled,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetVideoJbEnabled(This,enabled,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetVideoJbEnabled(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetVideoJbEnabled(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetRtpBuffSize(This,buffSize,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetRtpBuffSize(This,buffSize,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsGetRtpBuffSize(This,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsGetRtpBuffSize(This,__returnValue) ) 
-
-#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtMediaSessionMgrStatics_defaultsSetAvpfTail(This,tail_min,tail_max,__returnValue)	\
-    ( (This)->lpVtbl -> defaultsSetAvpfTail(This,tail_min,tail_max,__returnValue) ) 
 
 #endif /* COBJMACROS */
 
@@ -15567,6 +15017,60 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVi
                     virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_UserAgent( 
                         /* [in] */ HSTRING value) = 0;
                     
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_EchoSupp( 
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_EchoSupp( 
+                        /* [in] */ boolean value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_EchoTail( 
+                        /* [out][retval] */ INT32 *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_EchoTail( 
+                        /* [in] */ INT32 value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_EchoSkew( 
+                        /* [out][retval] */ INT32 *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_EchoSkew( 
+                        /* [in] */ INT32 value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_NoiseSupp( 
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_NoiseSupp( 
+                        /* [in] */ boolean value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Vad( 
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Vad( 
+                        /* [in] */ boolean value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Agc( 
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Agc( 
+                        /* [in] */ boolean value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_JbMaxLateRate( 
+                        /* [out][retval] */ INT32 *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_JbMaxLateRate( 
+                        /* [in] */ INT32 value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Rtcp( 
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Rtcp( 
+                        /* [in] */ boolean value) = 0;
+                    
+                    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_RtcpMux( 
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_RtcpMux( 
+                        /* [in] */ boolean value) = 0;
+                    
                 };
 
                 extern const __declspec(selectany) IID & IID___ISipConfigPublicNonVirtuals = __uuidof(__ISipConfigPublicNonVirtuals);
@@ -15704,6 +15208,78 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVi
             __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
             /* [in] */ HSTRING value);
         
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_EchoSupp )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_EchoSupp )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ boolean value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_EchoTail )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ INT32 *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_EchoTail )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ INT32 value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_EchoSkew )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ INT32 *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_EchoSkew )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ INT32 value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NoiseSupp )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_NoiseSupp )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ boolean value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Vad )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Vad )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ boolean value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Agc )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Agc )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ boolean value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_JbMaxLateRate )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ INT32 *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_JbMaxLateRate )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ INT32 value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Rtcp )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rtcp )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ boolean value);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_RtcpMux )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_RtcpMux )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals * This,
+            /* [in] */ boolean value);
+        
         END_INTERFACE
     } __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtualsVtbl;
 
@@ -15808,6 +15384,60 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVi
 
 #define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_UserAgent(This,value)	\
     ( (This)->lpVtbl -> put_UserAgent(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_EchoSupp(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_EchoSupp(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_EchoSupp(This,value)	\
+    ( (This)->lpVtbl -> put_EchoSupp(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_EchoTail(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_EchoTail(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_EchoTail(This,value)	\
+    ( (This)->lpVtbl -> put_EchoTail(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_EchoSkew(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_EchoSkew(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_EchoSkew(This,value)	\
+    ( (This)->lpVtbl -> put_EchoSkew(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_NoiseSupp(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_NoiseSupp(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_NoiseSupp(This,value)	\
+    ( (This)->lpVtbl -> put_NoiseSupp(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_Vad(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_Vad(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_Vad(This,value)	\
+    ( (This)->lpVtbl -> put_Vad(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_Agc(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_Agc(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_Agc(This,value)	\
+    ( (This)->lpVtbl -> put_Agc(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_JbMaxLateRate(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_JbMaxLateRate(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_JbMaxLateRate(This,value)	\
+    ( (This)->lpVtbl -> put_JbMaxLateRate(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_Rtcp(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_Rtcp(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_Rtcp(This,value)	\
+    ( (This)->lpVtbl -> put_Rtcp(This,value) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_get_RtcpMux(This,__returnValue)	\
+    ( (This)->lpVtbl -> get_RtcpMux(This,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____ISipConfigPublicNonVirtuals_put_RtcpMux(This,value)	\
+    ( (This)->lpVtbl -> put_RtcpMux(This,value) ) 
 
 #endif /* COBJMACROS */
 
