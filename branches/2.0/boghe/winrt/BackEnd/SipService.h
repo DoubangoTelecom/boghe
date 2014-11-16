@@ -168,6 +168,15 @@ namespace doubango_rt
 			DECLARE_PROPERTY_RW(IPVersion, e, doubango_rt::BackEnd::IPVersion);
 			DECLARE_PROPERTY_RW(PushNotificationUri, p, Platform::String^);
 			DECLARE_PROPERTY_RW(UserAgent, p, Platform::String^);
+			DECLARE_PROPERTY_RW(EchoSupp, b, bool);
+			DECLARE_PROPERTY_RW(EchoTail, n, int);
+			DECLARE_PROPERTY_RW(EchoSkew, n, int);
+			DECLARE_PROPERTY_RW(NoiseSupp, b, bool);
+			DECLARE_PROPERTY_RW(Vad, b, bool);
+			DECLARE_PROPERTY_RW(Agc, b, bool);
+			DECLARE_PROPERTY_RW(JbMaxLateRate, n, int);
+			DECLARE_PROPERTY_RW(Rtcp, b, bool);
+			DECLARE_PROPERTY_RW(RtcpMux, b, bool);
 			
 		internal:
 			SipConfig(Platform::String^ realmUri, Platform::String^ impiString, Platform::String^ impuUri);
@@ -185,6 +194,15 @@ namespace doubango_rt
 			doubango_rt::BackEnd::IPVersion m_eIPVersion;
 			Platform::String^ m_pPushNotificationUri;
 			Platform::String^ m_pUserAgent;
+			bool m_bEchoSupp;
+			int m_nEchoTail;
+			int m_nEchoSkew;
+			bool m_bNoiseSupp;
+			bool m_bVad;
+			bool m_bAgc;
+			int m_nJbMaxLateRate;
+			bool m_bRtcp;
+			bool m_bRtcpMux;
 		};
 
 		public ref class SipAVCall sealed
