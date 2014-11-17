@@ -84,7 +84,7 @@ namespace BogheApp.Screens
             int timeout = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS_TIMEOUT, Configuration.DEFAULT_QOS_SESSION_TIMERS_TIMEOUT);
 
             this.comboBoxPrefVideoSize.SelectedIndex = Math.Max(0, prefVideoSizeIndex);
-            this.checkBoxZeroVideoArtifactsEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.ZERO_VIDEO_ARTIFACTS, Configuration.DEFAULT_QOS_ZERO_VIDEO_ARTIFACTS);
+            this.checkBoxZeroVideoArtifactsEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_ZERO_VIDEO_ARTIFACTS, Configuration.DEFAULT_QOS_USE_ZERO_VIDEO_ARTIFACTS);
             this.checkBoxSessionTimersEnable.IsChecked = this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, Configuration.DEFAULT_QOS_SESSION_TIMERS);
             this.comboBoxPreconditionStrength.SelectedValue = Configuration.QoSStrengthToString((tmedia_qos_strength_t)Enum.Parse(typeof(tmedia_qos_strength_t), strength));
             this.comboBoxPreconditionType.SelectedValue = Configuration.QoSTypeToString((tmedia_qos_stype_t)Enum.Parse(typeof(tmedia_qos_stype_t), type));
@@ -98,7 +98,7 @@ namespace BogheApp.Screens
             tmedia_pref_video_size_t prefVideoSize = (this.comboBoxPrefVideoSize.SelectedValue as PrefVideoSize).Value;
             tmedia_bandwidth_level_t bandwidthLevel = Configuration.QoSBandwidthFromString(this.comboBoxPreconditionBandwidth.SelectedValue.ToString());
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PREF_VIDEO_SIZE, prefVideoSize.ToString());
-            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.ZERO_VIDEO_ARTIFACTS,
+            this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_ZERO_VIDEO_ARTIFACTS,
                 this.checkBoxZeroVideoArtifactsEnable.IsChecked.Value);
             this.configurationService.Set(Configuration.ConfFolder.QOS, Configuration.ConfEntry.SESSION_TIMERS, 
                 this.checkBoxSessionTimersEnable.IsChecked.Value);            

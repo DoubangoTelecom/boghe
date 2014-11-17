@@ -91,7 +91,7 @@ namespace BogheCore.Model
         public static int DEFAULT_QOS_SIP_SESSIONS_TIMEOUT = 600000;
         public static int DEFAULT_QOS_SESSION_TIMERS_TIMEOUT = 3600;
         public static bool DEFAULT_QOS_SESSION_TIMERS = false;
-        public static bool DEFAULT_QOS_ZERO_VIDEO_ARTIFACTS = false;
+        public static bool DEFAULT_QOS_USE_ZERO_VIDEO_ARTIFACTS = false;
         public static bool DEFAULT_QOS_USE_ECHO_SUPP = true;
         public static int DEFAULT_QOS_ECHO_TAIL = 100;
         public static int DEFAULT_QOS_ECHO_SKEW = 0;
