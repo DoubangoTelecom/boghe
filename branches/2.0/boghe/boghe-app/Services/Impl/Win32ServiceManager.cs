@@ -138,7 +138,7 @@ namespace BogheApp.Services.Impl
             {
                 MediaSessionMgr.defaultsSetInviteSessionTimers(0, null);
             }
-            MediaSessionMgr.defaultsSetVideoZeroArtifactsEnabled(this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.ZERO_VIDEO_ARTIFACTS, Configuration.DEFAULT_QOS_ZERO_VIDEO_ARTIFACTS));
+            MediaSessionMgr.defaultsSetVideoZeroArtifactsEnabled(this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.USE_ZERO_VIDEO_ARTIFACTS, Configuration.DEFAULT_QOS_USE_ZERO_VIDEO_ARTIFACTS));
             MediaSessionMgr.defaultsSetPrefVideoSize(
                 (tmedia_pref_video_size_t)Enum.Parse(typeof(tmedia_pref_video_size_t), this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.PREF_VIDEO_SIZE, Configuration.DEFAULT_QOS_PREF_VIDEO_SIZE), true)
                 );
