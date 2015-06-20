@@ -331,6 +331,7 @@ popd</Command>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_dialog.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_event.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_message.h" />
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_proxy_node_plugin.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_session.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_url.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp_config.h" />
@@ -439,6 +440,9 @@ popd</Command>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_nat.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_poll.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proto.h" />
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxydetect.h" />
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_node_socks_plugin.h" />
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_plugin.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_socket.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_transport.h" />
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_types.h" />
@@ -1298,6 +1302,12 @@ popd</Command>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\src\thttp_proxy_node_plugin.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\src\thttp_session.c">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
@@ -1873,6 +1883,24 @@ popd</Command>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxydetect.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_node_socks_plugin.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_plugin.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_socket.c">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>

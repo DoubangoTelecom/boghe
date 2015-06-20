@@ -133,7 +133,6 @@ namespace BogheApp
                             this.avHistoryEvent.StartTime = DateTime.Now;
                             this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
                         }
-
                         break;
                     }
 

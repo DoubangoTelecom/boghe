@@ -1487,6 +1487,18 @@
     <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\turn\tnet_turn_session.c">
       <Filter>Doubango\tinyNET</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\src\thttp_proxy_node_plugin.c">
+      <Filter>Doubango\tinyHTTP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_node_socks_plugin.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_plugin.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxydetect.c">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackEndNativeBuffer.h" />
@@ -3038,6 +3050,18 @@
       <Filter>Doubango\tinyNET</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\turn\tnet_turn_session.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyHTTP\include\tinyhttp\thttp_proxy_node_plugin.h">
+      <Filter>Doubango\tinyHTTP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_node_socks_plugin.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxy_plugin.h">
+      <Filter>Doubango\tinyNET</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\doubango\branches\2.0\doubango\tinyNET\src\tnet_proxydetect.h">
       <Filter>Doubango\tinyNET</Filter>
     </ClInclude>
   </ItemGroup>
