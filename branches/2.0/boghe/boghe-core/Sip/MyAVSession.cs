@@ -32,6 +32,7 @@ using ActionConfig = doubango_rt.BackEnd.rtActionConfig;
 using SipMessage = doubango_rt.BackEnd.rtSipMessage;
 using twrap_media_type_t = doubango_rt.BackEnd.rt_twrap_media_type_t;
 using tmedia_t140_data_type_t = doubango_rt.BackEnd.rt_tmedia_t140_data_type_t;
+using tmedia_pref_video_size_t = doubango_rt.BackEnd.rt_tmedia_pref_video_size_t;
 #endif
 
 namespace BogheCore.Sip
@@ -300,6 +301,41 @@ namespace BogheCore.Sip
         public bool SetEchoSupp(bool enabled)
         {
             return this.MediaSessionMgr.sessionSetInt32(twrap_media_type_t.twrap_media_audio, "echo-supp", enabled ? 1 : 0);
+        }
+        public bool setVideoPrefSize(tmedia_pref_video_size_t pref_video_size)
+        {
+            if (mSession != null)
+            {
+                return mSession.setVideoPrefSize(pref_video_size);
+            }
+            return false;
+        }
+
+        public bool setVideoFps(int fps)
+        {
+            if (mSession != null)
+            {
+                return mSession.setVideoFps(fps);
+            }
+            return false;
+        }
+
+        public bool setVideoBandwidthUploadMax(int max)
+        {
+            if (mSession != null)
+            {
+                return mSession.setVideoBandwidthUploadMax(max);
+            }
+            return false;
+        }
+
+        public bool setVideoBandwidthDownloadMax(int max)
+        {
+            if (mSession != null)
+            {
+                return mSession.setVideoBandwidthDownloadMax(max);
+            }
+            return false;
         }
 
         /// <summary>

@@ -123,6 +123,7 @@ namespace BogheApp.Services.Impl
             MediaSessionMgr.defaultsSetAvpfMode(tmedia_mode_t.tmedia_mode_optional);
             MediaSessionMgr.defaultsSetBandwidthVideoDownloadMax(-1);
             MediaSessionMgr.defaultsSetBandwidthVideoUploadMax(-1);
+            MediaSessionMgr.defaultsSetCongestionCtrlEnabled(false);
 
             tmedia_bandwidth_level_t bandwidthLevel = (tmedia_bandwidth_level_t)Enum.Parse(typeof(tmedia_bandwidth_level_t), this.configurationService.Get(Configuration.ConfFolder.QOS, Configuration.ConfEntry.BANDWIDTH, Configuration.DEFAULT_QOS_BANDWIDTH));
             MediaSessionMgr.defaultsSetVideoMotionRank(Configuration.QoSMotionRankFromBandwidth(bandwidthLevel));
