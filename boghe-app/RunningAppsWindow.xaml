@@ -1,0 +1,28 @@
+﻿<Window x:Class="BogheApp.RunningAppsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:items="clr-namespace:BogheApp.Items"
+    Title="Share application" Loaded="Window_Loaded" WindowStyle="ToolWindow">
+    <Grid>
+        <ListView Name="listView" BorderBrush="SkyBlue">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Background" Value="LightGray"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <items:ItemRunningApp Value="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

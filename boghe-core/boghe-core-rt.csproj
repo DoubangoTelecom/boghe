@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24B5E665-F24E-47B7-9D8B-4346ADEF1F3C}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BogheCore</RootNamespace>
+    <AssemblyName>boghe_core_rt</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;WINRT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WINRT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;WINRT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WINRT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;WINRT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WINRT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ContentType.cs" />
+    <Compile Include="Events\ConfigurationEventArgs.cs" />
+    <Compile Include="Events\ContactEventArgs.cs" />
+    <Compile Include="Events\ContactEventTypes.cs" />
+    <Compile Include="Events\EventHandlerTrigger.cs" />
+    <Compile Include="Events\HistoryEventArgs.cs" />
+    <Compile Include="Events\HistoryEventTypes.cs" />
+    <Compile Include="Events\MyEventArgs.cs" />
+    <Compile Include="Events\StateMonitorEventArgs.cs" />
+    <Compile Include="Events\StateMonitorEventTypes.cs" />
+    <Compile Include="Events\StringEventArgs.cs" />
+    <Compile Include="MediaType.cs" />
+    <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\HistoryAVCallEvent.cs" />
+    <Compile Include="Model\HistoryChatEvent.cs" />
+    <Compile Include="Model\HistoryEvent.cs" />
+    <Compile Include="Model\HistoryFileTransferEvent.cs" />
+    <Compile Include="Model\HistoryShortMessageEvent.cs" />
+    <Compile Include="Model\MessageSummary.cs" />
+    <Compile Include="Model\RCSService.cs" />
+    <Compile Include="Model\RCSServiceDescription.cs" />
+    <Compile Include="Model\RegistrationInfo.cs" />
+    <Compile Include="Model\WatcherInfo.cs" />
+    <Compile Include="MyObservableCollection.cs" />
+    <Compile Include="PresenceStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IContactService.cs" />
+    <Compile Include="Services\IHistoryService.cs" />
+    <Compile Include="Services\Impl\ContactService.cs" />
+    <Compile Include="Services\Impl\ContactService.Local.cs" />
+    <Compile Include="Services\Impl\HistoryService.cs" />
+    <Compile Include="Services\Impl\IsfConfigurationService.cs" />
+    <Compile Include="Services\Impl\RegConfigurationService.cs" />
+    <Compile Include="Services\Impl\ServiceManager.cs" />
+    <Compile Include="Services\Impl\StateMonitorService.cs" />
+    <Compile Include="Services\Impl\XmlConfigurationService.cs" />
+    <Compile Include="Services\INetworkService.cs" />
+    <Compile Include="Services\IScreenService.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\ISipService.cs" />
+    <Compile Include="Services\ISoundService.cs" />
+    <Compile Include="Services\IStateMonitorService.cs" />
+    <Compile Include="Services\IStorageService.cs" />
+    <Compile Include="Services\IXcapService.cs" />
+    <Compile Include="Sip\Events\InfoEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\InfoEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\InviteEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\InviteEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\MessagingEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\MessagingEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\MsrpEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\MsrpEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\RegistrationEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\RegistrationEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\StackEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\StackEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\SubscriptionEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\Events\SubscriptionEventTypes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyAVSession.Callback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyAVSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyInfoSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyInviteSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyMessagingSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyMsrpSession.Callback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyMsrpSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MyPublicationSession.cs" />
+    <Compile Include="Sip\MyRegistrationSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MySipSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MySipStack.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sip\MySubscriptionSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\IMActivityIndicator.cs" />
+    <Compile Include="Utils\log4net-rt.cs" />
+    <Compile Include="Utils\MySoundPlayer.cs" />
+    <Compile Include="Utils\MyXmlSerializer.cs" />
+    <Compile Include="Utils\Rfc3339DateTime.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\Timer-rt.cs" />
+    <Compile Include="Utils\UriUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\boghe-xdm\boghe-xdm-rt.csproj">
+      <Project>{EE496924-533E-4552-ABAF-42DEEEADAA7A}</Project>
+      <Name>boghe-xdm-rt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\doubango\winrt\doubango.csproj">
+      <Project>{F455FC8C-2D0C-42F6-A069-DAF31D982C5A}</Project>
+      <Name>doubango</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\winrt\Agents\Agents.csproj">
+      <Project>{820034C1-645D-4340-8813-D980C1EF77DE}</Project>
+      <Name>Agents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\winrt\BackEnd\BackEnd.vcxproj">
+      <Project>{C8D75245-FFCF-4932-A228-C9CC8BB60B03}</Project>
+      <Name>BackEnd</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

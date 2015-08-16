@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Settings>
+  <General>
+    <ExtractMode Path="C:\\tmp" AllowEdit="True">Custom</ExtractMode>
+    <HideProgress>False</HideProgress>
+    <SelfDelete>False</SelfDelete>
+    <CompressStub>True</CompressStub>
+    <XPStyles>True</XPStyles>
+    <Overwrite>All</Overwrite>
+    <MessageBegin Show="False">Start extraction</MessageBegin>
+    <MessageCancel Show="False">Are you sue you want to cancel ?</MessageCancel>
+    <MessageFinish Show="False">Files were successfully extracted</MessageFinish>
+    <TitleText>7-ZIP SFX archive</TitleText>
+    <ExtractPathText>Select extraction path</ExtractPathText>
+    <ExtractCancelText>Abort</ExtractCancelText>
+    <Icon>C:\Projects\7-Zip SFX Maker\Resources\01.ico</Icon>
+  </General>
+  <Shortcuts />
+  <RunPrograms>
+    <Item>RunProgram="\"%%T\\setup.exe\""</Item>
+  </RunPrograms>
+  <EnvVariables />
+</Settings>

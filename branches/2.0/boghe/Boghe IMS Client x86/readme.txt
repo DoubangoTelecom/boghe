@@ -1,1 +1,0 @@
-To install the program please execute "setup.exe" file.

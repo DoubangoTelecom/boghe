@@ -1,0 +1,12 @@
+﻿<ctrl:BaseItem x:TypeArguments="corem:RunningApp" x:Class="BogheApp.Items.ItemRunningApp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:corem="clr-namespace:BogheCore.Model;assembly=BogheCore"
+    xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Name="stackPanel1" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="72" MinHeight="72" MaxWidth="100" MaxHeight="100">
+            <Image Name="imageIcon" Stretch="Fill" MinWidth="32" MinHeight="32" Width="32" MaxWidth="32" MaxHeight="32" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Height="32" />
+            <TextBlock Name="labelDescription" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center">Hello World</TextBlock>
+        </StackPanel>
+    </Grid>
+</ctrl:BaseItem>

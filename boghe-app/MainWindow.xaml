@@ -1,0 +1,178 @@
+﻿<Window x:Class="BogheApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:res="clr-namespace:BogheApp.embedded"
+    Title="{x:Static res:Strings.MainWindow_Title}" Width="450" Height="690" SizeToContent="Manual"  Background="SkyBlue" MinWidth="450" MinHeight="690" WindowStyle="SingleBorderWindow" BorderThickness="1" BorderBrush="SkyBlue" Loaded="Window_Loaded" Closing="Window_Closing" Icon="/BogheApp;component/embedded/icon.ico">
+
+    <Grid Background="White">
+        <StatusBar Height="32" Name="statusBar" VerticalAlignment="Bottom" Background="White" />
+        <Menu Height="22" Name="menu" VerticalAlignment="Top" Background="White" FontWeight="Normal" FontSize="12" BorderBrush="SkyBlue" BorderThickness="1">
+            <MenuItem Header="{x:Static res:Strings.MainWindow_MenuFile}" Name="MenuItemFile" Click="MenuItemFile_Click" Background="White">
+                <MenuItem Header="{x:Static res:Strings.MainWindow_SignIn}" Name="MenuItemFile_SignIn">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/signin_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_SignOut}" Name="MenuItemFile_SignOut" IsEnabled="False" >
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/signout_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Registrations (0)" Name="MenuItemFile_Registrations" IsEnabled="False" >
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_information_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MainWindow_Exit}" Name="MenuItemFile_Exit">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/exit_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Address Book" Name="MenuItemEAB" IsEnabled="False" Click="MenuItemEAB_Click">
+                <MenuItem Header="{x:Static res:Strings.MainWindow_Refresh}" Name="MenuItemEAB_Refresh">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_refresh_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_Reset}" Name="MenuItemEAB_Reset" IsEnabled="False" />
+                <Separator />
+                <MenuItem Header="Add Contact" Name="MenuItemEAB_AddContact">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_add_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_EditContact}" Name="MenuItemEAB_EditContact">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_edit_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_DeleteContact}" Name="MenuItemEAB_DeleteContact">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_delete_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MainWindow_AddGroup}" Name="MenuItemEAB_AddGroup">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/users4_add_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_EditGroup}" Name="MenuItemEAB_EditGroup" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/users4_edit_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_DeleteGroup}" Name="MenuItemEAB_DeleteGroup" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/users4_delete_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MainWindow_Authorizations}" Name="MenuItemEAB_Authorizations">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/user_preferences_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MainWindow_MenuHistory}" Name="MenuItemHistory" IsEnabled="False" Click="MenuItemHistory_Click">
+                <MenuItem Header="Show History" Name="MenuItemHistory_ShowHistory">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/date_time_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MainWindow_ShowCalls}" Name="MenuItemHistory_ShowCalls">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/call_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_ShowFileTransfers}" Name="MenuItemHistory_ShowFileTransfers">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/document_up_down_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Strings.MainWindow_ShowMessages}" Name="MenuItemHistory_ShowMessages">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/messages_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MainWindow_DeleteAllEvents}" Name="MenuItemHistory_Clear">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/calendar_delete_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Strings.MainWindow_MenuTools}" Name="MenuItemTools" Click="MenuItemTools_Click">
+                <MenuItem Header="Options" Name="MenuItemTools_Options">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/magic_wand_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="?" Name="MenuItemHelp" Click="MenuItemHelp_Click">
+                <MenuItem Name="MenuItemHelp_GettingStarted" Header="{x:Static res:Strings.MainWindow_GettingStarted}">
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="MenuItemHelp_RequestInfo" Header="{x:Static res:Strings.MainWindow_RequestInfo}">
+                </MenuItem>
+                <MenuItem Name="MenuItemHelpDoubangoWebsite" Header="{x:Static res:Strings.MainWindow_DoubangoWebsite}">
+                </MenuItem>
+                <MenuItem Name="MenuItemHelp_BogheWebsite" Header="{x:Static res:Strings.MainWindow_BogheWebsite}">
+                </MenuItem>
+                <MenuItem Name="MenuItemHelp_IssueTracker" Header="{x:Static res:Strings.MainWindow_IssueTracker}">
+                </MenuItem>
+                <MenuItem Name="MenuItemHelp_Check4Updates" Header="{x:Static res:Strings.MainWindow_CheckForUpdates}">
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{x:Static res:Strings.MainWindow_About}" Name="MenuItemHelp_About">
+                    <MenuItem.Icon>
+                        <Image Source="/BogheApp;component/embedded/16/about_16.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <TabControl Margin="0,86,0,29" Name="tabControl" FlowDirection="LeftToRight" Background="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderBrush="SkyBlue">
+        </TabControl>
+        
+        <Label Height="28" Margin="1,23,128,0" Name="labelDisplayName" VerticalAlignment="Top" FontSize="14" FontWeight="Bold">John Doe</Label>
+        <Border Width="80" Height="60" HorizontalAlignment="Right" Margin="0,24,3,0" VerticalAlignment="Top" BorderThickness="1" CornerRadius="2,2,2,2" BorderBrush="SkyBlue" MouseUp="Border_MouseUp">
+            <Image Height="60" Name="imageAvatar" Stretch="Uniform" Width="80" Source="/BogheApp;component/embedded/48/avatar_48.png" MaxWidth="80" MaxHeight="60" />
+        </Border>
+        <ComboBox ItemsSource="{Binding}" Height="27" HorizontalAlignment="Left" Margin="4,52,0,0" Name="comboBoxStatus" VerticalAlignment="Top" Width="96" SelectionChanged="comboBoxStatus_SelectionChanged">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.567"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Path=ImageSource}" Width="16" Height="16" />
+                        <TextBlock Text = "{Binding Path=Text}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Height="28" Margin="106,52,91,0" Name="labelFreeText" VerticalAlignment="Top" BorderThickness="0" FontSize="14" FontStyle="Italic" Foreground="Black" MouseUp="labelFreeText_MouseUp">Hello John Doe from Paris!</Label>
+        
+        
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <DockPanel.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+            <Label Name="labelProgressInfo" Margin="0,0,0,1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="12" FontWeight="Normal" Height="26" Width="352" Background="Transparent"></Label>
+            <Image Name="imageIndicatorSecurity" Source="/BogheApp;component/embedded/24/lock_open_24.png" Stretch="None"  Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />            
+            <Image Name="imageIndicatorHourGlass" Source="/BogheApp;component/embedded/24/hourglass_24.png" Stretch="None" Visibility="Hidden"   MinWidth="24" MinHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <Image Name="imageIndicatorConn" Source="/BogheApp;component/embedded/24/bullet_ball_glass_red_24.png" Stretch="None" MinWidth="24" MinHeight="24" ClipToBounds="False" HorizontalAlignment="Right" />
+        </DockPanel>
+        <Image Height="24" HorizontalAlignment="Right" Margin="0,25,89,0" Name="imageMailbox" Stretch="None" VerticalAlignment="Top" Width="24" Source="/BogheApp;component/embedded/24/mailbox_empty_24.png" ToolTip="{x:Static res:Strings.MainWindow_NoMessages}" Visibility="Hidden" />
+    </Grid>
+</Window>

@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
+  <DefaultLanguage xmlns="" code="en-US" />
+  <App xmlns="" ProductID="{231d48bf-2376-49bf-b0a0-faa840c9bc63}" Title="Boghe SIP Video Client" RuntimeType="Silverlight" Version="2.146.820" Genre="apps.normal" Author="Doubango Telecom" Description="Boghe SIP Video Client" Publisher="Mamadou DIOP" PublisherID="{20c6acc1-39d0-4b8d-b035-78c3df4fa550}">
+    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon128x128.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
+      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
+      <Capability Name="ID_CAP_SENSORS" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
+      <Capability Name="ID_CAP_CONTACTS" />
+      <Capability Name="ID_CAP_IDENTITY_USER" />
+      <Capability Name="ID_CAP_ISV_CAMERA" />
+      <Capability Name="ID_CAP_MICROPHONE" />
+      <Capability Name="ID_CAP_PHONEDIALER" />
+      <Capability Name="ID_CAP_PROXIMITY" />
+      <Capability Name="ID_CAP_PUSH_NOTIFICATION" />
+      <Capability Name="ID_CAP_VOIP" />
+    </Capabilities>
+    <Tasks>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="Boghe_wp8Token" TaskName="_default">
+        <TemplateFlip>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Application_IconImage_62x62.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\ApplicationIcon128x128.png</BackgroundImageURI>
+          <Title>Boghe</Title>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI>
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
+          <DeviceLockImageURI>
+          </DeviceLockImageURI>
+          <HasLarge>False</HasLarge>
+        </TemplateFlip>
+      </PrimaryToken>
+    </Tokens>
+    <ActivatableClasses>
+      <InProcessServer>
+        <Path>doubango_rt.BackEnd.DLL</Path>
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtActionConfig" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtDDebugCallback" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtCodec" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMediaSessionMgr" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMsrpByteRange" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMsrpMessage" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMsrpEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMsrpCallback" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtDnsResult" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSipStack" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSipUri" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtT140CallbackData" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtT140Callback" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSipSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtInviteSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtCallSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMsrpSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMessagingSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtInfoSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtOptionsSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtPublicationSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtRegistrationSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSubscriptionSession" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSipCallback" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtDialogEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtStackEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtInviteEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtMessagingEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtInfoEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtOptionsEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtPublicationEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtRegistrationEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSubscriptionEvent" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSdpMessage" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.rtSipMessage" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.SipConfig" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.SipAVCall" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.SipService" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.VideoFrameReceivedEventHandler" ThreadingModel="MTA" />
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.Globals" ThreadingModel="MTA" />
+      </InProcessServer>
+      <OutOfProcessServer ServerName="doubango_rt.BackEnd">
+        <Path>doubango_rt.BackEnd.DLL</Path>
+        <Instancing>multipleInstances</Instancing>
+        <ActivatableClass ActivatableClassId="doubango_rt.BackEnd.OutOfProcess.Server" />
+      </OutOfProcessServer>
+      <ProxyStub ClassId="{1BA29F65-9ABB-3024-8221-A98CDB008887}">
+        <Path>doubango_rt.BackEndProxyStub.DLL</Path>
+        <Interface Name="doubango_rt.BackEnd.__IrtActionConfigPublicNonVirtuals" InterfaceId="{1BA29F65-9ABB-3024-8221-A98CDB008887}" />
+        <Interface Name="doubango_rt.BackEnd.rtIDDebugCallback" InterfaceId="{EA0B2968-7AD4-3D5C-AAD3-2AEFB3ACD2E7}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtDDebugCallbackPublicNonVirtuals" InterfaceId="{F8BB64E3-54A8-3060-9310-0D73B4C5D423}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtCodecPublicNonVirtuals" InterfaceId="{8DD1CD82-F943-3715-B510-F8D9F210D75D}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMediaSessionMgrPublicNonVirtuals" InterfaceId="{040D7757-114C-3581-8EF9-D640256C0C14}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMediaSessionMgrStatics" InterfaceId="{5E3981B2-9A97-38D1-B0D2-48B2FFB7B475}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMsrpByteRangePublicNonVirtuals" InterfaceId="{72089DC3-5600-3F9E-89A9-35D50E350348}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMsrpMessagePublicNonVirtuals" InterfaceId="{B92764BB-F11D-3BD1-8DEA-B133CE9BF5F7}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMsrpEventPublicNonVirtuals" InterfaceId="{E4EFFEF8-5C8D-389A-BEA7-7E14E2A0AA95}" />
+        <Interface Name="doubango_rt.BackEnd.rtIMsrpCallback" InterfaceId="{BD3CC691-DAAF-35DD-9CDA-242B70BDF5DC}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMsrpCallbackPublicNonVirtuals" InterfaceId="{38A8B79D-5679-3AF4-BD1C-D27DE0494B1D}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtDnsResultPublicNonVirtuals" InterfaceId="{944BB133-86E3-3FB3-BCF5-FD12B66E3BA6}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipStackPublicNonVirtuals" InterfaceId="{31AC4C99-4FE9-3CCE-89B5-0C2750CCEEA7}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipStackStatics" InterfaceId="{102E8833-DCF3-3111-8252-66AE5C847073}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipUriPublicNonVirtuals" InterfaceId="{357645EC-98BF-3BAF-8B97-3338783397CB}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipUriFactory" InterfaceId="{44A6D232-AE6A-398C-AB6A-78D4EE5B8B5C}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipUriStatics" InterfaceId="{F04BF842-DE0A-31B9-B1CB-42CAD4040666}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtT140CallbackDataPublicNonVirtuals" InterfaceId="{19F9A6F1-E76C-321C-BA0A-78DBA80EC230}" />
+        <Interface Name="doubango_rt.BackEnd.rtIT140Callback" InterfaceId="{FBC56EE2-7375-3F53-91D3-853079193184}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtT140CallbackProtectedVirtuals" InterfaceId="{540329E3-8DD6-391C-9EBD-4D738E1C04F0}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtT140CallbackFactory" InterfaceId="{1275BFA1-5793-318F-97CD-D34CDF953775}" />
+        <Interface Name="doubango_rt.BackEnd.rtISipSession" InterfaceId="{9BFB53AD-BFC4-3784-9E6D-6839B5E87320}" />
+        <Interface Name="doubango_rt.BackEnd.rtIInviteSession" InterfaceId="{A93DFA4F-7D83-32D0-B866-CC9FC57D7225}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipSessionPublicNonVirtuals" InterfaceId="{6ACF024C-5FA2-3607-92B2-677405C75519}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipSessionFactory" InterfaceId="{6EEC00B8-8AFD-3C0D-9EE6-BB0BD3FE761A}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtInviteSessionPublicNonVirtuals" InterfaceId="{266A5021-F4D7-3457-8C28-00C7A386ABDE}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtInviteSessionFactory" InterfaceId="{8102D159-281E-397D-B6DD-AB94059820A7}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtCallSessionPublicNonVirtuals" InterfaceId="{7D605CC9-6FF4-3D58-9976-F23C30D4AED5}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtCallSessionFactory" InterfaceId="{9B651B7D-7BFE-3918-BDFE-52B72F9B0F30}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMsrpSessionPublicNonVirtuals" InterfaceId="{746AFEAB-0072-38FE-B1A7-21770BE64A4A}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMsrpSessionFactory" InterfaceId="{840E557A-A75D-35A5-9E1E-9AFE1FA80A9D}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMessagingSessionPublicNonVirtuals" InterfaceId="{AACA3593-CEFB-373E-A229-853C78AD5921}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMessagingSessionFactory" InterfaceId="{489F9906-CC60-3868-A55A-E93A7455B514}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtInfoSessionPublicNonVirtuals" InterfaceId="{6A30534C-9226-3450-861F-8D92E241D611}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtInfoSessionFactory" InterfaceId="{548CF937-8336-3950-AA5C-F8CA1D9B4A67}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtOptionsSessionPublicNonVirtuals" InterfaceId="{7AA94F17-FBEB-3FAC-92ED-898FB9F4EDC7}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtOptionsSessionFactory" InterfaceId="{1FB0FA30-B04C-3AFC-87EF-B3264AE0B43C}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtPublicationSessionPublicNonVirtuals" InterfaceId="{8D8BFB47-BE91-3E55-AD42-51A6F8E0190A}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtPublicationSessionFactory" InterfaceId="{DE777EC1-607A-3E44-910E-932793DF128E}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtRegistrationSessionPublicNonVirtuals" InterfaceId="{D34B80F8-410C-3A42-AA06-296EB6A8E2B1}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtRegistrationSessionFactory" InterfaceId="{AC3D979B-2D68-3AD7-8D53-7C1D7444F7BC}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSubscriptionSessionPublicNonVirtuals" InterfaceId="{E3F89F64-B94A-368B-9082-93AF84F8BB1F}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSubscriptionSessionFactory" InterfaceId="{71094813-DA89-30CF-BD63-A70FDF4A85FA}" />
+        <Interface Name="doubango_rt.BackEnd.rtISipCallback" InterfaceId="{B210DD33-A6A6-34A8-A96A-EFAC9D0B8DBA}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipCallbackPublicNonVirtuals" InterfaceId="{F6F4FF9E-06BC-3929-BAEA-6F7FA44013FE}" />
+        <Interface Name="doubango_rt.BackEnd.rtISipEvent" InterfaceId="{6FDB3F81-9CB1-34F1-9AD6-78780BC58E43}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtDialogEventPublicNonVirtuals" InterfaceId="{65780FAA-8EBB-375D-B04C-47555D0F2845}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtStackEventPublicNonVirtuals" InterfaceId="{5FB380DD-095D-32D4-ACE4-7991516FD8EA}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtInviteEventPublicNonVirtuals" InterfaceId="{731A866B-4B61-3A41-9F4B-0DA7322F1AA7}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtMessagingEventPublicNonVirtuals" InterfaceId="{D6D6ADFB-954A-36F7-B36B-51FD4091FEDA}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtInfoEventPublicNonVirtuals" InterfaceId="{3E3607D8-9CA6-3CD2-9C82-4478580C86D1}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtOptionsEventPublicNonVirtuals" InterfaceId="{01126DE2-DB09-3456-93C8-0517C3F963D5}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtPublicationEventPublicNonVirtuals" InterfaceId="{EC75DE12-C356-33FD-B8AF-AE4AB05414A5}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtRegistrationEventPublicNonVirtuals" InterfaceId="{599EE12A-5485-3D18-9ACE-F0885D29455E}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSubscriptionEventPublicNonVirtuals" InterfaceId="{9F4A8862-8482-3083-B24C-796737FDF42B}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSdpMessagePublicNonVirtuals" InterfaceId="{6D43145F-FC50-3FD7-9D1F-BC4789AA9CED}" />
+        <Interface Name="doubango_rt.BackEnd.__IrtSipMessagePublicNonVirtuals" InterfaceId="{F68542F0-F6C6-3DE5-86FE-31E2ADD4E41E}" />
+        <Interface Name="doubango_rt.BackEnd.IVideoRenderer" InterfaceId="{F8F3EBEE-094D-38D5-840A-254710AE9091}" />
+        <Interface Name="doubango_rt.BackEnd.IDebugMessageListener" InterfaceId="{3F230803-D28D-3153-A07C-7F9FD9C91E43}" />
+        <Interface Name="doubango_rt.BackEnd.IAudioStateChangedListener" InterfaceId="{19BAB5B7-A2FC-3714-9A50-913351616BAA}" />
+        <Interface Name="doubango_rt.BackEnd.ISipRegistrationStateChangedListener" InterfaceId="{BEEF9A82-3E32-3ADB-A750-09C020B25194}" />
+        <Interface Name="doubango_rt.BackEnd.ISipAVCallStateChangedListener" InterfaceId="{79981920-108E-3EFF-BFFB-1435777B55A0}" />
+        <Interface Name="doubango_rt.BackEnd.ISipStackStateChangedListener" InterfaceId="{EB16F8EC-3180-35C4-A4D8-A9D73427E4FA}" />
+        <Interface Name="doubango_rt.BackEnd.__ISipConfigPublicNonVirtuals" InterfaceId="{4868DDC4-3353-3344-842D-EB96AC8371B9}" />
+        <Interface Name="doubango_rt.BackEnd.__ISipAVCallPublicNonVirtuals" InterfaceId="{05FC37D6-FF7F-3D9F-A6FD-775DD14372AD}" />
+        <Interface Name="doubango_rt.BackEnd.__ISipServicePublicNonVirtuals" InterfaceId="{CC5B3C10-588D-37C4-818A-97DDA8C1D5DC}" />
+        <Interface Name="doubango_rt.BackEnd.__ISipServiceStatics" InterfaceId="{228FB9E6-ED53-3289-ACE3-995F36F172B2}" />
+        <Interface Name="doubango_rt.BackEnd.__IGlobalsPublicNonVirtuals" InterfaceId="{2F22CC8A-1FA9-3EF8-BD69-A1B61A696F3C}" />
+        <Interface Name="doubango_rt.BackEnd.__IGlobalsProtectedNonVirtuals" InterfaceId="{FD21E8E5-0146-348B-979D-9237197A9A9B}" />
+        <Interface Name="doubango_rt.BackEnd.__IGlobalsStatics" InterfaceId="{D397D79C-41C8-3E86-B794-A20EA8D545F5}" />
+        <Interface Name="doubango_rt.BackEnd.OutOfProcess.__IServerPublicNonVirtuals" InterfaceId="{E4EA5621-E41B-3A0B-8FBD-C2851F7454FC}" />
+      </ProxyStub>
+    </ActivatableClasses>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+    </ScreenResolutions>
+  </App>
+</Deployment>

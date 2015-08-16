@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B4E6B7AC-B18B-49CE-A79D-9B39E0A06499}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BogheCore</RootNamespace>
+    <AssemblyName>BogheCore</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c198e78e289aebd0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\boghe-thirdparties\win32\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContentType.cs" />
+    <Compile Include="Events\ConfigurationEventArgs.cs" />
+    <Compile Include="Events\ContactEventArgs.cs" />
+    <Compile Include="Events\ContactEventTypes.cs" />
+    <Compile Include="Events\EventHandlerTrigger.cs" />
+    <Compile Include="Events\HistoryEventArgs.cs" />
+    <Compile Include="Events\HistoryEventTypes.cs" />
+    <Compile Include="Events\StateMonitorEventArgs.cs" />
+    <Compile Include="Events\StateMonitorEventTypes.cs" />
+    <Compile Include="Events\StringEventArgs.cs" />
+    <Compile Include="Generated\data-model.cs" />
+    <Compile Include="Generated\data-model.Extra.cs">
+      <DependentUpon>data-model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\im-iscomposing.cs" />
+    <Compile Include="Generated\pidf-caps.cs" />
+    <Compile Include="Generated\pidf.cs" />
+    <Compile Include="Generated\pidf.Extra.cs">
+      <DependentUpon>pidf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\prs_pidf_omapres-v1_0.cs" />
+    <Compile Include="Generated\prs_pidf_omapres-v1_0.Extra.cs">
+      <DependentUpon>prs_pidf_omapres-v1_0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\reginfo.cs" />
+    <Compile Include="Generated\rpid.cs" />
+    <Compile Include="Model\HistoryChatEvent.cs" />
+    <Compile Include="Model\HistoryAVCallEvent.cs" />
+    <Compile Include="Model\HistoryEvent.cs" />
+    <Compile Include="Model\HistoryFileTransferEvent.cs" />
+    <Compile Include="Model\HistoryShortMessageEvent.cs" />
+    <Compile Include="Model\MessageSummary.cs" />
+    <Compile Include="Model\RCSService.cs" />
+    <Compile Include="Model\RCSServiceDescription.cs" />
+    <Compile Include="Model\RegistrationInfo.cs" />
+    <Compile Include="Model\RunningApp.cs" />
+    <Compile Include="Model\WatcherInfo.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="PresenceStatus.cs" />
+    <Compile Include="Services\Impl\ContactService.Local.cs">
+      <DependentUpon>ContactService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\HistoryService.cs" />
+    <Compile Include="Services\Impl\StateMonitorService.cs" />
+    <Compile Include="Services\Impl\XcapService.Directory.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.PresenceContent.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.PresRules.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.XcapCaps.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XmlConfigurationService.cs" />
+    <Compile Include="Services\IStateMonitorService.cs" />
+    <Compile Include="Sip\Events\InfoEventArgs.cs" />
+    <Compile Include="Sip\Events\InfoEventTypes.cs" />
+    <Compile Include="Sip\Events\InviteEventArgs.cs" />
+    <Compile Include="Sip\Events\InviteEventTypes.cs" />
+    <Compile Include="Events\MyEventArgs.cs" />
+    <Compile Include="MediaType.cs" />
+    <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="MyObservableCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IContactService.cs" />
+    <Compile Include="Services\IHistoryService.cs" />
+    <Compile Include="Services\Impl\ContactService.cs" />
+    <Compile Include="Services\Impl\RegConfigurationService.cs" />
+    <Compile Include="Services\Impl\ServiceManager.cs" />
+    <Compile Include="Services\Impl\SipService.Callback.cs">
+      <DependentUpon>SipService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\SipService.cs" />
+    <Compile Include="Services\Impl\SipService.Preferences.cs">
+      <DependentUpon>SipService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\SipService.Presence.cs">
+      <DependentUpon>SipService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.Auid.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.cs" />
+    <Compile Include="Services\Impl\XcapService.Misc.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.ResourceLists.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.RLS.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\XcapService.Serializer.cs">
+      <DependentUpon>XcapService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\INetworkService.cs" />
+    <Compile Include="Services\IScreenService.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\ISipService.cs" />
+    <Compile Include="Services\ISoundService.cs" />
+    <Compile Include="Services\IStorageService.cs" />
+    <Compile Include="Services\IXcapService.cs" />
+    <Compile Include="Sip\Events\MessagingEventArgs.cs" />
+    <Compile Include="Sip\Events\MessagingEventTypes.cs" />
+    <Compile Include="Sip\Events\MsrpEventArgs.cs" />
+    <Compile Include="Sip\Events\MsrpEventTypes.cs" />
+    <Compile Include="Sip\Events\RegistrationEventArgs.cs" />
+    <Compile Include="Sip\Events\RegistrationEventTypes.cs" />
+    <Compile Include="Sip\Events\StackEventArgs.cs" />
+    <Compile Include="Sip\Events\StackEventTypes.cs" />
+    <Compile Include="Sip\Events\SubscriptionEventArgs.cs" />
+    <Compile Include="Sip\Events\SubscriptionEventTypes.cs" />
+    <Compile Include="Sip\MyAVSession.Callback.cs">
+      <DependentUpon>MyAVSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sip\MyAVSession.cs" />
+    <Compile Include="Sip\MyInfoSession.cs" />
+    <Compile Include="Sip\MyInviteSession.cs" />
+    <Compile Include="Sip\MyMessagingSession.cs" />
+    <Compile Include="Sip\MyMsrpSession.Callback.cs">
+      <DependentUpon>MyMsrpSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sip\MyMsrpSession.cs" />
+    <Compile Include="Sip\MyPublicationSession.cs" />
+    <Compile Include="Sip\MyRegistrationSession.cs" />
+    <Compile Include="Sip\MySipSession.cs" />
+    <Compile Include="Sip\MySipStack.cs" />
+    <Compile Include="Sip\MySubscriptionSession.cs" />
+    <Compile Include="Utils\IMActivityIndicator.cs" />
+    <Compile Include="Utils\MySoundPlayer.cs" />
+    <Compile Include="Utils\MyXmlSerializer.cs" />
+    <Compile Include="Utils\Rfc3339DateTime.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\UriUtils.cs" />
+    <Compile Include="Xcap\Events\XcapEventArgs.cs" />
+    <Compile Include="Xcap\Events\XcapEventTypes.cs" />
+    <Compile Include="Xcap\MySyncXcapCallback.cs" />
+    <Compile Include="Xcap\MyAsyncXcapCallback.cs" />
+    <Compile Include="Xcap\MyXcapMessage.cs" />
+    <Compile Include="Xcap\MyXcapStack.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\boghe-xdm\boghe-xdm.csproj">
+      <Project>{C916D357-A1FF-46C8-B3BA-28173F5ACEE9}</Project>
+      <Name>boghe-xdm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\doubango\doubango.csproj">
+      <Project>{93201A98-88E0-4430-BCEB-643E58C28C66}</Project>
+      <Name>doubango</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

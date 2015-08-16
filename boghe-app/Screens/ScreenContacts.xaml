@@ -1,0 +1,86 @@
+﻿<ctrl:BaseScreen x:Class="BogheApp.Screens.ScreenContacts"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:ctrl="clr-namespace:BogheControls;assembly=BogheControls"
+    xmlns:local="clr-namespace:BogheApp.Screens"
+    xmlns:items="clr-namespace:BogheApp.Items"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:res="clr-namespace:BogheApp.embedded"
+    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="510" Width="367" Loaded="BaseScreen_Loaded">
+    
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListBox Name="listBox" ItemsSource="{Binding}" Margin="0,32,0,44" HorizontalContentAlignment="Stretch" BorderBrush="SkyBlue">
+            <ListBox.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <items:ItemGroup Value="{Binding Path=Name}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListBox.GroupStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <items:ItemContact Value="{Binding Path=.}" HorizontalAlignment="Left" VerticalAlignment="Top"></items:ItemContact>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Border Height="23" VerticalAlignment="Top" Margin="179,3,2,0" BorderBrush="SkyBlue" BorderThickness="1">
+            <DockPanel LastChildFill="True" IsItemsHost="False">
+                <Image Source="/BogheApp;component/embedded/12/search_info_12.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2" />
+                <TextBox BorderThickness="0" Name="textBoxSearchCriteria" TextChanged="textBoxSearchCriteria_TextChanged" Width="152" />
+                <Image Name="imageSearchCriteriaClear" Source="/BogheApp;component/embedded/12/search_clear_12.png" Stretch="None"  VerticalAlignment="Center" MouseUp="imageSearchCriteriaClear_MouseUp" Focusable="True" HorizontalAlignment="Right" Margin="2" />
+            </DockPanel>
+        </Border>
+        <ComboBox ItemsSource="{Binding}" Margin="1,3,0,0" Name="comboBoxGroups" HorizontalAlignment="Left" Width="152" Height="23" VerticalAlignment="Top" SelectionChanged="comboBoxGroups_SelectionChanged">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="SkyBlue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.567"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="0,0,2,0" Source="{Binding Path=ImageSource}" Width="16" Height="16" />
+                        <TextBlock Text = "{Binding Path=DisplayName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        
+        <Border Height="26" VerticalAlignment="Bottom" Margin="1,0,157,7" BorderThickness="1" BorderBrush="SkyBlue">
+            <DockPanel LastChildFill="False" HorizontalAlignment="Stretch">
+                <TextBox  Name="textBoxFreeContact" FontSize="14"  VerticalAlignment="Center" Width="184" BorderThickness="0" HorizontalAlignment="Stretch" />
+                <Image Name="imageFreeTextClear" Source="/BogheApp;component/embedded/12/search_clear_12.png" Stretch="None"  VerticalAlignment="Center" MouseUp="imageFreeTextClear_MouseUp" Focusable="True" HorizontalAlignment="Right" Margin="2" Width="12" Height="12" MaxWidth="12" MaxHeight="12" DockPanel.Dock="Right" />
+            </DockPanel>
+        </Border>
+        
+        <Button HorizontalAlignment="Right" Margin="0,4,113,2" Name="buttonVoice" Click="buttonVoice_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipMakeVoiceCall}" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/voice_call_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+        <Button HorizontalAlignment="Right" Margin="0,4,76,2" Name="buttonVisio"   Click="buttonVisio_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipMakeVideoCall}" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/visio_call_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+        <Button HorizontalAlignment="Right" Margin="0,4,39,2" Name="buttonFile"    Click="buttonFile_Click" Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipSendFile}" VerticalAlignment="Bottom">
+            <Image Source="/BogheApp;component/embedded/32/image_gallery_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+        <Button HorizontalAlignment="Right" Margin="0,4,1,2" Name="buttonMessaging"    Padding="0" Background="Transparent" MinHeight="35" MinWidth="35" BorderBrush="SkyBlue" ToolTip="{x:Static res:Strings.TabContacts_ToolTipStartChat}" VerticalAlignment="Bottom" Click="buttonMessaging_Click">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Start Chat" Name="menuItemStartChat" Click="menuItemStartChat_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/BogheApp;component/embedded/16/messages_16.png"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Send SMS" Name="menuItemSendSMS" Click="menuItemSendSMS_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/BogheApp;component/embedded/16/message_16.png"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
+            <Image Source="/BogheApp;component/embedded/32/messages_32.png" MaxWidth="32" MaxHeight="32" MinWidth="32" MinHeight="32" Width="32" Height="32" Stretch="None" Opacity="1" ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+        </Button>
+    </Grid>
+</ctrl:BaseScreen>
