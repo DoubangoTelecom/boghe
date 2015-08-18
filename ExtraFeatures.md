@@ -1,4 +1,4 @@
-This application contains all features supported by [Doubango framework](https://code.google.com/p/doubango/) with some extra features provided through standalone plugins.
+This application contains all features supported by [Doubango framework](https://github.com/DoubangoTelecom/doubango) with some extra features provided through standalone plugins.
 
 <table width='100%' border='1'>
 <tr>
