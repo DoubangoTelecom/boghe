@@ -1,4 +1,4 @@
-This application uses [Doubango Framework](https://www.doubango.org/) and has [extra features](ExtraFeatures.md) like **NVIDIA CUDA**, **Intel Quick Sync**, **DXVA2**... provided as [standalone plugins](ExtraFeatures.md).
+This application uses [Doubango Framework](https://github.com/DoubangoTelecom/doubango) and has [extra features](ExtraFeatures.md) like **NVIDIA CUDA**, **Intel Quick Sync**, **DXVA2**... provided as [standalone plugins](ExtraFeatures.md).
 <br />
 
 
