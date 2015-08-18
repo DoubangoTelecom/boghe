@@ -2,7 +2,7 @@
 This wiki page is for Windows Desktop (XP, Vista, 7 and 8).
 
 To build the source code you need Visual Studio 2008 or later with the .NET Framework 3.5 **SP1**.<br />
-Please note that Boghe v2.x requires [Doubango v2.x](http://code.google.com/p/doubango/) <br />
+Please note that Boghe v2.x requires [Doubango v2.x](https://github.com/DoubangoTelecom/doubango) <br />
 
 ## Supported systems ##
   * Windows XP SP3 with .NET Framework 3.5 **SP1**
@@ -25,15 +25,15 @@ cd myboghe
 ```
   * Checkout doubango source code into **myboghe**. Important: The destination directory MUST be called **doubango**
 ```
-svn checkout http://doubango.googlecode.com/svn doubango
+git clone https://github.com/DoubangoTelecom/doubango.git doubango
 ```
   * Checkout Boghe source code into **myboghe**
 ```
-svn checkout http://boghe.googlecode.com/svn boghe
+git clone https://github.com/DoubangoTelecom/boghe.git boghe
 ```
 
 <br />
-To open & build all projects, open **myboghe\boghe\branches\2.0\boghe\boghe-win32.sln**
+To open & build all projects, open **myboghe\boghe\boghe-win32.sln**
 
 ### Building standalone plugins (DLLs) ###
 All standalone plugins are optional and provide different features. You should deploy them all regardless the target OS and let the loader choose the best ones. For example, both **pluginWinMF** and **pluginDirectShow** will be included in the installer and the loader will choose the first one for Win7/Win8 and the second for XP/Vista.
@@ -150,6 +150,6 @@ If you are license owner then, you can build a non-GPL version of Doubango and B
 </li><li>Remove <b>libx264.a</b> from the list.</li></ol></li></ul>
 
 <h2>Technical help</h2>
-Please check our <a href='http://code.google.com/p/webrtc2sip/issues/list'>issue tracker</a> or <a href='https://groups.google.com/group/doubango'>developer group</a> if you have any problem.<br>
+Please check our <a href='https://github.com/DoubangoTelecom/boghe/issues'>issue tracker</a> or <a href='https://groups.google.com/group/doubango'>developer group</a> if you have any problem.<br>
 <br>
-For more information about third-parties libraries, please visit <a href='http://code.google.com/p/doubango/wiki/Licensing'>this page</a>.
+For more information about third-parties libraries, please visit <a href='https://github.com/DoubangoTelecom/doubango/blob/master/Licensing.md'>this page</a>.
