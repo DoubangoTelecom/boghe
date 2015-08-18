@@ -1,12 +1,12 @@
-This application uses [Doubango Framework](http://www.doubango.org/) and has [extra features](ExtraFeatures.md) like **NVIDIA CUDA**, **Intel Quick Sync**, **DXVA2**... provided as [standalone plugins](ExtraFeatures.md).
+This application uses [Doubango Framework](https://www.doubango.org/) and has [extra features](ExtraFeatures.md) like **NVIDIA CUDA**, **Intel Quick Sync**, **DXVA2**... provided as [standalone plugins](ExtraFeatures.md).
 <br />
 
 
 <table cellpadding='10'>
 <tr>
-<td><img src='https://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-wp8/screenshots/240x400/ss_dialer.png' /></td>
-<td><img src='https://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-wp8/screenshots/240x400/ss_incomin.png' /></td>
-<td><img src='https://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-wp8/screenshots/240x400/ss_incall1.png' /></td>
+<td><img src='boghe-wp8/screenshots/240x400/ss_dialer.png' /></td>
+<td><img src='boghe-wp8/screenshots/240x400/ss_incomin.png' /></td>
+<td><img src='boghe-wp8/screenshots/240x400/ss_incall1.png' /></td>
 </tr>
 <tr>
 <td align='center'><i>WP8: Dialer</i></td>
@@ -14,9 +14,9 @@ This application uses [Doubango Framework](http://www.doubango.org/) and has [ex
 <td align='center'><i>WP8: In Call</i></td>
 </tr>
 <tr>
-<td><img src='https://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-wp8/screenshots/240x400/ss_inprogress.png' /></td>
-<td><img src='https://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-wp8/screenshots/240x400/ss_credentials.png' /></td>
-<td><img src='https://boghe.googlecode.com/svn/branches/2.0/boghe/boghe-wp8/screenshots/240x400/ss_network.png' /></td>
+<td><img src='boghe-wp8/screenshots/240x400/ss_inprogress.png' /></td>
+<td><img src='boghe-wp8/screenshots/240x400/ss_credentials.png' /></td>
+<td><img src='boghe-wp8/screenshots/240x400/ss_network.png' /></td>
 </tr>
 <tr>
 <td align='center'><i>WP8: In Progress</i></td>
@@ -28,8 +28,8 @@ This application uses [Doubango Framework](http://www.doubango.org/) and has [ex
 
 <table cellpadding='10'>
 <tr>
-<td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/eab.jpg' /></td>
-<td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/chat.png' /></td>
+<td><img src='screenshots/eab.jpg' /></td>
+<td><img src='screenshots/chat.png' /></td>
 </tr>
 <tr>
 <td align='center'>Windows Vista: <i>Enhanced Address Book</i></td>
@@ -53,37 +53,37 @@ To be compliant with the GSMA RCS an IMS client MUST at least support these serv
 <table cellpadding='2' border='1'>
 
 <tr> <th><b>Enhanced Address Book</b></th> </tr>
-<tr> <td>Basic social presence</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Revoke</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td> </tr>
-<tr> <td>Pseudo-permanent presence state</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td> </tr>
-<tr> <td>Anonymous fetch</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td> </tr>
-<tr> <td>Voice call</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td> </tr>
-<tr> <td>Video call</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td> </tr>
-<tr> <td>Network address book</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/edit-undo-8.png' /></td> </tr>
+<tr> <td>Basic social presence</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Revoke</td> <td><img src='screenshots/dialog-accept.png' /></td> </tr>
+<tr> <td>Pseudo-permanent presence state</td> <td><img src='screenshots/dialog-accept.png' /></td> </tr>
+<tr> <td>Anonymous fetch</td> <td><img src='screenshots/dialog-accept.png' /></td> </tr>
+<tr> <td>Voice call</td> <td><img src='screenshots/dialog-accept.png' /></td> </tr>
+<tr> <td>Video call</td> <td><img src='screenshots/dialog-accept.png' /></td> </tr>
+<tr> <td>Network address book</td> <td><img src='screenshots/edit-undo-8.png' /></td> </tr>
 
 <tr> <th><b>Social Presence Attributes</b></th> </tr>
-<tr> <td>Hyper availability</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Portrait icon</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Free-text</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Favorite link</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Hyper availability</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Portrait icon</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Free-text</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Favorite link</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
 
 <tr> <th><b>Content Sharing</b></th> </tr>
-<tr> <td>Basic sharing</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Video share (GSMA IR.74)</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/edit-undo-8.png' /></td></tr>
-<tr> <td>Image share (GSMA IR.79)</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Basic sharing</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Video share (GSMA IR.74)</td> <td><img src='screenshots/edit-undo-8.png' /></td></tr>
+<tr> <td>Image share (GSMA IR.79)</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
 
 <tr> <th><b>Enhanced Messaging</b></th> </tr>
-<tr> <td>Conversational messaging (SMS/MMS)</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Chat 1-to-1 (OMA IM SIMPLE 1.0)</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
-<tr> <td>Group chat 1-to-many (OMA IM SIMPLE 1.0)</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/edit-undo-8.png' /></td></tr>
-<tr> <td>File transfer</td> <td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Conversational messaging (SMS/MMS)</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Chat 1-to-1 (OMA IM SIMPLE 1.0)</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
+<tr> <td>Group chat 1-to-many (OMA IM SIMPLE 1.0)</td> <td><img src='screenshots/edit-undo-8.png' /></td></tr>
+<tr> <td>File transfer</td> <td><img src='screenshots/dialog-accept.png' /></td></tr>
 
 </table>
 
 <table>
 <tr>
-<td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/dialog-accept.png' /></td><td>fully compliant</td>
-<td><img src='http://boghe.googlecode.com/svn/branches/2.0/boghe/screenshots/edit-undo-8.png' /></td><td>under dev</td>
+<td><img src='screenshots/dialog-accept.png' /></td><td>fully compliant</td>
+<td><img src='screenshots/edit-undo-8.png' /></td><td>under dev</td>
 </tr>
 </table>
 
@@ -156,9 +156,7 @@ Many technical references are common to GSMA Image Sharing but this service allo
 Both end clients (caller/callee) can start file transfer session during an ongoing session (CS/PS call) or without having an ongoing session.<br />
 Only 1-to-1 file transfer feature is supported in GSMA RCS phase 2 and only a single file can be transferred per session. Only sending/receiving files are supported and requesting files is not part of the GSMA RCS phase 2 use cases.<br />
 
-
-
 <br>
 <br>
-<b>© 2011-2012 Doubango Telecom</b> <br />
+<b>© 2011-2015 Doubango Telecom</b> <br />
 <i>Inspiring the future</i>
