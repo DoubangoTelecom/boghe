@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Sat Jun 20 21:05:29 2015
+/* at Tue Aug 18 19:52:18 2015
  */
-/* Compiler settings for C:\Users\mamadou\AppData\Local\Temp\doubango_rt.BackEnd.idl-8a44d5f3:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
+/* Compiler settings for C:\Users\dmi\AppData\Local\Temp\doubango_rt.BackEnd.idl-24f232db:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=ARM 8.00.0595 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -2154,8 +2154,10 @@ enum __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__pref__video__size__t
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_hvga	= 4,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_vga	= 5,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_4cif	= 6,
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_wvga	= 7,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_svga	= 8,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_480p	= 9,
+        rt_tmedia_pref_video_size_t_tmedia_pref_video_size_xga	= 10,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_720p	= 11,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_16cif	= 12,
         rt_tmedia_pref_video_size_t_tmedia_pref_video_size_1080p	= 13
@@ -3282,8 +3284,10 @@ namespace ABI {
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_hvga	= 4,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_vga	= 5,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_4cif	= 6,
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_wvga	= 7,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_svga	= 8,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_480p	= 9,
+                    rt_tmedia_pref_video_size_t_tmedia_pref_video_size_xga	= 10,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_720p	= 11,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_16cif	= 12,
                     rt_tmedia_pref_video_size_t_tmedia_pref_video_size_1080p	= 13
@@ -8997,6 +9001,22 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicN
                         /* [in] */ ABI::doubango_rt::BackEnd::rt_tmedia_qos_strength_t strength,
                         /* [out][retval] */ boolean *__returnValue) = 0;
                     
+                    virtual HRESULT STDMETHODCALLTYPE setVideoFps( 
+                        /* [in] */ INT32 fps,
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual HRESULT STDMETHODCALLTYPE setVideoBandwidthUploadMax( 
+                        /* [in] */ INT32 max,
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual HRESULT STDMETHODCALLTYPE setVideoBandwidthDownloadMax( 
+                        /* [in] */ INT32 max,
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
+                    virtual HRESULT STDMETHODCALLTYPE setVideoPrefSize( 
+                        /* [in] */ ABI::doubango_rt::BackEnd::rt_tmedia_pref_video_size_t pref_video_size,
+                        /* [out][retval] */ boolean *__returnValue) = 0;
+                    
                     virtual HRESULT STDMETHODCALLTYPE hold2( 
                         /* [in] */ ABI::doubango_rt::BackEnd::__IrtActionConfigPublicNonVirtuals *config,
                         /* [out][retval] */ boolean *__returnValue) = 0;
@@ -9153,6 +9173,26 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicN
             /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__qos__strength__t strength,
             /* [out][retval] */ boolean *__returnValue);
         
+        HRESULT ( STDMETHODCALLTYPE *setVideoFps )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals * This,
+            /* [in] */ INT32 fps,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        HRESULT ( STDMETHODCALLTYPE *setVideoBandwidthUploadMax )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals * This,
+            /* [in] */ INT32 max,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        HRESULT ( STDMETHODCALLTYPE *setVideoBandwidthDownloadMax )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals * This,
+            /* [in] */ INT32 max,
+            /* [out][retval] */ boolean *__returnValue);
+        
+        HRESULT ( STDMETHODCALLTYPE *setVideoPrefSize )( 
+            __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals * This,
+            /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_Crt__tmedia__pref__video__size__t pref_video_size,
+            /* [out][retval] */ boolean *__returnValue);
+        
         HRESULT ( STDMETHODCALLTYPE *hold2 )( 
             __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals * This,
             /* [in] */ __x_ABI_Cdoubango__rt_CBackEnd_C____IrtActionConfigPublicNonVirtuals *config,
@@ -9287,6 +9327,18 @@ EXTERN_C const IID IID___x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicN
 
 #define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals_setQoS(This,type,strength,__returnValue)	\
     ( (This)->lpVtbl -> setQoS(This,type,strength,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals_setVideoFps(This,fps,__returnValue)	\
+    ( (This)->lpVtbl -> setVideoFps(This,fps,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals_setVideoBandwidthUploadMax(This,max,__returnValue)	\
+    ( (This)->lpVtbl -> setVideoBandwidthUploadMax(This,max,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals_setVideoBandwidthDownloadMax(This,max,__returnValue)	\
+    ( (This)->lpVtbl -> setVideoBandwidthDownloadMax(This,max,__returnValue) ) 
+
+#define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals_setVideoPrefSize(This,pref_video_size,__returnValue)	\
+    ( (This)->lpVtbl -> setVideoPrefSize(This,pref_video_size,__returnValue) ) 
 
 #define __x_ABI_Cdoubango__rt_CBackEnd_C____IrtCallSessionPublicNonVirtuals_hold2(This,config,__returnValue)	\
     ( (This)->lpVtbl -> hold2(This,config,__returnValue) ) 
