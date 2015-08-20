@@ -155,8 +155,6 @@ Video codec H.263-2000 profile 0 level 45 is mandatory (QCIF). To have better Vi
 Many technical references are common to GSMA Image Sharing but this service allows exchanging different types of content (text, documents, SMIL, videos …).
 Both end clients (caller/callee) can start file transfer session during an ongoing session (CS/PS call) or without having an ongoing session.<br />
 Only 1-to-1 file transfer feature is supported in GSMA RCS phase 2 and only a single file can be transferred per session. Only sending/receiving files are supported and requesting files is not part of the GSMA RCS phase 2 use cases.<br />
-
 <br>
-<br>
-<b>© 2011-2015 Doubango Telecom</b> <br />
+<b>© 2011-2015 [Doubango Telecom](https://doubango.org)</b> <br />
 <i>Inspiring the future</i>
