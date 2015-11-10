@@ -53,10 +53,11 @@ All standalone plugins are optional and provide different features. You should d
 </li><li>Video Producer (camera access)<br>
 </li><li><a href='http://www.intel.com/content/www/us/en/architecture-and-technology/quick-sync-video/quick-sync-video-general.html'>Intel Quick Sync</a> H.264 encoder and decoder<br>
 </li><li>Microsoft H.264 encoder and decoder<br>
-</li><li>Video Converter (Chroma conversion, re-sizer, framerate adapter...)<br>
+</li><li>Video Converter (Chroma conversion, re-sizer, framerate adapter...)</li><br>
+If you have any build issue when using VS2008 then, [make sure](http://blogs.msdn.com/b/windowssdk/archive/2008/06/30/winsdk-bug-notification-sdk-config-tool-appears-to-work-but-fails.aspx) you're using the right Windows SDK version.
 </td>
 <td>
-</li><li><a href='http://www.microsoft.com/en-us/download/details.aspx?id=3138'>Windows SDK 7.0</a> or later.<br>
+<li><a href='http://www.microsoft.com/en-us/download/details.aspx?id=3138'>Windows SDK 7.0</a> or later.<br>
 </td>
 <td>Win7</td>
 <td>
