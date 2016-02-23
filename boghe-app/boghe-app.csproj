@@ -223,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="QoSWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RunningAppsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -305,6 +309,9 @@
     </Compile>
     <Compile Include="MessagingWindow.xaml.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QoSWindow.xaml.cs">
+      <DependentUpon>QoSWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RunningAppsWindow.xaml.cs">
       <DependentUpon>RunningAppsWindow.xaml</DependentUpon>

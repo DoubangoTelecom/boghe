@@ -75,6 +75,7 @@ namespace BogheApp
         private readonly IConfigurationService configurationService;
 
         private readonly Timer timerCall;
+        private readonly Timer timerQuality;
 
         private HistoryChatEvent chatHistoryEvent;
         private HistoryAVCallEvent avHistoryEvent;
@@ -84,6 +85,8 @@ namespace BogheApp
         private readonly VideoDisplay videoDisplayRemote;
 
         private readonly MyObservableCollection<HistoryEvent> historyDataSource;
+
+        private QoSWindow qosWindow;
 
         private RunningAppsWindow runningAppsWindow;
         private RunningApp runningAppToShare;
@@ -117,6 +120,12 @@ namespace BogheApp
             this.timerCall = new Timer(1000);
             this.timerCall.AutoReset = true;
             this.timerCall.Elapsed += this.timerCall_Elapsed;
+
+            // QoS
+            this.labelQuality.Content = String.Empty;
+            this.timerQuality = new Timer(3000);
+            this.timerQuality.AutoReset = true;
+            this.timerQuality.Elapsed += this.timerQuality_Elapsed;
 
             // Services
             this.contactService = Win32ServiceManager.SharedManager.ContactService;
@@ -427,6 +436,48 @@ namespace BogheApp
             }
         }
 
+        private void timerQuality_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                if (this.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+                {
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new EventHandler<ElapsedEventArgs>(this.timerQuality_Elapsed), sender, new object[] { e });
+                    return;
+                }
+                if (this.AVSession != null && this.AVSession.IsActive)
+                {
+                    QoS qos = this.AVSession.GetVideoQualityInfo();
+                    if (qos != null)
+                    {
+                        this.labelQuality.Content = string.Format("Quality: {0}%", (uint)(qos.getQavg() * 100));
+                        if (this.qosWindow != null && this.qosWindow.IsVisible)
+                        {
+                            this.qosWindow.Info = qos;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex);
+            }
+        }
+
+        private void labelQuality_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.AVSession != null && this.AVSession.IsActive)
+            {
+                if (this.qosWindow == null)
+                {
+                    this.qosWindow = new QoSWindow();
+                    this.qosWindow.Info = this.AVSession.GetVideoQualityInfo();
+                }
+                this.qosWindow.Show();
+            } 
+        }
+
         private void buttonCallOrAnswer_Click(object sender, RoutedEventArgs e)
         {
             if (Strings.Text_Call.Equals(this.buttonCallOrAnswer.Tag) && this.AVSession == null)
@@ -588,6 +639,5 @@ namespace BogheApp
             };
         }
 
-        
     }
 }

@@ -72,9 +72,9 @@ namespace BogheApp
                         bool isVideo = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video || (this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp);
                         this.avHistoryEvent = new HistoryAVCallEvent(isVideo, this.AVSession.RemotePartyUri);
                         this.avHistoryEvent.Status = HistoryEvent.StatusType.Outgoing;
-                        // Video Displays
                         if (isVideo)
                         {
+                            // Video Displays
                             this.AttachDisplays();
                         }
 
@@ -122,6 +122,7 @@ namespace BogheApp
                         this.videoDisplayLocal.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                         this.videoDisplayScrenCastLocal.Visibility = ((this.AVSession.MediaType & MediaType.Videobfcp) == MediaType.Videobfcp) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                         this.videoDisplayRemote.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                        this.labelQuality.Visibility = ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
 
                         this.timerCall.Start();
                         if (this.avHistoryEvent != null)
@@ -133,6 +134,13 @@ namespace BogheApp
                             this.avHistoryEvent.StartTime = DateTime.Now;
                             this.avHistoryEvent.EndTime = this.avHistoryEvent.StartTime;
                         }
+
+                        if (this.labelQuality.Visibility == System.Windows.Visibility.Visible)
+                        {
+                            this.labelQuality.Content = "Quality: 100%";
+                            this.timerQuality.Start();
+                        }
+
                         break;
                     }
 
@@ -144,8 +152,17 @@ namespace BogheApp
                             runningAppsWindow.Close();
                             runningAppsWindow = null;
                         }
+
+                        if (this.qosWindow != null)
+                        {
+                            this.qosWindow.Close();
+                            this.qosWindow = null;
+                        }
+
                         this.labelInfo.Content = e.Type == InviteEventTypes.TERMWAIT ? Strings.Text_CallTerminated : e.Phrase;
+                        
                         this.timerCall.Stop();
+                        this.timerQuality.Stop();
                         this.soundService.StopRingBackTone();
                         this.soundService.StopRingTone();
 
@@ -162,6 +179,7 @@ namespace BogheApp
                         this.videoDisplayLocal.Visibility = System.Windows.Visibility.Hidden;
                         this.videoDisplayRemote.Visibility = System.Windows.Visibility.Hidden;
                         this.videoDisplayScrenCastLocal.Visibility = System.Windows.Visibility.Hidden;
+                        this.labelQuality.Visibility = System.Windows.Visibility.Hidden;
                         this.AVSession.PreDispose();
                         this.AVSession = null;
                         break;

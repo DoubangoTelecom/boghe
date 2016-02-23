@@ -126,6 +126,28 @@ namespace BogheApp
                     LOG.Error("Invalid State");
                 }
             }
+            else if (menuItem == this.MenuItemCall_Quality)
+            {
+                if (this.AVSession != null && this.AVSession.IsConnected)
+                {
+                    lock (this.AVSession)
+                    {
+                        if ((this.AVSession.MediaType & MediaType.Video) == MediaType.Video)
+                        {
+                            if (this.qosWindow == null)
+                            {
+                                this.qosWindow = new QoSWindow();
+                                this.qosWindow.Info = this.AVSession.GetVideoQualityInfo();
+                            }
+                            this.qosWindow.Show();
+                        }
+                    }
+                }
+                else
+                {
+                    LOG.Error("Invalid State");
+                }
+            }
             else if (menuItem == this.MenuItemCall_HangUp)
             {
                 if (this.AVSession != null)

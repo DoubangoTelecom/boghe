@@ -152,6 +152,9 @@
     <Compile Include="..\..\doubango\bindings\csharp\PublicationSession.cs">
       <Link>PublicationSession.cs</Link>
     </Compile>
+    <Compile Include="..\..\doubango\bindings\csharp\QoS.cs">
+      <Link>QoS.cs</Link>
+    </Compile>
     <Compile Include="..\..\doubango\bindings\csharp\RegistrationEvent.cs">
       <Link>RegistrationEvent.cs</Link>
     </Compile>

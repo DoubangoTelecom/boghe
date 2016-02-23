@@ -50,6 +50,12 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem Name="MenuItemCall_Quality" Header="Video Quality Info">
+                    <MenuItem.Icon>
+                        <Image Name="MenuItemCall_QualityImage" Source="/BogheApp;component/embedded/16/magic_wand_16.png" Stretch="None" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
                 <MenuItem Name="MenuItemCall_HangUp" Header="{x:Static res:Strings.AV_MenuHangUp}" IsEnabled="False">
                     <MenuItem.Icon>
                         <Image Source="/BogheApp;component/embedded/16/phone_hang_up_16.png" Stretch="None" />
@@ -84,7 +90,7 @@
             </MenuItem>
         </Menu>
                        
-        <Label Height="28" Name="labelInfo" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="Black" Margin="21,27,163,0">Call Terminated</Label>
+        <Label Height="28" Name="labelInfo" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="Black" Margin="21,27,238,0">Call Terminated</Label>
          
         <TextBox Height="50" Margin="2,0,80,3" Name="textBoxInput" VerticalAlignment="Bottom" BorderBrush="SkyBlue" AcceptsReturn="True" TextChanged="textBoxInput_TextChanged"></TextBox>
         <Button Height="54" HorizontalAlignment="Right" Margin="0,0,3,1" Name="buttonSendText" VerticalAlignment="Bottom" Width="73" Padding="0" BorderBrush="SkyBlue" Background="Transparent" Click="buttonSendText_Click">
@@ -121,5 +127,6 @@
             </StackPanel>
         </Button>
         <Border Background="SkyBlue" Name="borderVideoDispalyScrenCastLocal" HorizontalAlignment="Right" Margin="0,0,3,205" Width="86" Height="72" VerticalAlignment="Bottom" />
+        <Label Height="28" Margin="0,27,133,0" FontSize="14" Name="labelQuality" VerticalAlignment="Top" Foreground="Blue" Visibility="Hidden" HorizontalAlignment="Right" Width="99" MouseUp="labelQuality_MouseUp">Quality: 100%</Label>
     </Grid>
 </Window>

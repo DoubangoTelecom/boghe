@@ -352,6 +352,15 @@ namespace BogheCore.Sip
             return false;
         }
 
+        public QoS GetVideoQualityInfo()
+        {
+            if (this.MediaSessionMgr != null)
+            {
+                return this.MediaSessionMgr.sessionGetQoS(twrap_media_type_t.twrap_media_video);
+            }
+            return null;
+        }
+
         public bool ResumeCall()
         {
             return mSession.resume();

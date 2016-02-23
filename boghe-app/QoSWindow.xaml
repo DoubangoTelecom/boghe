@@ -1,0 +1,10 @@
+﻿<Window x:Class="BogheApp.QoSWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:res="clr-namespace:BogheApp.embedded"
+    Title="QoSWindow" Height="200" Width="242">
+    <Grid>
+        <Label Name="labelInfo">
+        </Label>
+    </Grid>
+</Window>
