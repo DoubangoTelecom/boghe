@@ -465,6 +465,11 @@ namespace BogheApp
             }
         }
 
+        void qosWindow_Closed(object sender, EventArgs e)
+        {
+            this.qosWindow = null;
+        }
+
         private void labelQuality_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (this.AVSession != null && this.AVSession.IsActive)

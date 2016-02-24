@@ -138,6 +138,7 @@ namespace BogheApp
                             {
                                 this.qosWindow = new QoSWindow();
                                 this.qosWindow.Info = this.AVSession.GetVideoQualityInfo();
+                                this.qosWindow.Closed += this.qosWindow_Closed;
                             }
                             this.qosWindow.Show();
                         }
